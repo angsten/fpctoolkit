@@ -3,7 +3,12 @@
 from fpctoolkit.io.file import File
 
 class Kpoint(File):
-	
+	"""
+	properties:
+		scheme ('Monkhorst' or 'Gamma')
+		subdivisions_list ([1,2,5] or [4,4,6])
+	"""
+
 	@property
 	def scheme(self):
 		scheme_line = self[2]

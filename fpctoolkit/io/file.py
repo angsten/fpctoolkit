@@ -44,6 +44,7 @@ class File(object):
 		self.iter_index += 1
 		return self.data[self.iter_index]
 
+
 	def load_from_path(self, file_path):
 		self.load_path = Path.clean_path(file_path)
 		with open(self.load_path, 'rb') as file:
@@ -54,6 +55,7 @@ class File(object):
 			file_path = self.load_path
 		else:
 			file_path = Path.clean_path(file_path)
+			
 		with open(file_path,'wb') as file:
 			file.write(str(self))
 

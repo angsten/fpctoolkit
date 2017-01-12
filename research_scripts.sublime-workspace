@@ -31,25 +31,25 @@
 			"file": "fpctoolkit/io/file.py",
 			"settings":
 			{
-				"buffer_size": 87,
+				"buffer_size": 1256,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/structure/structure.py",
+			"file": "fpctoolkit/io/vasp/kpoint.py",
 			"settings":
 			{
-				"buffer_size": 91,
+				"buffer_size": 551,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": ".gitignore",
+			"file": "/C/Users/Tom/Documents/Coding/python_work/fpc_tester.py",
 			"settings":
 			{
-				"buffer_size": 155,
+				"buffer_size": 192,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -238,16 +238,23 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure"
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util"
 	],
 	"file_history":
 	[
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/path.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/__init__.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/__init__.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/setup.py",
+		"/C/Users/Tom/Documents/Coding/python_work/fpc_tester.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/.gitignore",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/test.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/__init__.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/setup.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/__init__.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/__init__.py",
 		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/game_view.js",
 		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/game.js",
@@ -312,6 +319,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"file_path",
 			"1",
 			"deltaProjectedVelocityMagnitude",
 			"0.5",
@@ -372,15 +380,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 87,
+						"buffer_size": 1256,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								87,
-								87
+								243,
+								250
 							]
 						],
 						"settings":
@@ -396,19 +404,19 @@
 				},
 				{
 					"buffer": 1,
-					"file": "fpctoolkit/structure/structure.py",
+					"file": "fpctoolkit/io/vasp/kpoint.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 91,
+						"buffer_size": 551,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								91,
-								91
+								75,
+								212
 							]
 						],
 						"settings":
@@ -424,24 +432,24 @@
 				},
 				{
 					"buffer": 2,
-					"file": ".gitignore",
+					"file": "/C/Users/Tom/Documents/Coding/python_work/fpc_tester.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 155,
+						"buffer_size": 192,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								155,
-								155
+								164,
+								164
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -490,7 +498,7 @@
 	},
 	"output.exec":
 	{
-		"height": 125.0
+		"height": 112.0
 	},
 	"output.find_results":
 	{
