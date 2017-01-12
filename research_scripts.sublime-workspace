@@ -1,0 +1,550 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"pro",
+				"proto\tPrototype"
+			],
+			[
+				"prot",
+				"prototype"
+			],
+			[
+				"rg",
+				"rgb()"
+			],
+			[
+				"backg",
+				"background-color"
+			],
+			[
+				"s",
+				"sans-serif"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "fpctoolkit/io/file.py",
+			"settings":
+			{
+				"buffer_size": 87,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/structure/structure.py",
+			"settings":
+			{
+				"buffer_size": 91,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": ".gitignore",
+			"settings":
+			{
+				"buffer_size": 155,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "Packages/Python/Python.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/JSHint/JSHint.sublime-build",
+					""
+				],
+				[
+					"Packages/User/Node.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/User/Node.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 150.0,
+		"last_filter": "git push",
+		"selected_items":
+		[
+			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"qu",
+				"Git: Quick Commit"
+			],
+			[
+				"add",
+				"Git: Add Current File"
+			],
+			[
+				"stat",
+				"Git: Status"
+			],
+			[
+				"git ",
+				"Git: Reset (unstage) All"
+			],
+			[
+				"statu",
+				"Git: Status"
+			],
+			[
+				"pu",
+				"Git: Push"
+			],
+			[
+				"push",
+				"Git: Push"
+			],
+			[
+				"qui",
+				"Git: Quick Commit"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"git add",
+				"Git: Add All"
+			],
+			[
+				"git st",
+				"Git: Status"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"git rest ",
+				"Git: Reset (hard) HEAD"
+			],
+			[
+				"git log",
+				"Git: Log All"
+			],
+			[
+				"git stat",
+				"Git: Status"
+			],
+			[
+				"git com",
+				"Git: Quick Commit"
+			],
+			[
+				"git dif",
+				"Git: Diff Current File"
+			],
+			[
+				"git diff",
+				"Git: Diff All Files"
+			],
+			[
+				"git di",
+				"Git: Diff Current File"
+			],
+			[
+				"git co",
+				"Git: Quick Commit"
+			],
+			[
+				"git s",
+				"Git: Status"
+			],
+			[
+				"git status",
+				"Git: Status"
+			],
+			[
+				"git commit",
+				"git: quick commit"
+			],
+			[
+				"git",
+				"git: add (edit)"
+			],
+			[
+				"git init",
+				"git: init"
+			],
+			[
+				"",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 400.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"git init",
+			"git",
+			"GitSavvy help",
+			"git init",
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
+			"open",
+			"dir",
+			"ls"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure"
+	],
+	"file_history":
+	[
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/test.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/__init__.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/setup.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/__init__.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/__init__.py",
+		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/game_view.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/game.js",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/temps/epitaxy_data_getter.py",
+		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/body.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/linear_boundary.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/linear_spring.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/vertex.js",
+		"/C/Users/Tom/Documents/Berkeley/research/my_papers/Epitaxial Phase Validation Paper/backups/phase_validation/posc_show_2.py",
+		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/index.html",
+		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/vector.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/BotBreaker/lib/linear_spring.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/BotBreaker/lib/body.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/Practice/JS testing/test2.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/BotBreaker/lib/fixed_boundary.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/BotBreaker/lib/vertex.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/BotBreaker/lib/game.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/BotBreaker/lib/boundary.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/BotBreaker/lib/linear_boundary.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/BotBreaker/lib/vector.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/BotBreaker/lib/spring.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/game_view.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/game.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/Practice/t.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/BotBreaker/index.html",
+		"/C/Users/Tom/Documents/Coding/Web Development/Practice/Rally Racer/index.html",
+		"/C/Users/Tom/Documents/Coding/Web Development/BotBreaker/lib/game_view.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/Practice/Rally Racer/lib/game_view.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/BotBreaker/lib/util.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/BotBreaker/assets/keymaster.js",
+		"/C/Users/Tom/Documents/Coding/Web Development/BotBreaker/lib/car.js",
+		"/C/Users/Tom/Documents/Web Development/BotBreaker/lib/angular_spring.js",
+		"/C/Users/Tom/Documents/Web Development/BotBreaker/index.html",
+		"/C/Users/Tom/Documents/Web Development/BotBreaker/lib/util.js",
+		"/C/Users/Tom/AppData/Roaming/Sublime Text 3/Packages/User/GitGutter.sublime-settings",
+		"/C/Users/Tom/AppData/Roaming/Sublime Text 3/Packages/User/Node.sublime-build",
+		"/C/Users/Tom/Documents/Web Development/Practice/JS testing/test.js",
+		"/C/Users/Tom/AppData/Roaming/Sublime Text 3/Packages/JsFormat/JsFormat.sublime-settings",
+		"/C/Users/Tom/Documents/Web Development/Practice/Design a Site/index.html",
+		"/C/Users/Tom/Documents/Web Development/Practice/Design a Site/main.css",
+		"/C/Users/Tom/Documents/Web Development/Practice/main.css",
+		"/C/Users/Tom/Documents/Web Development/Practice/main2.css",
+		"/C/Users/Tom/Documents/Web Development/Practice/index2.html",
+		"/C/Users/Tom/Documents/Web Development/Practice/index.html",
+		"/C/Users/Tom/Documents/Web Development/Practice/test.html",
+		"/C/Users/Tom/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"1",
+			"deltaProjectedVelocityMagnitude",
+			"0.5",
+			"springMagnitude",
+			"spingMagnitude",
+			"vertex1",
+			"\t\tvar vertex1ProjectedVelocity = this.vertex1.velocity.dot(springDirectionVector);",
+			"console.",
+			"staticFrictionThresholdVelocity2",
+			"0",
+			"collisionData",
+			"lastCollisionData",
+			"console",
+			"d;",
+			"d ",
+			"t ",
+			"this.direction",
+			"xf",
+			"xi",
+			"{\n",
+			"this.dir",
+			"canvas",
+			"gameView",
+			"Util",
+			"bla",
+			"game-canvas",
+			"point"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"boundaryCrossingData",
+			"lastBoundaryCrossingData",
+			"distanceFraction ",
+			"timeFraction ",
+			"timeFraction",
+			"vertex.position",
+			"vertex.lastPosition"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "fpctoolkit/io/file.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 87,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								87,
+								87
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "fpctoolkit/structure/structure.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 91,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								91,
+								91
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": ".gitignore",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 155,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								155,
+								155
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.GitSavvy":
+	{
+		"height": 118.0
+	},
+	"output.exec":
+	{
+		"height": 125.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 100.0
+	},
+	"pinned_build_system": "Packages/Python/Python.sublime-build",
+	"project": "research_scripts.sublime-project",
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 230.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
