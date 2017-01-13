@@ -56,3 +56,4 @@ class File(object):
 
 		with open(file_path,'wb') as file:
 			file.write(str(self))
+
