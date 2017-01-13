@@ -56,12 +56,3 @@ class File(object):
 
 		with open(file_path,'wb') as file:
 			file.write(str(self))
-
-
-
-def pa():
-	print 'in pa'
-	import fpctoolkit
-	print fpctoolkit.a
-	print fpctoolkit.l
-

@@ -10,4 +10,4 @@ class FileTest(TestCase):
 	def test_init(self):
 		file = File()
 
-		self.assertEqual(-1,2)
+		self.assertEqual(-1,3)
