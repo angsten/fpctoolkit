@@ -59,5 +59,9 @@ class File(object):
 
 
 
-
+def pa():
+	print 'in pa'
+	import fpctoolkit
+	print fpctoolkit.a
+	print fpctoolkit.l
 
