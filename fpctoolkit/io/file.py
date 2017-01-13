@@ -13,22 +13,22 @@ class File(object):
 	def __str__(self):
 		return "".join(self.lines)
 
-	def __add__(self,val):
+	def __add__(self, val):
 		return str(self) + str(val)
 
-	def __getitem__(self,key):
+	def __getitem__(self, key):
 		if isinstance(key,slice):
 			return self.lines[key.start:key.stop]
 		else:
 			return self.lines[key]
 
-	def __setitem__(self,key,value):
+	def __setitem__(self, key, value):
 		if isinstance(key,slice):
 			self.lines[key.start:key.stop] = value
 		else:
 			self.lines[key] = value
 
-	def __delitem__(self,key):
+	def __delitem__(self, key):
 		if isinstance(key,slice):
 			del self.lines[key.start:key.stop]
 		else:
