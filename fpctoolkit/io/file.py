@@ -1,6 +1,6 @@
 
 
-from fpctoolkit.util.path import Path
+
 
 class File(object):
 	def __init__(self, file_path=None):
@@ -46,16 +46,14 @@ class File(object):
 
 
 	def load_from_path(self, file_path):
-		self.load_path = Path.clean_path(file_path)
+		self.load_path = file_path
 		with open(self.load_path, 'rb') as file:
 			self.data = file.readlines()
 
 	def write_to_path(self, file_path=None):
 		if not file_path:
 			file_path = self.load_path
-		else:
-			file_path = Path.clean_path(file_path)
-			
+
 		with open(file_path,'wb') as file:
 			file.write(str(self))
 
