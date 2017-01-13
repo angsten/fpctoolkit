@@ -1,0 +1,7 @@
+This is a test file
+testing 1 2 3
+line 3
+line 4
+line 5
+line 6
+end of testing file
