@@ -55,16 +55,25 @@
 			"file": "fpctoolkit/io/file.py",
 			"settings":
 			{
-				"buffer_size": 1173,
+				"buffer_size": 2622,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/io/vasp/incar.py",
+			"file": "fpctoolkit/util/string_util.py",
 			"settings":
 			{
-				"buffer_size": 717,
+				"buffer_size": 343,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/io/tests/test_File.py",
+			"settings":
+			{
+				"buffer_size": 1137,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -73,7 +82,7 @@
 			"file": "/C/Users/Tom/Documents/Coding/python_work/fpc_tester.py",
 			"settings":
 			{
-				"buffer_size": 254,
+				"buffer_size": 578,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -262,28 +271,38 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/data_File",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util"
 	],
 	"file_history":
 	[
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/file_util.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar.py",
-		"/C/Users/Tom/Documents/Berkeley/research/my_papers/Epitaxial Phase Validation Paper/backups/phase_validation/util.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/path.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/string_util.py",
+		"/C/Users/Tom/Documents/Coding/python_work/tt.txt",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/data_File/empty.txt",
+		"/C/Users/Tom/.bashrc",
+		"/C/Users/Tom/Documents/Coding/python_work/fpc_tester.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/__init__.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/.gitignore",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/test_file.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/__init__.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit.egg-info/SOURCES.txt",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/file.py",
+		"/C/Users/Tom/Documents/Berkeley/research/my_papers/Epitaxial Phase Validation Paper/backups/phase_validation/util.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar_element_mapping.json",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/kpoint.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar_element_mapping2.json",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/.gitignore",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/__init__.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/__init__.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/setup.py",
-		"/C/Users/Tom/Documents/Coding/python_work/fpc_tester.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/test.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/__init__.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/__init__.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/__init__.py",
 		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/game_view.js",
@@ -349,6 +368,19 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"string",
+			"fu",
+			"self",
+			"__",
+			"pad_with_newline",
+			"standardize_newlines",
+			"__class__",
+			".rstrip()",
+			"print",
+			"assertEqual",
+			",[])\n",
+			"assertEqual",
+			"echo",
 			".data",
 			"clean_path",
 			"'",
@@ -388,6 +420,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"printf",
 			".lines",
 			"expand_path",
 			"\"",
@@ -408,7 +441,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -417,43 +450,44 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1173,
+						"buffer_size": 2622,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								537,
-								564
+								1288,
+								1288
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 135.0,
+						"translation.y": 45.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "fpctoolkit/io/vasp/incar.py",
+					"file": "fpctoolkit/util/string_util.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 717,
+						"buffer_size": 343,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								492,
-								492
+								164,
+								164
 							]
 						],
 						"settings":
@@ -464,24 +498,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "/C/Users/Tom/Documents/Coding/python_work/fpc_tester.py",
+					"file": "fpctoolkit/io/tests/test_File.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 254,
+						"buffer_size": 1137,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								254,
-								254
+								1136,
+								1136
 							]
 						],
 						"settings":
@@ -493,6 +527,34 @@
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/C/Users/Tom/Documents/Coding/python_work/fpc_tester.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 578,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								467,
+								467
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -535,7 +597,7 @@
 	},
 	"output.exec":
 	{
-		"height": 153.0
+		"height": 108.0
 	},
 	"output.find_results":
 	{
@@ -558,6 +620,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"",
+				"fpctoolkit\\io\\tests\\data_File\\file1.txt"
+			]
 		],
 		"width": 0.0
 	},

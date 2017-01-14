@@ -8,15 +8,6 @@ Functions in this file operate on strings as auxiliary methods.
 # 	if not string.find(substring) == -1:
 # 		return True
 
-#if string ends with \n or \r\n return one of these, else return empty string
-# def get_string_return_char(string):
-# 	if len(string) == 0:
-# 		return ''
-# 	elif string[-1:] == '\n':
-# 		return '\n'
-# 	elif string[-2:] == '\r\n':
-# 		return '\r\n'
-
 def enforce_newline(string):
 	return string.rstrip('\n')+'\n'
 

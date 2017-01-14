@@ -29,6 +29,10 @@ class File(object):
 		else:
 			return str(val) + str(self)
 
+	def __iadd__(self, val):
+		self.append(val)
+		return self
+
 	def __getitem__(self, key):
 		if isinstance(key, slice):
 			return self.lines[key.start:key.stop]
