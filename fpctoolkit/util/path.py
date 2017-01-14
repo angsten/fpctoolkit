@@ -12,3 +12,7 @@ class Path(object):
 	@staticmethod
 	def clean(*paths):
 		return Path.expand_path(Path.join(*paths))
+
+	@staticmethod
+	def exists(path):
+		return os.path.exists(path)

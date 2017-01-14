@@ -1,6 +1,7 @@
+import copy
 
-
-
+import fpctoolkit.util.string_util as su
+from fpctoolkit.util.path import Path
 
 class File(object):
 	def __init__(self, file_path=None):
@@ -13,11 +14,20 @@ class File(object):
 	def __str__(self):
 		return "".join(self.lines)
 
-	def __add__(self, val):
-		return str(self) + str(val)
+	def __len__(self):
+		return len(self.lines)
 
-	def __radd__(self, val):
-		return str(val) + str(self)
+	def __add__(self, val): #self + val
+		if val.__class__ == self.__class__: #if both files, create new file with lines added together
+			return File.concatenate(self, val)
+		else:
+			return str(self) + str(val)
+
+	def __radd__(self, val): #val + self
+		if val.__class__ == self.__class__:
+			return File.concatenate(val, self)
+		else:
+			return str(val) + str(self)
 
 	def __getitem__(self, key):
 		if isinstance(key, slice):
@@ -27,9 +37,14 @@ class File(object):
 
 	def __setitem__(self, key, value):
 		if isinstance(key, slice):
-			self.lines[key.start:key.stop] = value
+			while len(self) < key.stop:
+				self.append()
+			self.lines[key.start:key.stop] = su.enforce_newline_on_list(value)
 		else:
-			self.lines[key] = value
+			while len(self) <= key:
+				self.append()
+
+			self.lines[key] = su.enforce_newline(value)
 
 	def __delitem__(self, key):
 		if isinstance(key, slice):
@@ -47,11 +62,19 @@ class File(object):
 		self.iter_index += 1
 		return self.lines[self.iter_index]
 
+	def append(self, string=""):
+		self.lines.append(su.enforce_newline(string))
+
+
+
 
 	def load_from_path(self, file_path):
 		self.load_path = file_path
-		with open(self.load_path, 'rb') as file:
-			self.lines = file.readlines()
+
+		if Path.exists(file_path):
+			with open(self.load_path, 'rb') as file:
+				self.lines = file.readlines()
+		File.standardize_newlines(self, '\n')
 
 	def write_to_path(self, file_path=None):
 		if not file_path:
@@ -59,3 +82,34 @@ class File(object):
 
 		with open(file_path, 'wb') as file:
 			file.write(str(self))
+
+
+
+	@staticmethod	
+	def get_lines_containing_string(file, string):
+		lines = []
+		for line in file.lines:
+			if not line.find(string) == -1:
+				lines.append(line)
+		return lines
+
+	@staticmethod
+	def standardize_newlines(file, newline_char):
+		for line in file:
+			line = line.replace('\r\n',newline_char)
+
+	@staticmethod
+	def pad_with_newline(file):
+		if file.lines:
+			file[-1] = file[-1].rstrip('\n') + '\n'
+		return file
+
+	@staticmethod
+	def concatenate(*files):
+		concatenated_file = File()
+		for file in files:
+			file_copy = File.pad_with_newline(copy.deepcopy(file))
+			concatenated_file.lines += file_copy.lines
+
+		return concatenated_file
+

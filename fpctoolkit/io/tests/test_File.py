@@ -34,4 +34,8 @@ class Test(TestCase):
 		file = File(Path.clean(self.data_path, 'small_file.txt'))
 		self.assertEqual(str(file), "Small file\r\nVery small\r\n")
 
+		file = File(Path.clean(self.data_path, 'empty.txt'))
+		self.assertEqual(str(file), "")		
 
+	def test_add(self):
+		pass
