@@ -9,6 +9,23 @@ class Kpoints(File):
 		subdivisions_list ([1,2,5] or [4,4,6])
 	"""
 
+	def __init__(self, file_path=None, scheme_str=None, subdivisions_list=None, kspacing=None, lattice=None):
+
+		super(Kpoints, self).__init__(file_path)
+
+		if file_path:
+			self.scheme #running these lines validates properties
+			self.subdivisions_list
+		elif not kspacing:
+			self[0] = "Kpoints File"
+			self[1] = "0"
+			self.scheme = scheme_str
+			self.subdivisions_list = subdivisions_list
+			self += "0 0 0"
+		else:
+			self.set_subdivisions_from_kspacing(kspacing, lattice)
+
+
 	@property
 	def scheme(self):
 		scheme_line = self[2]
@@ -23,11 +40,23 @@ class Kpoints(File):
 	def subdivisions_list(self):
 		subdivision_list_line = self[3].rstrip()
 
-		return [int(x) for x in subdivision_list_line.split(' ')]
+		subdivisions_list = [int(x) for x in subdivision_list_line.split(' ')]
+
+		if len(subdivisions_list) != 3:
+			raise Exception("Error parsing subdivisions list. List is " + str(subdivisions_list))
+
+		return subdivisions_list
 
 	@subdivisions_list.setter
 	def subdivisions_list(self, value):
+		if len(value) != 3:
+			raise Exception("Subdivisions_list length must be 3. Value given is " + str(value))
+
 		self[3] = " ".join(str(x) for x in value)
+
+	def set_subdivisions_list_from_kspacing(kspacing=None, lattice=None):
+		"""kspacing is given in inverse angstroms"""
+		pass
 
 
 	@staticmethod
