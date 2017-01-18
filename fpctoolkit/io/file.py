@@ -103,6 +103,9 @@ class File(object):
 		strings = string.split('\n')
 		self.lines += strings
 
+	def insert(self, index, string=""): #index is item before which to insert
+		self.lines.insert(index, string)
+
 
 	def load_from_path(self, file_path):
 		if Path.exists(file_path):

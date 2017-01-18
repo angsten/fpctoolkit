@@ -76,3 +76,23 @@ class Test(TestCase):
 
 		self.assertEqual(final_file.lines,['Small file', '  Very small  ', '', '', 'Small file 2', '  Not as small  ', ''])
 
+	def test_overrides(self):
+		file = File()
+		file[2] = '  inserted line   '
+		self.assertEqual(file.lines, ['', '', '  inserted line   '])
+		file[1] = 'add this line\n and this one where index 1 was'
+		self.assertEqual(file.lines, ['', 'add this line', ' and this one where index 1 was', '  inserted line   '])
+		file[1] = 'replaced add this line'
+		self.assertEqual(file.lines, ['', 'replaced add this line', ' and this one where index 1 was', '  inserted line   '])
+		self.assertEqual(file.lines[1:3], ['replaced add this line', ' and this one where index 1 was'])
+		del file[1]
+		del file[0:2]
+		self.assertEqual(file.lines, ['  inserted line   '])
+
+		file += "new line added"
+		self.assertEqual(file.lines, ['  inserted line   ', 'new line added'])
+
+		file.insert(0,'inserted at beginning')
+		file.insert(2,'right before new line added line')
+
+		self.assertEqual(file.lines, ['inserted at beginning', '  inserted line   ', 'right before new line added line', 'new line added'])
