@@ -1,4 +1,5 @@
 import os
+import os
 from unittest2 import TestCase
 
 from fpctoolkit.io.file import File

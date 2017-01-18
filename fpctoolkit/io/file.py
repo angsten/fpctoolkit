@@ -11,13 +11,23 @@ class File(object):
 	by other functions upon printing the file.
 	Lines, in files, that have neither content nor an eol character are not added to the list of lines.
 	Thus, for an empty file, lines will be the empty list, [].
-	For a file with the first line containing '\n' and the second '', lines will have [''] after loading.
+	For a file with the first line containing '\n' and the second containing '', lines will contain [''] after loading.
 	When writing or printing, a newline is always added.
+	Many operators are overridden for convenience.
 
-	Cool examples:
-	file = File()
-	file[2] = 'Can add in middle of file. Blanks lines will be added until this line.'
-	file[3:5] = ['this','is','a sequence']
+	Examples:
+		file = File()
+		file[2] = 'Can add in middle of file. Blanks lines will be added until this line.'
+		file += 'New stuff' #appends line to end
+		del file[3:5]
+		print file[2:4]
+		del file[2]
+		file.insert(0,'at beginning now')
+		new_file = some_file + another_file #concats files together
+
+		file2 = File('some_path.txt')
+		file2[6] = "write this line here"
+		file2.write_to_path() #remembers the load path
 	"""
 	def __init__(self, file_path=None):
 		self.lines = []
@@ -128,6 +138,10 @@ class File(object):
 		with open(file_path, 'wb') as file:
 			file.write(str(self))
 
+	def get_lines_containing_string(self, string):
+		"""Return list of lines that contain string"""
+
+		return filter(lambda x: x.find(string) != -1, self)
 
 
 	@staticmethod
@@ -140,12 +154,3 @@ class File(object):
 
 		return concatenated_file
 
-	@staticmethod	
-	def get_lines_containing_string(file, string):
-		lines = []
-
-		for line in file.lines:
-			if not line.find(string) == -1:
-				lines.append(line)
-
-		return lines
