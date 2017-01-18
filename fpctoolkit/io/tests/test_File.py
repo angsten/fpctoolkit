@@ -78,6 +78,7 @@ class Test(TestCase):
 
 	def test_overrides(self):
 		file = File()
+		self.assertFalse(file)
 		file[2] = '  inserted line   '
 		self.assertEqual(file.lines, ['', '', '  inserted line   '])
 		file[1] = 'add this line\n and this one where index 1 was'
@@ -96,3 +97,35 @@ class Test(TestCase):
 		file.insert(2,'right before new line added line')
 
 		self.assertEqual(file.lines, ['inserted at beginning', '  inserted line   ', 'right before new line added line', 'new line added'])
+
+		self.assertTrue(file)
+
+		self.assertEqual(len(file),4)
+
+		l = ['inserted at beginning', '  inserted line   ', 'right before new line added line', 'new line added']
+
+		for x,item in enumerate(file):
+			self.assertEqual(item,l[x])
+
+	def test_write_to_path(self):
+		file_path = Path.clean(self.data_path, 'small_file.txt')
+		file = File(file_path)
+
+		file[0] += " for line 0"
+		file[3] = "line 3"
+		file += ""
+		file += "here\nand here"
+		file += ""
+
+		self.assertEqual(file.lines, ['Small file for line 0', '  Very small  ', '', 'line 3', '', 'here', 'and here', ''])
+
+		file.write_to_path(Path.clean(self.data_path, 'small_file_ammended.txt'))
+
+		file_2 = File(Path.clean(self.data_path, 'small_file_ammended.txt'))
+
+		file_2[2] = "no more"
+		file_2.write_to_path()
+
+		file_3 = File(Path.clean(self.data_path, 'small_file_ammended.txt'))
+
+		self.assertEqual(file_3.lines, ['Small file for line 0', '  Very small  ', 'no more', 'line 3', '', 'here', 'and here', ''])

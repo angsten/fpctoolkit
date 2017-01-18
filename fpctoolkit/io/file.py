@@ -129,16 +129,6 @@ class File(object):
 			file.write(str(self))
 
 
-	@staticmethod	
-	def get_lines_containing_string(file, string):
-		lines = []
-
-		for line in file.lines:
-			if not line.find(string) == -1:
-				lines.append(line)
-
-		return lines
-
 
 	@staticmethod
 	def concatenate(*files):
@@ -150,3 +140,12 @@ class File(object):
 
 		return concatenated_file
 
+	@staticmethod	
+	def get_lines_containing_string(file, string):
+		lines = []
+
+		for line in file.lines:
+			if not line.find(string) == -1:
+				lines.append(line)
+
+		return lines
