@@ -9,6 +9,15 @@ class File(object):
 	loaded text file and are stored in the lines attribute. Stored strings in 
 	the lines list lack an end-of-line character (\n or \r\n) at the end - this is added 
 	by other functions upon printing the file.
+	Lines, in files, that have neither content nor an eol character are not added to the list of lines.
+	Thus, for an empty file, lines will be the empty list, [].
+	For a file with the first line containing '\n' and the second '', lines will have [''] after loading.
+	When writing or printing, a newline is always added.
+
+	Cool examples:
+	file = File()
+	file[2] = 'Can add in middle of file. Blanks lines will be added until this line.'
+	file[3:5] = ['this','is','a sequence']
 	"""
 	def __init__(self, file_path=None):
 		self.lines = []
@@ -19,8 +28,10 @@ class File(object):
 
 
 	def __str__(self):
-		return "\n".join(self.lines)
+		return "\n".join(self.lines) + "\n" if self else "" #always add \n unless empty file or last line is newline
 
+	def __nonzero__(self):
+		return bool(self.lines)
 
 	def __len__(self):
 		return len(self.lines)
@@ -54,15 +65,16 @@ class File(object):
 
 	def __setitem__(self, key, value):
 		if isinstance(key, slice):
-			while len(self) < key.stop:
-				self.append()
+			raise AttributeError("Cannot set items with slices.")
+			# while len(self) < key.stop:
+			# 	self.append()
 
-			self.lines[key.start:key.stop] = [v.rstrip('\r\n') for v in value]
+			# self.lines[key.start:key.stop] = [v.rstrip('\r\n') for v in value]
 		else:
-			while len(self) <= key:
+			while len(self) < key:
 				self.append()
 
-			self.lines[key] = value.rstrip('\r\n')
+			self.lines[key:key+1] = (value.rstrip('\r\n')).split('\n')
 
 
 	def __delitem__(self, key):
@@ -87,7 +99,9 @@ class File(object):
 
 
 	def append(self, string=""):
-		self.lines.append(string.rstrip('\r\n'))
+		string = string.rstrip('\r\n')
+		strings = string.split('\n')
+		self.lines += strings
 
 
 	def load_from_path(self, file_path):

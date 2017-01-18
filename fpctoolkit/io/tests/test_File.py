@@ -20,22 +20,59 @@ class Test(TestCase):
 		self.assertEqual(file.lines, [])
 		self.assertEqual(file.load_path, None)
 
+		with self.assertRaises(IOError):
+			file.write_to_path()
+
 		file_path = Path.clean(self.data_path, 'file1.txt')
 		file = File(file_path)
-		self.assertEqual(file.lines[0], "This is a test file\r\n")
-		self.assertEqual(file.lines[4], "line 5\r\n") 
+		self.assertEqual(file.lines[0], "This is a test file")
+		self.assertEqual(file.lines[4], "line 5") 
 		self.assertEqual(file.lines[6], "end of testing file")
 		with self.assertRaises(IndexError):
 			file.lines[7]
 
 		self.assertEqual(file.load_path, file_path)
 
+		file_path = Path.clean(self.data_path, 'small_file.txt')
+		file = File(file_path)
+		self.assertEqual(file.lines,['Small file', '  Very small  ', ''])
+
+		file_path = Path.clean(self.data_path, 'empty.txt')
+		file = File(file_path)
+		self.assertEqual(file.lines,[])
+
+		file_path = Path.clean(self.data_path, 'almost_empty.txt')
+		file = File(file_path) #this file contains: line 1: '\n' line 2: ''
+		self.assertEqual(file.lines, [''])
+
 	def test_str(self):
 		file = File(Path.clean(self.data_path, 'small_file.txt'))
-		self.assertEqual(str(file), "Small file\r\nVery small\r\n")
+		self.assertEqual(str(file), "Small file\n  Very small  \n\n")
 
 		file = File(Path.clean(self.data_path, 'empty.txt'))
-		self.assertEqual(str(file), "")		
+		self.assertEqual(str(file), "")
+
+		file = File(Path.clean(self.data_path, 'almost_empty.txt')) #this file contains: line 1: '\n' line 2: ''
+		self.assertEqual(str(file), "\n")
 
 	def test_add(self):
-		pass
+		file_path = Path.clean(self.data_path, 'small_file.txt')
+		file = File(file_path)
+		add_str = "string to add"
+		right_full_str = file + add_str
+		self.assertEqual(right_full_str,"Small file\n  Very small  \n\nstring to add")
+
+		l_add_str = "  left string to add"
+		left_full_str = l_add_str + file
+
+		self.assertEqual(left_full_str,"  left string to addSmall file\n  Very small  \n\n")
+
+		file_path_1 = Path.clean(self.data_path, 'small_file.txt')
+		file_path_2 = Path.clean(self.data_path, 'small_file_2.txt')
+		first_file = File(file_path_1)
+		second_file = File(file_path_2)
+
+		final_file = first_file + second_file
+
+		self.assertEqual(final_file.lines,['Small file', '  Very small  ', '', '', 'Small file 2', '  Not as small  ', ''])
+
