@@ -28,15 +28,21 @@ class Incar(File):
 			if key not in self:
 				self += Incar.get_line_string(key, value)
 			else: #find actual line with this key and update the value
-				line_index_list = self.get_indices_of_lines_containing_string(key, Incar.get_line_with_comments_removed)
-				if len(line_index_list) > 1:
-					raise Exception("Incar file contains " + key + " key twice.")
-
-				line_index = line_index_list[0]
-
+				line_index = self.get_line_index_of_key(key)
 				self[line_index] = Incar.get_line_string(key, value)
 			
 			self.assign_key_value_pair(key, value)
+
+	def get_line_index_of_key(self, key):
+		"""Returns the index of the line containing key as a valid parameter assignment"""
+
+		line_index_list = self.get_indices_of_lines_containing_string(key, Incar.get_line_with_comments_removed)
+		filtered_line_index_list = filter(lambda x: self[x].find('=') != -1, line_index_list) #only accept those with an assignment
+
+		if len(filtered_line_index_list) > 1:
+			raise Exception("Incar file contains " + key + " key twice.")
+
+		return filtered_line_index_list[0]
 
 	def __getitem__(self, key):
 		if not isinstance(key, basestring): #treat as file line index getter
@@ -51,7 +57,11 @@ class Incar(File):
 			super(Incar, self).__delitem__(key)
 		else:
 			key = Incar.get_processed_key_string(key)
-			del self.dict[key]
+
+			if key in self:
+				del self.dict[key]
+
+
 			#find line with this key and delete it##############################
 
 	def __contains__(self, key):
@@ -102,7 +112,12 @@ class Incar(File):
 
 	@staticmethod
 	def get_processed_key_string(key_string):
-		return (key_string.strip()).upper()
+		modified_key_string = (key_string.strip()).upper()
+
+		if ' ' in modified_key_string:
+			raise Exception("Incar keys should not contain an internal space")
+		else:
+			return modified_key_string
 
 	@staticmethod
 	def get_processed_value_string(value):
