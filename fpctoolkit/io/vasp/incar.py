@@ -5,6 +5,17 @@ from fpctoolkit.io.file import File
 class Incar(File):
 	"""Multiple parameters assigned in one line not supported
 
+	Examples:
+		incar = Incar()
+		incar[0] = 'comment line here'
+		incar['isif'] = 3
+		incar['EDIFF'] = 0.0000001
+		incar['prec'] = 'Accurate'
+		ediff in incar  #returns true (it has the key)
+		del incar['ediff']
+		incar += 'ediff = 0.001' #errors - already have ediff
+		incar [7] = 'another comment'
+
 	"""
 
 	output_separator_token = " = "
@@ -18,6 +29,7 @@ class Incar(File):
 			self.update_dictionary_from_file_lines()
 
 	def __str__(self):
+		#removes redundant spaces
 		self.lines = [' '.join(line.split()) if line.find("=") != -1 else line for line in self.lines]
 		return super(Incar, self).__str__()
 
@@ -37,20 +49,10 @@ class Incar(File):
 			self.assign_key_value_pair(key, value)
 
 	def __iadd__(self, value):
-		val = super(Incar, self).__iadd__(value)
+		super_value = super(Incar, self).__iadd__(value)
 		self.update_dictionary_from_file_lines()
-		return val
+		return super_value
 
-	def get_line_index_of_key(self, key):
-		"""Returns the index of the line containing key as a valid parameter assignment"""
-
-		line_index_list = self.get_indices_of_lines_containing_key(key)
-		filtered_line_index_list = filter(lambda x: self[x].find('=') != -1, line_index_list) #only accept those with an assignment
-
-		if len(filtered_line_index_list) > 1:
-			raise Exception("Incar file contains " + key + " key twice.")
-
-		return filtered_line_index_list[0]
 
 	def __getitem__(self, key):
 		if not isinstance(key, basestring): #treat as file line index getter
@@ -70,14 +72,25 @@ class Incar(File):
 				del self.lines[self.get_line_index_of_key(key)]
 				del self.dict[key]
 
-			#find line with this key and delete it##############################
-
 	def __contains__(self, key):
 		if not isinstance(key, basestring):
 			return super(Incar, self).__contains__(key)
 		else:
 			key = Incar.get_processed_key_string(key)
 			return (key in self.dict)
+
+
+	def get_line_index_of_key(self, key):
+		"""Returns the index of the line containing key as a valid parameter assignment"""
+
+		line_index_list = self.get_indices_of_lines_containing_key(key)
+		filtered_line_index_list = filter(lambda x: self[x].find('=') != -1, line_index_list) #only accept those with an assignment
+
+		if len(filtered_line_index_list) > 1:
+			raise Exception("Incar file contains " + key + " key twice.")
+
+		return filtered_line_index_list[0]
+
 
 	def update_dictionary_from_file_lines(self):
 		self.dict = OrderedDict()
