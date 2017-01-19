@@ -146,20 +146,6 @@ class File(object):
 
 		return filter(lambda x: x.find(string) != -1, self)
 
-	def get_indices_of_lines_containing_string(self, string, modifier=None):
-		"""Applies modifier to each line before searching"""
-		indices = []
-		new_lines = self.lines
-
-		if modifier:
-			new_lines = [modifier(line) for line in self]
-
-		for i, line in enumerate(new_lines):
-			if line.find(string) != -1:
-				indices.append(i)
-
-		return indices
-
 	def trim_trailing_whitespace_only_lines(self):
 		for i in range(len(self)-1, -1, -1):
 			if self[i].strip() == "":

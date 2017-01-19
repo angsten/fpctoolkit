@@ -1,0 +1,3 @@
+ISIF = 3
+EDIFF = 1e-6
+PREC = Accurate

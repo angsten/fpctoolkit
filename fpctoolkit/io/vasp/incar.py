@@ -17,6 +17,9 @@ class Incar(File):
 		if file_path: #update dict here from loaded file text lines
 			self.update_dictionary_from_file_lines()
 
+	def __str__(self):
+		self.lines = [' '.join(line.split()) if line.find("=") != -1 else line for line in self.lines]
+		return super(Incar, self).__str__()
 
 	def __setitem__(self, key, value):
 		if not isinstance(key, basestring): #treat as file line index setter
@@ -36,7 +39,7 @@ class Incar(File):
 	def get_line_index_of_key(self, key):
 		"""Returns the index of the line containing key as a valid parameter assignment"""
 
-		line_index_list = self.get_indices_of_lines_containing_string(key, Incar.get_line_with_comments_removed)
+		line_index_list = self.get_indices_of_lines_containing_key(key)
 		filtered_line_index_list = filter(lambda x: self[x].find('=') != -1, line_index_list) #only accept those with an assignment
 
 		if len(filtered_line_index_list) > 1:
@@ -59,8 +62,8 @@ class Incar(File):
 			key = Incar.get_processed_key_string(key)
 
 			if key in self:
+				del self.lines[self.get_line_index_of_key(key)]
 				del self.dict[key]
-
 
 			#find line with this key and delete it##############################
 
@@ -92,6 +95,17 @@ class Incar(File):
 				key_value_pairs.append(parameter_line_string.split("="))
 
 		return key_value_pairs
+
+	def get_indices_of_lines_containing_key(self, key):
+		"""Applies modifier to each line before searching"""
+		indices = []	
+		new_lines = [Incar.get_line_with_comments_removed(line) for line in self.lines]
+
+		for i, line in enumerate(new_lines):
+			if (line.upper()).find(key) != -1:
+				indices.append(i)
+
+		return indices
 
 	@property
 	def parameter_line_strings_list(self):
