@@ -29,6 +29,7 @@ class File(object):
 		file2[6] = "write this line here"
 		file2.write_to_path() #remembers the load path
 	"""
+
 	def __init__(self, file_path=None):
 		self.lines = []
 		self.load_path = None
@@ -93,6 +94,8 @@ class File(object):
 		else:
 			del self.lines[key]
 
+	def __contains__(self, line_string):
+		return bool(filter(lambda x: x.find(line_string) != -1, self))
 
 	def __iter__(self):
 		self.iter_index = -1
@@ -142,6 +145,20 @@ class File(object):
 		"""Return list of lines that contain string"""
 
 		return filter(lambda x: x.find(string) != -1, self)
+
+	def get_indices_of_lines_containing_string(self, string, modifier=None):
+		"""Applies modifier to each line before searching"""
+		indices = []
+		new_lines = self.lines
+
+		if modifier:
+			new_lines = [modifier(line) for line in self]
+
+		for i, line in enumerate(new_lines):
+			if line.find(string) != -1:
+				indices.append(i)
+
+		return indices
 
 
 	@staticmethod

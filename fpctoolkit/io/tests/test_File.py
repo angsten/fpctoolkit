@@ -56,6 +56,7 @@ class Test(TestCase):
 		file = File(Path.clean(self.data_path, 'almost_empty.txt')) #this file contains: line 1: '\n' line 2: ''
 		self.assertEqual(str(file), "\n")
 
+
 	def test_add(self):
 		file_path = Path.clean(self.data_path, 'small_file.txt')
 		file = File(file_path)
@@ -90,6 +91,9 @@ class Test(TestCase):
 		del file[1]
 		del file[0:2]
 		self.assertEqual(file.lines, ['  inserted line   '])
+
+		self.assertFalse("home is where the heart is" in file)
+		self.assertTrue("line" in file)
 
 		file += "new line added"
 		self.assertEqual(file.lines, ['  inserted line   ', 'new line added'])
