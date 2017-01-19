@@ -160,6 +160,11 @@ class File(object):
 
 		return indices
 
+	def trim_trailing_whitespace_only_lines(self):
+		for i in range(len(self)-1, -1, -1):
+			if self[i].strip() == "":
+				del self[i]
+
 
 	@staticmethod
 	def concatenate(*files):
