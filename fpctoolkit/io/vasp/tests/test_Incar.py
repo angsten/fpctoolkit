@@ -79,4 +79,12 @@ class Test(TestCase):
 		incar = Incar(file_out_path)
 		self.assertEqual(incar['prec'], 'accurate')
 		self.assertEqual(str(incar), 'Comment revised\nNSW = 181 #here is a comment\nHere is another comment\n#and another\none more comment.\nISIF = 3\nPREC = accurate\nEDIFF = 1e-06\n')
+
+		with self.assertRaises(Exception):
+			incar['proper ty'] = 'value'
+
+		with self.assertRaises(Exception):
+			incar += 'PREC = repeat'
 		
+	def test_loaded(self):
+		file_path = Path.clean(self.data_path, "incar_1")

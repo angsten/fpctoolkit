@@ -36,6 +36,11 @@ class Incar(File):
 			
 			self.assign_key_value_pair(key, value)
 
+	def __iadd__(self, value):
+		val = super(Incar, self).__iadd__(value)
+		self.update_dictionary_from_file_lines()
+		return val
+
 	def get_line_index_of_key(self, key):
 		"""Returns the index of the line containing key as a valid parameter assignment"""
 
@@ -76,6 +81,7 @@ class Incar(File):
 
 	def update_dictionary_from_file_lines(self):
 		self.dict = OrderedDict()
+
 		for (key, value) in self.get_valid_key_value_pairs_from_file_lines():
 			if Incar.get_processed_key_string(key) in self:
 				raise Exception("Incar file contains key " + Incar.get_processed_key_string(key) + " twice.")
