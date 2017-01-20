@@ -103,12 +103,15 @@ class Poscar(File):
 		if (self[7].upper()).find('SELECTIVE') != -1:
 			raise Exception("Selective dynamics not yet supported")
 
+		self.lattice #these will throw exceptions if not set right in file
+		self.coordinates
+
 
 	@staticmethod
 	def validate_lattice(lattice):
 		for lattice_components_list in lattice:
 			if len(lattice_components_list) != 3:
-				raise Exception('Too many components in poscar lattice.')
+				raise Exception('Incorrect number of components in poscar lattice.')
 
 	@staticmethod
 	def get_coordinate_system_string(coord_sys_line):
