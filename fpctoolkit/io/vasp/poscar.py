@@ -15,7 +15,7 @@ class Poscar(File):
 		coordinates (8+)
 	"""
 
-	def __init__(self, file_path=None):
+	def __init__(self, file_path=None, lattice=None, species_list=None, species_count_list=None, coordinate_system=None, coordinates=None):
 
 		super(Poscar, self).__init__(file_path)
 

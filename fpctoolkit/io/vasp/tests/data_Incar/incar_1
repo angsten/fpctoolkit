@@ -11,7 +11,7 @@ ICHARG = 1
 ISiF = 3
 IsmeAR = -5
   ISPIN = 2
-LORBIT = 11 #comment
+LORBIT = 11 #comment with = sign
 
 
 
@@ -22,7 +22,7 @@ NELM = 100
 NSW = 99
     PREC = Accurate
 
-  #lonely sigma
+  #lonely sigma with = sign!
 
 SIGMA = 0.05
 

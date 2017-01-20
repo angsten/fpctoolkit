@@ -141,15 +141,19 @@ class File(object):
 		with open(file_path, 'wb') as file:
 			file.write(str(self))
 
-	def get_lines_containing_string(self, string):
-		"""Return list of lines that contain string"""
 
-		return filter(lambda x: x.find(string) != -1, self)
+	def get_lines_containing_string(self, string, modifier = lambda x: x):
+		"""Return list of lines that contain string, modifier is applied to each line before search"""
+		return filter(lambda x: modifier(x).find(string) != -1, self)
 
 	def trim_trailing_whitespace_only_lines(self):
 		for i in range(len(self)-1, -1, -1):
 			if self[i].strip() == "":
 				del self[i]
+
+	def modify_lines(self, modifier):
+		for i in range(len(self)):
+			self[i] = modifier(self[i])
 
 
 	@staticmethod
