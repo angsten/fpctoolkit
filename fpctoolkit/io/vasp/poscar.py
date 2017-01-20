@@ -1,6 +1,7 @@
 
 
 from fpctoolkit.io.file import File
+import fpctoolkit.util.string_util as su
 
 class Poscar(File):
 	"""Just a file container - for more methods see Structure class
@@ -43,8 +44,8 @@ class Poscar(File):
 
 	@property
 	def species_list(self):
-		species_line_no_whitespace = ' '.join(self[5].split())
-		return species_line_no_whitespace.split(' ')
+		species_line = su.remove_extra_spaces(self[5])
+		return species_line.split(' ')
 
 	@species_list.setter
 	def species_list(self):
@@ -52,8 +53,8 @@ class Poscar(File):
 
 	@property
 	def species_count_list(self):
-		species_count_line_no_whitespace = ' '.join(self[6].split())
-		return [int(species_count) for species_count in species_count_line_no_whitespace.split(' ')]
+		species_count_line = su.remove_extra_spaces(self[6])
+		return [int(species_count) for species_count in species_count_line.split(' ')]
 
 	@species_count_list.setter
 	def species_count_list(self):
@@ -73,6 +74,20 @@ class Poscar(File):
 	def coordinate_system(self):
 		pass
 
+	@property
+	def coordinates(self):
+		coordinates = []
+		index = 8
+
+		for line in self[8:]:
+			coordinate = Poscar.get_coordinate_from_line(line)
+
+			if not coordinate:
+				break
+			else:
+				coordinates.append(coordinate)
+
+		return coordinates
 
 	def validate_lines(self):
 		if float(self[1].strip()) != 1.0:
@@ -80,3 +95,17 @@ class Poscar(File):
 
 		if (self[7].upper()).find('SELECTIVE') != -1:
 			raise Exception("Selective dynamics not yet supported")
+
+	@staticmethod
+	def get_coordinate_from_line(line_string):
+		line_string = su.remove_extra_spaces(line_string).strip()
+		component_strings = line_string.split(' ')
+		if len(component_strings) != 3:
+			return False
+
+		try:
+			coordinate = [float(component) for component in component_strings]
+		except ValueError:
+			return False
+
+		return coordinate
