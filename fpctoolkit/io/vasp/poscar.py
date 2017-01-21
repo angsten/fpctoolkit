@@ -19,6 +19,8 @@ class Poscar(File):
 
 		super(Poscar, self).__init__(file_path)
 
+		self.trim_trailing_whitespace_only_lines()
+
 		if file_path:
 			self.validate_lines()
 		else:
@@ -46,13 +48,14 @@ class Poscar(File):
 
 	@property
 	def species_list(self):
-		species_line = su.remove_extra_spaces(self[5])
-		return species_line.split(' ')
+		self._species_line = su.remove_extra_spaces(self[5])
+		self._species_line = self._species_line.split(' ')
+		return self._species_line
 
 	@species_list.setter
 	def species_list(self, species_list):
-		species_list = [species[0].upper()+species[1:].lower() for species in species_list] #'bA' => 'Ba'
-		self[5] = ' '.join(species_list)
+		self._species_list = [species[0].upper()+species[1:].lower() for species in species_list] #'bA' => 'Ba'
+		self[5] = ' '.join(self._species_list)
 
 	@property
 	def species_count_list(self):

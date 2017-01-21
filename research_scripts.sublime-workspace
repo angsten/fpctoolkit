@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"as",
+				"assertEqual"
+			],
+			[
+				"equals",
+				"equals_split"
+			],
+			[
+				"get_pr",
+				"get_processed_value_string"
+			],
+			[
+				"remo",
+				"remove_extra_spaces"
+			],
+			[
+				"list",
+				"list_2"
+			],
+			[
 				"def",
 				"def\tFunction"
 			],
@@ -103,8 +123,16 @@
 			"file": "fpctoolkit/io/vasp/poscar.py",
 			"settings":
 			{
-				"buffer_size": 4217,
+				"buffer_size": 4329,
 				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/io/vasp/incar.py",
+			"settings":
+			{
+				"buffer_size": 6766,
 				"line_ending": "Windows"
 			}
 		},
@@ -112,28 +140,18 @@
 			"file": "/C/Users/Tom/Documents/Coding/python_work/fpc_tester.py",
 			"settings":
 			{
-				"buffer_size": 1842,
+				"buffer_size": 805,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/io/vasp/tests/test_Poscar.py",
+			"file": "fpctoolkit/io/vasp/tests/data_Poscar/poscar_small",
 			"settings":
 			{
-				"buffer_size": 1580,
+				"buffer_size": 127,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/io/vasp/tests/data_Poscar/Poscar_bad_2",
-			"settings":
-			{
-				"buffer_size": 241,
-				"encoding": "UTF-8",
-				"line_ending": "Windows",
-				"name": "System POSCAR"
 			}
 		}
 	],
@@ -322,26 +340,29 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Incar",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util"
 	],
 	"file_history":
 	[
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/string_util.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar/poscar_1",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Incar/incar_1",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/test_Incar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/file.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/string_util.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar/Poscar_bad_2",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/test_Poscar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/poscar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Incar/incar_0",
+		"/C/Users/Tom/Downloads/t.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/kpoints.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/my_papers/Epitaxial Phase Validation Paper/backups/phase_validation/vaspio.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/test_Incar.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Incar/incar_1",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Incar/test_made_incar",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Incar/incar_0",
 		"/C/Users/Tom/Documents/Coding/python_work/t.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/test_Kpoints.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/test_File.py",
-		"/C/Users/Tom/Downloads/t.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Kpoints/kpt_1",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Kpoints/new_kpt_1",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar_element_mapping.json",
@@ -439,6 +460,16 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"assertEqual",
+			"get_processed_key_string",
+			"validate_incar_parameter_line",
+			"get_line_with_comments_removed",
+			"parameter_line_strings_list",
+			"get_key_value_pair_from_file_line",
+			"get_indices_of_lines_containing_key",
+			"get_line_string",
+			"update_dictionary_from_file_lines",
+			"self.assertEqual",
 			"self_assertEqual",
 			"string",
 			"get_indices_of_lines_containing_string",
@@ -528,7 +559,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -537,71 +568,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4217,
+						"buffer_size": 4329,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								468,
-								468
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 90.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/C/Users/Tom/Documents/Coding/python_work/fpc_tester.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1842,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								614,
-								614
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 90.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "fpctoolkit/io/vasp/tests/test_Poscar.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1580,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1479,
-								1479
+								1491,
+								1491
 							]
 						],
 						"settings":
@@ -610,39 +585,95 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 135.0,
+						"translation.y": 577.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "fpctoolkit/io/vasp/tests/data_Poscar/Poscar_bad_2",
+					"buffer": 1,
+					"file": "fpctoolkit/io/vasp/incar.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 241,
+						"buffer_size": 6766,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								149,
-								149
+								1015,
+								973
 							]
 						],
 						"settings":
 						{
-							"auto_name": "System POSCAR",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 296.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/Users/Tom/Documents/Coding/python_work/fpc_tester.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 805,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								737,
+								737
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 155.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "fpctoolkit/io/vasp/tests/data_Poscar/poscar_small",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 127,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								58,
+								58
+							]
+						],
+						"settings":
+						{
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -685,7 +716,7 @@
 	},
 	"output.exec":
 	{
-		"height": 367.0
+		"height": 163.0
 	},
 	"output.find_results":
 	{
@@ -737,7 +768,7 @@
 	"settings":
 	{
 	},
-	"show_minimap": true,
+	"show_minimap": false,
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,

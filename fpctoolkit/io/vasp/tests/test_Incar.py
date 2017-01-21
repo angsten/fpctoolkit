@@ -12,7 +12,9 @@ class Test(TestCase):
 	data_dir_path = Path.clean(os.path.dirname(__file__), 'data_'+class_title)
 
 	def setUp(self):
+		assertEqual = self.assertEqual
 		self.data_path = Path.clean(self.__class__.data_dir_path)
+		self_data_path = self.data_path
 
 	def test_init(self):
 		file_path = Path.clean(self.data_path, "empty_incar")
@@ -93,16 +95,7 @@ class Test(TestCase):
 		file_path = Path.clean(self.data_path, "incar_1")
 		incar = Incar(file_path)
 
-		self.assertEqual(incar.dict.items(), [('ALGO', 'Fast'), ('EDIFF', '0.00075'), ('ENCUT', '520'), ('IBRION', '2'), ('ICHARG', '1'), ('ISIF', '3'), ('ISMEAR', '-5'), ('ISPIN', '2'), ('LORBIT', '11'), ('LREAL', 'Auto'), ('LWAVE', 'False'), ('MAGMOM', '15*0.6'), ('NELM', '100'), ('NSW', '99'), ('PREC', 'Accurate'), ('SIGMA', '0.05')])
-		self.assertEqual(incar.lines, ['Comment here #messy messy', 'ALGO = Fast #stuff here', 'whats up', 'EDIFF = 0.00075', 'ENCUT = 520', '\tIBRION = 2', 'ICHARG = 1', 'ISIF = 3', 'ISMEAR = -5', '  ISPIN = 2', 'LORBIT = 11 #comment with = sign', 'LREAL = Auto', 'LWAVE = False', 'MAGMOM = 15*0.6', 'NELM = 100                   ', 'NSW = 99', '    PREC = Accurate', '  #lonely sigma with = sign!', 'SIGMA = 0.05'])
+		self.assertEqual(incar.lines, ['', 'Comment here #messy messy', 'ALGO = Fast #stuff here', 'whats up', '', '', 'EDIFF = 0.00075', 'ENCUT = 520', 'IBRION = 2', 'ICHARG = 1', 'ISIF = 3', 'ISMEAR = -5', 'ISPIN = 2', 'LORBIT = 11 #comment with equals sign', '', '', '', 'LREAL = Auto', 'LWAVE = False', 'MAGMOM = 15*0.6', 'NELM = 100', 'NSW = 99', 'PREC = Accurate', '', '#lonely sigma with equals signequalsequals!', '', 'X = y #equalsequals', 'f   #equals', 'SIGMA = 0.05'])
+		self.assertEqual(incar.dict.items(), [('ALGO', 'Fast'), ('EDIFF', '0.00075'), ('ENCUT', '520'), ('IBRION', '2'), ('ICHARG', '1'), ('ISIF', '3'), ('ISMEAR', '-5'), ('ISPIN', '2'), ('LORBIT', '11'), ('LREAL', 'Auto'), ('LWAVE', 'False'), ('MAGMOM', '15*0.6'), ('NELM', '100'), ('NSW', '99'), ('PREC', 'Accurate'), ('X', 'y'), ('SIGMA', '0.05')])
 
-		incar['nelm'] = 60
-		del incar['ibrion']
-		incar[0] = 'new comment'
-		incar += 'made_up = accurate'
-		incar[5] = 'icharg = 2'
-
-		self.assertEqual(incar.dict.items(), [('ALGO', 'Fast'), ('EDIFF', '0.00075'), ('ENCUT', '520'), ('ICHARG', '2'), ('ISIF', '3'), ('ISMEAR', '-5'), ('ISPIN', '2'), ('LORBIT', '11'), ('LREAL', 'Auto'), ('LWAVE', 'False'), ('MAGMOM', '15*0.6'), ('NELM', '60'), ('NSW', '99'), ('PREC', 'Accurate'), ('SIGMA', '0.05'), ('MADE_UP', 'accurate')])
-		self.assertEqual(incar.lines, ['new comment', 'ALGO = Fast #stuff here', 'whats up', 'EDIFF = 0.00075', 'ENCUT = 520', 'icharg = 2', 'ISiF = 3', 'IsmeAR = -5', '  ISPIN = 2', 'LORBIT = 11 #comment', 'LREAL = Auto', 'LWAVE = False', 'magmom = 15*0.6', 'NELM = 60', 'NSW = 99', '    PREC = Accurate', '  #lonely sigma', 'SIGMA = 0.05', 'made_up = accurate'])
-		self.assertFalse(' algoo' in incar)
-		self.assertTrue('encut' in incar)
+		

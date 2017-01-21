@@ -176,12 +176,12 @@ class Incar(File):
 			'   '
 			'All comment, no hashtag'
 			'Comment no hashtag #then hashtag'
-			'#all comment with hashtag'
-			'#comment with = sign'
+			'#all comment with hashtag' => returns same thing
+			'#comment with = sign' => '#comemnt with = sign'
 			'isif = 2'
-			'isif  = 2' or 'isif=2' ...
+			'isif  = 2' or 'isif=2' ... => 'ISIF = 2'
 			'isif = 2 #with comment'
-			'isif = 2 #with comment with = sign'
+			'isif = 2 #with comment with = sign' => 'ISIF = 2 #with comment with equals sign'
 			'isif = 2 algo = fast' is not valid
 		"""
 		ist = Incar.output_separator_token
