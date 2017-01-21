@@ -32,6 +32,7 @@ class Incar(File):
 		#remove only-whitespace-containing lines at end
 		self.trim_trailing_whitespace_only_lines()
 
+		#for each line in incar:
 		#make sure keys are capitalized, no redundant white-space in non-comment parts
 		#make sure no more than one assigment on each line
 		self.modify_lines(Incar.standardize_line)

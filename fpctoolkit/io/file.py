@@ -24,6 +24,7 @@ class File(object):
 		del file[2]
 		file.insert(0,'at beginning now')
 		new_file = some_file + another_file #concats files together
+		for line in file: #can iterate over lines in file
 
 		file2 = File('some_path.txt')
 		file2[6] = "write this line here"
@@ -39,7 +40,7 @@ class File(object):
 
 
 	def __str__(self):
-		return "\n".join(self.lines) + "\n" if self else "" #always add \n unless empty file or last line is newline
+		return "\n".join(self.lines) + "\n" if self.lines else "" #always add \n unless empty file or last line is newline
 
 	def __nonzero__(self):
 		return bool(self.lines)
@@ -82,7 +83,7 @@ class File(object):
 
 			# self.lines[key.start:key.stop] = [v.rstrip('\r\n') for v in value]
 		else:
-			while len(self) < key:
+			while len(self.lines) < key:
 				self.append()
 
 			self.lines[key:key+1] = (value.rstrip('\r\n')).split('\n')
@@ -95,20 +96,10 @@ class File(object):
 			del self.lines[key]
 
 	def __contains__(self, line_string):
-		return bool(filter(lambda x: x.find(line_string) != -1, self))
+		return bool(filter(lambda x: x.find(line_string) != -1, self.lines))
 
 	def __iter__(self):
-		self.iter_index = -1
-		return self
-
-
-	def next(self):
-		if self.iter_index >= (len(self.lines)-1):
-			raise StopIteration
-
-		self.iter_index += 1
-
-		return self.lines[self.iter_index]
+		return iter(self.lines)
 
 
 	def append(self, string=""):
@@ -124,9 +115,9 @@ class File(object):
 		if Path.exists(file_path):
 			self.load_path = file_path
 
+			#this will strip any type of eol character
 			with open(self.load_path, 'rb') as file:
 				self.lines = [line.rstrip('\r\n') for line in file.readlines()]
-
 		else:
 			raise IOError('File does not exist at path ' + file_path)
 
@@ -144,16 +135,16 @@ class File(object):
 
 	def get_lines_containing_string(self, string, modifier = lambda x: x):
 		"""Return list of lines that contain string, modifier is applied to each line before search"""
-		return filter(lambda x: modifier(x).find(string) != -1, self)
+		return filter(lambda x: modifier(x).find(string) != -1, self.lines)
 
 	def trim_trailing_whitespace_only_lines(self):
 		for i in range(len(self)-1, -1, -1):
-			if self[i].strip() == "":
-				del self[i]
+			if self.lines[i].strip() == "":
+				del self.lines[i]
 
 	def modify_lines(self, modifier):
 		for i in range(len(self)):
-			self[i] = modifier(self[i])
+			self.lines[i] = modifier(self[i])
 
 
 	@staticmethod
