@@ -127,24 +127,7 @@ class Incar(File):
 			return None
 		else:
 			return indices[0]
-		# line_index_list = self.get_indices_of_lines_containing_key(key)
-		# filtered_line_index_list = filter(lambda x: self[x].find('=') != -1, line_index_list) #only accept those with an assignment
 
-		# if len(filtered_line_index_list) > 1:
-		# 	raise Exception("Incar file contains " + key + " key twice.")
-
-		# return filtered_line_index_list[0]
-
-	def get_indices_of_lines_containing_key(self, key):
-		"""Applies modifier to each line before searching"""
-		indices = []	
-		new_lines = [Incar.get_line_with_comments_removed(line) for line in self.lines]
-
-		for i, line in enumerate(new_lines):
-			if (line.upper()).find(key) != -1:
-				indices.append(i)
-
-		return indices
 
 
 	@staticmethod
@@ -166,27 +149,6 @@ class Incar(File):
 		value = Incar.get_processed_value_string(equals_split[1])
 
 		return (key, value)
-
-
-	@property
-	def parameter_line_strings_list(self):
-		#gives all lines with comments stripped which contain '=' character
-		modifier = lambda x: x.split('#')[0]
-		param_list = [Incar.get_line_with_comments_removed(line) for line in self.get_lines_containing_string("=", modifier)]
-		return param_list
-
-
-
-	@staticmethod
-	def get_line_with_comments_removed(line_string):
-		return line_string.split('#')[0] #cut off to right of comments
-
-	@staticmethod
-	def validate_incar_parameter_line(parameter_line_string):
-		non_comment_parameter_line_string = parameter_line_string.split('#')[0]
-		if non_comment_parameter_line_string.count('=') != 1:
-			raise Exception("Must have exactly one key value pair in one incar parameter line.")
-
 
 	@staticmethod
 	def get_processed_key_string(key_string):
