@@ -137,10 +137,13 @@ class File(object):
 		"""Return list of lines that contain string, modifier is applied to each line before search"""
 		return filter(lambda x: modifier(x).find(string) != -1, self.lines)
 
+	#Removes last set of contiguous whitespace-only lines
 	def trim_trailing_whitespace_only_lines(self):
 		for i in range(len(self)-1, -1, -1):
 			if self.lines[i].strip() == "":
 				del self.lines[i]
+			else:
+				break
 
 	def modify_lines(self, modifier):
 		for i in range(len(self)):
