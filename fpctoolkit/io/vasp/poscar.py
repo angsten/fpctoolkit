@@ -6,7 +6,10 @@ import fpctoolkit.util.string_util as su
 class Poscar(File):
 	"""Just a file container - for more methods see Structure class
 
-		Selective dynamics not yet supported
+		One is only able to read from a poscar class once instantiated. Can
+		also instantiate with coordinates and lattice. Avoid modification after
+		instantiation of instance's attributes. This is just a file wrapper.
+		Selective dynamics not yet supported.
 
 		lattice (2-4)
 		species_list (5)
@@ -19,13 +22,24 @@ class Poscar(File):
 
 		super(Poscar, self).__init__(file_path)
 
-		self.trim_trailing_whitespace_only_lines()
+		self.trim_to_whitespace_only_line() #remove up to full whitespace line
 
 		if file_path:
 			self.validate_lines()
 		else:
 			self[0] = 'Poscar'
 			self[1] = '1.0'
+			self.lattice = lattice
+			self.species_list = species_list
+			self.species_count_list = species_count_list
+			self.coordinate_system = coordinate_system
+			self.coordinates = coordinates
+
+			if sum(self.species_count_list) != len(self.coordinates):
+				raise Exception("Count list sum not equal to number of coordinates given")
+
+			if len(self.species_count_list) != len(self.species_list):
+				raise Exception("Number of species given not equal to number of counts given")
 
 
 	@property
@@ -97,7 +111,10 @@ class Poscar(File):
 		for coordinate in coordinates:
 			Poscar.validate_coordinate(coordinate)
 
-		self._coordinates = coordinates
+		del self[8:]
+
+		for coordinate in coordinates:
+			self += " ".join(str(component) for component in coordinate)
 
 	def validate_lines(self):
 		if float(self[1].strip()) != 1.0:
@@ -108,7 +125,6 @@ class Poscar(File):
 
 		self.lattice #these will throw exceptions if not set right in file
 		self.coordinates
-
 
 	@staticmethod
 	def validate_lattice(lattice):
@@ -136,6 +152,8 @@ class Poscar(File):
 			coordinate = [float(component) for component in component_strings]
 		except ValueError:
 			return False
+
+		Poscar.validate_coordinate(coordinate)
 
 		return coordinate
 

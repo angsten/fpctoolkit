@@ -145,6 +145,16 @@ class File(object):
 			else:
 				break
 
+	def trim_to_whitespace_only_line(self):
+		"""keep all lines until a whitespace-only line is found"""
+		new_lines = []
+		for line in self.lines:
+			if line.strip() == "":
+				break
+			else:
+				new_lines.append(line)
+		self.lines = new_lines
+
 	def modify_lines(self, modifier):
 		for i in range(len(self)):
 			self.lines[i] = modifier(self[i])
