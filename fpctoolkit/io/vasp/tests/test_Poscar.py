@@ -21,21 +21,21 @@ class Test(TestCase):
 		self.assertEqual(poscar.species_list, ['Si', 'O'])
 		self.assertEqual(poscar.lines, ['Poscar', '1.0', '5.0 0.2 0.1', '0.4\t 6.0   0.7', '-0.2   0.0  7.7    ', 'Si   O', '2  1', 'Direct', '0.11 0.22 0.33', '0.33 0.22 0.11', '0.22 0.33 0.11  '])
 		self.assertEqual(poscar.species_count_list, [2, 1])
-		self.assertEqual(poscar.coordinate_system, 'Direct')
+		self.assertEqual(poscar.coordinate_mode, 'Direct')
 		self.assertEqual(poscar.coordinates, [[0.11, 0.22, 0.33], [0.33, 0.22, 0.11], [0.22, 0.33, 0.11]])
 
 
 		lattice = [[2.2, 2.3, 2.1], [1.2, 3.3, 0.0], [-1.2, -2.2, 4.4]]
 		species_list = ['K', 'V', 'O']
 		species_count_list = [1, 2, 3]
-		coordinate_system = 'cart'
+		coordinate_mode = 'cart'
 		coordinates = [[0.2, 0.3, 0.4], [0.5, 0.5, 0.1], [-0.01, 0.1, 0.01], [2.33, 6.5, 3.2], [0.0, 0.1, -0.1], [0.1, 0.5, 0.5]]
-		poscar = Poscar(None, lattice, species_list, species_count_list, coordinate_system, coordinates)
+		poscar = Poscar(None, lattice, species_list, species_count_list, coordinate_mode, coordinates)
 
 		self.assertEqual(poscar.species_list, ['K', 'V', 'O'])
 		self.assertEqual(poscar.lines, ['Poscar', '1.0', '2.2 2.3 2.1', '1.2 3.3 0.0', '-1.2 -2.2 4.4', 'K V O', '1 2 3', 'Cartesian', '0.2 0.3 0.4', '0.5 0.5 0.1', '-0.01 0.1 0.01', '2.33 6.5 3.2', '0.0 0.1 -0.1', '0.1 0.5 0.5'])
 		self.assertEqual(poscar.species_count_list, [1, 2, 3])
-		self.assertEqual(poscar.coordinate_system, 'Cartesian')
+		self.assertEqual(poscar.coordinate_mode, 'Cartesian')
 		self.assertEqual(poscar.coordinates, coordinates)
 		
 	def test_loaded(self):
