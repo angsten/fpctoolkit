@@ -34,3 +34,6 @@ class Lattice(object):
 				return self.c
 		else:
 			raise KeyError
+
+	def to_array(self):
+		return [self.a, self.b, self.c]

@@ -33,7 +33,7 @@ class Poscar(File):
 			self.species_list = species_list
 			self.species_count_list = species_count_list
 			self.coordinate_mode = coordinate_mode
-			self.coordinates = coordinates
+			self.coordinates = coordinates #list of 3-component lists
 
 		if sum(self.species_count_list) != len(self.coordinates):
 			raise Exception("Count list sum not equal to number of coordinates given")
