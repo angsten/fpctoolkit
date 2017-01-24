@@ -1,6 +1,6 @@
+import numpy as np
 
-
-
+from fpctoolkit.util.vector import Vector
 
 class Site(object):
 	"""Sites are generic property sets holding a position in the crystal.
@@ -63,6 +63,15 @@ class Site(object):
 
 	def get_properties_dictionary(self):
 		return self._properties
+
+	def displace(self, vector):
+		
+
+	def randomly_displace(self, stdev, mean=0.0):
+		"""Randomly displaces site in direction with dipslacement magnitude
+		governed by a normal distribution
+		"""
+
 
 
 	@staticmethod

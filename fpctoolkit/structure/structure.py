@@ -68,3 +68,11 @@ class Structure(object):
 
 	def get_coordinates_list(self):
 		return self.sites.get_coordinates_list()
+
+
+	def randomly_displace_site_positions(self, stdev, mean=0.0):
+		vec = vu.get_random_unit_vector()
+
+
+
+		print " ".join(str(v) for v in vec)
