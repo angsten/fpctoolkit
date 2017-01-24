@@ -47,3 +47,18 @@ class Test(TestCase):
 		self.assertEqual(structure.lattice.to_array(), [[5.0, 0.2, 0.1], [0.4, 6.0, 0.7], [-0.2, 0.0, 7.7]])
 		self.assertEqual(structure.sites.get_sorted_list()[1]['coordinate_mode'], 'Direct')
 		self.assertEqual(structure.get_coordinates_list(), [[0.11, 0.22, 0.33], [0.33, 0.22, 0.11], [0.22, 0.33, 0.11]])
+
+
+	def test_conversion(self):
+		file_path = Path.clean(self.data_path, "big_posc")
+
+		structure = Structure(file_path)
+		structure_2 = Structure(file_path)
+
+		structure_2.convert_sites_to_cartesian_coordinates()
+		structure_2.convert_sites_to_direct_coordinates()
+		print structure
+
+		for i in range(len(structure.sites)):
+			for j in range(3):
+				self.assertTrue(structure.sites[i]['position'][j] - structure_2.sites[i]['position'][j] < 0.00000000001)

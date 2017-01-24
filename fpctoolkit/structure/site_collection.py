@@ -28,6 +28,15 @@ class SiteCollection(object):
 	def __iter__(self):
 		return iter(self.get_sorted_list())
 
+	def __getitem__(self, index):
+		if not isinstance(index, int):
+			raise Exception("Site collection index must be an integer")
+		else:
+			return self.get_sorted_list()[index]
+
+	def __len__(self):
+		return len(self.get_sorted_list())
+
 	def append(self, site):
 		if isinstance(site, Site):
 			self.add_site(site)

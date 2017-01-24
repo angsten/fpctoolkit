@@ -34,18 +34,47 @@ class Vector(object):
 	__rmul__ = __mul__
 
 	def __str__(self):
-		return " ".join(str(component) for component in [self.x, self.y, self.z])
+		return " ".join(str(component) for component in self.to_list())
+
+	def to_list(self):
+		return [self.x, self.y, self.z]
 
 	@property
 	def magnitude(self):
 		return (self.x**2.0 + self.y**2.0 + self.z**2.0)**0.5
 
 	@staticmethod
-	def get_in_direct_coordinates(self, vector, lattice):
+	def get_in_cartesian_coordinates(direct_vector, lattice):
+		"""Returns vector with coordinates transformed to
+		the equivalent cartesian coordinate representation.
+		No clipping is performed to keep in unit cell.
+		"""
+
+		x = direct_vector[0]*lattice[0][0] + direct_vector[1]*lattice[1][0] + direct_vector[2]*lattice[2][0]
+		y = direct_vector[0]*lattice[0][1] + direct_vector[1]*lattice[1][1] + direct_vector[2]*lattice[2][1]
+		z = direct_vector[0]*lattice[0][2] + direct_vector[1]*lattice[1][2] + direct_vector[2]*lattice[2][2]
+
+		return Vector([x,y,z])
+
+
+	@staticmethod
+	def get_in_direct_coordinates(cartesian_vector, lattice):
 		"""Returns vector with coordinates transformed to
 		the equivalent direct coordinate representation.
 		No clipping is performed to keep in unit cell.
 		"""
+		a = lattice[0]
+		b = lattice[1]
+		c = lattice[2]
+
+		A = np.array([[a[0], b[0], c[0]], [a[1], b[1], c[1]], [a[2], b[2], c[2]]])
+		X = np.array([cartesian_vector[0], cartesian_vector[1], cartesian_vector[2]])
+
+		A_inverse = np.linalg.inv(A)
+		d = np.dot(A_inverse, X)
+
+		return Vector([d[0], d[1], d[2]])
+
 
 	@staticmethod
 	def get_random_unit_vector():

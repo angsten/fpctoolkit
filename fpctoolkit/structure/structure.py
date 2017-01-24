@@ -84,6 +84,26 @@ class Structure(object):
 
 			if site['coordinate_mode'] == 'Direct':
 				#convert disp vec to direct coordinates
-				pass
+				displacement_vector = Vector.get_in_direct_coordinates(displacement_vector, self.lattice)
 
 			site.displace(displacement_vector)
+
+	def convert_sites_to_cartesian_coordinates(self):
+		"""Takes any site in sites that is in direct coordinates and changes
+		its position and coordinate mode to be in cartesian coordinate system
+		"""
+
+		for site in self.sites:
+			if site['coordinate_mode'] == 'Direct':
+				site['coordinate_mode'] = 'Cartesian'
+				site['position'] = Vector.get_in_cartesian_coordinates(site['position'], self.lattice).to_list()
+
+	def convert_sites_to_direct_coordinates(self):
+		"""Takes any site in sites that is in cartesian coordinates and changes
+		its position and coordinate mode to be in direct coordinate system
+		"""
+
+		for site in self.sites:
+			if site['coordinate_mode'] == 'Cartesian':
+				site['coordinate_mode'] = 'Direct'
+				site['position'] = Vector.get_in_direct_coordinates(site['position'], self.lattice).to_list()
