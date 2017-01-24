@@ -18,7 +18,7 @@ class SiteCollection(object):
 	"""
 
 
-	def __init__(self, sites_list = []):
+	def __init__(self, sites_list=[]):
 		self.sites = OrderedDict()
 		self._type_counts = OrderedDict()
 
