@@ -1,4 +1,4 @@
-
+import numpy as np
 
 from fpctoolkit.io.file import File
 from fpctoolkit.io.vasp.poscar import Poscar

@@ -137,6 +137,16 @@ class File(object):
 		"""Return list of lines that contain string, modifier is applied to each line before search"""
 		return filter(lambda x: modifier(x).find(string) != -1, self.lines)
 
+	def get_line_indices_containing_string(self, string):
+		return [index for index, line in enumerate(self.lines) if line.find(string) != -1]
+
+	def get_first_line_containing_string_from_bottom(self, string, stop_after=None):
+		if not stop_after:
+			stop_after = len(self.lines)
+		for i in range(len(self.lines)-1, (len(self.lines)-1)-stop_after, -1):
+			if self.lines[i].find(string) != -1:
+				return self.lines[i]
+
 	#Removes last set of contiguous whitespace-only lines
 	def trim_trailing_whitespace_only_lines(self):
 		for i in range(len(self)-1, -1, -1):
