@@ -5,6 +5,7 @@ from fpctoolkit.io.vasp.poscar import Poscar
 from fpctoolkit.structure.site import Site
 from fpctoolkit.structure.lattice import Lattice
 from fpctoolkit.structure.site_collection import SiteCollection
+from fpctoolkit.util.vector import Vector
 
 class Structure(object):
 	"""Abstract crystal structure class.
@@ -71,8 +72,18 @@ class Structure(object):
 
 
 	def randomly_displace_site_positions(self, stdev, mean=0.0):
-		vec = vu.get_random_unit_vector()
+		"""Randomly displace all sites in separate random directions with
+		dipslacement magnitude governed by a normal distribution.
+		!!Parameters are given in angstroms!!
+		These will be converted to direct coordinates for sites represented
+		in direct coordinates.
+		"""
 
+		for site in self.sites:
+			displacement_vector = Vector.get_random_vector(mean, stdev) #vector is in angstroms
 
+			if site['coordinate_mode'] == 'Direct':
+				#convert disp vec to direct coordinates
+				pass
 
-		print " ".join(str(v) for v in vec)
+			site.displace(displacement_vector)

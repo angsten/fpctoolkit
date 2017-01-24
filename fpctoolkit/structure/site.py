@@ -65,13 +65,12 @@ class Site(object):
 		return self._properties
 
 	def displace(self, vector):
-		
-
-	def randomly_displace(self, stdev, mean=0.0):
-		"""Randomly displaces site in direction with dipslacement magnitude
-		governed by a normal distribution
+		"""Displaces site's position by vector - no knowledge of
+		coordinate mode.
 		"""
 
+		for i in range(3):
+			self._properties['position'][i] += vector[i]
 
 
 	@staticmethod

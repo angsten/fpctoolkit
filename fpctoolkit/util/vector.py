@@ -23,6 +23,30 @@ class Vector(object):
 		elif key ==2:
 			return self.z
 
+	def __mul__(self, value):
+		if isinstance(value, list) or isinstance(value, tuple) or isinstance(value, Vector):
+			return Vector([self[i]*value[i] for i in range(3)])
+		elif isinstance(value, float) or isinstance(value, int):
+			return Vector([self[i]*value for i in range(3)])
+		else:
+			raise Exception("Cannot multiply vector by this type")
+
+	__rmul__ = __mul__
+
+	def __str__(self):
+		return " ".join(str(component) for component in [self.x, self.y, self.z])
+
+	@property
+	def magnitude(self):
+		return (self.x**2.0 + self.y**2.0 + self.z**2.0)**0.5
+
+	@staticmethod
+	def get_in_direct_coordinates(self, vector, lattice):
+		"""Returns vector with coordinates transformed to
+		the equivalent direct coordinate representation.
+		No clipping is performed to keep in unit cell.
+		"""
+
 	@staticmethod
 	def get_random_unit_vector():
 	    """
@@ -37,3 +61,18 @@ class Vector(object):
 	    z = np.cos(theta)
 
 	    return Vector([x,y,z])
+
+	@staticmethod
+	def get_random_vector(magnitude_average, magnitude_stdev):
+		"""returns vector with random direction and magnitude
+		governed by normal distribution. No absolute value
+		is taken on the magnitude - can be negative or positive.
+		"""
+		direction = Vector.get_random_unit_vector()
+
+		if magnitude_stdev == 0.0:
+			magnitude = magnitude_average
+		else:
+			magnitude = np.random.normal(magnitude_average, magnitude_stdev)
+
+		return direction*magnitude
