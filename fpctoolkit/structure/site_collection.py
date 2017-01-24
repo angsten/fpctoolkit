@@ -18,12 +18,13 @@ class SiteCollection(object):
 	"""
 
 
-	def __init__(self, sites_list=[]):
+	def __init__(self, sites_list=None):
 		self.sites = OrderedDict()
 		self._type_counts = OrderedDict()
 
-		for site in sites_list:
-			self.append(site)
+		if sites_list:
+			for site in sites_list:
+				self.append(site)
 
 	def __iter__(self):
 		return iter(self.get_sorted_list())

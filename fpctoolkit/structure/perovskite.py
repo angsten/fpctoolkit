@@ -30,7 +30,7 @@ class Perovskite(Structure):
 			sites = Perovskite.generate_perfect_site_collection(supercell_dimensions, species_list)
 
 
-		super(Structure, self).__init__(file_path, lattice, sites)
+		super(Perovskite, self).__init__(file_path, lattice, sites)
 
 		self.verify_is_perovskite()
 
@@ -43,7 +43,7 @@ class Perovskite(Structure):
 		elif len(self.sites.get_species_list()) != 3:
 			raise Exception("Perovskite must have exactly three types of species")
 
-		species_counts = self.sites.get_species_counts_list()
+		species_counts = self.sites.get_species_count_list()
 		if species_counts[0]/species_counts[1] != 1.0 or species_counts[2]/species_counts[0] != 3.0:
 			raise Exception("Perovskite ABO3 atom ratios not 1:1:3")
 
@@ -54,9 +54,21 @@ class Perovskite(Structure):
 
 		See research slides for conventions on order of sites
 		"""
-		sites = SiteCollection
+		sites = SiteCollection()
+		atom_types = species_list + [species_list[2], species_list[2]]
 
 		for nz in range(supercell_dimensions[2]):
 			for ny in range(supercell_dimensions[1]):
 				for nx in range(supercell_dimensions[0]):
+					n_list = [nx,ny,nz]
+
 					for atom_index in range(5):
+						position_list = [0.0, 0.0, 0.0]
+
+						for i in range(3):
+							offset = Perovskite.position_offsets[atom_index][i] / (1.0*supercell_dimensions[i])
+							position_list[i] = (1.0*n_list[i]) / (1.0*supercell_dimensions[i]) + offset
+
+						sites.append(Site({'position':position_list, 'coordinate_mode':'Direct', 'type':atom_types[atom_index]}))
+
+		return sites

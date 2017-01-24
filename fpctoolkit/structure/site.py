@@ -19,11 +19,11 @@ class Site(object):
 	accepted_keys = ['position', 'coordinate_mode', 'type']
 
 	def __init__(self, properties=None):
-		if properties:
-			self._properties = properties
-		else:
-			self._properties = {}
+		self._properties = {}
 
+		if properties: #safeley add given properties
+			for key, value in properties.items():
+				self[key] = value
 	def __nonzero__(self):
 		return bool(self._properties)
 
