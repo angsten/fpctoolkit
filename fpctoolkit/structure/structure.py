@@ -59,3 +59,12 @@ class Structure(object):
 
 		poscar = Poscar(None, lattice, species_list, species_count_list, coordinate_mode, coordinates)
 		poscar.write_to_path(file_path)
+
+	def get_species_list(self):
+		return self.sites.get_species_list()
+
+	def get_species_count_list(self):
+		return self.sites.get_species_count_list()
+
+	def get_coordinates_list(self):
+		return self.sites.get_coordinates_list()
