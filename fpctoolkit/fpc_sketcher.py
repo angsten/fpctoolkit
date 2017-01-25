@@ -40,28 +40,28 @@ self = self_c()
 #self.data_path = "C:/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/tests/data_structure/"
 self.data_path = "C:\Users\Tom\Documents\Coding\python_work\workflow_test"
 
-convergence_base_path = Path.clean(self.data_path)
+# convergence_base_path = Path.clean(self.data_path)
 
-Path.remove(convergence_base_path)
+# Path.remove(convergence_base_path)
 
-structure = Perovskite(supercell_dimensions = [2, 2, 2], lattice=[[4.0, 0.0, 0.0], [0.0, 4.0, 0.0], [0.0, 0.0, 4.0]], species_list=['K', 'V', 'O'])
-incar = Incar()
+# structure = Perovskite(supercell_dimensions = [2, 2, 2], lattice=[[4.0, 0.0, 0.0], [0.0, 4.0, 0.0], [0.0, 0.0, 4.0]], species_list=['K', 'V', 'O'])
+# incar = Incar()
 
-incar['IBRION'] = -1
-incar['NSW'] = 0
-incar['ISMEAR'] = 0
-incar['SIGMA'] = 0.01
-incar['LREAL'] = False
-incar['LWAVE'] = False
-incar['LCHARG'] = False
-incar['NPAR'] = 2
-incar['PREC'] = 'Accurate'
-incar['EDIFF'] = 0.00001
-incar['ENCUT'] = 400
-incar['NELMIN'] = 4
+# incar['IBRION'] = -1
+# incar['NSW'] = 0
+# incar['ISMEAR'] = 0
+# incar['SIGMA'] = 0.01
+# incar['LREAL'] = False
+# incar['LWAVE'] = False
+# incar['LCHARG'] = False
+# incar['NPAR'] = 2
+# incar['PREC'] = 'Accurate'
+# incar['EDIFF'] = 0.00001
+# incar['ENCUT'] = 400
+# incar['NELMIN'] = 4
 
-kpoints = Kpoints(scheme_string='Monkhorst', subdivisions_list=[2, 2, 2])
+# kpoints = Kpoints(scheme_string='Monkhorst', subdivisions_list=[2, 2, 2])
 
 
-vasp_run = VaspRun(convergence_base_path, structure, incar, kpoints, None)
+# vasp_run = VaspRun(convergence_base_path, structure, incar, kpoints, None)
 

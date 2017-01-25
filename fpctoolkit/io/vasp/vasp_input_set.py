@@ -34,6 +34,7 @@ class VaspInputSet(object):
 			if self.incar:
 				self.set_lreal_from_structure_size()
 				self.set_npar_from_number_of_cores()
+				self.check_incar_kpoints_consistent()
 
 	def auto_generate_potcar(self):
 		if not self.structure:
@@ -61,3 +62,6 @@ class VaspInputSet(object):
 	def set_npar_from_number_of_cores(self):
 		self.incar['npar'] = QueueAdapter.get_optimal_npar(self.submission_script_file)
 
+	def check_incar_kpoints_consistent(self):
+		"""If tetrahedron smearing is used (ismear = -5), should have gamma-centered mesh"""
+		if ('ismear' in self.incar) and (self.incar['ismear'] == -5)
