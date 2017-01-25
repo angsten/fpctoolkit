@@ -1,6 +1,5 @@
 import copy
 
-#import fpctoolkit.util.string_util as su
 from fpctoolkit.util.path import Path
 
 class File(object):
