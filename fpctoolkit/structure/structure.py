@@ -70,6 +70,10 @@ class Structure(object):
 	def get_coordinates_list(self):
 		return self.sites.get_coordinates_list()
 
+	@property
+	def site_count(self):
+		return len(self.sites)
+
 
 	def randomly_displace_site_positions(self, stdev, mean=0.0):
 		"""Randomly displace all sites in separate random directions with

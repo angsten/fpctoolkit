@@ -77,3 +77,10 @@ class QueueAdapter(object):
 		on the size of a calculation"""
 
 		return submsision_file
+
+	@staticmethod
+	def get_optimal_npar(submission_file):
+		if QueueAdapter.host == 'Fenrir':
+			return 2 #this is almost always the best choice on fenrir
+		elif QueueAdapter.host == 'Tom_hp':
+			return 1

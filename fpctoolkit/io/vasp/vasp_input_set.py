@@ -29,7 +29,11 @@ class VaspInputSet(object):
 
 		if self.structure:
 			self.check_potcar_structure_consistency()
-			self.set_number_of_cores_from_structure()
+			self.set_number_of_cores_from_structure_size()
+
+			if self.incar:
+				self.set_lreal_from_structure_size()
+				self.set_npar_from_number_of_cores()
 
 	def auto_generate_potcar(self):
 		if not self.structure:
@@ -41,9 +45,19 @@ class VaspInputSet(object):
 		if not self.potcar.get_elements_list() == self.structure.get_species_list():
 			raise Exception("Potcar elements list is not compatible with structure")
 
-	def set_number_of_cores_from_structure(self):
+	def set_number_of_cores_from_structure_size(self):
 		"""Looks at number of atoms in structure and sets the number of cores in the
 		submission script accordingly
 		"""
 
-		self.submission_script_file = 
+		self.submission_script_file = QueueAdapter.modify_number_of_cores_from_num_atoms(self.submission_script_file, self.structure.site_count)
+
+	def set_lreal_from_structure_size(self):
+		if self.structure.site_count > 20:
+			self.incar['lreal'] = 'Auto'
+		else:
+			self.incar['lreal'] = False
+
+	def set_npar_from_number_of_cores(self):
+		self.incar['npar'] = QueueAdapter.get_optimal_npar(self.submission_script_file)
+
