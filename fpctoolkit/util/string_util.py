@@ -12,3 +12,16 @@ def remove_extra_spaces(string): #' hello    yo  u' => ' hello yo u'
 	return " ".join(string.split())
 
 
+def string_represents_integer(s):
+	try:
+		int(s)
+		return True
+	except ValueError:
+		return False
+
+def string_represents_float(s):
+	try:
+		float(s)
+		return True
+	except ValueError:
+		return False

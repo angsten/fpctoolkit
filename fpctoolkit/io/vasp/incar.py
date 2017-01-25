@@ -23,6 +23,10 @@ class Incar(File):
 		incar += 'ediff = 0.001' #errors - already have ediff
 		incar [7] = 'another comment'
 
+	IMPORTANT: when comparing values, use float or integer:
+		incar['ismear'] == '-5' will return false, but
+		incar['ismear'] == -5 will return true
+
 	"""
 
 	output_separator_token = " = "
@@ -77,7 +81,16 @@ class Incar(File):
 		else:
 			key = Incar.get_processed_key_string(key)
 			if key in self.dict:
-				return self.dict[key]
+				value = self.dict[key]
+
+				if su.string_represents_integer(value):
+					return int(value)
+				elif su.string_represents_float(value):
+					return float(value)
+				else:
+					return value
+			else:
+				raise Exception("Key " + str(key) + " not found in incar file")
 
 	def __delitem__(self, key):
 		if not isinstance(key, basestring):

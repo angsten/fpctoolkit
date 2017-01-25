@@ -1,21 +1,23 @@
 import os
 
 from fpctoolkit.io.file import File
+from fpctoolkit.util.path import Path
 
 class QueueAdapter(object):
-	host = 'Tom_hp'#os.environ['QUEUE_ADAPTER_HOST']
+	host = os.environ['QUEUE_ADAPTER_HOST']
 
 	@staticmethod
 	def submit(calculation_path, override=False):
+		id = None
 		submit = True
-
 
 		if submit:
 			if QueueAdapter.host == 'Fenrir':
 				cwd = os.getcwd()
+
 				os.chdir(calculation_path)
 
-				process = subprocess.Popen(["qsub","submit.sh"], stdout=subprocess.PIPE)
+				process = subprocess.Popen(["qsub", "submit.sh"], stdout=subprocess.PIPE)
 				out, err = process.communicate() #get output from qsub command
 				id = out.split('.')[0] #get the job id portion of 45643.fenerir...etc
 
@@ -26,8 +28,9 @@ class QueueAdapter(object):
 				os.chdir(calculation_path)
 				print "Fake run submission"
 				os.chdir(cwd)
+				id = 1
 
-		return submit
+		return id
 
 	#submits submit.sh to queue in calculation_path
 	#if override, will remove job attached to calculation_path directory from queue and submit a new job
@@ -76,7 +79,7 @@ class QueueAdapter(object):
 		"""Each system should specify how many cores to use based
 		on the size of a calculation"""
 
-		return submsision_file
+		return submission_file
 
 	@staticmethod
 	def get_optimal_npar(submission_file):

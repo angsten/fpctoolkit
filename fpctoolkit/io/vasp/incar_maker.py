@@ -1,6 +1,6 @@
 
 
-
+from fpctoolkit.io.vasp.incar import Incar
 
 class IncarMaker(object):
 	"""Helper class for creating standard incars with slight modifications.
@@ -13,27 +13,33 @@ class IncarMaker(object):
 
 
 	@staticmethod
-	def get_static_incar(new_parameters=None):
+	def get_static_incar(custom_parameters=None):
 		incar = Incar()
 
-		IBRION = 2
-		ISIF = 3
-		NSW = 191
-		ISMEAR = 0
-		SIGMA = 0.01
-		LREAL = False
-		LWAVE = True
-		LCHARG = False
-		NPAR = 2
-		PREC = Normal
-		EDIFF = 0.0004
-		ENCUT = 400
-		KSPACING = 1.0
-		KGAMMA = False
-		NELMIN = 4
-
+		#optional parameters that can be overwritten by the user
 		incar['ibrion'] = -1
-		del incar['isif']
 		incar['nsw'] = 0
+		incar['nelmin'] = 6 #helps with force accuracy
+		incar['isif'] = 2 #by default, calculate the stress tensor (atoms won't move still)
 		incar['ismear'] = 0
-		incar['']
+		incar['sigma'] = 0.01
+		incar['prec'] = 'Accurate'
+		incar['ediff'] = 0.000001
+		incar['encut'] = 600
+		incar['lreal'] = False
+		incar['lwave'] = False
+		incar['lcharg'] = False
+
+		#load in user custom parameters
+		if custom_parameters:
+			for key, value in custom_parameters.items():
+				incar[key] = value
+
+
+		if not incar['ibrion'] == -1:
+			raise Exception("IBRION must be -1 in a static calculation")
+
+		if not incar['nsw'] == 0:
+			raise Exception("NSW must be 0 in a static calculation")
+
+		return incar

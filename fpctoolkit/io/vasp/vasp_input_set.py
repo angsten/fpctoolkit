@@ -64,4 +64,5 @@ class VaspInputSet(object):
 
 	def check_incar_kpoints_consistent(self):
 		"""If tetrahedron smearing is used (ismear = -5), should have gamma-centered mesh"""
-		if ('ismear' in self.incar) and (self.incar['ismear'] == -5)
+		if ('ismear' in self.incar) and (self.incar['ismear'] == -5):
+			self.kpoints.scheme = 'Gamma'
