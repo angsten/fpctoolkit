@@ -8,16 +8,29 @@ from fpctoolkit.util.queue_adapter import QueueAdapter
 
 class VaspRun(object):
 	"""
-	Class wrapper for vasp calculations
+	Class wrapper for vasp calculations. This class is meant to
+	be as general as possible - it simply takes in a set of inputs,
+	writes them out, and runs the calculation. There are no
+	internal consistency checks done on the inputs. There is,
+	however, an error handler that gives updates based on
+	the outcar errors present.
 
 	"""
 
-	def __init__(self, path, structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None):
+	def __init__(self, path, structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None, input_set=None):
 		"""
-		If path exists, load files in path, else, files must exist as arguments
+		If path directory already exists, load files in path, otherwise, files must exist as arguments
 
 		"""
 		self.path = Path.clean(path)
+
+		if input_set:
+			structure = input_set.structure
+			incar = input_set.incar
+			kpoints = input_set.kpoints
+			potcar = input_set.potcar
+			submission_script_file = input_set.submission_script_file
+
 		self.structure = structure
 		self.incar = incar
 		self.kpoints = kpoints
@@ -27,34 +40,29 @@ class VaspRun(object):
 		if Path.exists(self.path):
 			pass
 			#see if input files exist - if so, load in?
+			#maybe have an override option
+			#if no override, search for saved run and load that class?
 		else:
 			Path.make(self.path)
 			self.setup() #writes input files into self.path
 
 	def setup(self):
 		"""
-		Verify input files are consistent with each other, write files to path and submit run to queue
-		If no potcar, auto generate
+		Simply write files to path
 		"""
 
 		self.structure.to_poscar_file_path(Path.clean(self.path, 'POSCAR'))
 		self.incar.write_to_path(Path.clean(self.path, 'INCAR'))
 		self.kpoints.write_to_path(Path.clean(self.path, 'KPOINTS'))
-
-		if not self.potcar:
-			self.potcar = Potcar(elements_list=self.structure.get_species_list())
 		self.potcar.write_to_path(Path.clean(self.path, 'POTCAR'))
-
-		if not self.submission_script_file:
-			self.submission_script_file = QueueAdapter.get_submission_file()
 		self.submission_script_file.write_to_path(Path.clean(self.path, 'submit.sh'))
 
-		#put in consistency checks here (modify submit script, lreal, potcar and poscar consistent, ...)
+		#don't...put in consistency checks here (modify submit script, lreal, potcar and poscar consistent, ...)
 
 	def start(self):
 		QueueAdapter.submit(self.path)
 
-		#submit job here
+		#Remove all output files here!!! Maybe store in .folder?
 
 	def update(self):
 		"""Check job status on queue. Check for errors"""
@@ -70,5 +78,5 @@ class VaspRun(object):
 
 	@property
 	def complete(self):
-		return self.outcar.complete #not necessarily sufficient! what if outcar is old!
+		return self.outcar.complete #not necessarily sufficient! what if outcar is old! (remove output files at start)
 

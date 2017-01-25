@@ -9,7 +9,7 @@ class Site(object):
 	These can be accessed and set using instance['property_name']
 
 	Example: site = Site()   site['position'] = [0.1, 0.2, 0.0]
-	site['type'] = 'Ba'
+	site['type'] = 'Ba' (it's a good idea to keep this element names always)
 	site['coordinate_mode'] = 'Cartesian'
 	del site['magmom']
 

@@ -70,3 +70,10 @@ class QueueAdapter(object):
 
 		elif QueueAdapter.host == 'Tom_hp':
 			return File()
+
+	@staticmethod
+	def modify_number_of_cores_from_num_atoms(submission_file, num_atoms):
+		"""Each system should specify how many cores to use based
+		on the size of a calculation"""
+
+		return submsision_file
