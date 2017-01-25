@@ -46,5 +46,5 @@ class Test(TestCase):
 			kpoints_2.subdivisions_list = ['2','4','5','6']
 
 
-		kpoints_3 = Kpoints(scheme_str="Gamma", subdivisions_list=[4,6,8])
+		kpoints_3 = Kpoints(scheme_string="Gamma", subdivisions_list=[4,6,8])
 		self.assertEqual(str(kpoints_3),'Kpoints File\n0\nGamma\n4 6 8\n0 0 0\n')

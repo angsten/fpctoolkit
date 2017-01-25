@@ -9,7 +9,7 @@ class Kpoints(File):
 		subdivisions_list ([1,2,5] or [4,4,6])
 	"""
 
-	def __init__(self, file_path=None, scheme_str=None, subdivisions_list=None, kspacing=None, lattice=None):
+	def __init__(self, file_path=None, scheme_string=None, subdivisions_list=None, kspacing=None, lattice=None):
 
 		super(Kpoints, self).__init__(file_path)
 
@@ -19,7 +19,7 @@ class Kpoints(File):
 		elif not kspacing:
 			self[0] = "Kpoints File"
 			self[1] = "0"
-			self.scheme = scheme_str
+			self.scheme = scheme_string
 			self.subdivisions_list = subdivisions_list
 			self += "0 0 0"
 		else:
@@ -60,10 +60,10 @@ class Kpoints(File):
 
 
 	@staticmethod
-	def parse_scheme(scheme_str):
-		if string.upper(scheme_str[0]) == 'G':
+	def parse_scheme(scheme_string):
+		if string.upper(scheme_string[0]) == 'G':
 			return 'Gamma'
-		elif string.upper(scheme_str[0]) == 'M':
+		elif string.upper(scheme_string[0]) == 'M':
 			return 'Monkhorst'
 		else:
 			raise Exception("Kpoints scheme not set properly. Must start with M or G.")
