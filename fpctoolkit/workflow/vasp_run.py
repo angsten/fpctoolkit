@@ -122,11 +122,14 @@ class VaspRun(object):
 
 		self.potcar = stored_potcar
 
-	def load(self,file_path):
-		if not Path.exists(file_path):
-			raise Exception("Load file path does not exist: " + file_path)
+	def load(self,load_path=None):
+		if not load_path:
+			load_path = self.get_save_path()
 
-		file = open(file_path, 'r')
+		if not Path.exists(load_path):
+			raise Exception("Load file path does not exist: " + load_path)
+
+		file = open(load_path, 'r')
 		data_pickle = file.read()
 		file.close()
 
@@ -136,3 +139,20 @@ class VaspRun(object):
 		if self.potcar_minimal_form:
 			self.potcar = Potcar(minimal_form=self.potcar_minimal_form)
 			del self.potcar_minimal_form
+
+
+
+
+	def __str__(self):
+		head_string = "==>"
+		file_separator = 30*"-"
+		output_string = ""
+
+		output_string += 10*"-" + "VaspRun" + 10*"-" + "\n"
+		output_string += head_string + "Path: " + self.path + "\n"
+		output_string += head_string + "Potcar: " + " ".join(self.potcar.get_titles()) + "\n"
+		output_string += head_string + "Kpoints:\n" + file_separator + "\n" + str(self.kpoints) + file_separator + "\n"
+		output_string += head_string + "Incar:\n" + file_separator + "\n" + str(self.incar) + file_separator + "\n"
+		output_string += head_string + "Poscar:\n" + file_separator + "\n" + str(self.structure) + file_separator + "\n"
+
+		return output_string

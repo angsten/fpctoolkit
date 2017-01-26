@@ -26,7 +26,7 @@ class Structure(object):
 				raise Exception("sites must be of SiteColleciton type")
 
 	def __str__(self):
-		return str(self.lattice) + "\n".join(str(site) for site in self.sites)
+		return str(self.lattice) + "\n".join(str(site) for site in self.sites) + "\n"
 
 
 	def from_poscar_file_path(self, file_path):
