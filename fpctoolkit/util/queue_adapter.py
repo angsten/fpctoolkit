@@ -126,7 +126,7 @@ class QueueAdapter(object):
 	@staticmethod
 	def get_job_properties_from_id_string(id_string):
 		"""Takes in id_string like '32223' and return dictionary of run properties that looks like:
-		{'status': QueueStatus.off_queue} or {'status': QueueStatus.running, 'nodes': 1, 'wall_time_limit': '16:00', 'elapsed_time': '00:08'}
+		{'status': QueueStatus.off_queue} or {'status': QueueStatus.running, 'node_count': 1, 'wall_time_limit': '16:00', 'elapsed_time': '00:08'}
 
 		Possible statuses are denoted in the QueueStatus class below.
 		"""
@@ -134,12 +134,40 @@ class QueueAdapter(object):
 		if QueueAdapter.host == 'Fenrir':
 			queue_view_file = QueueAdapter.get_queue_view_file()
 
-			line = get_lines_containing_string
+			lines = queue_view_file.get_lines_containing_string(id_string + '.fenrir.bw')
+
+			if len(lines) > 1:
+				raise Exception("Multiple entries in queue view for same id found.")
+
+			if lines:
+				queue_line = lines[0] #looks like '682554.fenrir.bw     angsten  default  job               16794     1  --    --  16:00 R 00:01'
+				queue_line = su.remove_extra_spaces(queue_line) #'682554.fenrir.bw angsten default job 16794 1 -- -- 16:00 R 00:01'
+				node_count = queue_line.split(' ')[5]
+				wall_time_limit = queue_line.split(' ')[8]
+				run_code = queue_line.split(' ')[9]
+				elapsed_time = queue_line.split(' ')[10]
+
+				if run_code == 'Q':
+					status = QueueStatus.queued
+				elif run_code == 'R':
+					status = QueueStatus.running
+				elif run_code == 'C':
+					status = QueueStatus.complete
+				elif run_code == 'E':
+					status = QueueStatus.errored
+				else:
+					raise Exception("Could not identify queue status: " + run_code)
+
+				output_dictionary = {'status':status, 'node_count':node_count, 'wall_time_limit':wall_time_limit,'elapsed_time':elapsed_time}
+
+
 
 		elif QueueAdapter.host == 'Tom_hp':
 			pass
 		else:
 			raise Exception("QueueAdapter.host not supported")
+
+		return output_dictionary
 
 	@staticmethod
 	def _template():
@@ -222,3 +250,4 @@ class QueueStatus(object):
 	queued = 2 #i.e., has 'Q' as status
 	running = 3 #'R'
 	complete = 4 #'C'
+	errored = 5
