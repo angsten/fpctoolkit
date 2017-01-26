@@ -24,6 +24,9 @@ class VaspRun(object):
 		"""
 		self.path = Path.clean(path)
 
+		if Path.exists(self.get_extended_path("RUN_SUBMISSION_UNTRACKED")):
+			raise Exception("Previous run had potentially untracked job - check fail file for id and delete if id exists on queue")
+
 		if input_set:
 			structure = input_set.structure
 			incar = input_set.incar
@@ -42,8 +45,10 @@ class VaspRun(object):
 		if Path.exists(self.path):
 			#Don't overwrite - load in the run here if it exists
 			if Path.exists(self.get_save_path()):
-				print "lodaing"
 				self.load()
+			else:
+				#can't find a run to load - overwrite?
+				raise Exception("temporory here - load not supported in this way yet")
 		else:
 			Path.make(self.path)
 			self.setup() #writes input files into self.path
@@ -61,6 +66,13 @@ class VaspRun(object):
 
 		#don't...put in consistency checks here (modify submit script, lreal, potcar and poscar consistent, ...)
 
+	def update(self):
+		"""Check job status on queue. Check for errors"""
+		
+		#only if there is not job_id associated with this run should we start a run
+		if not self.job_id:
+			self.start()
+
 	def start(self):
 		"""Submit the calculation at self.path"""
 
@@ -71,7 +83,7 @@ class VaspRun(object):
 			self.job_id = QueueAdapter.submit_job(self.path)
 
 			self.save() #want to make sure we save here so tracking of job id isn't lost
-		except:
+		except Exception as exception:
 			"""
 			Submission of a job to the queue has failed.
 
@@ -80,12 +92,11 @@ class VaspRun(object):
 			This is dangerous - could create a rogue run, so must delete the path
 			if this file is found.
 			"""
-			failed_file = File(self.get_extended_path("RUN_SUBMISSION_UNTRACKED"))
-			failed_file.write_to_path()
+			failed_file = File()
+			failed_file += str(self.job_id) #this may be None if assignment above failed
+			failed_file.write_to_path(self.get_extended_path("RUN_SUBMISSION_UNTRACKED"))
 
-	def update(self):
-		"""Check job status on queue. Check for errors"""
-		pass
+			raise exception #reraise the original exception so the error can be passed on
 
 	def stop(self):
 		"""If run has associated job on queue, delete this job"""
@@ -145,15 +156,15 @@ class VaspRun(object):
 
 
 	def __str__(self):
-		head_string = "==>"
+		head_string = "==> "
 		file_separator = 30*"-"
 		output_string = ""
 
-		output_string += 10*"-" + "VaspRun" + 10*"-" + "\n"
+		output_string += 10*"-" + "VaspRun: Job ID is " + str(self.job_id) + 10*"-" + "\n"
 		output_string += head_string + "Path: " + self.path + "\n"
 		output_string += head_string + "Potcar: " + " ".join(self.potcar.get_titles()) + "\n"
 		output_string += head_string + "Kpoints:\n" + file_separator + "\n" + str(self.kpoints) + file_separator + "\n"
 		output_string += head_string + "Incar:\n" + file_separator + "\n" + str(self.incar) + file_separator + "\n"
-		output_string += head_string + "Poscar:\n" + file_separator + "\n" + str(self.structure) + file_separator + "\n"
+		output_string += head_string + "Structure:\n" + file_separator + "\n" + str(self.structure) + file_separator + "\n"
 
 		return output_string

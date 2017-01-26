@@ -66,5 +66,5 @@ for encut in convergence_encuts_list:
 
 	vasp_run = VaspRun(run_path, input_set=input_set)
 
-	vasp_run.start()
+	vasp_run.update()
 	print vasp_run

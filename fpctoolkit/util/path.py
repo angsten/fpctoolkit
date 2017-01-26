@@ -1,6 +1,7 @@
 import os
 import shutil
-from datetime import datetime
+
+import fpctoolkit.util.string_util as su
 
 class Path(object):
 	@staticmethod
@@ -34,8 +35,7 @@ class Path(object):
 
 		if os.environ['QUEUE_ADAPTER_HOST'] == 'Tom_hp': #Don't want to destroy my home computer files
 			if Path.exists(path):
-				time = str(datetime.now()).replace('.', '_').replace(':', '_').replace('-', '_')
-				move_path = Path.clean("C:\Users\Tom\Documents\Coding\python_work/fpc_recycle_bin/", os.path.basename(path)+'_'+time)
+				move_path = Path.clean("C:\Users\Tom\Documents\Coding\python_work/fpc_recycle_bin/", os.path.basename(path)+'_'+ su.get_time_stamp_string())
 				shutil.move(path, move_path)
 			return
 

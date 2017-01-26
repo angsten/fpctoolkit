@@ -168,6 +168,10 @@ class File(object):
 		for i in range(len(self)):
 			self.lines[i] = modifier(self[i])
 
+	def clear(self):
+		"""Removes all lines data, load_path is preserved"""
+		self.lines = []
+
 
 	@staticmethod
 	def concatenate(*files):
