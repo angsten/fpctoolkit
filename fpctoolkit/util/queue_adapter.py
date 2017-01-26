@@ -229,7 +229,7 @@ class QueueAdapter(object):
 
 		job_property_dictionary = QueueAdapter.get_job_property_dictionary()
 
-		for job_properties in job_property_dictionary:
+		for job_id_string, job_properties in job_property_dictionary.items():
 			if QueueStatus.is_status_active(job_properties['status']):
 				active_job_count += 1
 
