@@ -97,7 +97,7 @@ class QueueAdapter(object):
 			return False
 
 		if QueueAdapter.host == 'Fenrir':
-			job_properties = QueueAdapter.get_job_properties_from_id_string()
+			job_properties = QueueAdapter.get_job_property_dictionary()[id_string]
 			status = job_properties['status']
 
 			return status in [QueueStatus.queued, QueueStatus.running]
@@ -123,29 +123,6 @@ class QueueAdapter(object):
 		file = File()
 		file[0] = error_string
 		file.write_to_path(error_path)
-
-	@staticmethod
-	def get_job_properties_from_id_string(id_string):
-		"""Takes in id_string like '32223' and return dictionary of run properties of the job"""
-		
-		output_dictionary = {'status': QueueStatus.off_queue}
-		if QueueAdapter.host == 'Fenrir':
-			queue_view_file = QueueAdapter.get_queue_view_file()
-
-			lines = queue_view_file.get_lines_containing_string(id_string + '.fenrir.bw')
-
-			if len(lines) > 1:
-				raise Exception("Multiple entries in queue view for same id found.")
-
-			if lines:
-				output_dictionary = QueueAdapter.get_job_properties_from_queue_view_line(lines[0])
-
-		elif QueueAdapter.host == 'Tom_hp':
-			pass
-		else:
-			raise Exception("QueueAdapter.host not supported")
-
-		return output_dictionary
 
 	@staticmethod
 	def get_job_properties_from_queue_view_line(line_string):
@@ -213,6 +190,34 @@ class QueueAdapter(object):
 		return output_file
 
 	@staticmethod
+	def get_job_property_dictionary():
+		"""returns a dictionary of all job property dictionaries for jobs showing up on the queue that looks like:
+			
+		{'46442':{'status': QueueStatus.running, 'node_count': 1, 'wall_time_limit': '16:00', 'elapsed_time': '00:01'}, '3324':...etc}
+		"""
+
+		job_property_dictionary = {}
+		if QueueAdapter.host == 'Fenrir':
+			queue_view_file = QueueAdapter.get_queue_view_file()
+
+			for queue_line in queue_view_file:
+				job_id_string = queue_line.split('.')[0]
+				job_properties = QueueAdapter.get_job_properties_from_queue_view_line(queue_line)
+
+				if job_id_string in job_property_dictionary:
+					raise Exception("Multiple entries in queue view for same id found.")
+				else:
+					job_property_dictionary[job_id_string] = job_property_dictionary
+
+		elif QueueAdapter.host == 'Tom_hp':
+			pass
+		else:
+			raise Exception("QueueAdapter.host not supported")
+
+		return job_property_dictionary
+
+
+	@staticmethod
 	def _template():
 		if QueueAdapter.host == 'Fenrir':
 			pass
@@ -245,6 +250,40 @@ class QueueAdapter(object):
 			return 1
 		else:
 			raise Exception("QueueAdapter.host not supported")
+
+	@staticmethod
+	def modify_submission_script(script_file, modified_version, gamma=False):
+		pass
+	# 	if QueueAdapter.host == 'Fenrir':
+
+	# 	elif QueueAdapter.host == 'Tom_hp':
+	# 		return 1
+	# 	else:
+	# 		raise Exception("QueueAdapter.host not supported")
+	# file = open(script_path,'rb')
+	# lines = file.readlines()
+	# file.close()
+
+	# file = open(script_path,'wb')
+	# for l in lines:
+	# 	if not l.find("MYMPIPROG=") == -1:
+	# 		if modified_version == '100': #use recompiled vasp in submission script
+	# 			if gamma:
+	# 				file.write('MYMPIPROG="${HOME}/bin/vasp_5.4.1_100_constrained_gamma"\n')
+	# 			else:
+	# 				file.write('MYMPIPROG="${HOME}/bin/vasp_5.4.1_100_constrained"\n')
+	# 		elif modified_version == '110':
+	# 			file.write('MYMPIPROG="${HOME}/vasp_mod/modified_110_vasp.5.4.1/bin/vasp_std"\n')
+	# 		elif modified_version == '111':
+	# 			file.write('MYMPIPROG="${HOME}/vasp_mod/modified_111_vasp.5.4.1/bin/vasp_std"\n')
+	# 		elif modified_version == 'standard':
+	# 			if gamma:
+	# 				file.write('MYMPIPROG="${HOME}/bin/vasp_5.4.1_gamma"\n')
+	# 			else:
+	# 				file.write('MYMPIPROG="${HOME}/bin/vasp_5.4.1_standard"\n')
+	# 	else:
+	# 		file.write(l)
+
 
 
 class QueueStatus(object):
