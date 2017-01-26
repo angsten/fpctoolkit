@@ -41,15 +41,28 @@ self = self_c()
 
 #self.data_path = "C:/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/tests/data_structure/"
 self.data_path = "C:\Users\Tom\Documents\Coding\python_work\workflow_test"
+#self.data_path = "~/workflow_test/"
 
 convergence_base_path = Path.clean(self.data_path)
-Path.remove(convergence_base_path)
+Path.make(convergence_base_path)
 
+base_kpoints_scheme = 'Monkhorst'
+base_kpoints_subdivisions_list = [4, 4, 4]
+base_encut = 800
+base_ediff = 0.000001
+base_structure = Perovskite(supercell_dimensions = [2, 2, 2], lattice=[[8.0, 0.0, 0.0], [0.0, 8.0, 0.0], [0.0, 0.0, 8.0]], species_list=['Ba', 'Ti', 'O'])
 
-structure = Perovskite(supercell_dimensions = [2, 2, 2], lattice=[[8.0, 0.0, 0.0], [0.0, 8.0, 0.0], [0.0, 0.0, 8.0]], species_list=['Ba', 'Ti', 'O'])
-kpoints = Kpoints(scheme_string='Monkhorst', subdivisions_list=[2, 2, 2])
-incar = IncarMaker.get_static_incar({'ediff':0.0001, 'encut':400})
-input_set = VaspInputSet(structure, kpoints, incar)
+convergence_encuts_list = [200, 300]
 
-vasp_run = VaspRun(convergence_base_path, input_set=input_set)
-vasp_run.start()
+encut_convergence_set_path = Path.join(convergence_base_path, 'encut_convergence_set')
+Path.make(encut_convergence_set_path)
+
+for encut in convergence_encuts_list:
+	run_path = Path.join(encut_convergence_set_path, str(encut))
+
+	kpoints = Kpoints(scheme_string=base_kpoints_scheme, subdivisions_list=base_kpoints_subdivisions_list)
+	incar = IncarMaker.get_static_incar({'ediff':base_ediff, 'encut':encut})
+	input_set = VaspInputSet(base_structure, kpoints, incar)
+
+	vasp_run = VaspRun(run_path, input_set=input_set)
+	vasp_run.start()

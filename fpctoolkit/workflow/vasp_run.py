@@ -37,6 +37,8 @@ class VaspRun(object):
 		self.potcar = potcar
 		self.submission_script_file = submission_script_file
 
+		self.job_id = None #Tracks job id associated with run on queue
+
 		if Path.exists(self.path):
 			pass
 			#see if input files exist - if so, load in?
@@ -60,7 +62,7 @@ class VaspRun(object):
 		#don't...put in consistency checks here (modify submit script, lreal, potcar and poscar consistent, ...)
 
 	def start(self):
-		QueueAdapter.submit(self.path)
+		self.job_id = QueueAdapter.submit(self.path)
 
 		#Remove all output files here!!! Maybe store in .folder?
 
