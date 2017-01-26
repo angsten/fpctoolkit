@@ -97,7 +97,7 @@ class QueueAdapter(object):
 			return False
 
 		if QueueAdapter.host == 'Fenrir':
-			job_properties = QueueAdapter.get_job_property_dictionary()[id_string]
+			job_properties = QueueAdapter.get_job_properties_from_id_string(id_string)
 			status = job_properties['status']
 
 			return status in [QueueStatus.queued, QueueStatus.running]
@@ -123,6 +123,11 @@ class QueueAdapter(object):
 		file = File()
 		file[0] = error_string
 		file.write_to_path(error_path)
+
+	@staticmethod
+	def get_job_properties_from_id_string(id_string):
+		"""Takes in id_string like '32223' and return dictionary of run properties of the job"""
+		return QueueAdapter.get_job_property_dictionary()[id_string]
 
 	@staticmethod
 	def get_job_properties_from_queue_view_line(line_string):
