@@ -1,5 +1,6 @@
 import os
 import subprocess
+import time
 
 from fpctoolkit.io.file import File
 from fpctoolkit.util.path import Path
@@ -11,50 +12,71 @@ class QueueAdapter(object):
 	id_path = ".job_id" #where id's are saved upon submission
 	error_path = "QUEUE_SUBMISSION_ERROR_OUTPUT"
 
+	sleep_buffer_time = 0.2 #good idea to add in some buffer (in seconds) between deletions and submissions of jobs
+
 	@staticmethod
-	def submit_job(calculation_path, override=False):
+	def submit_job(calculation_path, override_existing_job=False):
 		"""This safely submits jobs and records the associated id at calculation_path/.job_id
 
 		If an id exists in this file, it is first checked that it is not active on the queue.
-		If it is active, the override parameter determines whether or not to cancel that job
+		If it is active ('R' or 'Q' status), the override_existing_job parameter determines whether or not to cancel that job
 		and submit the current one (thus overwriting the .job_id file).
+
+		The id_string of the submitted job is returned (looks like "33254") if a submission is done, else None
 		
 		For safety, qsub should be aliased to execute this code on every machine.
 		"""
 
-		id = None
-		submit = True
+		previous_id_string = QueueAdapter.get_job_id_at_path(calculation_path) #returns None if no id
 
-		if submit:
-			if QueueAdapter.host == 'Fenrir':
-				cwd = os.getcwd()
-				os.chdir(calculation_path)
-
-				#This call pipes through output and error which can be obtained from communicate() call
-				process = subprocess.Popen(["qsub", "submit.sh"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-				output, error = process.communicate() #get output and error from the qsub command
-
-				if error: #error will be None if no error is caused
-					QueueAdapter.write_error_to_path(calculation_path, error)
-					raise Exception("Error in submitting job to path " + calculation_path + " See error file at this path for details.")
-				else:
-					id_string = output.split('.')[0] #get the job id portion of 45643.fenerir...etc
-					QueueAdapter.write_id_string_to_path(calculation_path, id_string)
-
-				os.chdir(cwd)
-
-			elif QueueAdapter.host == 'Tom_hp':
-				cwd = os.getcwd()
-				os.chdir(calculation_path)
-				print "Fake run submission"
-				id_string = '1'
-				QueueAdapter.write_id_string_to_path(calculation_path, id_string)
-				os.chdir(cwd)
-				
+		if QueueAdapter.job_id_is_active(previous_id_string):
+			if not override_existing_job:
+				return None #previous id is active, don't want to override - no new job id
 			else:
-				raise Exception("QueueAdapter.host not supported")
+				QueueAdapter.terminate_job_id(previous_id_string)
+				time.sleep(QueueAdapter.sleep_buffer_time)
 
-		return id
+
+		if QueueAdapter.host == 'Fenrir':
+			cwd = os.getcwd()
+			os.chdir(calculation_path)
+
+			#This call pipes through output and error which can be obtained from communicate() call
+			process = subprocess.Popen(["qsub", "submit.sh"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+			output, error = process.communicate() #get output and error from the qsub command
+
+			if error: #error will be None if no error is caused
+				QueueAdapter.write_error_to_path(calculation_path, error)
+				raise Exception("Error in submitting job to path " + calculation_path + " See error file at this path for details.")
+			else:
+				id_string = output.split('.')[0] #get the job id portion of 45643.fenerir...etc
+				QueueAdapter.write_id_string_to_path(calculation_path, id_string)
+
+			time.sleep(QueueAdapter.sleep_buffer_time)
+
+			os.chdir(cwd)
+
+		elif QueueAdapter.host == 'Tom_hp':
+			cwd = os.getcwd()
+			os.chdir(calculation_path)
+			print "Fake run submission"
+			id_string = '1'
+			QueueAdapter.write_id_string_to_path(calculation_path, id_string)
+			os.chdir(cwd)
+			
+		else:
+			raise Exception("QueueAdapter.host not supported")
+
+		return id_string
+
+	@staticmethod
+	def terminate_job_id(id_string):
+		process = subprocess.Popen(['qdel', id_string], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		output, error = process.communicate()
+
+		if error:
+			raise Exception("Failure deleting job " + id_string)
+
 
 	@staticmethod
 	def get_job_id_at_path(calculation_path):
@@ -66,6 +88,25 @@ class QueueAdapter(object):
 			return File(id_path)[0]
 		else:
 			return None
+
+	@staticmethod
+	def job_id_is_active(id_string):
+		"""Returns true if job id is on the queue with queued or running status ('Q' or 'R')"""
+
+		if not id_string: #if it's none, return false
+			return False
+
+		if QueueAdapter.host == 'Fenrir':
+			job_properties = QueueAdapter.get_job_properties_from_id_string()
+			status = job_properties['status']
+
+			return status in [QueueStatus.queued, QueueStatus.running]
+
+		elif QueueAdapter.host == 'Tom_hp':
+			pass
+		else:
+			raise Exception("QueueAdapter.host not supported")
+
 
 	@staticmethod
 	def write_id_string_to_path(calculation_path, id_string):
@@ -84,18 +125,66 @@ class QueueAdapter(object):
 		file.write_to_path(error_path)
 
 	@staticmethod
-	def get_job_status_at_path(calculation_path):
-		"""Finds id in calculation_path/.job_id (or lack thereof) and
-		returns status. possible statuses are denoted in the QueueStatus
-		class below
-		"""
-
+	def get_job_properties_from_id_string(id_string):
+		"""Takes in id_string like '32223' and return dictionary of run properties of the job"""
+		
+		output_dictionary = {'status': QueueStatus.off_queue}
 		if QueueAdapter.host == 'Fenrir':
-			pass
+			queue_view_file = QueueAdapter.get_queue_view_file()
+
+			lines = queue_view_file.get_lines_containing_string(id_string + '.fenrir.bw')
+
+			if len(lines) > 1:
+				raise Exception("Multiple entries in queue view for same id found.")
+
+			if lines:
+				output_dictionary = QueueAdapter.get_job_properties_from_queue_view_line(lines[0])
+
 		elif QueueAdapter.host == 'Tom_hp':
 			pass
 		else:
 			raise Exception("QueueAdapter.host not supported")
+
+		return output_dictionary
+
+	@staticmethod
+	def get_job_properties_from_queue_view_line(line_string):
+		"""
+		Takes in string that looks like '682554.fenrir.bw     angsten  default  job               16794     1  --    --  16:00 R 00:01'
+		and returns property set like 
+		{'status': QueueStatus.off_queue} or 
+		{'status': QueueStatus.running, 'node_count': 1, 'wall_time_limit': '16:00', 'elapsed_time': '00:01'}
+
+		Possible statuses are denoted in the QueueStatus class below.
+		"""
+		output_dictionary = {}
+
+		if QueueAdapter.host == 'Fenrir':
+			line_string = su.remove_extra_spaces(line_string) #'682554.fenrir.bw angsten default job 16794 1 -- -- 16:00 R 00:01'
+			node_count = line_string.split(' ')[5]
+			wall_time_limit = line_string.split(' ')[8]
+			run_code = line_string.split(' ')[9]
+			elapsed_time = line_string.split(' ')[10]
+
+			if run_code == 'Q':
+				status = QueueStatus.queued
+			elif run_code == 'R':
+				status = QueueStatus.running
+			elif run_code == 'C':
+				status = QueueStatus.complete
+			elif run_code == 'E':
+				status = QueueStatus.errored
+			else:
+				raise Exception("Could not identify queue status: " + run_code)
+
+			output_dictionary = {'status':status, 'node_count':node_count, 'wall_time_limit':wall_time_limit,'elapsed_time':elapsed_time}
+
+		elif QueueAdapter.host == 'Tom_hp':
+			pass
+		else:
+			raise Exception("QueueAdapter.host not supported")
+
+		return output_dictionary
 
 	@staticmethod
 	def get_queue_view_file():
@@ -124,52 +213,6 @@ class QueueAdapter(object):
 		return output_file
 
 	@staticmethod
-	def get_job_properties_from_id_string(id_string):
-		"""Takes in id_string like '32223' and return dictionary of run properties that looks like:
-		{'status': QueueStatus.off_queue} or {'status': QueueStatus.running, 'node_count': 1, 'wall_time_limit': '16:00', 'elapsed_time': '00:08'}
-
-		Possible statuses are denoted in the QueueStatus class below.
-		"""
-		output_dictionary = {'status': QueueStatus.off_queue}
-		if QueueAdapter.host == 'Fenrir':
-			queue_view_file = QueueAdapter.get_queue_view_file()
-
-			lines = queue_view_file.get_lines_containing_string(id_string + '.fenrir.bw')
-
-			if len(lines) > 1:
-				raise Exception("Multiple entries in queue view for same id found.")
-
-			if lines:
-				queue_line = lines[0] #looks like '682554.fenrir.bw     angsten  default  job               16794     1  --    --  16:00 R 00:01'
-				queue_line = su.remove_extra_spaces(queue_line) #'682554.fenrir.bw angsten default job 16794 1 -- -- 16:00 R 00:01'
-				node_count = queue_line.split(' ')[5]
-				wall_time_limit = queue_line.split(' ')[8]
-				run_code = queue_line.split(' ')[9]
-				elapsed_time = queue_line.split(' ')[10]
-
-				if run_code == 'Q':
-					status = QueueStatus.queued
-				elif run_code == 'R':
-					status = QueueStatus.running
-				elif run_code == 'C':
-					status = QueueStatus.complete
-				elif run_code == 'E':
-					status = QueueStatus.errored
-				else:
-					raise Exception("Could not identify queue status: " + run_code)
-
-				output_dictionary = {'status':status, 'node_count':node_count, 'wall_time_limit':wall_time_limit,'elapsed_time':elapsed_time}
-
-
-
-		elif QueueAdapter.host == 'Tom_hp':
-			pass
-		else:
-			raise Exception("QueueAdapter.host not supported")
-
-		return output_dictionary
-
-	@staticmethod
 	def _template():
 		if QueueAdapter.host == 'Fenrir':
 			pass
@@ -177,49 +220,6 @@ class QueueAdapter(object):
 			pass
 		else:
 			raise Exception("QueueAdapter.host not supported")
-
-	@staticmethod
-	def _template():
-		if QueueAdapter.host == 'Fenrir':
-			pass
-		elif QueueAdapter.host == 'Tom_hp':
-			pass
-		else:
-			raise Exception("QueueAdapter.host not supported")
-
-
-	#submits submit.sh to queue in calculation_path
-	#if override, will remove job attached to calculation_path directory from queue and submit a new job
-	#returns true if job is submitted
-	@staticmethod
-	def submitRun(calculation_path, override = False):
-	    submit = False
-	    id_path = os.path.join(calculation_path,'.id')
-
-	    status = getJobStatus(calculation_path)
-	    if status == 'NO_ID' or status == 'OFF_QUEUE': #submit in this case no matter what - no job for this path is waiting or running on queue
-	        submit = True
-	    elif status == 'ON_QUEUE' and override: #then delete the current run on queue and resubmit
-	        terminateJob(calculation_path)
-	        submit = True
-
-	    if submit: #submit job to queue at this directory using submit.sh and write id to .id
-	        cwd = os.getcwd()
-	        os.chdir(calculation_path)
-
-	        time.sleep(0.1) #sleeping can help success of submission
-	        process = subprocess.Popen(["qsub","submit.sh"], stdout=subprocess.PIPE)
-	        out,err = process.communicate() #get output from qsub command
-	        id = out.split('.')[0] #get the job id portion of 45643.fenerir...etc
-	        time.sleep(0.1)
-
-	        wfile = open(id_path,'wb')
-	        wfile.write(id+'\n')
-	        wfile.close()
-
-	        os.chdir(cwd)
-
-	    return submit
 
 
 	@staticmethod
@@ -243,6 +243,8 @@ class QueueAdapter(object):
 			return 2 #this is almost always the best choice on fenrir
 		elif QueueAdapter.host == 'Tom_hp':
 			return 1
+		else:
+			raise Exception("QueueAdapter.host not supported")
 
 
 class QueueStatus(object):
