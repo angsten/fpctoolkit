@@ -100,7 +100,7 @@ class QueueAdapter(object):
 			job_properties = QueueAdapter.get_job_properties_from_id_string(id_string)
 			status = job_properties['status']
 
-			return status in [QueueStatus.queued, QueueStatus.running]
+			return QueueStatus.is_status_active(status)
 
 		elif QueueAdapter.host == 'Tom_hp':
 			pass
@@ -221,6 +221,19 @@ class QueueAdapter(object):
 
 		return job_property_dictionary
 
+	@staticmethod
+	def get_queue_count():
+		"""Returns count of jobs either queued 'Q' or running 'R'"""
+
+		active_job_count = 0
+
+		job_property_dictionary = QueueAdapter.get_job_property_dictionary()
+
+		for job_properties in job_property_dictionary:
+			if QueueStatus.is_status_active(job_properties['status']):
+				active_job_count += 1
+
+		return active_job_count
 
 	@staticmethod
 	def _template():
@@ -297,3 +310,7 @@ class QueueStatus(object):
 	running = 3 #'R'
 	complete = 4 #'C'
 	errored = 5
+
+	@staticmethod
+	def is_status_active(queue_status):
+		return queue_status in [QueueStatus.queued, QueueStatus.running]
