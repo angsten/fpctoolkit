@@ -212,7 +212,7 @@ class QueueAdapter(object):
 				if job_id_string in job_property_dictionary:
 					raise Exception("Multiple entries in queue view for same id found.")
 				else:
-					job_property_dictionary[job_id_string] = job_property_dictionary
+					job_property_dictionary[job_id_string] = job_properties
 
 		elif QueueAdapter.host == 'Tom_hp':
 			pass
