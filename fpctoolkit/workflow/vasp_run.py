@@ -19,7 +19,7 @@ class VaspRun(object):
 
 	def __init__(self, path, structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None, input_set=None):
 		"""
-		If path directory already exists, load files in path, otherwise, files must exist as arguments
+		If path directory already exists, load run saved in path, otherwise, files must exist as arguments
 
 		"""
 		self.path = Path.clean(path)
@@ -40,10 +40,10 @@ class VaspRun(object):
 		self.job_id = None #Tracks job id associated with run on queue
 
 		if Path.exists(self.path):
-			pass
-			#see if input files exist - if so, load in?
-			#maybe have an override option
-			#if no override, search for saved run and load that class?
+			#Don't overwrite - load in the run here if it exists
+			if Path.exists(self.get_save_path()):
+				print "lodaing"
+				self.load()
 		else:
 			Path.make(self.path)
 			self.setup() #writes input files into self.path
@@ -66,10 +66,11 @@ class VaspRun(object):
 
 		try:
 			#Remove all output files here!!! Maybe store in .folder?
+			#also, check that this run doesn't already have a job on queue associated with it!
 
 			self.job_id = QueueAdapter.submit_job(self.path)
 
-			self.save()
+			self.save() #want to make sure we save here so tracking of job id isn't lost
 		except:
 			"""
 			Submission of a job to the queue has failed.
