@@ -8,7 +8,7 @@ class QueueAdapter(object):
 	host = os.environ['QUEUE_ADAPTER_HOST']
 
 	@staticmethod
-	def submit(calculation_path, override=False):
+	def submit_job(calculation_path, override=False):
 		id = None
 		submit = True
 

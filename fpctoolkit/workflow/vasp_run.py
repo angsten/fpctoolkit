@@ -1,4 +1,4 @@
-
+import cPickle
 
 from fpctoolkit.io.file import File
 from fpctoolkit.io.vasp.outcar import Outcar
@@ -62,9 +62,25 @@ class VaspRun(object):
 		#don't...put in consistency checks here (modify submit script, lreal, potcar and poscar consistent, ...)
 
 	def start(self):
-		self.job_id = QueueAdapter.submit(self.path)
+		"""Submit the calculation at self.path"""
 
-		#Remove all output files here!!! Maybe store in .folder?
+		try:
+			#Remove all output files here!!! Maybe store in .folder?
+
+			self.job_id = QueueAdapter.submit_job(self.path)
+
+			self.save()
+		except:
+			"""
+			Submission of a job to the queue has failed.
+
+			This file creation is a safeguard against vasp runs that submit a job
+			to the queue, but fail to save (thus losing the id information)
+			This is dangerous - could create a rogue run, so must delete the path
+			if this file is found.
+			"""
+			failed_file = File(self.get_extended_path("RUN_SUBMISSION_UNTRACKED"))
+			failed_file.write_to_path()
 
 	def update(self):
 		"""Check job status on queue. Check for errors"""
@@ -82,3 +98,41 @@ class VaspRun(object):
 	def complete(self):
 		return self.outcar.complete #not necessarily sufficient! what if outcar is old! (remove output files at start)
 
+	def get_extended_path(self, relative_path):
+		return Path.join(self.path, relative_path)
+
+	def get_save_path(self):
+		return self.get_extended_path(".run_pickle")
+
+
+	def save(self):
+		"""Saves class to pickled file at {self.path}/.run_pickle
+		"""
+
+		#We don't want to waste space with storing full potcars - just store basenames and recreate on loading
+		self.potcar_minimal_form = self.potcar.get_minimal_form()
+		stored_potcar = self.potcar
+		self.potcar = None
+
+		save_path = self.get_save_path()
+
+		file = open(save_path, 'w')
+		file.write(cPickle.dumps(self.__dict__))
+		file.close()
+
+		self.potcar = stored_potcar
+
+	def load(self,file_path):
+		if not Path.exists(file_path):
+			raise Exception("Load file path does not exist: " + file_path)
+
+		file = open(file_path, 'r')
+		data_pickle = file.read()
+		file.close()
+
+		self.__dict__ = cPickle.loads(data_pickle)
+
+		#restore the full potcar from the basenames that were saved
+		if self.potcar_minimal_form:
+			self.potcar = Potcar(minimal_form=self.potcar_minimal_form)
+			del self.potcar_minimal_form
