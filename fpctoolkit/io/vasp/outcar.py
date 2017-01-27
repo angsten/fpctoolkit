@@ -1,6 +1,7 @@
 
 
 from fpctoolkit.io.file import File
+import fpctoolkit.util.string_util as su
 
 class Outcar(File):
 	
@@ -42,3 +43,21 @@ class Outcar(File):
 		ionic_step_data_start_line_indices = self.get_line_indices_containing_string(Outcar.ionic_step_complete_string)
 		print ionic_step_data_start_line_indices
 
+	def get_calculation_time_in_core_hours(self):
+		"""In cpu*hours. Good for comparing speed up when moving from smaller to larger number of cores"""
+
+		return (self.get_total_cpu_time() / self.get_number_of_cores()) / 3600.0
+
+	def get_number_of_cores(self):
+		"""Returns number of cores recorded in outcar"""
+
+		core_count_line = self.get_lines_containing_string("total cores") #may be fenrir specific!
+		core_count_line = su.remove_extra_spaces(core_count_line)
+		return int(core_count_line.split(' ')[2])
+
+	def get_total_cpu_time(self):
+		"""Returns number after Total CPU time used (sec): string"""
+
+		cpu_time_line = self.get_lines_containing_string("Total CPU time used (sec):")
+		cpu_time_line = su.remove_extra_spaces(cpu_time_line).strip()
+		return float(cpu_time_line.split(' ')[5])
