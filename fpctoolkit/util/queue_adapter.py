@@ -282,8 +282,12 @@ class QueueAdapter(object):
 			if num_atoms >= 160:
 				node_count = 8
 
-			node_count_line_index = submission_file.get_line_indices_containing_string("#PBS -l nodes=")
-			submission_file[node_count_line_index] = "#PBS -l nodes=" + str(node_count) + ":ppn=8:node"
+			node_count_line_indices = submission_file.get_line_indices_containing_string("#PBS -l nodes=")
+
+			if len(node_count_line_indices) != 1:
+				raise Exception("Could not find node count line (or there are multiple) in submission file")
+				
+			submission_file[node_count_line_indices[0]] = "#PBS -l nodes=" + str(node_count) + ":ppn=8:node"
 		elif QueueAdapter.host == 'Tom_hp':
 			pass
 		else:
