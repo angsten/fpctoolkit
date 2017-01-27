@@ -46,7 +46,7 @@ class Outcar(File):
 	def get_calculation_time_in_core_hours(self):
 		"""In cpu*hours. Good for comparing speed up when moving from smaller to larger number of cores"""
 
-		return (self.get_total_cpu_time() / self.get_number_of_cores()) / 3600.0
+		return (self.get_total_cpu_time() * self.get_number_of_cores()) / 3600.0
 
 	def get_number_of_cores(self):
 		"""Returns number of cores recorded in outcar"""
