@@ -61,7 +61,6 @@ class Path(object):
 
 		files = Path.get_list_of_files_at_path(path)
 
-		print files
 		for file_name in files:
 			if file_name.upper() == file_string.upper():
 				return file_name
