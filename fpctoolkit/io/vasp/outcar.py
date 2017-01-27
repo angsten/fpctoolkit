@@ -51,13 +51,21 @@ class Outcar(File):
 	def get_number_of_cores(self):
 		"""Returns number of cores recorded in outcar"""
 
-		core_count_line = self.get_lines_containing_string("total cores") #may be fenrir specific!
-		core_count_line = su.remove_extra_spaces(core_count_line)
+		core_count_lines = self.get_lines_containing_string("total cores") #may be fenrir specific!
+
+		if len(core_count_lines) != 1:
+			raise Exception("Could not find or found more than one core count line in outcar")
+
+		core_count_line = su.remove_extra_spaces(core_count_lines[0])
 		return int(core_count_line.split(' ')[2])
 
 	def get_total_cpu_time(self):
 		"""Returns number after Total CPU time used (sec): string"""
 
-		cpu_time_line = self.get_lines_containing_string("Total CPU time used (sec):")
-		cpu_time_line = su.remove_extra_spaces(cpu_time_line).strip()
+		cpu_time_lines = self.get_lines_containing_string("Total CPU time used (sec):")
+
+		if len(cpu_time_lines) != 1:
+			raise Exception("Could not find or found more than one cpu count line in outcar")
+
+		cpu_time_line = su.remove_extra_spaces(cpu_time_lines[0]).strip()
 		return float(cpu_time_line.split(' ')[5])
