@@ -68,9 +68,12 @@ for encut in convergence_encuts_list:
 
 	vasp_run.update()
 	print vasp_run
+	vasp_run.view()
 
 
-outcar = Outcar("C:/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Outcar/outcar")
-print outcar.energy
-print outcar.get_number_of_atoms()
-print outcar.energy_per_atom
+
+
+# outcar = Outcar("C:/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Outcar/outcar")
+# print outcar.energy
+# print outcar.get_number_of_atoms()
+# print outcar.energy_per_atom

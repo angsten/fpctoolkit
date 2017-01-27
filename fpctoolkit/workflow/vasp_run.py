@@ -3,6 +3,9 @@ import cPickle
 from fpctoolkit.io.file import File
 from fpctoolkit.io.vasp.outcar import Outcar
 from fpctoolkit.io.vasp.potcar import Potcar
+from fpctoolkit.io.vasp.incar import Incar
+from fpctoolkit.io.vasp.poscar import Poscar
+from fpctoolkit.io.vasp.kpoints import Kpoints
 from fpctoolkit.util.path import Path
 from fpctoolkit.util.queue_adapter import QueueAdapter
 
@@ -163,6 +166,40 @@ class VaspRun(object):
 			del self.potcar_minimal_form
 
 
+
+
+
+	def view(self, files_to_view=['Potcar', 'Kpoints', 'Incar', 'Poscar', 'Contcar', 'Submit.sh', '_JOB_OUTPUT.txt']):
+		"""
+		See printing of actual text input files written in directory, not internally stored input files.
+		Useful for validating runs.
+
+		files_to_view list is case insensitive - it will find 'POSCAR' file if you input 'poscar' for instance
+		"""
+
+		head_string = "==> "
+		file_separator = 30*"-"
+		output_string = ""
+		output_string += 10*"-" + "VaspRun View: Job ID is " + str(self.job_id_string) + 10*"-" + "\n"
+		output_string += head_string + "Path: " + self.path + "\n"
+
+		for file_name in files_to_view:
+			actual_file_name = Path.get_case_insensitive_file_name(self.path, file_name) #if Submit.sh is file_name, could find submit.sh for example
+
+			if not actual_file_name:
+				output_string += head_string + file_name + " file not present" + "\n"
+				continue
+
+			file_path = self.get_extended_path(actual_file_name)
+
+			if actual_file_name.upper() == 'POTCAR':
+				file = Potcar(file_path)
+			else:
+				file = File(file_path)
+
+			output_string += head_string + actual_file_name + ":\n" + file_separator + "\n" + file + file_separator + "\n"
+
+		print output_string,
 
 
 	def __str__(self):
