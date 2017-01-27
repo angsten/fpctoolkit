@@ -24,9 +24,6 @@ class VaspRun(object):
 		"""
 		self.path = Path.clean(path)
 
-		if Path.exists(self.get_extended_path("RUN_SUBMISSION_UNTRACKED")):
-			raise Exception("Previous run had potentially untracked job - check fail file for id and delete if id exists on queue")
-
 		if input_set:
 			structure = input_set.structure
 			incar = input_set.incar
@@ -40,14 +37,14 @@ class VaspRun(object):
 		self.potcar = potcar
 		self.submission_script_file = submission_script_file
 
-		self.job_id = None #Tracks job id associated with run on queue
+		self.job_id_string = None #Tracks job id associated with run on queue, looks like '35432'
 
-		if Path.exists(self.path):
-			#Don't overwrite - load in the run here if it exists
+		if Path.exists(self.path) and not Path.is_empty(self.path):
+			#We're in a directory with files in it - see if there's an old run to load
 			if Path.exists(self.get_save_path()):
 				self.load()
 			else:
-				#can't find a run to load - overwrite?
+				#Directory has files in it but no saved VaspRun. This case is not yet supported
 				raise Exception("temporory here - load not supported in this way yet")
 		else:
 			Path.make(self.path)
@@ -67,48 +64,61 @@ class VaspRun(object):
 		#don't...put in consistency checks here (modify submit script, lreal, potcar and poscar consistent, ...)
 
 	def update(self):
-		"""Check job status on queue. Check for errors"""
+		"""Returns true if run is completed"""
 		
-		#only if there is not job_id associated with this run should we start a run
-		if not self.job_id:
+		#only if there is not job_id_string associated with this run should we start the run
+		if not self.job_id_string:
 			self.start()
+
+			return False
+
+		#check if run is complete
+		if self.complete:
+			return True
+
+		#check status on queue:
+		#if running, check for runtime errors using handler
+		#if queued, return false
+		#if not on queue, run failed - check for errors using handler
+
+
+
+		return False
 
 	def start(self):
 		"""Submit the calculation at self.path"""
 
-		try:
-			#Remove all output files here!!! Maybe store in .folder?
-			#also, check that this run doesn't already have a job on queue associated with it!
+		#Remove all output files here!!! Maybe store in hidden archived folder?
+		#also, check that this run doesn't already have a job on queue associated with it!
 
-			self.job_id = QueueAdapter.submit_job(self.path)
+		self.job_id_string = QueueAdapter.submit_job(self.path)
 
-			self.save() #want to make sure we save here so tracking of job id isn't lost
-		except Exception as exception:
-			"""
-			Submission of a job to the queue has failed.
+		if not self.job_id_string:
+			raise Exception("Tried to start vasp run but an active job is already associated with its path")
 
-			This file creation is a safeguard against vasp runs that submit a job
-			to the queue, but fail to save (thus losing the id information)
-			This is dangerous - could create a rogue run, so must delete the path
-			if this file is found.
-			"""
-			failed_file = File()
-			failed_file += str(self.job_id) #this may be None if assignment above failed
-			failed_file.write_to_path(self.get_extended_path("RUN_SUBMISSION_UNTRACKED"))
-
-			raise exception #reraise the original exception so the error can be passed on
+		self.save() #want to make sure we save here so tracking of job id isn't lost
 
 	def stop(self):
 		"""If run has associated job on queue, delete this job"""
-		pass
+		
+		QueueAdapter.terminate_job(self.job_id_string)
 
 	@property
 	def outcar(self):
-		return Outcar(Path.clean(self.path, 'OUTCAR'))
+		outcar_path = Path.clean(self.path, 'OUTCAR')
+		if Path.exists(outcar_path):
+			return Outcar(outcar_path)
+		else:
+			return None
 
 	@property
 	def complete(self):
-		return self.outcar.complete #not necessarily sufficient! what if outcar is old! (remove output files at start)
+		outcar = self.outcar
+
+		if outcar:
+			return outcar.complete #not necessarily sufficient! what if outcar is old! (remove output files at start)
+		else:
+			return False
 
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)
@@ -160,7 +170,7 @@ class VaspRun(object):
 		file_separator = 30*"-"
 		output_string = ""
 
-		output_string += 10*"-" + "VaspRun: Job ID is " + str(self.job_id) + 10*"-" + "\n"
+		output_string += 10*"-" + "VaspRun: Job ID is " + str(self.job_id_string) + 10*"-" + "\n"
 		output_string += head_string + "Path: " + self.path + "\n"
 		output_string += head_string + "Potcar: " + " ".join(self.potcar.get_titles()) + "\n"
 		output_string += head_string + "Kpoints:\n" + file_separator + "\n" + str(self.kpoints) + file_separator + "\n"

@@ -44,3 +44,7 @@ class Path(object):
 				os.remove(path)
 			elif os.path.isdir(path):
 				shutil.rmtree(path)
+
+	@staticmethod
+	def is_empty(path):
+		return os.listdir(path) == []

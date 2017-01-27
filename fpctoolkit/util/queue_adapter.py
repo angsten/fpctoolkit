@@ -8,7 +8,7 @@ import fpctoolkit.util.string_util as su
 
 class QueueAdapter(object):
 	host = os.environ['QUEUE_ADAPTER_HOST']
-	user = os.environ['USER']
+	user = 'angsten'#os.environ['USER']######################################!!!!!!!!!!!!!!!!!!!!!!!!##############
 	id_path = ".job_id" #where id's are saved upon submission
 	error_path = "QUEUE_SUBMISSION_ERROR_OUTPUT"
 
@@ -33,7 +33,7 @@ class QueueAdapter(object):
 			if not override_existing_job:
 				return None #previous id is active, don't want to override - no new job id
 			else:
-				QueueAdapter.terminate_job_id(previous_id_string)
+				QueueAdapter.terminate_job(previous_id_string)
 				time.sleep(QueueAdapter.sleep_buffer_time)
 
 
@@ -70,12 +70,15 @@ class QueueAdapter(object):
 		return id_string
 
 	@staticmethod
-	def terminate_job_id(id_string):
-		process = subprocess.Popen(['qdel', id_string], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-		output, error = process.communicate()
+	def terminate_job(id_string):
+		"""Terminates job with id id_string only if this job is active on queue"""
 
-		if error:
-			raise Exception("Failure deleting job " + id_string)
+		if self.job_id_is_active(id_string):
+			process = subprocess.Popen(['qdel', id_string], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+			output, error = process.communicate()
+
+			if error:
+				raise Exception("Failure deleting active job with id: " + id_string)
 
 
 	@staticmethod
@@ -98,6 +101,10 @@ class QueueAdapter(object):
 
 		if QueueAdapter.host == 'Fenrir':
 			job_properties = QueueAdapter.get_job_properties_from_id_string(id_string)
+
+			if not job_properties: #job does not show up on queue at all
+				return False
+
 			status = job_properties['status']
 
 			return QueueStatus.is_status_active(status)
@@ -127,7 +134,13 @@ class QueueAdapter(object):
 	@staticmethod
 	def get_job_properties_from_id_string(id_string):
 		"""Takes in id_string like '32223' and return dictionary of run properties of the job"""
-		return QueueAdapter.get_job_property_dictionary()[id_string]
+
+		job_property_dictionary = QueueAdapter.get_job_property_dictionary()
+
+		if id_string in job_property_dictionary:
+			return job_property_dictionary[id_string]
+		else:
+			return None
 
 	@staticmethod
 	def get_job_properties_from_queue_view_line(line_string):
@@ -255,8 +268,26 @@ class QueueAdapter(object):
 
 	@staticmethod
 	def modify_number_of_cores_from_num_atoms(submission_file, num_atoms):
-		"""Each system should specify how many cores to use based
-		on the size of a calculation"""
+		"""
+		Each system should specify how many cores to use based
+		on the size of a calculation
+		"""
+
+		if QueueAdapter.host == 'Fenrir':
+			node_count = 1
+			if num_atoms >= 40:
+				node_count = 2
+			if num_atoms >= 80:
+				node_count = 4
+			if num_atoms >= 160:
+				node_count = 8
+
+			node_count_line_index = submission_file.get_line_indices_containing_string("#PBS -l nodes=")
+			submission_file[node_count_line_index] = "#PBS -l nodes=" + str(node_count) + ":ppn=8:node"
+		elif QueueAdapter.host == 'Tom_hp':
+			pass
+		else:
+			raise Exception("QueueAdapter.host not supported")
 
 		return submission_file
 
