@@ -219,6 +219,7 @@ class QueueAdapter(object):
 			queue_view_file = QueueAdapter.get_queue_view_file()
 
 			for queue_line in queue_view_file:
+				print "Queue view file is " + str(queue_view_file)
 				job_id_string = queue_line.split('.')[0]
 				job_properties = QueueAdapter.get_job_properties_from_queue_view_line(queue_line)
 
