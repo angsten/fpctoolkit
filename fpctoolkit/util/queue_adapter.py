@@ -199,13 +199,13 @@ class QueueAdapter(object):
 				raise Exception("Error in getting view of queue: " + error)
 			else:
 				output_file += output #output is string with \n's built in - file class will handle this automatically
+				output_file.trim_trailing_whitespace_only_lines() #otherwise empty output will lead to lines in out_file looking like [''] - errors out then
 
 		elif QueueAdapter.host == 'Tom_hp':
 			pass
 		else:
 			raise Exception("QueueAdapter.host not supported")
 
-		print "Lines " + str(output_file.lines)
 		return output_file
 
 	@staticmethod
