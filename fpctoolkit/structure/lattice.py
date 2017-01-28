@@ -89,13 +89,13 @@ class Lattice(object):
 
 		self.from_2D_array(strained_lattice)
 
-	def get_super_lattice(supercell_dimensions_list):
+	def get_super_lattice(self, supercell_dimensions_list):
 		"""Returns new lattice that is a super lattice by dimensions supercell_dimensions_list"""
 
 		if not len(supercell_dimensions_list) == 3:
 			raise Exception("supercell_dimensions_list must be of length 3")
 
-		new_lattice = copy.deepcopy(self.to_array)
+		new_lattice = copy.deepcopy(self.to_array())
 
 		for i in range(3):
 			for j in range(3):

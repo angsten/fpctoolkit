@@ -122,35 +122,27 @@ class Structure(object):
 		if not len(supercell_dimensions_list) == 3:
 			raise Exception("supercell_dimensions_list must be of length 3")
 
+		for dimension in supercell_dimensions_list:
+			if not int(dimension) == dimension:
+				raise Exception("Only integer values accepted for supercell dimension factors.")
+
+		self.convert_sites_to_direct_coordinates()
+
 		new_lattice = self.lattice.get_super_lattice(supercell_dimensions_list)
-		new_sites = copyself.convert_sites_to_direct_coordinates()
+		new_sites = SiteCollection()
 
-		orig_lattice = self.getLattice()
-		orig_direct_coords = self.getDirectCoords()
-		num_atoms_list = self.getNumberAtomsList() #gives [4,4,6] - number of each atom in cell
-		atom_num_multiplier = supercell_dimensions[0]*supercell_dimensions[1]*supercell_dimensions[2]
+		for original_site in self.sites:
+			for a in range(supercell_dimensions_list[0]):
+				for b in range(supercell_dimensions_list[1]):
+					for c in range(supercell_dimensions_list[2]):
+						a_frac = float(a)/float(supercell_dimensions_list[0])
+						b_frac = float(b)/float(supercell_dimensions_list[1])
+						c_frac = float(c)/float(supercell_dimensions_list[2])
 
-        #rewrite how many atoms are in poscar line index 6
-        self.data[6] = ''
-        for num in num_atoms_list:
-            self.data[6] += str(num*atom_num_multiplier) + ' '
-        self.data[6] = self.data[6][:-1] + '\n'
+						new_site = copy.deepcopy(original_site)
+						old_position = original_site['position']
+						new_site['position'] = [old_position[0]/supercell_dimensions_list[0]+a_frac, old_position[1]/supercell_dimensions_list[1]+b_frac, old_position[2]/supercell_dimensions_list[2]+c_frac]
+						new_sites.append(new_site)
 
-        #expand size of lattice
-        for i in range(0,3):
-            for j in range(0,3):
-                self.lattice[i][j] *= supercell_dimensions[i]
 
-        #make new atoms
-        new_direct_coordinates = []
-        for old_coord in orig_direct_coords:
-            for a in range(0,supercell_dimensions[0]):
-                for b in range(0,supercell_dimensions[1]):
-                    for c in range(0,supercell_dimensions[2]):
-                        a_frac = float(a)/float(supercell_dimensions[0])
-                        b_frac = float(b)/float(supercell_dimensions[1])
-                        c_frac = float(c)/float(supercell_dimensions[2])
-
-                        new_direct_coordinates.append([old_coord[0]/supercell_dimensions[0]+a_frac,old_coord[1]/supercell_dimensions[1]+b_frac,old_coord[2]/supercell_dimensions[2]+c_frac])
-
-        self.directCoordinates = new_direct_coordinates
+		return Structure(lattice=new_lattice, sites=new_sites)

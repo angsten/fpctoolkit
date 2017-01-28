@@ -4,6 +4,106 @@
 		"selected_items":
 		[
 			[
+				"super",
+				"supercell_dimensions_list"
+			],
+			[
+				"conver",
+				"convert_sites_to_direct_coordinates"
+			],
+			[
+				"sup",
+				"supercell_dimensions_list"
+			],
+			[
+				"str",
+				"strain_tensor"
+			],
+			[
+				"conv",
+				"convert_voigt_strain_to_6x6_tensor"
+			],
+			[
+				"ful",
+				"full_tensor"
+			],
+			[
+				"voigt",
+				"voigt_tensor"
+			],
+			[
+				"voig",
+				"voigt_tensor"
+			],
+			[
+				"voi",
+				"voigt_tensor"
+			],
+			[
+				"lattice",
+				"lattice_matrix"
+			],
+			[
+				"sta",
+				"strain_tensor_np"
+			],
+			[
+				"out",
+				"output_file"
+			],
+			[
+				"queue_",
+				"queue_view_file"
+			],
+			[
+				"Queu",
+				"QueueStatus"
+			],
+			[
+				"queu",
+				"queue_properties"
+			],
+			[
+				"que",
+				"queue_properties"
+			],
+			[
+				"sp",
+				"special_handler"
+			],
+			[
+				"queue",
+				"queue_status"
+			],
+			[
+				"raise",
+				"raise_exception"
+			],
+			[
+				"log",
+				"log_string"
+			],
+			[
+				"write",
+				"write_to_path"
+			],
+			[
+				"act",
+				"actual_file_name"
+			],
+			[
+				"get",
+				"get_list_of_files_at_path"
+			],
+			[
+				"kpoint",
+				"kpoints_path"
+			],
+			[
+				"get_",
+				"get_extended_path"
+			],
+			[
 				"core",
 				"core_count_line"
 			],
@@ -32,14 +132,6 @@
 				"submission_file"
 			],
 			[
-				"que",
-				"queue_status"
-			],
-			[
-				"sta",
-				"staticmethod"
-			],
-			[
 				"Qu",
 				"QueueAdapter"
 			],
@@ -64,10 +156,6 @@
 				"previous_id_string"
 			],
 			[
-				"Queu",
-				"QueueAdapter"
-			],
-			[
 				"Que",
 				"QueueAdapter"
 			],
@@ -86,10 +174,6 @@
 			[
 				"Q",
 				"QueueAdapter"
-			],
-			[
-				"write",
-				"write_id_to_path"
 			],
 			[
 				"calcu",
@@ -158,10 +242,6 @@
 			[
 				"su",
 				"submission_script_file"
-			],
-			[
-				"super",
-				"supercell_dimensions"
 			],
 			[
 				"gen",
@@ -343,60 +423,16 @@
 			"file": "fpctoolkit/fpc_sketcher.py",
 			"settings":
 			{
-				"buffer_size": 2511,
+				"buffer_size": 3314,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/io/vasp/tests/data_Outcar/outcar",
+			"file": "fpctoolkit/io/vasp/tests/data_Poscar/poscar_small",
 			"settings":
 			{
-				"buffer_size": 3766705,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "fpctoolkit/io/vasp/outcar.py",
-			"settings":
-			{
-				"buffer_size": 3344,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/io/vasp/incar.py",
-			"settings":
-			{
-				"buffer_size": 7157,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/io/file.py",
-			"settings":
-			{
-				"buffer_size": 5199,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/workflow/vasp_run.py",
-			"settings":
-			{
-				"buffer_size": 5654,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/util/path.py",
-			"settings":
-			{
-				"buffer_size": 1148,
-				"encoding": "UTF-8",
+				"buffer_size": 162,
 				"line_ending": "Windows"
 			}
 		},
@@ -404,43 +440,32 @@
 			"file": "fpctoolkit/structure/structure.py",
 			"settings":
 			{
-				"buffer_size": 3819,
+				"buffer_size": 5195,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/io/vasp/potcar.py",
+			"file": "fpctoolkit/structure/site_collection.py",
 			"settings":
 			{
-				"buffer_size": 2677,
-				"encoding": "UTF-8",
+				"buffer_size": 1976,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/io/vasp/incar_maker.py",
+			"file": "fpctoolkit/structure/site.py",
 			"settings":
 			{
-				"buffer_size": 1135,
-				"encoding": "UTF-8",
+				"buffer_size": 2383,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/util/queue_adapter.py",
+			"file": "fpctoolkit/structure/lattice.py",
 			"settings":
 			{
-				"buffer_size": 11475,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/util/string_util.py",
-			"settings":
-			{
-				"buffer_size": 636,
+				"buffer_size": 3711,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -631,34 +656,38 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Outcar",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow"
 	],
 	"file_history":
 	[
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/vasp_input_set.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/file.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/string_util.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/path.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/poscar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/queue_adapter.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/file.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar_maker.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/outcar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Outcar/outcar",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/vasp_input_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar_element_mapping.json",
 		"/C/Users/Tom/Documents/Coding/python_work/workflow_test/INCAR",
 		"/C/Users/Tom/Documents/Coding/python_work/workflow_test/POSCAR",
 		"/C/Users/Tom/Documents/Coding/python_work/workflow_test/KPOINTS",
 		"/C/Users/Tom/Documents/Coding/python_work/workflow_test/POTCAR",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/string_util.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_collection.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/perovskite.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/kpoints.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site.py",
 		"/C/Users/Tom/.bash_profile",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/outcar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/test_Kpoints.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/__init__.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/poscar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/lattice.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/vector.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/tests/test_Structure.py",
@@ -773,6 +802,21 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"old_coord",
+			"supercell_dimensions",
+			"print",
+			"verbose",
+			"get_basenames_list",
+			"view_files",
+			"contcar_path",
+			"submit.sh",
+			"poscar_path",
+			"structure_path",
+			"incar_path",
+			"incar",
+			"kpoints_path",
+			"Potcar",
+			"potcar_path",
 			"Path.clean(self.path, 'OUTCAR')",
 			"job_id",
 			"terminate_job_id",
@@ -909,7 +953,7 @@
 	"groups":
 	[
 		{
-			"selected": 7,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -918,15 +962,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2511,
+						"buffer_size": 3314,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2510,
-								2510
+								3312,
+								3312
 							]
 						],
 						"settings":
@@ -934,115 +978,113 @@
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 378.0,
+						"translation.y": 840.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "fpctoolkit/io/vasp/tests/data_Outcar/outcar",
+					"file": "fpctoolkit/io/vasp/tests/data_Poscar/poscar_small",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3766705,
+						"buffer_size": 162,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								18249,
-								18252
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 4285.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "fpctoolkit/io/vasp/outcar.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3344,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1148,
-								1148
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 210.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "fpctoolkit/io/vasp/incar.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7157,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2884,
-								3043
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 672.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "fpctoolkit/io/file.py",
+					"buffer": 2,
+					"file": "fpctoolkit/structure/structure.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5199,
+						"buffer_size": 5195,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3610,
-								3637
+								4371,
+								4371
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1386.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "fpctoolkit/structure/site_collection.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1976,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 168.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "fpctoolkit/structure/site.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2383,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1059,47 +1101,19 @@
 				},
 				{
 					"buffer": 5,
-					"file": "fpctoolkit/workflow/vasp_run.py",
+					"file": "fpctoolkit/structure/lattice.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5654,
+						"buffer_size": 3711,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4955,
-								4955
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 1521.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "fpctoolkit/util/path.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1148,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1147,
-								1147
+								2874,
+								2874
 							]
 						],
 						"settings":
@@ -1108,153 +1122,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 966.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "fpctoolkit/structure/structure.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3819,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2337,
-								2369
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 756.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "fpctoolkit/io/vasp/potcar.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2677,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2676,
-								2676
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 162.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "fpctoolkit/io/vasp/incar_maker.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1135,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1135,
-								1135
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "fpctoolkit/util/queue_adapter.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 11475,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								115,
-								155
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "fpctoolkit/util/string_util.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 636,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								554,
-								554
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -1297,7 +1168,7 @@
 	},
 	"output.exec":
 	{
-		"height": 146.0
+		"height": 301.0
 	},
 	"output.find_results":
 	{
