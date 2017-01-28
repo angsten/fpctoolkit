@@ -1,4 +1,5 @@
 import numpy as np
+import copy
 
 from fpctoolkit.io.file import File
 from fpctoolkit.io.vasp.poscar import Poscar
@@ -112,4 +113,44 @@ class Structure(object):
 				site['coordinate_mode'] = 'Direct'
 				site['position'] = Vector.get_in_direct_coordinates(site['position'], self.lattice).to_list()
 
-	
+	def get_supercell(self, supercell_dimensions_list):
+		"""
+		Returns new structure that is a supercell of this structure
+		Argument supercell_dimensions_list looks like [1,3,4]
+		"""
+
+		if not len(supercell_dimensions_list) == 3:
+			raise Exception("supercell_dimensions_list must be of length 3")
+
+		new_lattice = self.lattice.get_super_lattice(supercell_dimensions_list)
+		new_sites = copyself.convert_sites_to_direct_coordinates()
+
+		orig_lattice = self.getLattice()
+		orig_direct_coords = self.getDirectCoords()
+		num_atoms_list = self.getNumberAtomsList() #gives [4,4,6] - number of each atom in cell
+		atom_num_multiplier = supercell_dimensions[0]*supercell_dimensions[1]*supercell_dimensions[2]
+
+        #rewrite how many atoms are in poscar line index 6
+        self.data[6] = ''
+        for num in num_atoms_list:
+            self.data[6] += str(num*atom_num_multiplier) + ' '
+        self.data[6] = self.data[6][:-1] + '\n'
+
+        #expand size of lattice
+        for i in range(0,3):
+            for j in range(0,3):
+                self.lattice[i][j] *= supercell_dimensions[i]
+
+        #make new atoms
+        new_direct_coordinates = []
+        for old_coord in orig_direct_coords:
+            for a in range(0,supercell_dimensions[0]):
+                for b in range(0,supercell_dimensions[1]):
+                    for c in range(0,supercell_dimensions[2]):
+                        a_frac = float(a)/float(supercell_dimensions[0])
+                        b_frac = float(b)/float(supercell_dimensions[1])
+                        c_frac = float(c)/float(supercell_dimensions[2])
+
+                        new_direct_coordinates.append([old_coord[0]/supercell_dimensions[0]+a_frac,old_coord[1]/supercell_dimensions[1]+b_frac,old_coord[2]/supercell_dimensions[2]+c_frac])
+
+        self.directCoordinates = new_direct_coordinates

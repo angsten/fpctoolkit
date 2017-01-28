@@ -78,7 +78,16 @@ for encut in convergence_encuts_list:
 # print outcar.get_number_of_atoms()
 # print outcar.energy_per_atom
 
-lattice = Lattice(a=[4.0, 0.0, 0.0], b=[0.0, 4.0, 0.0], c=[0.0, 0.0, 4.0])
+lattice = Lattice(a=[1.0, 0.0, 0.0], b=[0.0, 1.0, 0.0], c=[0.0, 0.0, 1.0])
+#lattice.strain([[2.0, 0.1, 0.1], [0.0, 0.5, 0.1], [0.0, 0.0, 3.0]])
+lattice.strain([1.0, 1.0, 1.0, 0.0, -0.1, 0.0])
+#print lattice
 
-print lattice.strain([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])
-print lattice.strain([1.0, 1.0, 1.0, 0.0, 0.0, 0.0])
+lattice = Lattice(a=[4.5, 1.0, 0.0], b=[1.0, -4.0, 0.1], c=[-2.0, 1.2, 4.0])
+lattice.strain([[-0.2, -0.05, 0.5], [-0.05, 1.0, 0.5], [0.5, 0.5, 1.0]])
+#print lattice
+
+
+lattice = Lattice(a=[1.0, 0.0, 0.0], b=[0.0, 1.0, 0.0], c=[0.0, 0.0, 1.0])
+lattice.randomly_strain(0.1, mask_array=[[1.0, 0.0, 2.0], [0.0, 1.0, 2.0], [0.0, 0.0, 1.0]]) #for (100) epitaxy
+print lattice

@@ -1,4 +1,4 @@
-
+import copy
 
 import numpy as np
 
@@ -12,9 +12,7 @@ class Lattice(object):
 		"""Lattice can be a Lattice instance or a 2D array"""
 
 		if lattice:
-			self.a = lattice[0]
-			self.b = lattice[1]
-			self.c = lattice[2]
+			self.from_2D_array(lattice)
 		else:
 			self.a = a
 			self.b = b
@@ -35,6 +33,11 @@ class Lattice(object):
 		else:
 			raise KeyError
 
+	def from_2D_array(self, array):
+		self.a = array[0]
+		self.b = array[1]
+		self.c = array[2]
+
 	def to_array(self):
 		return [self.a, self.b, self.c]
 
@@ -42,16 +45,37 @@ class Lattice(object):
 	def np_array(self):
 		return np.array(self.to_array())
 
-	def randomly_strain(self, stdev):
-		"""Randomly strains using normal distributions for strains of e1, e2, e3, e4, e5, and e6"""
+	def randomly_strain(self, stdev, mask_array=[[1.0, 1.0, 1.0], [1.0, 1.0, 1.0], [1.0, 1.0, 1.0]]):
+		"""
+		Randomly strains using normal distributions for strains
 
-		pass
+		mask_array is a 2D array that gets multiplied by strain component by component (use 0 or 1 to mask)
+		"""
 
-	def strain(self, strain_tensor):
+		strain_tensor = []
+		strain_tensor.append([np.random.normal(1.0, stdev),     np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev)/2.0])
+		strain_tensor.append([np.random.normal(0.0, stdev)/2.0, np.random.normal(1.0, stdev),     np.random.normal(0.0, stdev)/2.0])
+		strain_tensor.append([np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev)/2.0, np.random.normal(1.0, stdev)])
+
+		for i in range(3):
+			for j in range(3):
+				strain_tensor[i][j] = strain_tensor[i][j]*mask_array[i][j]
+
+		self.strain(strain_tensor)
+
+	def strain(self, strain_tensor, upper_triangle_only=False):
 		"""
 		Argument strain_tensor can be a 6x6 full tensor or a 6x1 Voigt-notated tensor
 
 		Note: 1 is not automatically added to the diagonal components of the strain tensor.
+
+								| e11 e12 e13 |
+		full tensor looks like:	| e21 e22 e23 |
+								| e31 e32 e33 |
+
+		voigt equivalent is: (e11, e22, e33, 2*e23, 2*e13, 2*e12)
+
+		##not supported yet: If upper_triangle_only is True, e21, e31, and e32
 		"""
 
 		strain_tensor = np.array(strain_tensor)
@@ -60,11 +84,24 @@ class Lattice(object):
 		if strain_tensor.ndim == 1: #voigt notation [e1, e2, e3, e4, e5, e6]
 			strain_tensor = Lattice.convert_voigt_strain_to_6x6_tensor(strain_tensor)
 
+
 		strained_lattice = np.dot(lattice_matrix.T, strain_tensor).T
 
+		self.from_2D_array(strained_lattice)
 
+	def get_super_lattice(supercell_dimensions_list):
+		"""Returns new lattice that is a super lattice by dimensions supercell_dimensions_list"""
 
-		return strained_lattice
+		if not len(supercell_dimensions_list) == 3:
+			raise Exception("supercell_dimensions_list must be of length 3")
+
+		new_lattice = copy.deepcopy(self.to_array)
+
+		for i in range(3):
+			for j in range(3):
+				new_lattice[i][j] *= supercell_dimensions[i]
+
+		return Lattice(new_lattice)
 
 	@staticmethod
 	def convert_voigt_strain_to_6x6_tensor(voigt_tensor):
