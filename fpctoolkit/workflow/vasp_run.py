@@ -7,7 +7,7 @@ from fpctoolkit.io.vasp.incar import Incar
 from fpctoolkit.io.vasp.poscar import Poscar
 from fpctoolkit.io.vasp.kpoints import Kpoints
 from fpctoolkit.util.path import Path
-from fpctoolkit.util.queue_adapter import QueueAdapter
+from fpctoolkit.util.queue_adapter import QueueAdapter, QueueStatus
 import fpctoolkit.util.string_util as su
 
 class VaspRun(object):
@@ -104,22 +104,23 @@ class VaspRun(object):
 		#if queued, return false
 		#if not on queue, run failed - check for errors using handler
 
-		queue_status = self.queue_properties['status']
+		queue_properties = self.queue_properties
+		if not queue_properties: #couldn't find job on queue
+			queue_status = None
+		else:
+			queue_status = queue_properties['status']
 
 		if queue_status == QueueStatus.queued:
 			self.log("Job is on queue waiting.")
-			return False
+			
 		elif queue_status == QueueStatus.running:
 			self.log("Job is on queue running. Queue properties: " + str(self.queue_properties))
 
 			#use handler to check for run time errors here
 		else:
-			self.log("Run is neither active on queue nor complete. An error must have occured.")
+			self.log("Run is not active on queue ('C', 'E', or absent) but still isn't complete. An error must have occured.")
 
 			#use handler to check for errors here
-
-		self.log("")
-
 
 
 		return False
@@ -163,7 +164,7 @@ class VaspRun(object):
 
 	@property
 	def queue_properties(self):
-		if not job_id_string:
+		if not self.job_id_string:
 			return None
 		else:
 			return QueueAdapter.get_job_properties_from_id_string(self.job_id_string)
