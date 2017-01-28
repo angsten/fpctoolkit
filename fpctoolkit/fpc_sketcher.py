@@ -52,7 +52,7 @@ base_encut = 800
 base_ediff = 0.000001
 base_structure = Perovskite(supercell_dimensions = [2, 2, 2], lattice=[[8.0, 0.0, 0.0], [0.0, 8.0, 0.0], [0.0, 0.0, 8.0]], species_list=['Ba', 'Ti', 'O'])
 
-convergence_encuts_list = [500]
+convergence_encuts_list = []
 
 encut_convergence_set_path = Path.join(convergence_base_path, 'encut_convergence_set')
 Path.make(encut_convergence_set_path)
@@ -67,7 +67,7 @@ for encut in convergence_encuts_list:
 	vasp_run = VaspRun(run_path, input_set=input_set)
 
 	vasp_run.update()
-	print vasp_run
+	#print vasp_run
 	vasp_run.view()
 
 
@@ -77,3 +77,8 @@ for encut in convergence_encuts_list:
 # print outcar.energy
 # print outcar.get_number_of_atoms()
 # print outcar.energy_per_atom
+
+lattice = Lattice(a=[4.0, 0.0, 0.0], b=[0.0, 4.0, 0.0], c=[0.0, 0.0, 4.0])
+
+print lattice.strain([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])
+print lattice.strain([1.0, 1.0, 1.0, 0.0, 0.0, 0.0])

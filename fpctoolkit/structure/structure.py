@@ -111,3 +111,5 @@ class Structure(object):
 			if site['coordinate_mode'] == 'Cartesian':
 				site['coordinate_mode'] = 'Direct'
 				site['position'] = Vector.get_in_direct_coordinates(site['position'], self.lattice).to_list()
+
+	
