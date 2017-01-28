@@ -8,6 +8,7 @@ from fpctoolkit.io.vasp.poscar import Poscar
 from fpctoolkit.io.vasp.kpoints import Kpoints
 from fpctoolkit.util.path import Path
 from fpctoolkit.util.queue_adapter import QueueAdapter
+import fpctoolkit.util.string_util as su
 
 class VaspRun(object):
 	"""
@@ -18,14 +19,23 @@ class VaspRun(object):
 	however, an error handler that gives updates based on
 	the outcar errors present.
 
+	Can use special_handler if you want to use a custom error handler class (must be child class of VaspHandler class)
 	"""
 
-	def __init__(self, path, structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None, input_set=None):
+	log_path = ".log"
+
+	def __init__(self, path, structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None, input_set=None, special_handler=None, verbose=True):
 		"""
 		If path directory already exists, load run saved in path, otherwise, files must exist as arguments
 
 		"""
 		self.path = Path.clean(path)
+		self.verbose = verbose
+
+		if special_handler:
+			self.handler = special_handler
+		else:
+			pass #self.handler = VaspHandler()
 
 		if input_set:
 			structure = input_set.structure
@@ -45,18 +55,24 @@ class VaspRun(object):
 		if Path.exists(self.path) and not Path.is_empty(self.path):
 			#We're in a directory with files in it - see if there's an old run to load
 			if Path.exists(self.get_save_path()):
+				self.log("Run path exists and a saved run file exists.")
 				self.load()
 			else:
 				#Directory has files in it but no saved VaspRun. This case is not yet supported
-				raise Exception("temporory here - load not supported in this way yet")
+				self.log("Files present in run directory but no run to load. Not yet supported.", raise_exception=True)
 		else:
 			Path.make(self.path)
+
+			self.log("Directory at run path did not exist or was empty. Created directory.")
+
 			self.setup() #writes input files into self.path
 
 	def setup(self):
 		"""
 		Simply write files to path
 		"""
+
+		self.log("Writing input files to path.")
 
 		self.structure.to_poscar_file_path(Path.clean(self.path, 'POSCAR'))
 		self.incar.write_to_path(Path.clean(self.path, 'INCAR'))
@@ -67,22 +83,42 @@ class VaspRun(object):
 		#don't...put in consistency checks here (modify submit script, lreal, potcar and poscar consistent, ...)
 
 	def update(self):
-		"""Returns true if run is completed"""
+		"""Returns True if run is completed"""
 		
+		self.log("Updating run")
+
 		#only if there is not job_id_string associated with this run should we start the run
 		if not self.job_id_string:
+			self.log("No job id stored in this run.")
 			self.start()
 
 			return False
 
 		#check if run is complete
 		if self.complete:
+			self.log("Run is complete.")
 			return True
 
 		#check status on queue:
 		#if running, check for runtime errors using handler
 		#if queued, return false
 		#if not on queue, run failed - check for errors using handler
+
+		queue_status = self.queue_properties['status']
+
+		if queue_status == QueueStatus.queued:
+			self.log("Job is on queue waiting.")
+			return False
+		elif queue_status == QueueStatus.running:
+			self.log("Job is on queue running. Queue properties: " + str(self.queue_properties))
+
+			#use handler to check for run time errors here
+		else:
+			self.log("Run is neither active on queue nor complete. An error must have occured.")
+
+			#use handler to check for errors here
+
+		self.log("")
 
 
 
@@ -91,13 +127,15 @@ class VaspRun(object):
 	def start(self):
 		"""Submit the calculation at self.path"""
 
+		self.log("Submitting a new job to queue.")
+
 		#Remove all output files here!!! Maybe store in hidden archived folder?####################???????????????????????????????????????????????????????????????????????????????????????????
 		#also, check that this run doesn't already have a job on queue associated with it!
 
 		self.job_id_string = QueueAdapter.submit_job(self.path)
 
 		if not self.job_id_string:
-			raise Exception("Tried to start vasp run but an active job is already associated with its path")
+			self.log("Tried to start vasp run but an active job is already associated with its path.", raise_exception=True)
 
 		self.save() #want to make sure we save here so tracking of job id isn't lost
 
@@ -123,6 +161,13 @@ class VaspRun(object):
 		else:
 			return False
 
+	@property
+	def queue_properties(self):
+		if not job_id_string:
+			return None
+		else:
+			return QueueAdapter.get_job_properties_from_id_string(self.job_id_string)
+
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)
 
@@ -133,6 +178,8 @@ class VaspRun(object):
 	def save(self):
 		"""Saves class to pickled file at {self.path}/.run_pickle
 		"""
+
+		self.log("Saving run")
 
 		#We don't want to waste space with storing full potcars - just store basenames and recreate on loading
 		self.potcar_minimal_form = self.potcar.get_minimal_form()
@@ -147,12 +194,17 @@ class VaspRun(object):
 
 		self.potcar = stored_potcar
 
+		self.log("Save successful")
+
 	def load(self,load_path=None):
+
+		self.log("Loading run")
+
 		if not load_path:
 			load_path = self.get_save_path()
 
 		if not Path.exists(load_path):
-			raise Exception("Load file path does not exist: " + load_path)
+			self.log("Load file path does not exist: " + load_path, raise_exception=True)
 
 		file = open(load_path, 'r')
 		data_pickle = file.read()
@@ -165,9 +217,27 @@ class VaspRun(object):
 			self.potcar = Potcar(minimal_form=self.potcar_minimal_form)
 			del self.potcar_minimal_form
 
+		self.log("Load successful")
 
+	def log(self, log_string, raise_exception=False):
+		"""Tracks the output of the run, logging either to stdout or a local path file or both"""
 
+		log_string = log_string.rstrip('\n') + '\n'
 
+		if self.verbose:
+			print log_string,
+
+		log_string_with_time_stamp = su.get_time_stamp_string() + " || " + log_string
+
+		if not Path.exists(VaspRun.log_path):
+			File.touch(self.get_extended_path(VaspRun.log_path))
+
+		log_file = File(self.get_extended_path(VaspRun.log_path))
+		log_file.append(log_string_with_time_stamp)
+		log_file.write_to_path()
+
+		if raise_exception:
+			raise Exception(log_string)
 
 	def view(self, files_to_view=['Potcar', 'Kpoints', 'Incar', 'Poscar', 'Contcar', 'Submit.sh', '_JOB_OUTPUT.txt']):
 		"""

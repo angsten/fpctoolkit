@@ -187,3 +187,12 @@ class File(object):
 
 		return concatenated_file
 
+
+	@staticmethod
+	def touch(file_path):
+		"""Same as unix command touch - creates empty file at file_path if file does not already exists"""
+
+		if not Path.exists(file_path):
+			file = File()
+			file.write_to_path(file_path)
+
