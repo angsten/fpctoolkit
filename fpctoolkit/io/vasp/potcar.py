@@ -51,9 +51,6 @@ class Potcar(File):
 
 			self.lines = concatenated_file.lines
 
-	def __str__(self):
-		return " ".join(self.get_basenames_list()) + '\n'
-
 	def get_titles(self):
 		"""Returns list like ['PAW Ba_sv 17Apr2000', 'PAW Ti_sv 26Sep2005', 'PAW O 22Mar2012']"""
 

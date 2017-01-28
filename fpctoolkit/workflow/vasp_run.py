@@ -251,7 +251,7 @@ class VaspRun(object):
 		head_string = "==> "
 		file_separator = 30*"-"
 		output_string = ""
-		output_string += "\n" + 30*"-" + "VaspRun View: Job ID is " + str(self.job_id_string) + 10*"-" + "\n"
+		output_string += "\n" + 30*"-" + "VaspRun View: Job ID is " + str(self.job_id_string) + 30*"-" + "\n"
 		output_string += head_string + "Path: " + self.path + "\n"
 
 		for file_name in files_to_view:
@@ -264,11 +264,15 @@ class VaspRun(object):
 			file_path = self.get_extended_path(actual_file_name)
 
 			if actual_file_name.upper() == 'POTCAR':
-				file = Potcar(file_path)
+				potcar = Potcar(file_path)
+				file_string = " ".join(potcar.get_basenames_list())
 			else:
 				file = File(file_path)
+				file_string = str(file)
 
-			output_string += head_string + actual_file_name + ":\n" + file_separator + "\n" + file + file_separator + "\n"
+			output_string += head_string + actual_file_name + ":\n" + file_separator + "\n" + file_string + file_separator + "\n"
+
+		output_string += "\n" + 30*"-" + "End VaspRun View for Job ID " + str(self.job_id_string) + 30*"-" + "\n\n"
 
 		print output_string,
 
