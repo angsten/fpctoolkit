@@ -112,7 +112,7 @@ class VaspRun(object):
 
 		if queue_status == QueueStatus.queued:
 			self.log("Job is on queue waiting.")
-			
+
 		elif queue_status == QueueStatus.running:
 			self.log("Job is on queue running. Queue properties: " + str(self.queue_properties))
 
@@ -251,7 +251,7 @@ class VaspRun(object):
 		head_string = "==> "
 		file_separator = 30*"-"
 		output_string = ""
-		output_string += 10*"-" + "VaspRun View: Job ID is " + str(self.job_id_string) + 10*"-" + "\n"
+		output_string += "\n" + 30*"-" + "VaspRun View: Job ID is " + str(self.job_id_string) + 10*"-" + "\n"
 		output_string += head_string + "Path: " + self.path + "\n"
 
 		for file_name in files_to_view:
@@ -278,7 +278,7 @@ class VaspRun(object):
 		file_separator = 30*"-"
 		output_string = ""
 
-		output_string += 10*"-" + "VaspRun: Job ID is " + str(self.job_id_string) + 10*"-" + "\n"
+		output_string += "\n" + 10*"-" + "VaspRun: Job ID is " + str(self.job_id_string) + 10*"-" + "\n"
 		output_string += head_string + "Path: " + self.path + "\n"
 		output_string += head_string + "Potcar: " + " ".join(self.potcar.get_titles()) + "\n"
 		output_string += head_string + "Kpoints:\n" + file_separator + "\n" + str(self.kpoints) + file_separator + "\n"
