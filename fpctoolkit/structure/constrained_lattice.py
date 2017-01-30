@@ -1,49 +1,20 @@
-import copy
 
-import numpy as np
 
-class Lattice(object):
-	"""Abstract lattice class (2D array)
+from fpctoolkit.structure.lattice import Lattice
 
-	a, b, c attributes are access the three lattice vectors
+class ConstrainedLattice(Lattice):
+	"""Lattice with mechanical constraints
+
+	Example: (100) epitaxy requires sqaure lattice (a and b constant).
+	This class raises an exception if these two lattice vectors change.
+	For this example, constraint vector would be [True, True, False]
 	"""
-
-	def __init__(self, lattice=None, a=None, b=None, c=None):
+	def __init__(self, lattice=None, a=None, b=None, c=None, constraint_vector=[False, False, False]):
 		"""Lattice can be a Lattice instance or a 2D array"""
 
-		if lattice:
-			self.from_2D_array(lattice)
-		else:
-			self.a = a
-			self.b = b
-			self.c = c
+		super(ConstrainedLattice, self).__init__(lattice, a, b, c)
 
-	def __str__(self):
-		return " ".join(str(x) for x in self.a) + '\n' + " ".join(str(x) for x in self.b) + '\n' + " ".join(str(x) for x in self.c) + '\n'
-
-
-	def __getitem__(self, key):
-		if isinstance(key, int) and key >= 0 and key <= 2:
-			if key == 0:
-				return self.a
-			elif key == 1:
-				return self.b
-			elif key == 2:
-				return self.c
-		else:
-			raise KeyError
-
-	def from_2D_array(self, array):
-		self.a = array[0]
-		self.b = array[1]
-		self.c = array[2]
-
-	def to_array(self):
-		return [self.a, self.b, self.c]
-
-	@property
-	def np_array(self):
-		return np.array(self.to_array())
+		self.constraint_vector = constraint_vector
 
 	def randomly_strain(self, stdev, mask_array=[[1.0, 1.0, 1.0], [1.0, 1.0, 1.0], [1.0, 1.0, 1.0]]):
 		"""

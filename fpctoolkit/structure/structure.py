@@ -77,11 +77,12 @@ class Structure(object):
 
 
 	def randomly_displace_site_positions(self, stdev, mean=0.0):
-		"""Randomly displace all sites in separate random directions with
+		"""
+		Randomly displace all sites in separate random directions with
 		dipslacement magnitude governed by a normal distribution.
 		!!Parameters are given in angstroms!!
 		These will be converted to direct coordinates for sites represented
-		in direct coordinates.
+		in direct coordinates. Modifies self.
 		"""
 
 		for site in self.sites:
@@ -115,12 +116,12 @@ class Structure(object):
 
 	def get_supercell(self, supercell_dimensions_list):
 		"""
-		Returns new structure that is a supercell of this structure
+		Returns new structure that is a supercell of this structure (self)
 		Argument supercell_dimensions_list looks like [1,3,4]
 		"""
 
 		if not len(supercell_dimensions_list) == 3:
-			raise Exception("supercell_dimensions_list must be of length 3")
+			raise Exception("Argument supercell_dimensions_list must be of length 3")
 
 		for dimension in supercell_dimensions_list:
 			if not int(dimension) == dimension:

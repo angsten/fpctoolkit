@@ -92,6 +92,14 @@ for encut in convergence_encuts_list:
 # lattice.randomly_strain(0.1, mask_array=[[1.0, 0.0, 2.0], [0.0, 1.0, 2.0], [0.0, 0.0, 1.0]]) #for (100) epitaxy
 # print lattice
 
-structure = Structure(file_path = "C:/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar/poscar_small")
 
-structure.get_supercell([2,1,1])
+
+structure = Structure(file_path = "C:/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar/poscar_small")
+print structure
+
+structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\orig.vasp")
+
+structure = structure.get_supercell([2,3,4])
+
+print structure
+structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\super.vasp")
