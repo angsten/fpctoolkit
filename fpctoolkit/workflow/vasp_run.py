@@ -251,7 +251,7 @@ class VaspRun(object):
 		head_string = "==> "
 		file_separator = 30*"-"
 		output_string = ""
-		output_string += "\n\n\n" + 30*"-" + "VaspRun View: Job ID is " + str(self.job_id_string) + 30*"-" + 40*"*" "\n\n\n"
+		output_string += "\n\n\n" + 30*"-" + "VaspRun View: Job ID is " + str(self.job_id_string) + 30*"-" + 40*"*" + "\n\n\n"
 		output_string += head_string + "Path: " + self.path + "\n"
 
 		for file_name in files_to_view:
