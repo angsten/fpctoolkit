@@ -30,6 +30,7 @@ class VaspRun(object):
 
 		"""
 		self.path = Path.clean(path)
+		self.verbose = verbose
 
 		if special_handler:
 			self.handler = special_handler
@@ -66,7 +67,7 @@ class VaspRun(object):
 
 			self.setup() #writes input files into self.path
 
-		self.verbose = verbose #don't want this to be a loadable property
+		self.verbose = verbose #don't want this to be a loadable property - reset here
 
 	def setup(self):
 		"""
