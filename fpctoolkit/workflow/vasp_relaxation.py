@@ -25,6 +25,7 @@ class VaspRelaxation(VaspRunSet):
 		
 		self.path = Path.clean(path)
 		self.verbose = verbose
+		self.run_count = 0
 
 		if external_relaxation_count < 0:
 			raise Exception("Must have one or more external relaxations")
@@ -36,19 +37,13 @@ class VaspRelaxation(VaspRunSet):
 		self.vasp_run_list = []
 
 		if Path.exists(self.path) and not Path.is_empty(self.path):
-			#We're in a non-empty directory. See if there's an old relaxation to load
+			#self.path is a non-empty directory. See if there's an old relaxation to load
 			if Path.exists(self.get_save_path()):
 				self.load()
 			else: #Directory has files in it but no saved VaspRelaxation. This case is not yet supported
 				raise Exception("Files present in relaxation directory but no run to load. Not yet supported.")
-		else:
+		else: #self.path is either an empty directory or does not exist
 			Path.make(self.path)
-
-			self.log("Directory at run path did not exist or was empty. Created directory.")
-
-			self.setup() #writes input files into self.path
-
-
 
 	def start(self):
 		run_path = Path.join(encut_convergence_set_path, str(encut))
@@ -68,10 +63,18 @@ class VaspRelaxation(VaspRunSet):
 	def load(self):
 		pass
 
+	def get_next_path(self):
+		"""
+		Returns relax_1 if no relaxes, returns relax_4 if three other relaxes exist,
+		returns static if self.run_count == 
+
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)
 
 	def get_save_path(self):
 		return self.get_extended_path(".relaxation_pickle")
+
+	def get_current_vasp_run(self):
+		return self.vasp_run_list[self.run_count]
 
 
