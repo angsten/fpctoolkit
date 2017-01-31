@@ -265,7 +265,7 @@ class VaspRun(object):
 
 			if actual_file_name.upper() == 'POTCAR':
 				potcar = Potcar(file_path)
-				file_string = " ".join(potcar.get_basenames_list())
+				file_string = " ".join(potcar.get_basenames_list()) + '\n'
 			else:
 				file = File(file_path)
 				file_string = str(file)
