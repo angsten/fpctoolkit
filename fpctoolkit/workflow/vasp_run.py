@@ -67,8 +67,6 @@ class VaspRun(object):
 
 			self.setup() #writes input files into self.path
 
-		self.verbose = verbose #don't want this to be a loadable property - reset here
-
 	def setup(self):
 		"""
 		Simply write files to path
@@ -200,6 +198,7 @@ class VaspRun(object):
 		self.log("Save successful")
 
 	def load(self,load_path=None):
+		previous_verbose = self.verbose
 
 		self.log("Loading run")
 
@@ -214,6 +213,7 @@ class VaspRun(object):
 		file.close()
 
 		self.__dict__ = cPickle.loads(data_pickle)
+		self.verbose = previous_verbose #so this can be overridden upon init
 
 		#restore the full potcar from the basenames that were saved
 		if self.potcar_minimal_form:
