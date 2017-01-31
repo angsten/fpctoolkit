@@ -33,8 +33,10 @@ class VaspRelaxation(VaspRunSet):
 		if external_relaxation_count < 0:
 			raise Exception("Must have one or more external relaxations")
 
+		self.initial_structure = initial_structure
 		self.external_relaxation_count = external_relaxation_count
 		self.kpoint_schemes = ParameterList(kpoint_schemes_list)
+		self.kpoint_subdivisions_lists = ParameterList(kpoint_subdivisions_lists)
 		self.incar_modifiers
 
 		self.vasp_run_list = []
@@ -51,7 +53,7 @@ class VaspRelaxation(VaspRunSet):
 	def create_next_run(self):
 		run_path = self.get_next_run_path()
 
-		kpoints = Kpoints(scheme_string=self.kpoint_schemes[self.run_count], subdivisions_list=base_kpoints_subdivisions_list)
+		kpoints = Kpoints(scheme_string=self.kpoint_schemes[self.run_count], subdivisions_list=self.kpoint_subdivisions_lists[self.run_count])
 		incar = IncarMaker.get_static_incar({'ediff':base_ediff, 'encut':encut})
 		input_set = VaspInputSet(base_structure, kpoints, incar)
 
@@ -60,7 +62,7 @@ class VaspRelaxation(VaspRunSet):
 
 	def update(self):
 
-		if self.run_count == 0 or self.get_current_vasp_run.complete:
+		if self.run_count == 0 or self.get_current_vasp_run().complete:
 			self.create_next_run()
 
 
@@ -68,6 +70,17 @@ class VaspRelaxation(VaspRunSet):
 
 	def load(self):
 		pass
+
+	def get_next_structure(self):
+		"""If first relax, return self.initial_structure, else, get the contcar from the current run"""
+		contcar_path = Path.join(self.get_current_run_path, 'CONTCAR')
+
+		if not Path.exists(contcar_path):
+			raise Exception("Method get_next_structure called, but Contcar for current run doesn't exist")
+		elif not self.get_current_vasp_run().complete:
+			raise Exception("Method get_next_structure called, but current run is not yet complete")
+
+		return Structure()
 
 	def get_next_run_path(self):
 		return self.get_extended_path(self.get_next_run_path_basename)

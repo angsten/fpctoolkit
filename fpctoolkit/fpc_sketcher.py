@@ -52,7 +52,7 @@ base_encut = 800
 base_ediff = 0.000001
 base_structure = Perovskite(supercell_dimensions = [2, 2, 2], lattice=[[8.0, 0.0, 0.0], [0.0, 8.0, 0.0], [0.0, 0.0, 8.0]], species_list=['Ba', 'Ti', 'O'])
 
-convergence_encuts_list = []
+convergence_encuts_list = [100]
 
 encut_convergence_set_path = Path.join(convergence_base_path, 'encut_convergence_set')
 Path.make(encut_convergence_set_path)
@@ -94,12 +94,12 @@ for encut in convergence_encuts_list:
 
 
 
-structure = Structure(file_path = "C:/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar/poscar_small")
-print structure
+# structure = Structure(file_path = "C:/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar/poscar_small")
+# print structure
 
-structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\orig.vasp")
+# structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\orig.vasp")
 
-structure = structure.get_supercell([2,3,4])
+# structure = structure.get_supercell([2,3,4])
 
-print structure
-structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\super.vasp")
+# print structure
+# structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\super.vasp")

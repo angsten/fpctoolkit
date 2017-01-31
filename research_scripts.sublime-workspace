@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"pre",
+				"previous_verbose"
+			],
+			[
 				"param",
 				"parameter_list"
 			],
@@ -182,10 +186,6 @@
 			[
 				"outp",
 				"output_dictionary"
-			],
-			[
-				"pre",
-				"previous_id_string"
 			],
 			[
 				"Que",
@@ -461,7 +461,7 @@
 			"file": "fpctoolkit/workflow/vasp_run.py",
 			"settings":
 			{
-				"buffer_size": 9480,
+				"buffer_size": 9585,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -693,9 +693,6 @@
 	[
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow"
 	],
@@ -997,7 +994,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -1092,15 +1089,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9480,
+						"buffer_size": 9585,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7880,
-								7880
+								2432,
+								2432
 							]
 						],
 						"settings":
@@ -1109,10 +1106,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1764.0,
+						"translation.y": 290.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -1140,7 +1137,7 @@
 						"translation.y": 504.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -1168,7 +1165,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{

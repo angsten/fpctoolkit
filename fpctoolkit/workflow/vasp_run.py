@@ -3,9 +3,6 @@ import cPickle
 from fpctoolkit.io.file import File
 from fpctoolkit.io.vasp.outcar import Outcar
 from fpctoolkit.io.vasp.potcar import Potcar
-from fpctoolkit.io.vasp.incar import Incar
-from fpctoolkit.io.vasp.poscar import Poscar
-from fpctoolkit.io.vasp.kpoints import Kpoints
 from fpctoolkit.util.path import Path
 from fpctoolkit.util.queue_adapter import QueueAdapter, QueueStatus
 import fpctoolkit.util.string_util as su
