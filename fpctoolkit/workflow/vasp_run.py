@@ -26,13 +26,17 @@ class VaspRun(object):
 		If path directory already exists, load run saved in path, otherwise, files must exist as arguments
 
 		"""
+
+		##Non-loaded parameters
 		self.path = Path.clean(path)
 		self.verbose = verbose
+		##
 
 		if special_handler:
 			self.handler = special_handler
 		else:
 			pass #self.handler = VaspHandler()
+
 
 		if input_set:
 			structure = input_set.structure
@@ -197,6 +201,7 @@ class VaspRun(object):
 		self.log("Save successful")
 
 	def load(self,load_path=None):
+		prevoius_path = self.path
 		previous_verbose = self.verbose
 
 		self.log("Loading run")
@@ -213,6 +218,7 @@ class VaspRun(object):
 
 		self.__dict__ = cPickle.loads(data_pickle)
 		self.verbose = previous_verbose #so this can be overridden upon init
+		self.path = previous_path #in case run is moved
 
 		#restore the full potcar from the basenames that were saved
 		if self.potcar_minimal_form:
