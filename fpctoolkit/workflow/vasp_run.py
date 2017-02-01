@@ -127,8 +127,8 @@ class VaspRun(object):
 
 		self.log("Submitting a new job to queue.")
 
-		#Remove all output files here!!! Maybe store in hidden archived folder?####################???????????????????????????????????????????????????????????????????????????????????????????
-		#also, check that this run doesn't already have a job on queue associated with it!
+		#Remove all output files here!!! Maybe store in hidden archived folder?####################
+		self.archive_file('OUTCAR')
 
 		self.job_id_string = QueueAdapter.submit_job(self.path)
 
@@ -172,6 +172,8 @@ class VaspRun(object):
 	def get_save_path(self):
 		return self.get_extended_path(".run_pickle")
 
+	def get_archive_path(self):
+		return self.get_extended_path(".run_archive")
 
 	def save(self):
 		"""Saves class to pickled file at {self.path}/.run_pickle
@@ -218,6 +220,24 @@ class VaspRun(object):
 			del self.potcar_minimal_form
 
 		self.log("Load successful")
+
+	def archive_file(self, file_basename):
+		"""
+		Takes residual file (maybe from previous runs) and moves into self.path/.run_archive directory.
+		Useful for making sure files like outcar are removed to somewhere before starting a new run -
+		if this isn't done, could get false completes.
+		"""
+
+		file_path = self.get_extended_path(file_basename)
+		archive_file_path = Path.join(self.get_archive_path(), file_basename + '_' + su.get_time_stamp_string())
+
+		if Path.exists(file_path):
+			if not Path.exists(self.get_archive_path()): #only make archive directory if at least one file will be in it
+				Path.make(self.get_archive_path())
+
+			Path.move(file_path, archive_file_path)
+
+
 
 	def log(self, log_string, raise_exception=False):
 		"""Tracks the output of the run, logging either to stdout or a local path file or both"""

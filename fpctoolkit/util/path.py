@@ -46,6 +46,13 @@ class Path(object):
 				shutil.rmtree(path)
 
 	@staticmethod
+	def move(path_src, path_dest):
+		path_src = Path.clean(path_src)
+		path_dest = Path.clean(path_dest)
+
+		shutil.move(path_src, path_dest)
+
+	@staticmethod
 	def is_empty(path):
 		return os.listdir(path) == []
 
