@@ -17,11 +17,13 @@ class VaspRun(object):
 	the outcar errors present.
 
 	Can use special_handler if you want to use a custom error handler class (must be child class of VaspHandler class)
+
+	If wavecar_path is defined, will see if wavecar_path exists and copy the wavecar there into the current run before beginning
 	"""
 
 	log_path = ".log"
 
-	def __init__(self, path, structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None, input_set=None, special_handler=None, verbose=True):
+	def __init__(self, path, structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None, input_set=None, special_handler=None, wavecar_path=None, verbose=True):
 		"""
 		If path directory already exists, load run saved in path, otherwise, files must exist as arguments
 
@@ -50,6 +52,7 @@ class VaspRun(object):
 		self.kpoints = kpoints
 		self.potcar = potcar
 		self.submission_script_file = submission_script_file
+		self.wavecar_path = wavecar_path
 
 		self.job_id_string = None #Tracks job id associated with run on queue, looks like '35432'
 
@@ -81,7 +84,8 @@ class VaspRun(object):
 		self.potcar.write_to_path(Path.clean(self.path, 'POTCAR'))
 		self.submission_script_file.write_to_path(Path.clean(self.path, 'submit.sh'))
 
-		#don't...put in consistency checks here (modify submit script, lreal, potcar and poscar consistent, ...)
+		if self.wavecar_path and Path.exists(self.wavecar_path):
+			Path.copy(self.wavecar_path, self.get_extended_path('WAVECAR'))
 
 	def update(self):
 		"""Returns True if run is completed"""

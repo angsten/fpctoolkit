@@ -46,6 +46,13 @@ class Path(object):
 				shutil.rmtree(path)
 
 	@staticmethod
+	def copy(path_src, path_dest):
+		path_src = Path.clean(path_src)
+		path_dest = Path.clean(path_dest)
+
+		shutil.copytree(path_src, path_dest)
+
+	@staticmethod
 	def move(path_src, path_dest):
 		path_src = Path.clean(path_src)
 		path_dest = Path.clean(path_dest)

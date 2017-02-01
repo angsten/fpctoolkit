@@ -32,7 +32,7 @@ class VaspRelaxation(VaspRunSet):
 		'ediff': [0.001, 0.00001, 0.0000001],
 		'encut': [200, 400, 600, 800],
 		'isif' : [21, 33, 111]
-		#any other incar parameters as a list
+		#any other incar parameters with value as a list
 	}
 
 	"""
@@ -77,23 +77,15 @@ class VaspRelaxation(VaspRunSet):
 
 		structure = self.get_next_structure()
 		kpoints = Kpoints(scheme_string=self.kpoint_schemes[self.run_count], subdivisions_list=self.kpoint_subdivisions_lists[self.run_count])
-
-		incar_modification_dict = {} #will look like {'ediff':base_ediff, 'encut':encut, ...}
-		for key, value_list in self.incar_modifier_lists_dictionary:
-			incar_modification_dict[key] = value_list[self.run_count]
-
-		if self.run_count < external_relaxation_count:
-			incar = IncarMaker.get_external_relaxation_incar(incar_modification_dict)
-		else:
-			incar = IncarMaker.get_static_incar(incar_modification_dict)
+		incar = self.get_next_incar()
 
 		input_set = VaspInputSet(structure, kpoints, incar)
 
-		#if wavecar exists in current relax run, make sure it is copied over to next run
-		self.copy_wavecar_to_next_run
+		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose, wavecar_path=self.get_wavecar_path())
 
-		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose)
-		self.run_count += 1
+		self.vasp_run_list.append(vasp_run)
+
+		self.run_count += 1 #increment at end - this tracks how many runs have been created up to now
 
 	def update(self):
 
@@ -101,10 +93,33 @@ class VaspRelaxation(VaspRunSet):
 			self.create_next_run()
 
 
-		
+		#delete all wavecars when finished or if True is returned
 
-	def load(self):
-		pass
+	def get_next_incar(self):
+		"""
+		Returns the incar corresponding to the next run in the relaxation set
+		"""
+
+		incar_modifications_dict = {} #will look like {'ediff':base_ediff, 'encut':encut, ...}
+		for key, value_list in self.incar_modifier_lists_dictionary:
+			incar_modifications_dict[key] = value_list[self.run_count]
+
+		if self.run_count < external_relaxation_count:
+			incar = IncarMaker.get_external_relaxation_incar(incar_modifications_dict)
+		else:
+			incar = IncarMaker.get_static_incar(incar_modifications_dict)
+
+		return incar
+	
+	def get_wavecar_path(self):
+		"""
+		If lwave of current run is true, returns path to wavecar of current run, else None
+		"""
+		current_run = self.get_current_vasp_run()
+		if current_run.incar['lwave']:
+			wavecar_path = current_run.get_extended_path('WAVECAR')
+
+		return wavecar_path if Path.exists(wavecar_path) else None
 
 	def get_next_structure(self):
 		"""If first relax, return self.initial_structure, else, get the contcar from the current run"""
@@ -144,7 +159,6 @@ class VaspRelaxation(VaspRunSet):
 		else:
 			return 'relax_' + str(self.run_count)
 
-
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)
 
@@ -154,4 +168,49 @@ class VaspRelaxation(VaspRunSet):
 	def get_current_vasp_run(self):
 		return self.vasp_run_list[self.run_count]
 
+	def save(self):
+		"""
+		Saves class to pickled file at {self.path}/.relaxation_pickle
 
+		Saves all attributes except vasp_run_list - this list is recreated
+		later by saving all runs now and loading them later from the run directories. 
+		"""
+
+		save_path = self.get_save_path()
+
+		save_dictionary = {key: value for key, value in self.__dict__.items() if not key == 'vasp_run_list'}
+
+		file = open(save_path, 'w')
+		file.write(cPickle.dumps(save_dictionary))
+		file.close()
+
+		for run in self.vasp_run_list:
+			run.save()
+
+	def load(self,load_path=None):
+		previous_path = self.path
+		previous_verbose = self.verbose
+
+		if not load_path:
+			load_path = self.get_save_path()
+
+		if not Path.exists(load_path):
+			self.log("Load file path does not exist: " + load_path, raise_exception=True)
+
+		file = open(load_path, 'r')
+		data_pickle = file.read()
+		file.close()
+
+		self.__dict__ = cPickle.loads(data_pickle)
+		self.verbose = previous_verbose #so this can be overridden upon init
+		self.path = previous_path #in case relaxation is moved
+
+		saved_run_count = self.run_count
+
+		self.vasp_run_list = []
+		self.run_count = 0
+
+		for count in range(saved_run_count):
+			self.vasp_run_list.append(VaspRun(path=self.get_next_run_path()))
+
+			self.run_count += 1

@@ -483,7 +483,7 @@
 			"file": "fpctoolkit/workflow/vasp_run.py",
 			"settings":
 			{
-				"buffer_size": 10064,
+				"buffer_size": 10175,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -1018,7 +1018,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -1046,7 +1046,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -1071,10 +1071,10 @@
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 714.0,
+						"translation.y": 84.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -1103,7 +1103,7 @@
 						"translation.y": 454.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -1141,15 +1141,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10064,
+						"buffer_size": 10175,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4227,
-								4227
+								6040,
+								6040
 							]
 						],
 						"settings":
@@ -1158,10 +1158,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1317.0,
+						"translation.y": 2394.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -1190,7 +1190,7 @@
 						"translation.y": 168.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
