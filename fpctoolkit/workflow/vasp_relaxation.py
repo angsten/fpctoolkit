@@ -2,7 +2,7 @@ import collections
 
 from fpctoolkit.workflow.vasp_run import VaspRun
 from fpctoolkit.workflow.vasp_run_set import VaspRunSet
-from fpctoolkit.workflow.flexible_parameter_list import ParameterList
+from fpctoolkit.workflow.parameter_list import ParameterList
 from fpctoolkit.structure.structure import Structure
 
 class VaspRelaxation(VaspRunSet):
