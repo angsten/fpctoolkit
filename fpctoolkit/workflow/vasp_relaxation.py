@@ -4,6 +4,7 @@ from fpctoolkit.workflow.vasp_run import VaspRun
 from fpctoolkit.workflow.vasp_run_set import VaspRunSet
 from fpctoolkit.workflow.parameter_list import ParameterList
 from fpctoolkit.structure.structure import Structure
+from fpctoolkit.util.path import Path
 
 class VaspRelaxation(VaspRunSet):
 	"""
@@ -38,7 +39,7 @@ class VaspRelaxation(VaspRunSet):
 	"""
 
 
-	def __init__(self, path, initial_structure=None, external_relaxation_count=2, input_dictionary=None, incar_modifications_list=None, kpoint_subdivisions_lists=None, kpoint_schemes_list=None, verbose=True):
+	def __init__(self, path, initial_structure=None, external_relaxation_count=2, input_dictionary=None, verbose=True):
 		
 		self.path = Path.clean(path)
 		self.verbose = verbose
