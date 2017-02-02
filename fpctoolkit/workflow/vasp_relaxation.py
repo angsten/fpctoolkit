@@ -96,9 +96,12 @@ class VaspRelaxation(VaspRunSet):
 
 	def inner_update(self):
 
-		if self.run_count == 0 or self.get_current_vasp_run().complete:
+		if self.complete:
+			return True
+		elif self.run_count == 0 or self.get_current_vasp_run().complete:
 			self.create_next_run()
 
+		self.get_current_vasp_run().update()
 
 		#delete all wavecars when finished or if True is returned
 
@@ -106,6 +109,10 @@ class VaspRelaxation(VaspRunSet):
 		completed = self.inner_update()
 		self.save()
 		return completed
+
+	@property
+	def complete(self):
+		return (self.run_count == self.external_relaxation_count + 1) and self.get_current_vasp_run().complete
 
 	def get_next_incar(self):
 		"""
@@ -181,7 +188,7 @@ class VaspRelaxation(VaspRunSet):
 		return self.get_extended_path(".relaxation_pickle")
 
 	def get_current_vasp_run(self):
-		return self.vasp_run_list[self.run_count]
+		return self.vasp_run_list[self.run_count-1]
 
 	def save(self):
 		"""
@@ -202,7 +209,7 @@ class VaspRelaxation(VaspRunSet):
 		for run in self.vasp_run_list:
 			run.save()
 
-	def load(self,load_path=None):
+	def load(self, load_path=None):
 		previous_path = self.path
 		previous_verbose = self.verbose
 

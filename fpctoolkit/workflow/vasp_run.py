@@ -207,7 +207,7 @@ class VaspRun(object):
 
 		self.log("Save successful")
 
-	def load(self,load_path=None):
+	def load(self, load_path=None):
 		previous_path = self.path
 		previous_verbose = self.verbose
 
