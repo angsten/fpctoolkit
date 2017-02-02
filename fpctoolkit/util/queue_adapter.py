@@ -73,7 +73,7 @@ class QueueAdapter(object):
 	def terminate_job(id_string):
 		"""Terminates job with id id_string only if this job is active on queue"""
 
-		if self.job_id_is_active(id_string):
+		if QueueAdapter.job_id_is_active(id_string):
 			process = subprocess.Popen(['qdel', id_string], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 			output, error = process.communicate()
 
