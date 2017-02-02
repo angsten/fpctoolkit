@@ -319,9 +319,9 @@ class QueueAdapter(object):
 				raise Exception("Could not find mpiprog line in submission script (or found multiple lines)")
 
 			if modification_key == 'standard':
-				submission_file[program_line_indices[0]] = 'MYMPIPROG="${HOME}/bin/vasp_5.4.1_standard'
+				submission_file[program_line_indices[0]] = 'MYMPIPROG="${HOME}/bin/vasp_5.4.1_standard"'
 			elif modification_key == '100':
-				submission_file[program_line_indices[0]] = 'MYMPIPROG="${HOME}/bin/vasp_5.4.1_100_constrained'
+				submission_file[program_line_indices[0]] = 'MYMPIPROG="${HOME}/bin/vasp_5.4.1_100_constrained"'
 
 		elif QueueAdapter.host == 'Tom_hp':
 			return 1
@@ -329,7 +329,7 @@ class QueueAdapter(object):
 			raise Exception("QueueAdapter.host not supported")
 
 		return submission_file
-		
+
 	# file = open(script_path,'rb')
 	# lines = file.readlines()
 	# file.close()

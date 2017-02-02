@@ -86,17 +86,17 @@ class VaspRelaxation(VaspRunSet):
 	def create_next_run(self):
 		run_path = self.get_next_run_path()
 
+
 		structure = self.get_next_structure()
 		kpoints = Kpoints(scheme_string=self.kpoint_schemes[self.run_count], subdivisions_list=self.kpoint_subdivisions_lists[self.run_count])
 		incar = self.get_next_incar()
 
-		print "HelloOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO*********************************************************************************************"
 		submission_script_file = None
 		if self.submission_script_modification_keys_list:
-			print "HelloOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO*********************************************************************************************"
 			submission_script_file = QueueAdapter.modify_submission_script(QueueAdapter.get_submission_file(), self.submission_script_modification_keys_list[self.run_count])
 
 		input_set = VaspInputSet(structure, kpoints, incar, submission_script_file=submission_script_file)
+
 
 		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose, wavecar_path=self.get_wavecar_path())
 
