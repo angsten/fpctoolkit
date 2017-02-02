@@ -35,7 +35,7 @@ class VaspRelaxation(VaspRunSet):
 		'external_relaxation_count': 4		
 		'kpoint_schemes_list': ['Gamma'],
 		'kpoint_subdivisions_lists': [[1, 1, 1], [1, 1, 2], [2, 2, 4]],
-		'submission_script_modification_keys_list': ['100', 'standard', 'gamma'], #not necessary - will default to whatever queue adapter gives
+		'submission_script_modification_keys_list': ['100', 'standard', 'standard_gamma'], #not necessary - will default to whatever queue adapter gives
 		'ediff': [0.001, 0.00001, 0.0000001],
 		'encut': [200, 400, 600, 800],
 		'isif' : [21, 33, 111]
@@ -90,10 +90,13 @@ class VaspRelaxation(VaspRunSet):
 		kpoints = Kpoints(scheme_string=self.kpoint_schemes[self.run_count], subdivisions_list=self.kpoint_subdivisions_lists[self.run_count])
 		incar = self.get_next_incar()
 
+		print "HelloOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO*********************************************************************************************"
+		submission_script_file = None
 		if self.submission_script_modification_keys_list:
+			print "HelloOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO*********************************************************************************************"
 			submission_script_file = QueueAdapter.modify_submission_script(QueueAdapter.get_submission_file(), self.submission_script_modification_keys_list[self.run_count])
 
-		input_set = VaspInputSet(structure, kpoints, incar)
+		input_set = VaspInputSet(structure, kpoints, incar, submission_script_file=submission_script_file)
 
 		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose, wavecar_path=self.get_wavecar_path())
 
