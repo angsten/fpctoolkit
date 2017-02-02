@@ -248,13 +248,15 @@ class VaspRelaxation(VaspRunSet):
 		files_to_view list is case insensitive - it will find 'POSCAR' file if you input 'poscar' for instance
 		"""
 
-		print "-"*160
-		print "-"*160
-		print "-"*160
+		extend_count = 200
+
+		print "-"*extend_count
+		print "-"*extend_count
+		print "-"*extend_count
 		print "           Relaxation Run at " + self.path
-		print "-"*160
-		print "-"*160
-		print "-"*160
+		print "-"*extend_count
+		print "-"*extend_count
+		print "-"*extend_count
 
 		for run_count, run in enumerate(self.vasp_run_list):
 			run_str = ""
@@ -265,13 +267,13 @@ class VaspRelaxation(VaspRunSet):
 				run_str = "Relax_" + str(run_count + 1)
 
 			print "\n"
-			print "V"*80 + " __ " + run_str + " __ " + "V"*80
+			print "V"*80 + "__  " + run_str + "  __" + "V"*80
 			print "\n"*3
 			run.view(files_to_view)
 			print "\n"*3
-			print "^"*80 + " __ END" + run_str + " __ " + "^"*80
+			print "^"*80 + "__  END " + run_str + "  __" + "^"*80
 			print "\n"
 
-		print "o"*160
+		print "o"*extend_count
 		print "          END Relaxation Run at " + self.path
-		print "o"*160
+		print "o"*extend_count
