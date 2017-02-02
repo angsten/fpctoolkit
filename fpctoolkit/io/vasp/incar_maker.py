@@ -42,6 +42,8 @@ class IncarMaker(object):
 		if not incar['nsw'] == 0:
 			raise Exception("NSW must be 0 in a static calculation")
 
+		del incar['ediffg'] #ediffg controls ionic loop convergence - no sense having in static calculation
+
 		return incar
 
 	@staticmethod

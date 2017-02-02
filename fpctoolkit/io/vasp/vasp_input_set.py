@@ -62,6 +62,10 @@ class VaspInputSet(object):
 	def set_npar_from_number_of_cores(self):
 		self.incar['npar'] = QueueAdapter.get_optimal_npar(self.submission_script_file)
 
+	def set_node_count(self, node_count):
+		"""Sets number of nodes in submission file"""
+		QueueAdapter.set_number_of_nodes(self.submission_script_file, node_count)
+
 	def check_incar_kpoints_consistent(self):
 		"""If tetrahedron smearing is used (ismear = -5), should have gamma-centered mesh"""
 		if ('ismear' in self.incar) and (self.incar['ismear'] == -5):

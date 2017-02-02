@@ -35,7 +35,8 @@ class VaspRelaxation(VaspRunSet):
 		'external_relaxation_count': 4		
 		'kpoint_schemes_list': ['Gamma'],
 		'kpoint_subdivisions_lists': [[1, 1, 1], [1, 1, 2], [2, 2, 4]],
-		'submission_script_modification_keys_list': ['100', 'standard', 'standard_gamma'], #not necessary - will default to whatever queue adapter gives
+		'submission_script_modification_keys_list': ['100', 'standard', 'standard_gamma'], #optional - will default to whatever queue adapter gives
+		'submission_node_count_list': [1, 2],
 		'ediff': [0.001, 0.00001, 0.0000001],
 		'encut': [200, 400, 600, 800],
 		'isif' : [21, 33, 111]
@@ -57,6 +58,7 @@ class VaspRelaxation(VaspRunSet):
 		self.kpoint_subdivisions_lists = ParameterList(input_dictionary.pop('kpoint_subdivisions_lists'))
 
 		self.submission_script_modification_keys_list = ParameterList(input_dictionary.pop('submission_script_modification_keys_list')) if 'submission_script_modification_keys_list' in input_dictionary else None
+		self.submission_node_count_list = ParameterList(input_dictionary.pop('submission_node_count_list')) if 'submission_node_count_list' in input_dictionary else None
 
 		if self.external_relaxation_count < 0:
 			raise Exception("Must have one or more external relaxations")
@@ -96,6 +98,10 @@ class VaspRelaxation(VaspRunSet):
 			submission_script_file = QueueAdapter.modify_submission_script(QueueAdapter.get_submission_file(), self.submission_script_modification_keys_list[self.run_count])
 
 		input_set = VaspInputSet(structure, kpoints, incar, submission_script_file=submission_script_file)
+
+		#Override node count in submission script over the auto generated count based on atom count
+		if self.submission_node_count_list:
+			input_set.set_node_count(self.submission_node_count_list[self.run_count])
 
 
 		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose, wavecar_path=self.get_wavecar_path())

@@ -283,6 +283,22 @@ class QueueAdapter(object):
 			if num_atoms >= 160:
 				node_count = 8
 
+			submission_file = QueueAdapter.set_number_of_nodes(submission_file, node_count)
+			
+		elif QueueAdapter.host == 'Tom_hp':
+			pass
+		else:
+			raise Exception("QueueAdapter.host not supported")
+
+		return submission_file
+
+	@staticmethod
+	def set_number_of_nodes(submission_file, node_count):
+		"""
+		Modifies submission file to have node_count nodes.
+		"""
+
+		if QueueAdapter.host == 'Fenrir':
 			node_count_line_indices = submission_file.get_line_indices_containing_string("#PBS -l nodes=")
 
 			if len(node_count_line_indices) != 1:
@@ -295,6 +311,8 @@ class QueueAdapter(object):
 			raise Exception("QueueAdapter.host not supported")
 
 		return submission_file
+
+
 
 	@staticmethod
 	def get_optimal_npar(submission_file):

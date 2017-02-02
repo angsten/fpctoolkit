@@ -75,6 +75,12 @@ class Structure(object):
 	def site_count(self):
 		return len(self.sites)
 
+	def randomly_displace_site_positions(self, stdev, minimum_atomic_distance, mean=0.0):
+		"""
+		Calls randomly_displace_site_positions. Tries until no atoms are within minimum_atomic_distance of each other.
+		"""
+
+		pass
 
 	def randomly_displace_site_positions(self, stdev, mean=0.0):
 		"""
