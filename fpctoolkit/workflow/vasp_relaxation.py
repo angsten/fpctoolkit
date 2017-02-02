@@ -218,7 +218,8 @@ class VaspRelaxation(VaspRunSet):
 
 		save_path = self.get_save_path()
 
-		save_dictionary = {key: value for key, value in self.__dict__.items() if not key == 'vasp_run_list'}
+		#save_dictionary = {key: value for key, value in self.__dict__.items() if not key == 'vasp_run_list'}
+		save_dictionary = {'run_count': self.__dict__['run_count']} #############################################need to think about what to save!
 
 		file = open(save_path, 'w')
 		file.write(cPickle.dumps(save_dictionary))
@@ -241,7 +242,9 @@ class VaspRelaxation(VaspRunSet):
 		data_pickle = file.read()
 		file.close()
 
-		self.__dict__ = cPickle.loads(data_pickle)
+		load_dictionary = cPickle.loads(data_pickle) #need to think about what to save
+		self.__dict__['run_count'] = load_dictionary['run_count']
+
 		self.verbose = previous_verbose #so this can be overridden upon init
 		self.path = previous_path #in case relaxation is moved
 
