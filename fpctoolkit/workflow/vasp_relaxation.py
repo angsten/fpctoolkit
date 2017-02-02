@@ -115,7 +115,7 @@ class VaspRelaxation(VaspRunSet):
 		for key, value_list in self.incar_modifier_lists_dictionary.items():
 			incar_modifications_dict[key] = value_list[self.run_count]
 
-		if self.run_count < external_relaxation_count:
+		if self.run_count < self.external_relaxation_count:
 			incar = IncarMaker.get_external_relaxation_incar(incar_modifications_dict)
 		else:
 			incar = IncarMaker.get_static_incar(incar_modifications_dict)
