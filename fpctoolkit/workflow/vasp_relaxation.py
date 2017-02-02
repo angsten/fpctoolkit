@@ -8,6 +8,7 @@ from fpctoolkit.io.vasp.kpoints import Kpoints
 from fpctoolkit.io.vasp.incar_maker import IncarMaker
 from fpctoolkit.structure.structure import Structure
 from fpctoolkit.util.path import Path
+from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 
 class VaspRelaxation(VaspRunSet):
 	"""
