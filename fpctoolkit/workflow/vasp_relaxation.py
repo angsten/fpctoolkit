@@ -39,7 +39,7 @@ class VaspRelaxation(VaspRunSet):
 	"""
 
 
-	def __init__(self, path, initial_structure=None, external_relaxation_count=2, input_dictionary=None, verbose=True):
+	def __init__(self, path, initial_structure=None, input_dictionary=None, verbose=True):
 		
 		self.path = Path.clean(path)
 		self.verbose = verbose
