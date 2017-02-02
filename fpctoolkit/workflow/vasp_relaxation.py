@@ -112,7 +112,7 @@ class VaspRelaxation(VaspRunSet):
 		"""
 
 		incar_modifications_dict = {} #will look like {'ediff':base_ediff, 'encut':encut, ...}
-		for key, value_list in self.incar_modifier_lists_dictionary:
+		for key, value_list in self.incar_modifier_lists_dictionary.items():
 			incar_modifications_dict[key] = value_list[self.run_count]
 
 		if self.run_count < external_relaxation_count:
