@@ -306,14 +306,30 @@ class QueueAdapter(object):
 			raise Exception("QueueAdapter.host not supported")
 
 	@staticmethod
-	def modify_submission_script(script_file, modified_version, gamma=False):
-		pass
-	# 	if QueueAdapter.host == 'Fenrir':
+	def modify_submission_script(submission_file, modification_key, gamma=False):
+		"""
+		Modifies submission_file based on the given modification_key. Keys could include:
+		'100', '' with gamma = True, '100', 'standard',...etc. Any with gamma = True okay too
+		"""
 
-	# 	elif QueueAdapter.host == 'Tom_hp':
-	# 		return 1
-	# 	else:
-	# 		raise Exception("QueueAdapter.host not supported")
+		if QueueAdapter.host == 'Fenrir':
+			program_line_indices = submission_file.get_line_indices_containing_string("MYMPIPROG=")
+
+			if len(program_line_indices) != 1:
+				raise Exception("Could not find mpiprog line in submission script (or found multiple lines)")
+
+			if modification_key == 'standard':
+				submission_file[program_line_indices[0]] = 'MYMPIPROG="${HOME}/bin/vasp_5.4.1_standard'
+			elif modification_key == '100':
+				submission_file[program_line_indices[0]] = 'MYMPIPROG="${HOME}/bin/vasp_5.4.1_100_constrained'
+
+		elif QueueAdapter.host == 'Tom_hp':
+			return 1
+		else:
+			raise Exception("QueueAdapter.host not supported")
+
+		return submission_file
+		
 	# file = open(script_path,'rb')
 	# lines = file.readlines()
 	# file.close()

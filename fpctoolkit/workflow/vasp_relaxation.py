@@ -9,6 +9,7 @@ from fpctoolkit.io.vasp.incar_maker import IncarMaker
 from fpctoolkit.structure.structure import Structure
 from fpctoolkit.util.path import Path
 from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
+from fpctoolkit.util.queue_adapter import QueueAdapter, QueueStatus
 
 class VaspRelaxation(VaspRunSet):
 	"""
@@ -34,6 +35,7 @@ class VaspRelaxation(VaspRunSet):
 		'external_relaxation_count': 4		
 		'kpoint_schemes_list': ['Gamma'],
 		'kpoint_subdivisions_lists': [[1, 1, 1], [1, 1, 2], [2, 2, 4]],
+		'submission_script_modification_keys_list': ['100', 'standard', 'gamma'], #not necessary - will default to whatever queue adapter gives
 		'ediff': [0.001, 0.00001, 0.0000001],
 		'encut': [200, 400, 600, 800],
 		'isif' : [21, 33, 111]
@@ -53,6 +55,8 @@ class VaspRelaxation(VaspRunSet):
 		self.external_relaxation_count = input_dictionary.pop('external_relaxation_count')
 		self.kpoint_schemes = ParameterList(input_dictionary.pop('kpoint_schemes_list'))
 		self.kpoint_subdivisions_lists = ParameterList(input_dictionary.pop('kpoint_subdivisions_lists'))
+
+		self.submission_script_modification_keys_list = ParameterList(input_dictionary.pop('submission_script_modification_keys_list')) if 'submission_script_modification_keys_list' in input_dictionary else None
 
 		if self.external_relaxation_count < 0:
 			raise Exception("Must have one or more external relaxations")
@@ -85,6 +89,9 @@ class VaspRelaxation(VaspRunSet):
 		structure = self.get_next_structure()
 		kpoints = Kpoints(scheme_string=self.kpoint_schemes[self.run_count], subdivisions_list=self.kpoint_subdivisions_lists[self.run_count])
 		incar = self.get_next_incar()
+
+		if self.submission_script_modification_keys_list:
+			submission_script_file = QueueAdapter.modify_submission_script(QueueAdapter.get_submission_file(), self.submission_script_modification_keys_list[self.run_count])
 
 		input_set = VaspInputSet(structure, kpoints, incar)
 
@@ -250,6 +257,7 @@ class VaspRelaxation(VaspRunSet):
 
 		extend_count = 200
 
+		print "\n"*5
 		print "-"*extend_count
 		print "-"*extend_count
 		print "-"*extend_count
@@ -277,3 +285,5 @@ class VaspRelaxation(VaspRunSet):
 		print "o"*extend_count
 		print "          END Relaxation Run at " + self.path
 		print "o"*extend_count
+
+		print "\n"*2
