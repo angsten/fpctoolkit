@@ -127,6 +127,9 @@ class VaspRelaxation(VaspRunSet):
 		"""
 		If lwave of current run is true, returns path to wavecar of current run, else None
 		"""
+		if self.run_count == 0:
+			return None
+
 		current_run = self.get_current_vasp_run()
 		if current_run.incar['lwave']:
 			wavecar_path = current_run.get_extended_path('WAVECAR')
