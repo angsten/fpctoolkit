@@ -146,7 +146,7 @@ class VaspRelaxation(VaspRunSet):
 		return Structure(current_contcar_path)
 
 	def get_next_run_path(self):
-		return self.get_extended_path(self.get_next_run_path_basename)
+		return self.get_extended_path(self.get_next_run_path_basename())
 
 	def get_next_run_path_basename(self):
 		"""
@@ -160,7 +160,7 @@ class VaspRelaxation(VaspRunSet):
 			return 'relax_' + str(self.run_count + 1)
 
 	def get_current_run_path(self):
-		return self.get_extended_path(self.get_current_run_path_basename)
+		return self.get_extended_path(self.get_current_run_path_basename())
 
 	def get_current_run_path_basename(self):
 		if self.run_count == self.external_relaxation_count:
