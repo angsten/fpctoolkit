@@ -50,7 +50,10 @@ class Path(object):
 		path_src = Path.clean(path_src)
 		path_dest = Path.clean(path_dest)
 
-		shutil.copytree(path_src, path_dest)
+		if os.path.isdir(path_src):
+			shutil.copytree(path_src, path_dest)
+		else:
+			shutil.copy(path_src, path_dest)
 
 	@staticmethod
 	def move(path_src, path_dest):

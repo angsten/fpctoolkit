@@ -186,6 +186,10 @@ class VaspRun(object):
 	def get_archive_path(self):
 		return self.get_extended_path(".run_archive")
 
+
+
+
+
 	def save(self):
 		"""Saves class to pickled file at {self.path}/.run_pickle
 		"""
