@@ -190,6 +190,8 @@ class VaspRelaxation(VaspRunSet):
 	def get_current_vasp_run(self):
 		return self.vasp_run_list[self.run_count-1]
 
+
+
 	def save(self):
 		"""
 		Saves class to pickled file at {self.path}/.relaxation_pickle
@@ -236,3 +238,18 @@ class VaspRelaxation(VaspRunSet):
 			self.vasp_run_list.append(VaspRun(path=self.get_next_run_path()))
 
 			self.run_count += 1
+
+
+	def view(self, files_to_view=['Potcar', 'Kpoints', 'Incar', 'Poscar', 'Contcar', 'Submit.sh', '_JOB_OUTPUT.txt']):
+		"""
+		See printing of actual text input files written in run directories, not internally stored input files.
+		Useful for validating runs.
+
+		files_to_view list is case insensitive - it will find 'POSCAR' file if you input 'poscar' for instance
+		"""
+
+
+		for run in self.vasp_run_list:
+			print "V"*80
+			run.view(files_to_view)
+			print "^"*80
