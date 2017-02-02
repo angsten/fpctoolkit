@@ -89,7 +89,7 @@ class VaspRun(object):
 		if self.wavecar_path and Path.exists(self.wavecar_path):
 			Path.copy(self.wavecar_path, self.get_extended_path('WAVECAR'))
 
-	def run_update(self):
+	def inner_update(self):
 		"""Returns True if run is completed"""
 		
 		self.log("Updating run")
@@ -131,7 +131,7 @@ class VaspRun(object):
 		return False
 
 	def update(self):
-		completed = self.run_update()
+		completed = self.inner_update()
 		self.save()
 		return completed
 

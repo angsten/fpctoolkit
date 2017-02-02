@@ -91,13 +91,18 @@ class VaspRelaxation(VaspRunSet):
 
 		self.run_count += 1 #increment at end - this tracks how many runs have been created up to now
 
-	def update(self):
+	def inner_update(self):
 
 		if self.run_count == 0 or self.get_current_vasp_run().complete:
 			self.create_next_run()
 
 
 		#delete all wavecars when finished or if True is returned
+
+	def update(self):
+		completed = self.inner_update()
+		self.save()
+		return completed
 
 	def get_next_incar(self):
 		"""
