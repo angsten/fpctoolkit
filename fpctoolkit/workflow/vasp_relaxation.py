@@ -149,8 +149,8 @@ class VaspRelaxation(VaspRunSet):
 		if self.run_count == 0:
 			return self.initial_structure
 
-		current_contcar_path = Path.join(self.get_current_run_path(), 'CONTCAR')
-
+		current_contcar_path = self.get_current_vasp_run().get_extended_path('CONTCAR')
+		print current_contcar_path
 		if not Path.exists(current_contcar_path):
 			raise Exception("Method get_next_structure called, but Contcar for current run doesn't exist")
 		elif not self.get_current_vasp_run().complete:
