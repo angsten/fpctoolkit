@@ -71,6 +71,8 @@ class VaspRun(object):
 
 			self.setup() #writes input files into self.path
 
+		self.save()
+
 	def setup(self):
 		"""
 		Simply write files to path
@@ -87,7 +89,7 @@ class VaspRun(object):
 		if self.wavecar_path and Path.exists(self.wavecar_path):
 			Path.copy(self.wavecar_path, self.get_extended_path('WAVECAR'))
 
-	def update(self):
+	def run_update(self):
 		"""Returns True if run is completed"""
 		
 		self.log("Updating run")
@@ -96,7 +98,6 @@ class VaspRun(object):
 		if not self.job_id_string:
 			self.log("No job id stored in this run.")
 			self.start()
-
 			return False
 
 		#check if run is complete
@@ -127,8 +128,12 @@ class VaspRun(object):
 
 			#use handler to check for errors here
 
-
 		return False
+
+	def update(self):
+		completed = self.run_update()
+		self.save()
+		return completed
 
 	def start(self):
 		"""Submit the calculation at self.path"""
@@ -142,8 +147,6 @@ class VaspRun(object):
 
 		if not self.job_id_string:
 			self.log("Tried to start vasp run but an active job is already associated with its path.", raise_exception=True)
-
-		self.save() #want to make sure we save here so tracking of job id isn't lost
 
 	def stop(self):
 		"""If run has associated job on queue, delete this job"""

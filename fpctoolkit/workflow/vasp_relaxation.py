@@ -73,6 +73,8 @@ class VaspRelaxation(VaspRunSet):
 		else: #self.path is either an empty directory or does not exist
 			Path.make(self.path)
 
+		self.save()
+
 	def create_next_run(self):
 		run_path = self.get_next_run_path()
 

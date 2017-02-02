@@ -10,10 +10,10 @@ class ParameterList(object):
 	change list.
 	"""
 
-	def __init__(parameter_list):
+	def __init__(self, parameter_list):
 		self._parameter_list = parameter_list
 
-	def __getitem__(index):
+	def __getitem__(self, index):
 		if (not isinstance(index, int)) or index < 0:
 			raise KeyError()
 		else:
