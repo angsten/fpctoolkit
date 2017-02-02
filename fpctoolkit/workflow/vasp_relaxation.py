@@ -1,4 +1,5 @@
 import collections
+import cPickle
 
 from fpctoolkit.workflow.vasp_run import VaspRun
 from fpctoolkit.workflow.vasp_run_set import VaspRunSet
