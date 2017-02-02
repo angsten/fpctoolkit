@@ -45,13 +45,13 @@ class VaspRelaxation(VaspRunSet):
 		self.verbose = verbose
 		self.run_count = 0 #how many runs have been initiated
 
-		if external_relaxation_count < 0:
-			raise Exception("Must have one or more external relaxations")
-
 		self.initial_structure = initial_structure
 		self.external_relaxation_count = input_dictionary.pop('external_relaxation_count')
 		self.kpoint_schemes = ParameterList(input_dictionary.pop('kpoint_schemes_list'))
 		self.kpoint_subdivisions_lists = ParameterList(input_dictionary.pop('kpoint_subdivisions_lists'))
+
+		if self.external_relaxation_count < 0:
+			raise Exception("Must have one or more external relaxations")
 
 
 		self.incar_modifier_lists_dictionary = {}
