@@ -1,8 +1,12 @@
 import cPickle
 
 from fpctoolkit.io.file import File
-from fpctoolkit.io.vasp.outcar import Outcar
+from fpctoolkit.io.vasp.kpoints import Kpoints
 from fpctoolkit.io.vasp.potcar import Potcar
+from fpctoolkit.io.vasp.poscar import Poscar
+from fpctoolkit.io.vasp.incar import Incar
+from fpctoolkit.structure.structure import Structure
+from fpctoolkit.io.vasp.outcar import Outcar
 from fpctoolkit.util.path import Path
 from fpctoolkit.util.queue_adapter import QueueAdapter, QueueStatus
 import fpctoolkit.util.string_util as su
@@ -19,26 +23,30 @@ class VaspRun(object):
 	Can use special_handler if you want to use a custom error handler class (must be child class of VaspHandler class)
 
 	If wavecar_path is defined, will see if wavecar_path exists and copy the wavecar there into the current run before beginning
+
 	"""
 
 	log_path = ".log"
 
 	def __init__(self, path, structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None, input_set=None, special_handler=None, wavecar_path=None, verbose=True):
 		"""
-		If path directory already exists, load run saved in path, otherwise, files must exist as arguments
+		Cases for __init__:
+		1. path does not exist or is empty => make the directory, enforce input file arguments all exists, write out input files to directory
+		2. path exists and is not empty
+			1. path/.job_id does not exist
+				1. path has all 5 input files already => do nothing if not all five input files exist, else overwrite current input files to directory
+				2. path does not have all 5 input files (has some subset or none) => enforce input file arguments all exists, write out input files to directory
+			2. path/.job_id exists => do nothing
 
 		"""
 
-		##Non-loaded parameters
 		self.path = Path.clean(path)
 		self.verbose = verbose
-		##
 
 		if special_handler:
 			self.handler = special_handler
 		else:
 			pass #self.handler = VaspHandler()
-
 
 		if input_set:
 			structure = input_set.structure
@@ -46,6 +54,8 @@ class VaspRun(object):
 			kpoints = input_set.kpoints
 			potcar = input_set.potcar
 			submission_script_file = input_set.submission_script_file
+
+		all_five_inputs_exist = structure and incar and kpoints and potcar and submission_script_file
 
 		self.structure = structure
 		self.incar = incar
@@ -56,6 +66,24 @@ class VaspRun(object):
 
 		self.job_id_string = None #Tracks job id associated with run on queue, looks like '35432'
 
+		self.log("In the VaspRun constructor")
+
+		if not Path.exists(self.path) or Path.is_empty(self.path):
+			if not all_five_inputs_exist:
+				raise Exception("All five vasp input files must be input for run to be initialized.")
+
+			Path.make(self.path)
+
+			self.log("Directory at run path did not exist or was empty. Created directory.")
+
+			self.setup() #writes input files into self.path
+		else:
+			if self.job_id_string():
+				self.log("Directory at run path exists and has a job id associated with it.")
+			else:
+				if not all_five_inputs_exist:
+					self.log("Directory at run path exists and has no job id associated with it.")
+
 		if Path.exists(self.path) and not Path.is_empty(self.path):
 			#We're in a directory with files in it - see if there's an old run to load
 			if Path.exists(self.get_save_path()):
@@ -65,13 +93,91 @@ class VaspRun(object):
 				#Directory has files in it but no saved VaspRun. This case is not yet supported
 				self.log("Files present in run directory but no run to load. Not yet supported.", raise_exception=True)
 		else:
-			Path.make(self.path)
-
-			self.log("Directory at run path did not exist or was empty. Created directory.")
-
-			self.setup() #writes input files into self.path
+			
 
 		self.save()
+		self.log("Exiting the VaspRun constructor")
+
+	@property
+	def job_id_string(self):
+		return QueueAdapter.get_job_id_at_path(self.path) #returns None if no .job_id file
+
+	@property
+	def initial_structure(self):
+		return Structure(self.get_extended_path('./POSCAR'))
+
+	@property
+	def current_structure(self):
+		if Path.exists(self.get_extended_path('./CONTCAR')):
+			return Structure(self.get_extended_path('./CONTCAR'))
+
+	@property
+	def final_structure(self):
+		if Path.exists(self.get_extended_path('./CONTCAR')) and self.complete:
+			return Structure(self.get_extended_path('./CONTCAR'))
+
+	@property
+	def incar(self):
+		incar_path = Path.clean(self.path, 'INCAR')
+		if Path.exists(incar_path):
+			return Incar(incar_path)
+		else:
+			return None
+
+	@property
+	def kpoints(self):
+		kpoints_path = Path.clean(self.path, 'KPOINTS')
+		if Path.exists(kpoints_path):
+			return Outcar(kpoints_path)
+		else:
+			return None
+
+	@property
+	def potcar(self):
+		potcar_path = Path.clean(self.path, 'KPOINTS')
+		if Path.exists(potcar_path):
+			return Outcar(potcar_path)
+		else:
+			return None
+
+	@property
+	def outcar(self):
+		outcar_path = Path.clean(self.path, 'OUTCAR')
+		if Path.exists(outcar_path):
+			return Outcar(outcar_path)
+		else:
+			return None
+
+
+	@property
+	def (self):
+
+	@property
+	def (self):
+
+	@property
+	def outcar(self):
+		outcar_path = Path.clean(self.path, 'OUTCAR')
+		if Path.exists(outcar_path):
+			return Outcar(outcar_path)
+		else:
+			return None
+
+	@property
+	def complete(self):
+		outcar = self.outcar
+
+		if outcar:
+			return outcar.complete
+		else:
+			return False
+
+	@property
+	def queue_properties(self):
+		if not self.job_id_string:
+			return None
+		else:
+			return QueueAdapter.get_job_properties_from_id_string(self.job_id_string)
 
 	def setup(self):
 		"""
@@ -152,30 +258,6 @@ class VaspRun(object):
 		"""If run has associated job on queue, delete this job"""
 		
 		QueueAdapter.terminate_job(self.job_id_string)
-
-	@property
-	def outcar(self):
-		outcar_path = Path.clean(self.path, 'OUTCAR')
-		if Path.exists(outcar_path):
-			return Outcar(outcar_path)
-		else:
-			return None
-
-	@property
-	def complete(self):
-		outcar = self.outcar
-
-		if outcar:
-			return outcar.complete #not necessarily sufficient! what if outcar is old! (remove output files at start)
-		else:
-			return False
-
-	@property
-	def queue_properties(self):
-		if not self.job_id_string:
-			return None
-		else:
-			return QueueAdapter.get_job_properties_from_id_string(self.job_id_string)
 
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)
