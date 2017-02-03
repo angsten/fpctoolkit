@@ -55,15 +55,13 @@ class VaspRun(object):
 			potcar = input_set.potcar
 			submission_script_file = input_set.submission_script_file
 
-		all_essential_input_parameters_exist = structure and incar and kpoints and potcar and submission_script_file
+		all_essential_input_parameters_exist = not bool(filter(lambda x: x == None, [structure, incar, kpoints, potcar, submission_script_file]))
 
 		wavecar_path = wavecar_path
 
-		self.log("In the VaspRun constructor")
-
 		if not Path.exists(self.path) or Path.is_empty(self.path):
 			if not all_essential_input_parameters_exist:
-				self.log("All five vasp input files must be input for run to be initialized.", raise_exception=True)
+				raise Exception("All five vasp input files must be input for run to be initialized.")
 			else:
 				Path.make(self.path)
 
@@ -71,7 +69,7 @@ class VaspRun(object):
 
 				self.write_input_files_to_path(structure, incar, kpoints, potcar, submission_script_file, wavecar_path) 
 		else:
-			if self.job_id_string():
+			if self.job_id_string:
 				self.log("Non-empty directory has a job id associated with it.")
 			else:
 				self.log("Non-empty directory does not have a job id associated with it.")
@@ -90,7 +88,6 @@ class VaspRun(object):
 						self.write_input_files_to_path(structure, incar, kpoints, potcar, submission_script_file, wavecar_path)
 			
 		self.save()
-		self.log("Exiting the VaspRun constructor")
 
 	def write_input_files_to_path(self, structure, incar, kpoints, potcar, submission_script_file, wavecar_path):
 		"""
@@ -325,8 +322,6 @@ class VaspRun(object):
 
 			Path.move(file_path, archive_file_path)
 
-
-
 	def log(self, log_string, raise_exception=False):
 		"""Tracks the output of the run, logging either to stdout or a local path file or both"""
 
@@ -348,7 +343,7 @@ class VaspRun(object):
 			raise Exception(log_string)
 
 
-			
+
 
 	def view(self, files_to_view=['Potcar', 'Kpoints', 'Incar', 'Poscar', 'Contcar', 'Submit.sh', '_JOB_OUTPUT.txt']):
 		"""
