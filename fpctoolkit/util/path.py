@@ -85,7 +85,7 @@ class Path(object):
 	@staticmethod
 	def all_files_are_present(path, file_basenames_list):
 		"""Returns true if every file in the list is present at path"""
-		files_present = Path.get_list_of_files_at_path(self.path)
+		files_present = Path.get_list_of_files_at_path(path)
 
 		for required_file in file_basenames_list:
 			if required_file not in files_present:

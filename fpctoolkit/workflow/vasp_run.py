@@ -75,7 +75,7 @@ class VaspRun(object):
 				self.log("Non-empty directory does not have a job id associated with it.")
 				if self.all_input_files_are_present(): #all input files are written to directory
 					if all_essential_input_parameters_exist: #overwrite what's there
-						self.log("Overwriting existing run files with input parameter files")
+						self.log("Overwriting existing complete input run files with new given input parameter files")
 						self.write_input_files_to_path(structure, incar, kpoints, potcar, submission_script_file, wavecar_path)
 					else:
 						self.log("Using existing run files at path")

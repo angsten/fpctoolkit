@@ -47,22 +47,51 @@ class VaspRelaxation(VaspRunSet):
 
 
 	def __init__(self, path, initial_structure=None, input_dictionary=None, verbose=True):
-		
+		"""
+		Cases:
+		1. path does not exist or is empty ==> make the relaxation directory, enforce input file arguments all exists
+		2. path exists and is non-empty
+			1. If input_dictionary is None, load in old input_dictionary that was saved and use that
+			2. Else, use current input_dictionary
+		"""
+
 		self.path = Path.clean(path)
 		self.verbose = verbose
 		self.run_count = 0 #how many runs have been initiated
 
 		self.initial_structure = initial_structure
+
+
+
+		self.vasp_run_list = []
+
+		if not Path.exists(self.path) or Path.is_empty(self.path): #self.path is either an empty directory or does not exist
+			Path.make(self.path)
+		else: #self.path is a non-empty directory. See if there's an old relaxation to load
+			if not input_dictionary:
+				if Path.exists(self.get_save_path()):
+					input_dictionary = {} #load input dictionary*******************************************************************
+					self.load()	
+				else: #input_dictionary parameter is none, but no input_dict saved either This case is not yet supported
+					raise Exception("No input_dictionary given, but also no input_dictionary saved to path. Not yet supported.")
+
+		self.load_in_input_dictionary(input_dictionary)
+			
+		self.save()
+
+	def load_input_dictionary(input_dictionary):
+		"""Takes items in input_dictionary and loads them into self."""
+
 		self.external_relaxation_count = input_dictionary.pop('external_relaxation_count')
 		self.kpoint_schemes = ParameterList(input_dictionary.pop('kpoint_schemes_list'))
 		self.kpoint_subdivisions_lists = ParameterList(input_dictionary.pop('kpoint_subdivisions_lists'))
 
+		#optional keys
 		self.submission_script_modification_keys_list = ParameterList(input_dictionary.pop('submission_script_modification_keys_list')) if 'submission_script_modification_keys_list' in input_dictionary else None
 		self.submission_node_count_list = ParameterList(input_dictionary.pop('submission_node_count_list')) if 'submission_node_count_list' in input_dictionary else None
 
 		if self.external_relaxation_count < 0:
 			raise Exception("Must have one or more external relaxations")
-
 
 		self.incar_modifier_lists_dictionary = {}
 		for key, value in input_dictionary.items():
@@ -70,20 +99,6 @@ class VaspRelaxation(VaspRunSet):
 				raise Exception("Incar modifier lists in input dictionary must be given as sequences")
 			else:
 				self.incar_modifier_lists_dictionary[key] = ParameterList(value)
-
-
-		self.vasp_run_list = []
-
-		if Path.exists(self.path) and not Path.is_empty(self.path):
-			#self.path is a non-empty directory. See if there's an old relaxation to load
-			if Path.exists(self.get_save_path()):
-				self.load()
-			else: #Directory has files in it but no saved VaspRelaxation. This case is not yet supported
-				raise Exception("Files present in relaxation directory but no run to load. Not yet supported.")
-		else: #self.path is either an empty directory or does not exist
-			Path.make(self.path)
-
-		self.save()
 
 	def create_next_run(self):
 		run_path = self.get_next_run_path()
@@ -105,8 +120,6 @@ class VaspRelaxation(VaspRunSet):
 
 
 		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose, wavecar_path=self.get_wavecar_path())
-
-		self.vasp_run_list.append(vasp_run)
 
 		self.run_count += 1 #increment at end - this tracks how many runs have been created up to now
 

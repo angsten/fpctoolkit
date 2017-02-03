@@ -68,7 +68,7 @@ for encut in convergence_encuts_list:
 
 	vasp_run.update()
 	#print vasp_run
-	vasp_run.view()
+	#vasp_run.view()
 
 
 
