@@ -182,7 +182,7 @@ class VaspRelaxation(VaspRunSet):
 			input_set.set_node_count(self.submission_node_count_list[self.run_count])
 
 
-		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose, wavecar_path=self.get_wavecar_path(), verbose=self.verbose)
+		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose, wavecar_path=self.get_wavecar_path())
 
 		#self.run_count += 1 #increment at end - this tracks how many runs have been created up to now
 		self.vasp_run_list.append(vasp_run)
