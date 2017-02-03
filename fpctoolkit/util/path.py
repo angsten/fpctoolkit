@@ -81,3 +81,14 @@ class Path(object):
 		for file_name in files:
 			if file_name.upper() == file_string.upper():
 				return file_name
+
+	@staticmethod
+	def all_files_are_present(path, file_basenames_list):
+		"""Returns true if every file in the list is present at path"""
+		files_present = Path.get_list_of_files_at_path(self.path)
+
+		for required_file in file_basenames_list:
+			if required_file not in files_present:
+				return False
+
+		return True

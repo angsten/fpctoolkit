@@ -34,7 +34,7 @@ class VaspRun(object):
 		1. path does not exist or is empty => make the directory, enforce input file arguments all exists, write out input files to directory
 		2. path exists and is not empty
 			1. path/.job_id does not exist
-				1. path has all 5 input files already => do nothing if not all five input files exist, else overwrite current input files to directory
+				1. path has all 5 input files written to it already => do nothing if not all five input parameters exist, else overwrite current input files to directory
 				2. path does not have all 5 input files (has some subset or none) => enforce input file arguments all exists, write out input files to directory
 			2. path/.job_id exists => do nothing
 
@@ -55,13 +55,13 @@ class VaspRun(object):
 			potcar = input_set.potcar
 			submission_script_file = input_set.submission_script_file
 
-		all_five_inputs_exist = structure and incar and kpoints and potcar and submission_script_file
+		all_essential_input_parameters_exist = structure and incar and kpoints and potcar and submission_script_file
 
-		self.structure = structure
-		self.incar = incar
-		self.kpoints = kpoints
-		self.potcar = potcar
-		self.submission_script_file = submission_script_file
+		# self.structure = structure
+		# self.incar = incar
+		# self.kpoints = kpoints
+		# self.potcar = potcar
+		# self.submission_script_file = submission_script_file
 		self.wavecar_path = wavecar_path
 
 		self.job_id_string = None #Tracks job id associated with run on queue, looks like '35432'
@@ -69,34 +69,58 @@ class VaspRun(object):
 		self.log("In the VaspRun constructor")
 
 		if not Path.exists(self.path) or Path.is_empty(self.path):
-			if not all_five_inputs_exist:
-				raise Exception("All five vasp input files must be input for run to be initialized.")
+			if not all_essential_input_parameters_exist:
+				self.log("All five vasp input files must be input for run to be initialized.", raise_exception=True)
+			else:
+				Path.make(self.path)
 
-			Path.make(self.path)
+				self.log("Directory at run path did not exist or was empty. Created directory.")
 
-			self.log("Directory at run path did not exist or was empty. Created directory.")
-
-			self.setup() #writes input files into self.path
+				self.write_input_files_to_path() #writes input files into self.path
 		else:
 			if self.job_id_string():
-				self.log("Directory at run path exists and has a job id associated with it.")
+				self.log("Non-empty directory has a job id associated with it.")
 			else:
-				if not all_five_inputs_exist:
-					self.log("Directory at run path exists and has no job id associated with it.")
-
-		if Path.exists(self.path) and not Path.is_empty(self.path):
-			#We're in a directory with files in it - see if there's an old run to load
-			if Path.exists(self.get_save_path()):
-				self.log("Run path exists and a saved run file exists.")
-				self.load()
-			else:
-				#Directory has files in it but no saved VaspRun. This case is not yet supported
-				self.log("Files present in run directory but no run to load. Not yet supported.", raise_exception=True)
-		else:
+				self.log("Non-empty directory does not have a job id associated with it.")
+				if self.all_input_files_are_present(): #all input files are written to directory
+					if all_essential_input_parameters_exist: #overwrite what's there
+						self.log("Overwriting existing run files with input parameter files")
+						self.write_input_files_to_path()
+					else:
+						self.log("Using existing run files at path")
+						pass #do nothing - don't have the necessary inputs to start a run
+				else: #not all input files currently exist - must have necessary input params to overwrite
+					if not all_essential_input_parameters_exist:
+						self.log("All five vasp input files must be input for run with incomplete inputs at path to be initialized.", raise_exception=True)
+					else:
+						self.log("Overwriting existing partially-present run files with input parameter files")
+						self.write_input_files_to_path()
 			
-
 		self.save()
 		self.log("Exiting the VaspRun constructor")
+
+	def write_input_files_to_path(self, structure, incar, kpoints, potcar, submission_script_file, wavecar_path):
+		"""
+		Simply write files to path
+		"""
+
+		self.log("Writing input files to path.")
+
+		structure.to_poscar_file_path(Path.clean(self.path, 'POSCAR'))
+		incar.write_to_path(Path.clean(self.path, 'INCAR'))
+		kpoints.write_to_path(Path.clean(self.path, 'KPOINTS'))
+		potcar.write_to_path(Path.clean(self.path, 'POTCAR'))
+		submission_script_file.write_to_path(Path.clean(self.path, 'submit.sh'))
+
+		if self.wavecar_path and Path.exists(self.wavecar_path):
+			Path.copy(self.wavecar_path, self.get_extended_path('WAVECAR'))
+
+	def all_input_files_are_present(self):
+		"""Returns true if incar, poscar, potcar, kpoints, and submit script are all written out at path"""
+
+		required_file_basenames_list = ['POSCAR', 'INCAR', 'KPOINTS', 'POTCAR', 'submit.sh']
+
+		return Path.all_files_are_present(self.path, required_file_basenames_list)
 
 	@property
 	def job_id_string(self):
@@ -128,15 +152,15 @@ class VaspRun(object):
 	def kpoints(self):
 		kpoints_path = Path.clean(self.path, 'KPOINTS')
 		if Path.exists(kpoints_path):
-			return Outcar(kpoints_path)
+			return Kpoints(kpoints_path)
 		else:
 			return None
 
 	@property
 	def potcar(self):
-		potcar_path = Path.clean(self.path, 'KPOINTS')
+		potcar_path = Path.clean(self.path, 'POTCAR')
 		if Path.exists(potcar_path):
-			return Outcar(potcar_path)
+			return Potcar(potcar_path)
 		else:
 			return None
 
@@ -147,13 +171,6 @@ class VaspRun(object):
 			return Outcar(outcar_path)
 		else:
 			return None
-
-
-	@property
-	def (self):
-
-	@property
-	def (self):
 
 	@property
 	def outcar(self):
@@ -179,21 +196,6 @@ class VaspRun(object):
 		else:
 			return QueueAdapter.get_job_properties_from_id_string(self.job_id_string)
 
-	def setup(self):
-		"""
-		Simply write files to path
-		"""
-
-		self.log("Writing input files to path.")
-
-		self.structure.to_poscar_file_path(Path.clean(self.path, 'POSCAR'))
-		self.incar.write_to_path(Path.clean(self.path, 'INCAR'))
-		self.kpoints.write_to_path(Path.clean(self.path, 'KPOINTS'))
-		self.potcar.write_to_path(Path.clean(self.path, 'POTCAR'))
-		self.submission_script_file.write_to_path(Path.clean(self.path, 'submit.sh'))
-
-		if self.wavecar_path and Path.exists(self.wavecar_path):
-			Path.copy(self.wavecar_path, self.get_extended_path('WAVECAR'))
 
 	def inner_update(self):
 		"""Returns True if run is completed"""
