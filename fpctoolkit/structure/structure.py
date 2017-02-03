@@ -75,15 +75,39 @@ class Structure(object):
 	def site_count(self):
 		return len(self.sites)
 
-	def randomly_displace_site_positions_with_distance_constraints(self, stdev, minimum_atomic_distance, max_displacement_distance, mean=0.0):
+	def randomly_displace_site_positions(self, stdev, enforced_minimum_atomic_distance=None, max_displacement_distance=None, mean=0.0):
 		"""
-		Calls randomly_displace_site_positions. Tries until no atoms are within minimum_atomic_distance (angstroms) of the atom being perturbed.
+		Randomly displace all sites in separate random directions with
+		displacement magnitude governed by a normal distribution.
+		!!Parameters are given in angstroms!!
+		These will be converted to direct coordinates for sites represented
+		in direct coordinates. Modifies self.
+
+		returns False if unable to satisfy any constraints, true else
+		"""
+
+		for site in self.sites:
+			if enforced_minimum_atomic_distance:
+				self.randomly_displace_site_positions_with_minimum_distance_constraints(site, stdev, enforced_minimum_atomic_distance, max_displacement_distance, mean)
+			else:
+				self.randomly_displace_site_position(site, stdev, max_displacement_distance, mean)
+
+	def randomly_displace_site_positions_with_minimum_distance_constraints(self, site, stdev, enforced_minimum_atomic_distance, max_displacement_distance=None, mean=0.0):
+		"""
+		Calls randomly_displace_site_position for a site. Tries until no atoms are within enforced_minimum_atomic_distance (angstroms) of the atom being perturbed.
 		Maxes out after a finite number of tries (returns false)
 		"""
 
+		for attempt_count in range(500):
+			self.randomly_displace_site_position(site, stdev, max_displacement_distance, mean)
 
+			if self.any_sites_are_too_close(site, enforced_minimum_atomic_distance):
+				site['position'] = copy.deepcopy(site['position'])
+				continue
+			else:
+				return True
 
-		pass
+		return False
 
 	def randomly_displace_site_position(self, site, stdev, max_displacement_distance=None, mean=0.0):
 		"""
@@ -94,36 +118,25 @@ class Structure(object):
 		in direct coordinates. Modifies site.
 		"""
 
-		
-
-	def randomly_displace_site_positions(self, stdev, max_displacement_distance=None, mean=0.0):
-		"""
-		Randomly displace all sites in separate random directions with
-		displacement magnitude governed by a normal distribution.
-		!!Parameters are given in angstroms!!
-		These will be converted to direct coordinates for sites represented
-		in direct coordinates. Modifies self.
-		"""
-
 		if max_displacement_distance and max_displacement_distance < 0.0:
 			raise Exception("Max displacement distance must be a non-negative quantity")
 
-		for site in self.sites:
-			displacement_vector = Vector.get_random_vector(mean, stdev) #vector is in angstroms
+		displacement_vector = Vector.get_random_vector(mean, stdev) #vector is in angstroms
 
-			if max_displacement_distance and (displacement_vector.magnitude() > max_displacement_distance):
-				corrector_fraction = max_displacement_distance/displacement_vector.magnitude()
-				displacement_vector = displacement_vector * corrector_fraction
+		if max_displacement_distance and (displacement_vector.magnitude() > max_displacement_distance):
+			corrector_fraction = max_displacement_distance/displacement_vector.magnitude()
+			displacement_vector = displacement_vector * corrector_fraction
 
-			if site['coordinate_mode'] == 'Direct':
-				#convert disp vec to direct coordinates
-				displacement_vector = Vector.get_in_direct_coordinates(displacement_vector, self.lattice)
+		if site['coordinate_mode'] == 'Direct':
+			#convert disp vec to direct coordinates
+			displacement_vector = Vector.get_in_direct_coordinates(displacement_vector, self.lattice)
 
-			site.displace(displacement_vector)
+		site.displace(displacement_vector)
 
-	def any_sites_are_too_close(self, test_site, minimum_atomic_distance, N_max=3):
+
+	def any_sites_are_too_close(self, test_site, enforced_minimum_atomic_distance, N_max=3):
 		"""
-		Returns False if any site in this structure is within minimum_atomic_distance (angstroms) of test_site
+		Returns False if any site in this structure is within enforced_minimum_atomic_distance (angstroms) of test_site
 		Ignores if test_site is the same object (address compared) as a site in the structure. 
 		N_max controls how many images to search. Higher means higher accuracy in weird sheared structures
 		"""
@@ -138,7 +151,7 @@ class Structure(object):
 
 			minimum_distance = Vector.get_minimum_distance_between_two_periodic_points(test_site_fractional_coordinates, site['position'], self.lattice, N_max)
 
-			if minimum_distance < minimum_atomic_distance:
+			if minimum_distance < enforced_minimum_atomic_distance:
 				return False
 
 		return True
