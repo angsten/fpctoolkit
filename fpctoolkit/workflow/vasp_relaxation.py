@@ -132,6 +132,16 @@ class VaspRelaxation(VaspRunSet):
 
 		return len(self.vasp_run_list)
 
+	@property
+	def final_energy(self, per_atom=False):
+		"""Returns static energy if static is complete, else returns None"""
+
+		if self.run_count == self.external_relaxation_count + 1 and self.get_current_vasp_run().complete:
+			if per_atom:
+				return self.get_current_vasp_run().outcar.energy_per_atom
+			else:
+				return self.get_current_vasp_run().outcar.energy
+
 	def inner_update(self):
 
 		if self.complete:
@@ -248,7 +258,10 @@ class VaspRelaxation(VaspRunSet):
 		return self.get_extended_path(".relaxation_pickle")
 
 	def get_current_vasp_run(self):
-		return self.vasp_run_list[self.run_count-1]
+		if self.run_count == 0:
+			raise Exception("No runs have been created yet - no current run exists")
+		else:
+			return self.vasp_run_list[self.run_count-1]
 
 
 

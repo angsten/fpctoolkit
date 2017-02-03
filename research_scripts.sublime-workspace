@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"in",
+				"Incar"
+			],
+			[
+				"subm",
+				"submission_script_file"
+			],
+			[
+				"all_",
+				"all_files_are_present"
+			],
+			[
+				"requ",
+				"required_file"
+			],
+			[
+				"req",
+				"required_files"
+			],
+			[
 				"Queu",
 				"QueueAdapter"
 			],
@@ -479,7 +499,7 @@
 			"file": "fpctoolkit/fpc_sketcher.py",
 			"settings":
 			{
-				"buffer_size": 3532,
+				"buffer_size": 4585,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -488,7 +508,7 @@
 			"file": "fpctoolkit/workflow/vasp_relaxation.py",
 			"settings":
 			{
-				"buffer_size": 10507,
+				"buffer_size": 12209,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -497,7 +517,7 @@
 			"file": "fpctoolkit/workflow/vasp_run.py",
 			"settings":
 			{
-				"buffer_size": 12084,
+				"buffer_size": 13411,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -506,7 +526,8 @@
 			"file": "fpctoolkit/util/queue_adapter.py",
 			"settings":
 			{
-				"buffer_size": 12718,
+				"buffer_size": 12792,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		}
@@ -702,15 +723,16 @@
 	],
 	"file_history":
 	[
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar_maker.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/path.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/queue_adapter.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar_maker.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/vasp_input_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar/poscar_small",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/lattice.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/parameter_list.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/path.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/simple_vasp_relaxation.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/perovskite.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/encut_kpoints_converger.py",
@@ -846,6 +868,22 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"write_input_files_to_path",
+			"external_relax_basename_string",
+			"job_id_string()",
+			"special_handler",
+			"write_file_list_to_path",
+			"self.",
+			"self",
+			"setup",
+			"all_five_inputs_exist",
+			"kpoints_path",
+			"outcar_path",
+			"Incar_path",
+			"Outcar",
+			"outcar",
+			"OUTCAR",
+			"outcar",
 			"all_five_inputs_exists",
 			"script_modification_keys",
 			"script_file",
@@ -957,23 +995,7 @@
 			"print",
 			"assertEqual",
 			",[])\n",
-			"assertEqual",
-			"echo",
-			".data",
-			"clean_path",
-			"'",
-			"potcar",
-			"file_path",
-			"1",
-			"deltaProjectedVelocityMagnitude",
-			"0.5",
-			"springMagnitude",
-			"spingMagnitude",
-			"vertex1",
-			"\t\tvar vertex1ProjectedVelocity = this.vertex1.velocity.dot(springDirectionVector);",
-			"console.",
-			"staticFrictionThresholdVelocity2",
-			"0"
+			"assertEqual"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1002,7 +1024,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -1011,15 +1033,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3532,
+						"buffer_size": 4585,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								400,
-								348
+								2452,
+								2452
 							]
 						],
 						"settings":
@@ -1027,10 +1049,10 @@
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 196.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -1039,26 +1061,27 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10507,
+						"buffer_size": 12209,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8966,
-								8966
+								392,
+								355
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2870.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -1067,15 +1090,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12084,
+						"buffer_size": 13411,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4128,
-								4128
+								4512,
+								4467
 							]
 						],
 						"settings":
@@ -1084,10 +1107,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 966.0,
+						"translation.y": 1265.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -1096,15 +1119,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12718,
+						"buffer_size": 12792,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3132,
-								3168
+								9173,
+								9173
 							]
 						],
 						"settings":
@@ -1112,8 +1135,8 @@
 							"syntax": "Packages/Python/Python.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 0.0,
-						"translation.y": 630.0,
+						"translation.x": -0.0,
+						"translation.y": 3444.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
@@ -1159,7 +1182,7 @@
 	},
 	"output.exec":
 	{
-		"height": 66.0
+		"height": 24.0
 	},
 	"output.find_results":
 	{
@@ -1215,7 +1238,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 235.0,
+	"side_bar_width": 209.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
