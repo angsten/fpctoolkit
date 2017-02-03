@@ -114,13 +114,13 @@ class VaspRelaxation(VaspRunSet):
 		for i in range(self.external_relaxation_count):
 			run_path = self.get_extended_path(VaspRelaxation.external_relax_basename_string + str(i+1))
 			if Path.exists(run_path):
-				self.vasp_run_list.append(VaspRun(run_path), verbose=self.verbose)
+				self.vasp_run_list.append(VaspRun(run_path, verbose=self.verbose))
 			else:
 				return
 
 		static_path = self.get_extended_path(VaspRelaxation.static_basename_string)
 		if Path.exists(static_path):
-			self.vasp_run_list.append(VaspRun(static_path), verbose=self.verbose)
+			self.vasp_run_list.append(VaspRun(static_path, verbose=self.verbose))
 
 	@property
 	def complete(self):
