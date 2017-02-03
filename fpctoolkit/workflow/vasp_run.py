@@ -172,6 +172,7 @@ class VaspRun(object):
 			else:
 				return self.outcar.energy
 		else:
+			
 			return None
 
 	@property
