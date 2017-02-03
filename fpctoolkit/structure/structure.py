@@ -75,7 +75,7 @@ class Structure(object):
 	def site_count(self):
 		return len(self.sites)
 
-	def randomly_displace_site_positions(self, stdev, enforced_minimum_atomic_distance=None, max_displacement_distance=None, mean=0.0):
+	def randomly_displace_site_positions(self, stdev, enforced_minimum_atomic_distance=None, max_displacement_distance=None, mean=0.0, types_list=None):
 		"""
 		Randomly displace all sites in separate random directions with
 		displacement magnitude governed by a normal distribution.
@@ -83,14 +83,23 @@ class Structure(object):
 		These will be converted to direct coordinates for sites represented
 		in direct coordinates. Modifies self.
 
+		If types_list is specified, only sites with type in types_list will be perturbed
+
 		returns False if unable to satisfy any constraints (and reverts structure to its original), true else
 		"""
+
+		if types_list == None:
+			types_list = []
 
 		sites_copy = copy.deepcopy(self.sites)
 
 		for site in self.sites:
+
+			if site['type'] not in types_list:
+				continue
+
 			if enforced_minimum_atomic_distance:
-				success = self.randomly_displace_site_positions_with_minimum_distance_constraints(site, stdev, enforced_minimum_atomic_distance, max_displacement_distance, mean)
+				success = self.randomly_displace_site_position_with_minimum_distance_constraints(site, stdev, enforced_minimum_atomic_distance, max_displacement_distance, mean)
 
 				if not success:
 					self.sites = sites_copy #restore structure to original form
@@ -100,7 +109,7 @@ class Structure(object):
 
 		return True
 
-	def randomly_displace_site_positions_with_minimum_distance_constraints(self, site, stdev, enforced_minimum_atomic_distance, max_displacement_distance=None, mean=0.0, max_attempt_count=400):
+	def randomly_displace_site_position_with_minimum_distance_constraints(self, site, stdev, enforced_minimum_atomic_distance, max_displacement_distance=None, mean=0.0, max_attempt_count=400):
 		"""
 		Calls randomly_displace_site_position for a site. Tries until no atoms are within enforced_minimum_atomic_distance (angstroms) of the atom being perturbed.
 		Maxes out after a finite number of tries (returns false)
@@ -133,8 +142,8 @@ class Structure(object):
 
 		displacement_vector = Vector.get_random_vector(mean, stdev) #vector is in angstroms
 
-		if max_displacement_distance and (displacement_vector.magnitude() > max_displacement_distance):
-			corrector_fraction = max_displacement_distance/displacement_vector.magnitude()
+		if max_displacement_distance and (displacement_vector.magnitude > max_displacement_distance):
+			corrector_fraction = max_displacement_distance/displacement_vector.magnitude
 			displacement_vector = displacement_vector * corrector_fraction
 
 		if site['coordinate_mode'] == 'Direct':

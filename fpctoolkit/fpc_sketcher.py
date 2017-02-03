@@ -150,13 +150,10 @@ self = self_c()
 
 #struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\dist.vasp")
 
-structure = Structure(file_path = "C:/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar/poscar_small")
-print structure
 
-print structure.randomly_displace_site_positions(stdev=2.2, enforced_minimum_atomic_distance=1.4, max_displacement_distance=None, mean=0.0)
+structure = Perovskite(supercell_dimensions = [4, 4, 1], lattice=[[14.4, 0.0, 0.0], [0.0, 14.4, 0.0], [0.0, 0.0, 4.7]], species_list=['K', 'V', 'O'])
 
-print structure
+print structure.randomly_displace_site_positions(stdev=0.6, enforced_minimum_atomic_distance=1.4, max_displacement_distance=1.2, mean=0.0)
+
 
 structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\dist.vasp")
-
-Perovskite(supercell_dimensions = [4, 4, 1], lattice=[[14.4, 0.0, 0.0], [0.0, 14.4, 0.0], [0.0, 0.0, 4.8]], species_list=['K', 'V', 'O'])
