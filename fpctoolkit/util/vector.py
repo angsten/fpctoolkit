@@ -168,25 +168,20 @@ class Vector(object):
 		fb = d[1]
 		fc = d[2]
 
-		N_max = 4 #how many images along each vector to look at
 		minimum_distance_squared = G(fa - N_max, fb - N_max, fc - N_max)
-		min_set = [N_max]*3
+		#min_set = [N_max]*3
 
-		N_max_a = N_max
-		N_max_b = N_max
-		N_max_c = N_max
-
-		for Na in range(-N_max_a, N_max_a + 1):
-			for Nb in range(-N_max_b, N_max_b + 1):
-				for Nc in range(-N_max_c, N_max_c + 1):
+		for Na in range(-N_max, N_max + 1):
+			for Nb in range(-N_max, N_max + 1):
+				for Nc in range(-N_max, N_max + 1):
 					distance_squared = G(fa - Na, fb - Nb, fc - Nc)
 
 					if distance_squared < minimum_distance_squared:
 						minimum_distance_squared = distance_squared
 
-						min_set = [Na, Nb, Nc]
+						#min_set = [Na, Nb, Nc]
 
 
 
-		print "Min set ", min_set
+		#print "Min set ", min_set
 		return minimum_distance_squared**0.5

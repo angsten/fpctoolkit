@@ -83,26 +83,36 @@ class Structure(object):
 		These will be converted to direct coordinates for sites represented
 		in direct coordinates. Modifies self.
 
-		returns False if unable to satisfy any constraints, true else
+		returns False if unable to satisfy any constraints (and reverts structure to its original), true else
 		"""
+
+		sites_copy = copy.deepcopy(self.sites)
 
 		for site in self.sites:
 			if enforced_minimum_atomic_distance:
-				self.randomly_displace_site_positions_with_minimum_distance_constraints(site, stdev, enforced_minimum_atomic_distance, max_displacement_distance, mean)
+				success = self.randomly_displace_site_positions_with_minimum_distance_constraints(site, stdev, enforced_minimum_atomic_distance, max_displacement_distance, mean)
+
+				if not success:
+					self.sites = sites_copy #restore structure to original form
+					return False
 			else:
 				self.randomly_displace_site_position(site, stdev, max_displacement_distance, mean)
 
-	def randomly_displace_site_positions_with_minimum_distance_constraints(self, site, stdev, enforced_minimum_atomic_distance, max_displacement_distance=None, mean=0.0):
+		return True
+
+	def randomly_displace_site_positions_with_minimum_distance_constraints(self, site, stdev, enforced_minimum_atomic_distance, max_displacement_distance=None, mean=0.0, max_attempt_count=400):
 		"""
 		Calls randomly_displace_site_position for a site. Tries until no atoms are within enforced_minimum_atomic_distance (angstroms) of the atom being perturbed.
 		Maxes out after a finite number of tries (returns false)
 		"""
 
-		for attempt_count in range(500):
+		original_position = copy.deepcopy(site['position'])
+
+		for attempt_count in range(max_attempt_count):
 			self.randomly_displace_site_position(site, stdev, max_displacement_distance, mean)
 
 			if self.any_sites_are_too_close(site, enforced_minimum_atomic_distance):
-				site['position'] = copy.deepcopy(site['position'])
+				site['position'] = copy.deepcopy(original_position)
 				continue
 			else:
 				return True
@@ -136,7 +146,7 @@ class Structure(object):
 
 	def any_sites_are_too_close(self, test_site, enforced_minimum_atomic_distance, N_max=3):
 		"""
-		Returns False if any site in this structure is within enforced_minimum_atomic_distance (angstroms) of test_site
+		Returns True if any site in this structure is within enforced_minimum_atomic_distance (angstroms) of test_site
 		Ignores if test_site is the same object (address compared) as a site in the structure. 
 		N_max controls how many images to search. Higher means higher accuracy in weird sheared structures
 		"""
@@ -152,9 +162,9 @@ class Structure(object):
 			minimum_distance = Vector.get_minimum_distance_between_two_periodic_points(test_site_fractional_coordinates, site['position'], self.lattice, N_max)
 
 			if minimum_distance < enforced_minimum_atomic_distance:
-				return False
+				return True
 
-		return True
+		return False
 
 
 	def convert_sites_to_cartesian_coordinates(self):

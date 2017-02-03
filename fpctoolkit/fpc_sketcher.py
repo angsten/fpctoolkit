@@ -130,22 +130,33 @@ self = self_c()
 
 
 
-for i in range(400):
+# for i in range(400):
 
-	position_1 = [random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5)]
-	position_2 = [random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5)]
-	#lattice=[[random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0)], [random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0)], [random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0)]]
+# 	position_1 = [random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5)]
+# 	position_2 = [random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5)]
+# 	#lattice=[[random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0)], [random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0)], [random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0)]]
 
-	lattice=[[14.4, 0.0, 0.0],[0.0, 14.4, 0.0], [random.uniform(-4.0, 4.0), random.uniform(-4.0, 4.0), random.uniform(4.0, 16.0)]]
-
-
-	#print "Lattice:"
-	#print Lattice(lattice)
+# 	lattice=[[14.4, 0.0, 0.0],[0.0, 14.4, 0.0], [random.uniform(-4.0, 4.0), random.uniform(-4.0, 4.0), random.uniform(4.0, 16.0)]]
 
 
+# 	#print "Lattice:"
+# 	#print Lattice(lattice)
 
-	Vector.get_minimum_distance_between_two_periodic_points(position_1, position_2, lattice)
+
+
+# 	Vector.get_minimum_distance_between_two_periodic_points(position_1, position_2, lattice)
 
 #struct = Structure(lattice=lattice, sites=SiteCollection([Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':position_1}), Site({'type':'Ti', 'coordinate_mode': 'Direct', 'position':position_2})]))
 
 #struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\dist.vasp")
+
+structure = Structure(file_path = "C:/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar/poscar_small")
+print structure
+
+print structure.randomly_displace_site_positions(stdev=2.2, enforced_minimum_atomic_distance=1.4, max_displacement_distance=None, mean=0.0)
+
+print structure
+
+structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\dist.vasp")
+
+Perovskite(supercell_dimensions = [4, 4, 1], lattice=[[14.4, 0.0, 0.0], [0.0, 14.4, 0.0], [0.0, 0.0, 4.8]], species_list=['K', 'V', 'O'])
