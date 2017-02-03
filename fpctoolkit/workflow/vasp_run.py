@@ -28,7 +28,7 @@ class VaspRun(object):
 
 	log_path = ".log"
 
-	def __init__(self, path, structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None, input_set=None, special_handler=None, wavecar_path=None, verbose=True):
+	def __init__(self, path, structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None, input_set=None, custom_handler=None, wavecar_path=None, verbose=True):
 		"""
 		Cases for __init__:
 		1. path does not exist or is empty => make the directory, enforce input file arguments all exists, write out input files to directory
@@ -43,8 +43,8 @@ class VaspRun(object):
 		self.path = Path.clean(path)
 		self.verbose = verbose
 
-		if special_handler:
-			self.handler = special_handler
+		if custom_handler:
+			self.handler = custom_handler
 		else:
 			pass #self.handler = VaspHandler()
 
@@ -57,14 +57,7 @@ class VaspRun(object):
 
 		all_essential_input_parameters_exist = structure and incar and kpoints and potcar and submission_script_file
 
-		# self.structure = structure
-		# self.incar = incar
-		# self.kpoints = kpoints
-		# self.potcar = potcar
-		# self.submission_script_file = submission_script_file
-		self.wavecar_path = wavecar_path
-
-		self.job_id_string = None #Tracks job id associated with run on queue, looks like '35432'
+		wavecar_path = wavecar_path
 
 		self.log("In the VaspRun constructor")
 
@@ -76,7 +69,7 @@ class VaspRun(object):
 
 				self.log("Directory at run path did not exist or was empty. Created directory.")
 
-				self.write_input_files_to_path() #writes input files into self.path
+				self.write_input_files_to_path(structure, incar, kpoints, potcar, submission_script_file, wavecar_path) 
 		else:
 			if self.job_id_string():
 				self.log("Non-empty directory has a job id associated with it.")
@@ -85,7 +78,7 @@ class VaspRun(object):
 				if self.all_input_files_are_present(): #all input files are written to directory
 					if all_essential_input_parameters_exist: #overwrite what's there
 						self.log("Overwriting existing run files with input parameter files")
-						self.write_input_files_to_path()
+						self.write_input_files_to_path(structure, incar, kpoints, potcar, submission_script_file, wavecar_path)
 					else:
 						self.log("Using existing run files at path")
 						pass #do nothing - don't have the necessary inputs to start a run
@@ -94,7 +87,7 @@ class VaspRun(object):
 						self.log("All five vasp input files must be input for run with incomplete inputs at path to be initialized.", raise_exception=True)
 					else:
 						self.log("Overwriting existing partially-present run files with input parameter files")
-						self.write_input_files_to_path()
+						self.write_input_files_to_path(structure, incar, kpoints, potcar, submission_script_file, wavecar_path)
 			
 		self.save()
 		self.log("Exiting the VaspRun constructor")
@@ -112,8 +105,8 @@ class VaspRun(object):
 		potcar.write_to_path(Path.clean(self.path, 'POTCAR'))
 		submission_script_file.write_to_path(Path.clean(self.path, 'submit.sh'))
 
-		if self.wavecar_path and Path.exists(self.wavecar_path):
-			Path.copy(self.wavecar_path, self.get_extended_path('WAVECAR'))
+		if wavecar_path and Path.exists(wavecar_path):
+			Path.copy(wavecar_path, self.get_extended_path('WAVECAR'))
 
 	def all_input_files_are_present(self):
 		"""Returns true if incar, poscar, potcar, kpoints, and submit script are all written out at path"""
@@ -124,6 +117,8 @@ class VaspRun(object):
 
 	@property
 	def job_id_string(self):
+		"""Tracks job id associated with run on queue, looks like '35432'"""
+
 		return QueueAdapter.get_job_id_at_path(self.path) #returns None if no .job_id file
 
 	@property
@@ -161,14 +156,6 @@ class VaspRun(object):
 		potcar_path = Path.clean(self.path, 'POTCAR')
 		if Path.exists(potcar_path):
 			return Potcar(potcar_path)
-		else:
-			return None
-
-	@property
-	def outcar(self):
-		outcar_path = Path.clean(self.path, 'OUTCAR')
-		if Path.exists(outcar_path):
-			return Outcar(outcar_path)
 		else:
 			return None
 
@@ -251,7 +238,7 @@ class VaspRun(object):
 		#Remove all output files here!!! Maybe store in hidden archived folder?####################
 		self.archive_file('OUTCAR')
 
-		self.job_id_string = QueueAdapter.submit_job(self.path)
+		QueueAdapter.submit_job(self.path) #call auto saves id to .job_id in path
 
 		if not self.job_id_string:
 			self.log("Tried to start vasp run but an active job is already associated with its path.", raise_exception=True)
@@ -260,6 +247,7 @@ class VaspRun(object):
 		"""If run has associated job on queue, delete this job"""
 		
 		QueueAdapter.terminate_job(self.job_id_string)
+
 
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)
@@ -273,7 +261,6 @@ class VaspRun(object):
 
 
 
-
 	def save(self):
 		"""Saves class to pickled file at {self.path}/.run_pickle
 		"""
@@ -281,44 +268,44 @@ class VaspRun(object):
 		self.log("Saving run")
 
 		#We don't want to waste space with storing full potcars - just store basenames and recreate on loading
-		self.potcar_minimal_form = self.potcar.get_minimal_form()
-		stored_potcar = self.potcar
-		self.potcar = None
+		# self.potcar_minimal_form = self.potcar.get_minimal_form()
+		# stored_potcar = self.potcar
+		# self.potcar = None
 
 		save_path = self.get_save_path()
 
-		file = open(save_path, 'w')
-		file.write(cPickle.dumps(self.__dict__))
-		file.close()
+		# file = open(save_path, 'w')
+		# file.write(cPickle.dumps(self.__dict__))
+		# file.close()
 
-		self.potcar = stored_potcar
+		# self.potcar = stored_potcar
 
 		self.log("Save successful")
 
 	def load(self, load_path=None):
-		previous_path = self.path
-		previous_verbose = self.verbose
+		# previous_path = self.path
+		# previous_verbose = self.verbose
 
 		self.log("Loading run")
 
-		if not load_path:
-			load_path = self.get_save_path()
+		# if not load_path:
+		# 	load_path = self.get_save_path()
 
-		if not Path.exists(load_path):
-			self.log("Load file path does not exist: " + load_path, raise_exception=True)
+		# if not Path.exists(load_path):
+		# 	self.log("Load file path does not exist: " + load_path, raise_exception=True)
 
-		file = open(load_path, 'r')
-		data_pickle = file.read()
-		file.close()
+		# file = open(load_path, 'r')
+		# data_pickle = file.read()
+		# file.close()
 
-		self.__dict__ = cPickle.loads(data_pickle)
-		self.verbose = previous_verbose #so this can be overridden upon init
-		self.path = previous_path #in case run is moved
+		# self.__dict__ = cPickle.loads(data_pickle)
+		# self.verbose = previous_verbose #so this can be overridden upon init
+		# self.path = previous_path #in case run is moved
 
-		#restore the full potcar from the basenames that were saved
-		if self.potcar_minimal_form:
-			self.potcar = Potcar(minimal_form=self.potcar_minimal_form)
-			del self.potcar_minimal_form
+		# #restore the full potcar from the basenames that were saved
+		# if self.potcar_minimal_form:
+		# 	self.potcar = Potcar(minimal_form=self.potcar_minimal_form)
+		# 	del self.potcar_minimal_form
 
 		self.log("Load successful")
 
@@ -359,6 +346,9 @@ class VaspRun(object):
 
 		if raise_exception:
 			raise Exception(log_string)
+
+
+			
 
 	def view(self, files_to_view=['Potcar', 'Kpoints', 'Incar', 'Poscar', 'Contcar', 'Submit.sh', '_JOB_OUTPUT.txt']):
 		"""
