@@ -108,6 +108,7 @@ class VaspRelaxation(VaspRunSet):
 
 	def initialize_run_list(self):
 		"""sets self.vasp_run_list based on directories present"""
+
 		self.vasp_run_list = []
 
 		for i in range(self.external_relaxation_count):
@@ -120,6 +121,32 @@ class VaspRelaxation(VaspRunSet):
 		static_path = self.get_extended_path(VaspRelaxation.static_basename_string)
 		if Path.exists(static_path):
 			self.vasp_run_list.append(VaspRun(static_path))
+
+	@property
+	def complete(self):
+		return (self.run_count == self.external_relaxation_count + 1) and self.get_current_vasp_run().complete
+
+	@property
+	def run_count(self):
+		"""Counts through the directories created that represent runs"""
+
+		return len(self.vasp_run_list)
+
+	def inner_update(self):
+
+		if self.complete:
+			return True
+		elif self.run_count == 0 or self.get_current_vasp_run().complete:
+			self.create_next_run()
+
+		self.get_current_vasp_run().update()
+
+		#delete all wavecars when finished or if True is returned
+
+	def update(self):
+		completed = self.inner_update()
+		self.save()
+		return completed
 
 	def create_next_run(self):
 		run_path = self.get_next_run_path()
@@ -144,33 +171,6 @@ class VaspRelaxation(VaspRunSet):
 
 		#self.run_count += 1 #increment at end - this tracks how many runs have been created up to now
 		self.vasp_run_list.append(vasp_run)
-
-	def inner_update(self):
-
-		if self.complete:
-			return True
-		elif self.run_count == 0 or self.get_current_vasp_run().complete:
-			self.create_next_run()
-
-		self.get_current_vasp_run().update()
-
-		#delete all wavecars when finished or if True is returned
-
-	def update(self):
-		completed = self.inner_update()
-		self.save()
-		return completed
-
-	@property
-	def complete(self):
-		return (self.run_count == self.external_relaxation_count + 1) and self.get_current_vasp_run().complete
-
-	@property
-	def run_count(self):
-		"""Counts through the directories created that represent runs"""
-
-		return len(self.vasp_run_list)
-
 
 	def get_next_incar(self):
 		"""
