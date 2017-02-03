@@ -259,7 +259,7 @@ class VaspRelaxation(VaspRunSet):
 		Saves all attributes except vasp_run_list - this list is recreated
 		later by saving all runs now and loading them later from the run directories. 
 		"""
-
+		return #********************************************************
 		save_path = self.get_save_path()
 
 		#save_dictionary = {key: value for key, value in self.__dict__.items() if not key == 'vasp_run_list'}
