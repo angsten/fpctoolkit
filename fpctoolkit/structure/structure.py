@@ -75,14 +75,17 @@ class Structure(object):
 	def site_count(self):
 		return len(self.sites)
 
-	def randomly_displace_site_positions(self, stdev, minimum_atomic_distance, mean=0.0):
+	def randomly_displace_site_positions_with_distance_constraints(self, stdev, minimum_atomic_distance, max_displacement_distance, mean=0.0):
 		"""
-		Calls randomly_displace_site_positions. Tries until no atoms are within minimum_atomic_distance of each other.
+		Calls randomly_displace_site_positions. Tries until no atoms are within minimum_atomic_distance (angstroms) of the atom being perturbed.
+		Maxes out after a finite number of tries (returns false)
 		"""
+
+
 
 		pass
 
-	def randomly_displace_site_positions(self, stdev, mean=0.0):
+	def randomly_displace_site_positions(self, stdev, max_displacement_distance=None, mean=0.0):
 		"""
 		Randomly displace all sites in separate random directions with
 		dipslacement magnitude governed by a normal distribution.
@@ -91,14 +94,34 @@ class Structure(object):
 		in direct coordinates. Modifies self.
 		"""
 
+		if max_displacement_distance and max_displacement_distance < 0.0:
+			raise Exception("Max displacement distance must be a non-negative quantity")
+
 		for site in self.sites:
 			displacement_vector = Vector.get_random_vector(mean, stdev) #vector is in angstroms
+
+			if max_displacement_distance and (displacement_vector.magnitude() > max_displacement_distance):
+				corrector_fraction = max_displacement_distance/displacement_vector.magnitude()
+				displacement_vector = displacement_vector * corrector_fraction
 
 			if site['coordinate_mode'] == 'Direct':
 				#convert disp vec to direct coordinates
 				displacement_vector = Vector.get_in_direct_coordinates(displacement_vector, self.lattice)
 
 			site.displace(displacement_vector)
+
+	def ensure_no_atoms_too_close_to_site(self, test_site, minimum_atomic_distance):
+		"""
+		Returns False if any site in this structure is within minimum_atomic_distance (angstroms) of test_site
+		Ignores if test_site is the same object (address compared) as a site in the structure.
+		"""
+
+		self.convert_sites_to_direct_coordinates()
+
+		for site in self.sites:
+			Vector.get_minimum_distance_between_two_periodic_points(fractional_coordinate_1, fractional_coordinate_2, lattice, N_max=3):
+
+
 
 	def convert_sites_to_cartesian_coordinates(self):
 		"""Takes any site in sites that is in direct coordinates and changes

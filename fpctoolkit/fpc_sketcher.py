@@ -1,4 +1,4 @@
-
+import random
 
 from fpctoolkit.io.vasp.kpoints import Kpoints
 from fpctoolkit.io.vasp.potcar import Potcar
@@ -16,6 +16,7 @@ from fpctoolkit.workflow.vasp_run import VaspRun
 from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
 from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 from fpctoolkit.io.vasp.incar_maker import IncarMaker
+from fpctoolkit.util.vector import Vector
 #import fpctoolkit.util.string_util as su
 
 
@@ -41,32 +42,32 @@ def get_string(printed):
 self = self_c()
 
 #self.data_path = "C:/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/tests/data_structure/"
-self.data_path = "C:\Users\Tom\Documents\Coding\python_work\workflow_test"
-#self.data_path = "~/workflow_test/"
+# self.data_path = "C:\Users\Tom\Documents\Coding\python_work\workflow_test"
+# #self.data_path = "~/workflow_test/"
 
-convergence_base_path = Path.clean(self.data_path)
-Path.make(convergence_base_path)
-
-
-path = Path.join(convergence_base_path, 'relaxation')
-#initial_structure = Perovskite(supercell_dimensions=[4, 4, 1], lattice=[[14.4, 0.0, 0.0], [0.0, 14.4, 0.0], [0.0, 0.0, 5.2]], species_list=['K', 'V', 'O'])
-#initial_structure.randomly_displace_site_positions(0.25)
-initial_structure = Perovskite(supercell_dimensions = [2, 2, 2], lattice=[[8.0, 0.0, 0.0], [0.0, 8.0, 0.0], [0.0, 0.0, 8.0]], species_list=['Ba', 'Ti', 'O'])
-
-input_dictionary = {
-    'submission_script_modification_keys_list': ['100'],
-    'external_relaxation_count': 10,
-    'kpoint_schemes_list': ['Monkhorst'],
-    'kpoint_subdivisions_lists': [[1, 1, 2], [1, 1, 2], [1, 1, 4]],
-    'ediff': [0.005, 0.005, 0.0001, 0.0001, 0.00005, 0.00005, 0.00001, 0.00001, 0.000001, 0.000001],
-    #'ediffg': [0.001, 0.001, 0.0001, 0.0001, 0.00001, 0.00001],
-    'encut': [300, 300, 400, 400, 500]
-}
+# convergence_base_path = Path.clean(self.data_path)
+# Path.make(convergence_base_path)
 
 
-relax = VaspRelaxation(path, initial_structure, input_dictionary)
-relax.update()
-relax.view()
+# path = Path.join(convergence_base_path, 'relaxation')
+# #initial_structure = Perovskite(supercell_dimensions=[4, 4, 1], lattice=[[14.4, 0.0, 0.0], [0.0, 14.4, 0.0], [0.0, 0.0, 5.2]], species_list=['K', 'V', 'O'])
+# #initial_structure.randomly_displace_site_positions(0.25)
+# initial_structure = Perovskite(supercell_dimensions = [2, 2, 2], lattice=[[8.0, 0.0, 0.0], [0.0, 8.0, 0.0], [0.0, 0.0, 8.0]], species_list=['Ba', 'Ti', 'O'])
+
+# input_dictionary = {
+#     'submission_script_modification_keys_list': ['100'],
+#     'external_relaxation_count': 10,
+#     'kpoint_schemes_list': ['Monkhorst'],
+#     'kpoint_subdivisions_lists': [[1, 1, 2], [1, 1, 2], [1, 1, 4]],
+#     'ediff': [0.005, 0.005, 0.0001, 0.0001, 0.00005, 0.00005, 0.00001, 0.00001, 0.000001, 0.000001],
+#     #'ediffg': [0.001, 0.001, 0.0001, 0.0001, 0.00001, 0.00001],
+#     'encut': [300, 300, 400, 400, 500]
+# }
+
+
+# relax = VaspRelaxation(path, initial_structure, input_dictionary)
+# relax.update()
+# relax.view()
 
 
 # base_kpoints_scheme = 'Monkhorst'
@@ -126,3 +127,25 @@ relax.view()
 
 # print structure
 # structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\super.vasp")
+
+
+
+for i in range(400):
+
+	position_1 = [random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5)]
+	position_2 = [random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5)]
+	#lattice=[[random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0)], [random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0)], [random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0)]]
+
+	lattice=[[14.4, 0.0, 0.0],[0.0, 14.4, 0.0], [random.uniform(-4.0, 4.0), random.uniform(-4.0, 4.0), random.uniform(4.0, 16.0)]]
+
+
+	#print "Lattice:"
+	#print Lattice(lattice)
+
+
+
+	Vector.get_minimum_distance_between_two_periodic_points(position_1, position_2, lattice)
+
+#struct = Structure(lattice=lattice, sites=SiteCollection([Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':position_1}), Site({'type':'Ti', 'coordinate_mode': 'Direct', 'position':position_2})]))
+
+#struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\dist.vasp")

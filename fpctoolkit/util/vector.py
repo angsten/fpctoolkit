@@ -105,3 +105,88 @@ class Vector(object):
 			magnitude = np.random.normal(magnitude_average, magnitude_stdev)
 
 		return direction*magnitude
+
+	@staticmethod
+	def normalize_fractional_coordinate(coordinate):
+		"""Puts each component of coordinate in range [0.0 and 1.0)"""
+		for i in range(3):
+			while coordinate[i] >= 1.0:
+				coordinate[i] -= 1.0
+			while coordinate[i] < 0.0:
+				coordinate[i] += 1.0
+
+	@staticmethod
+	def put_fractional_coordinate_nearest_to_origin(coordinate):
+		"""Puts all components in range (-0.5, 0.5]"""
+
+		for i in range(3):
+			while coordinate[i] > 0.5:
+				coordinate[i] -= 1.0
+			while coordinate[i] <= -0.5:
+				coordinate[i] += 1.0
+
+	@staticmethod
+	def get_minimum_distance_between_two_periodic_points(fractional_coordinate_1, fractional_coordinate_2, lattice, N_max=3):
+		"""
+		Given periodic boundary conditions specified by lattice and positions 1 and 2 in 
+		fractional coordinates, return the shorted distance between these two points
+
+		N_max controls how many images out to search - in general, need a higher N max for lattices with larger a*c b*c and a*b dot products
+		Scales (2.0*N_max)^3 in computing time though!
+		"""
+
+		#first, normalize fractional coordinate components to be within 0.0 and 1.0
+		Vector.normalize_fractional_coordinate(fractional_coordinate_1)
+		Vector.normalize_fractional_coordinate(fractional_coordinate_2)
+
+		#Now, both coordinates are contained within the same cell
+
+		d = np.array([fractional_coordinate_2[0] - fractional_coordinate_1[0], fractional_coordinate_2[1] - fractional_coordinate_1[1], fractional_coordinate_2[2] - fractional_coordinate_1[2]])
+
+		# print "Original d: ", d
+
+		Vector.put_fractional_coordinate_nearest_to_origin(d) #Want to center the relative distance vector
+
+		# print "Shifted d: ", d
+
+		a = np.array(lattice[0])
+		b = np.array(lattice[1])
+		c = np.array(lattice[2])
+
+		A = np.dot(a, a)
+		B = np.dot(b, b)
+		C = np.dot(c, c)
+
+		D = 2*np.dot(a, b)
+		E = 2*np.dot(a, c)
+		F = 2*np.dot(b, c)
+
+		#This gives magnitude squared of distance vector as a function of fractional coordinates (fa, fb, fc)
+		def G(fa, fb, fc): return A*fa**2 + B*fb**2 + C*fc**2 + D*fa*fb + E*fa*fc + F*fb*fc
+
+		fa = d[0]
+		fb = d[1]
+		fc = d[2]
+
+		N_max = 4 #how many images along each vector to look at
+		minimum_distance_squared = G(fa - N_max, fb - N_max, fc - N_max)
+		min_set = [N_max]*3
+
+		N_max_a = N_max
+		N_max_b = N_max
+		N_max_c = N_max
+
+		for Na in range(-N_max_a, N_max_a + 1):
+			for Nb in range(-N_max_b, N_max_b + 1):
+				for Nc in range(-N_max_c, N_max_c + 1):
+					distance_squared = G(fa - Na, fb - Nb, fc - Nc)
+
+					if distance_squared < minimum_distance_squared:
+						minimum_distance_squared = distance_squared
+
+						min_set = [Na, Nb, Nc]
+
+
+
+		print "Min set ", min_set
+		return minimum_distance_squared**0.5
