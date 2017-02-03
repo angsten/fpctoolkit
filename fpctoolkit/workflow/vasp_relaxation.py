@@ -59,7 +59,8 @@ class VaspRelaxation(VaspRunSet):
 
 		self.path = Path.clean(path)
 		self.verbose = verbose
-		self.run_count = 0 #how many runs have been initiated
+		#self.run_count = 0 #how many runs have been initiated
+		self.vasp_run_list = []
 
 		self.initial_structure = initial_structure
 
@@ -72,18 +73,19 @@ class VaspRelaxation(VaspRunSet):
 		else: #self.path is a non-empty directory. See if there's an old relaxation to load
 			if not input_dictionary:
 				if Path.exists(self.get_save_path()):
+					raise Exception("No input_dictionary given, future implementation should load it here. Not yet supported.")
 					input_dictionary = {} #load input dictionary*******************************************************************
-					self.load()	
+					#self.load()	
 				else: #input_dictionary parameter is none, but no input_dict saved either This case is not yet supported
 					raise Exception("No input_dictionary given, but also no input_dictionary saved to path. Not yet supported.")
 
-			#set self.run_count based on how many runs are present in the directory
+		self.load_input_dictionary(input_dictionary)
 
-		self.load_in_input_dictionary(input_dictionary)
+		self.initialize_run_list()
 			
-		self.save()
+		#self.save()
 
-	def load_input_dictionary(input_dictionary):
+	def load_input_dictionary(self, input_dictionary):
 		"""Takes items in input_dictionary and loads them into self."""
 
 		self.external_relaxation_count = input_dictionary.pop('external_relaxation_count')
@@ -103,6 +105,21 @@ class VaspRelaxation(VaspRunSet):
 				raise Exception("Incar modifier lists in input dictionary must be given as sequences")
 			else:
 				self.incar_modifier_lists_dictionary[key] = ParameterList(value)
+
+	def initialize_run_list(self):
+		"""sets self.vasp_run_list based on directories present"""
+		self.vasp_run_list = []
+
+		for i in range(self.external_relaxation_count):
+			run_path = self.get_extended_path(VaspRelaxation.external_relax_basename_string + str(i+1))
+			if Path.exists(run_path):
+				self.vasp_run_list.append(VaspRun(run_path))
+			else:
+				return
+
+		static_path = self.get_extended_path(VaspRelaxation.static_basename_string)
+		if Path.exists(static_path):
+			self.vasp_run_list.append(VaspRun(static_path))
 
 	def create_next_run(self):
 		run_path = self.get_next_run_path()
@@ -125,7 +142,8 @@ class VaspRelaxation(VaspRunSet):
 
 		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose, wavecar_path=self.get_wavecar_path())
 
-		self.run_count += 1 #increment at end - this tracks how many runs have been created up to now
+		#self.run_count += 1 #increment at end - this tracks how many runs have been created up to now
+		self.vasp_run_list.append(vasp_run)
 
 	def inner_update(self):
 
@@ -151,17 +169,7 @@ class VaspRelaxation(VaspRunSet):
 	def run_count(self):
 		"""Counts through the directories created that represent runs"""
 
-		count = 0
-		for i in range(self.external_relaxation_count):
-			if not Path.exists(self.get_extended_path(VaspRelaxation.external_relax_basename_string) + str(i+1)):
-				return count
-			else:
-				count += 1
-
-			if Path.exists(self.get_extended_path(VaspRelaxation.static_basename_string)):
-				return count + 1
-			else:
-				return count
+		return len(self.vasp_run_list)
 
 
 	def get_next_incar(self):
@@ -208,9 +216,6 @@ class VaspRelaxation(VaspRunSet):
 
 		return Structure(current_contcar_path)
 
-	def get_next_run_path(self):
-		return self.get_extended_path(self.get_next_run_path_basename())
-
 	def get_next_run_path_basename(self):
 		"""
 		Returns relax_1 if no relaxes, returns relax_4 if three other relaxes exist, 
@@ -222,14 +227,19 @@ class VaspRelaxation(VaspRunSet):
 		else:
 			return VaspRelaxation.external_relax_basename_string + str(self.run_count + 1)
 
-	def get_current_run_path(self):
-		return self.get_extended_path(self.get_current_run_path_basename())
+	def get_next_run_path(self):
+		return self.get_extended_path(self.get_next_run_path_basename())
+
 
 	def get_current_run_path_basename(self):
 		if self.run_count == self.external_relaxation_count:
 			return 'static'
 		else:
 			return 'relax_' + str(self.run_count)
+
+	def get_current_run_path(self):
+		return self.get_extended_path(self.get_current_run_path_basename())
+
 
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)

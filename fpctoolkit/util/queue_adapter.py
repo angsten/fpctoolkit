@@ -265,7 +265,10 @@ class QueueAdapter(object):
 			return File(Path.clean("/home/angsten/.submit.sh"))
 
 		elif QueueAdapter.host == 'Tom_hp':
-			return File()
+			file = File()
+			file[0] = 'fake submit script'
+			file[1] = 'nodes = 3'
+			return file
 
 	@staticmethod
 	def modify_number_of_cores_from_num_atoms(submission_file, num_atoms):

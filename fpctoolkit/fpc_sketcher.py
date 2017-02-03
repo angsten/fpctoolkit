@@ -13,6 +13,7 @@ from fpctoolkit.structure.perovskite import Perovskite
 from fpctoolkit.structure.site_collection import SiteCollection
 from fpctoolkit.io.vasp.outcar import Outcar
 from fpctoolkit.workflow.vasp_run import VaspRun
+from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
 from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 from fpctoolkit.io.vasp.incar_maker import IncarMaker
 #import fpctoolkit.util.string_util as su
@@ -46,27 +47,49 @@ self.data_path = "C:\Users\Tom\Documents\Coding\python_work\workflow_test"
 convergence_base_path = Path.clean(self.data_path)
 Path.make(convergence_base_path)
 
-base_kpoints_scheme = 'Monkhorst'
-base_kpoints_subdivisions_list = [4, 4, 4]
-base_encut = 800
-base_ediff = 0.000001
-base_structure = Perovskite(supercell_dimensions = [2, 2, 2], lattice=[[8.0, 0.0, 0.0], [0.0, 8.0, 0.0], [0.0, 0.0, 8.0]], species_list=['Ba', 'Ti', 'O'])
 
-convergence_encuts_list = [100]
+path = Path.join(convergence_base_path, 'relaxation')
+#initial_structure = Perovskite(supercell_dimensions=[4, 4, 1], lattice=[[14.4, 0.0, 0.0], [0.0, 14.4, 0.0], [0.0, 0.0, 5.2]], species_list=['K', 'V', 'O'])
+#initial_structure.randomly_displace_site_positions(0.25)
+initial_structure = Perovskite(supercell_dimensions = [2, 2, 2], lattice=[[8.0, 0.0, 0.0], [0.0, 8.0, 0.0], [0.0, 0.0, 8.0]], species_list=['Ba', 'Ti', 'O'])
 
-encut_convergence_set_path = Path.join(convergence_base_path, 'encut_convergence_set')
-Path.make(encut_convergence_set_path)
+input_dictionary = {
+    'submission_script_modification_keys_list': ['100'],
+    'external_relaxation_count': 10,
+    'kpoint_schemes_list': ['Monkhorst'],
+    'kpoint_subdivisions_lists': [[1, 1, 2], [1, 1, 2], [1, 1, 4]],
+    'ediff': [0.005, 0.005, 0.0001, 0.0001, 0.00005, 0.00005, 0.00001, 0.00001, 0.000001, 0.000001],
+    #'ediffg': [0.001, 0.001, 0.0001, 0.0001, 0.00001, 0.00001],
+    'encut': [300, 300, 400, 400, 500]
+}
 
-for encut in convergence_encuts_list:
-	run_path = Path.join(encut_convergence_set_path, str(encut))
 
-	kpoints = Kpoints(scheme_string=base_kpoints_scheme, subdivisions_list=base_kpoints_subdivisions_list)
-	incar = IncarMaker.get_static_incar({'ediff':base_ediff, 'encut':encut})
-	input_set = VaspInputSet(base_structure, kpoints, incar)
+relax = VaspRelaxation(path, initial_structure, input_dictionary)
+relax.update()
+relax.view()
 
-	vasp_run = VaspRun(run_path, input_set=input_set)
 
-	vasp_run.update()
+# base_kpoints_scheme = 'Monkhorst'
+# base_kpoints_subdivisions_list = [4, 4, 4]
+# base_encut = 800
+# base_ediff = 0.000001
+# base_structure = Perovskite(supercell_dimensions = [2, 2, 2], lattice=[[8.0, 0.0, 0.0], [0.0, 8.0, 0.0], [0.0, 0.0, 8.0]], species_list=['Ba', 'Ti', 'O'])
+
+# convergence_encuts_list = [100]
+
+# encut_convergence_set_path = Path.join(convergence_base_path, 'encut_convergence_set')
+# Path.make(encut_convergence_set_path)
+
+# for encut in convergence_encuts_list:
+# 	run_path = Path.join(encut_convergence_set_path, str(encut))
+
+# 	kpoints = Kpoints(scheme_string=base_kpoints_scheme, subdivisions_list=base_kpoints_subdivisions_list)
+# 	incar = IncarMaker.get_static_incar({'ediff':base_ediff, 'encut':encut})
+# 	input_set = VaspInputSet(base_structure, kpoints, incar)
+
+# 	vasp_run = VaspRun(run_path, input_set=input_set)
+
+# 	vasp_run.update()
 	#print vasp_run
 	#vasp_run.view()
 
