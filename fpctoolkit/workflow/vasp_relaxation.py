@@ -45,6 +45,8 @@ class VaspRelaxation(VaspRunSet):
 
 	"""
 
+	external_relax_basename_string = "relax_"
+	static_basename_string = "static"
 
 	def __init__(self, path, initial_structure=None, input_dictionary=None, verbose=True):
 		"""
@@ -74,6 +76,8 @@ class VaspRelaxation(VaspRunSet):
 					self.load()	
 				else: #input_dictionary parameter is none, but no input_dict saved either This case is not yet supported
 					raise Exception("No input_dictionary given, but also no input_dictionary saved to path. Not yet supported.")
+
+			#set self.run_count based on how many runs are present in the directory
 
 		self.load_in_input_dictionary(input_dictionary)
 			
@@ -143,6 +147,23 @@ class VaspRelaxation(VaspRunSet):
 	def complete(self):
 		return (self.run_count == self.external_relaxation_count + 1) and self.get_current_vasp_run().complete
 
+	@property
+	def run_count(self):
+		"""Counts through the directories created that represent runs"""
+
+		count = 0
+		for i in range(self.external_relaxation_count):
+			if not Path.exists(self.get_extended_path(VaspRelaxation.external_relax_basename_string) + str(i+1)):
+				return count
+			else:
+				count += 1
+
+			if Path.exists(self.get_extended_path(VaspRelaxation.static_basename_string)):
+				return count + 1
+			else:
+				return count
+
+
 	def get_next_incar(self):
 		"""
 		Returns the incar corresponding to the next run in the relaxation set
@@ -197,9 +218,9 @@ class VaspRelaxation(VaspRunSet):
 		"""
 
 		if self.run_count == self.external_relaxation_count:
-			return 'static'
+			return VaspRelaxation.static_basename_string
 		else:
-			return 'relax_' + str(self.run_count + 1)
+			return VaspRelaxation.external_relax_basename_string + str(self.run_count + 1)
 
 	def get_current_run_path(self):
 		return self.get_extended_path(self.get_current_run_path_basename())
