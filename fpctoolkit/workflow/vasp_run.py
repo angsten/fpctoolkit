@@ -172,14 +172,13 @@ class VaspRun(object):
 			else:
 				return self.outcar.energy
 		else:
-			
 			return None
 
 	@property
 	def total_time(self):
 		"""Defaults to cpu*hours for now (best measure of total resources used)"""
 		if self.complete:
-			return outcar.get_calculation_time_in_core_hours()
+			return self.outcar.get_calculation_time_in_core_hours()
 		else:
 			return None
 
