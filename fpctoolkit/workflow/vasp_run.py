@@ -165,8 +165,7 @@ class VaspRun(object):
 		else:
 			return None
 
-	@property
-	def final_energy(self, per_atom=True):
+	def get_final_energy(self, per_atom=True):
 		if self.complete:
 			if per_atom:
 				return self.outcar.energy_per_atom
@@ -401,16 +400,16 @@ class VaspRun(object):
 		print output_string,
 
 
-	def __str__(self):
-		head_string = "==> "
-		file_separator = 30*"-"
-		output_string = ""
+	# def __str__(self):
+	# 	head_string = "==> "
+	# 	file_separator = 30*"-"
+	# 	output_string = ""
 
-		output_string += "\n" + 10*"-" + "VaspRun: Job ID is " + str(self.job_id_string) + 10*"-" + "\n"
-		output_string += head_string + "Path: " + self.path + "\n"
-		output_string += head_string + "Potcar: " + " ".join(self.potcar.get_titles()) + "\n"
-		output_string += head_string + "Kpoints:\n" + file_separator + "\n" + str(self.kpoints) + file_separator + "\n"
-		output_string += head_string + "Incar:\n" + file_separator + "\n" + str(self.incar) + file_separator + "\n"
-		output_string += head_string + "Structure:\n" + file_separator + "\n" + str(self.structure) + file_separator + "\n"
+	# 	output_string += "\n" + 10*"-" + "VaspRun: Job ID is " + str(self.job_id_string) + 10*"-" + "\n"
+	# 	output_string += head_string + "Path: " + self.path + "\n"
+	# 	output_string += head_string + "Potcar: " + " ".join(self.potcar.get_titles()) + "\n"
+	# 	output_string += head_string + "Kpoints:\n" + file_separator + "\n" + str(self.kpoints) + file_separator + "\n"
+	# 	output_string += head_string + "Incar:\n" + file_separator + "\n" + str(self.incar) + file_separator + "\n"
+	# 	output_string += head_string + "Structure:\n" + file_separator + "\n" + str(self.structure) + file_separator + "\n"
 
-		return output_string
+	# 	return output_string

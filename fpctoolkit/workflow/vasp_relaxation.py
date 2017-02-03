@@ -132,8 +132,7 @@ class VaspRelaxation(VaspRunSet):
 
 		return len(self.vasp_run_list)
 
-	@property
-	def final_energy(self, per_atom=False):
+	def get_final_energy(self, per_atom=False):
 		"""Returns static energy if static is complete, else returns None"""
 
 		if self.complete:
