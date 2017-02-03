@@ -114,13 +114,13 @@ class VaspRelaxation(VaspRunSet):
 		for i in range(self.external_relaxation_count):
 			run_path = self.get_extended_path(VaspRelaxation.external_relax_basename_string + str(i+1))
 			if Path.exists(run_path):
-				self.vasp_run_list.append(VaspRun(run_path))
+				self.vasp_run_list.append(VaspRun(run_path), verbose=self.verbose)
 			else:
 				return
 
 		static_path = self.get_extended_path(VaspRelaxation.static_basename_string)
 		if Path.exists(static_path):
-			self.vasp_run_list.append(VaspRun(static_path))
+			self.vasp_run_list.append(VaspRun(static_path), verbose=self.verbose)
 
 	@property
 	def complete(self):
@@ -136,11 +136,16 @@ class VaspRelaxation(VaspRunSet):
 	def final_energy(self, per_atom=False):
 		"""Returns static energy if static is complete, else returns None"""
 
-		if self.run_count == self.external_relaxation_count + 1 and self.get_current_vasp_run().complete:
-			if per_atom:
-				return self.get_current_vasp_run().outcar.energy_per_atom
-			else:
-				return self.get_current_vasp_run().outcar.energy
+		if self.complete:
+			return self.get_current_vasp_run().final_energy(per_atom)
+		else:
+			return None
+
+	@property
+	def total_time(self, in_cpu_hours=True):
+		"""Defaults to cpu*hours for now (best measure of total resources used)"""
+
+		return sum([run.total_time for run in self.vasp_run_list if run.complete])
 
 	def inner_update(self):
 
@@ -177,7 +182,7 @@ class VaspRelaxation(VaspRunSet):
 			input_set.set_node_count(self.submission_node_count_list[self.run_count])
 
 
-		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose, wavecar_path=self.get_wavecar_path())
+		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose, wavecar_path=self.get_wavecar_path(), verbose=self.verbose)
 
 		#self.run_count += 1 #increment at end - this tracks how many runs have been created up to now
 		self.vasp_run_list.append(vasp_run)

@@ -166,6 +166,24 @@ class VaspRun(object):
 			return None
 
 	@property
+	def final_energy(self, per_atom=True):
+		if self.complete:
+			if per_atom:
+				return self.outcar.energy_per_atom
+			else:
+				return self.outcar.energy
+		else:
+			return None
+
+	@property
+	def total_time(self):
+		"""Defaults to cpu*hours for now (best measure of total resources used)"""
+		if self.complete:
+			return outcar.get_calculation_time_in_core_hours()
+		else:
+			return None
+
+	@property
 	def complete(self):
 		outcar = self.outcar
 

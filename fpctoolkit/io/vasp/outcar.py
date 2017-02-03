@@ -46,6 +46,7 @@ class Outcar(File):
 
 		ionic_step_data_start_line_indices = self.get_line_indices_containing_string(Outcar.ionic_step_complete_string)
 		print ionic_step_data_start_line_indices
+		##########unfinished
 
 	def get_number_of_atoms(self):
 		return self.get_incar_parameter_value("NIONS")
