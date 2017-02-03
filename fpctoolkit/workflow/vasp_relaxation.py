@@ -146,6 +146,23 @@ class VaspRelaxation(VaspRunSet):
 
 		return sum([run.total_time for run in self.vasp_run_list if run.complete])
 
+	def get_data_dictionary(self):
+		"""
+		Dictionary looks like:
+		{
+			'run_final_energy_list': [-24.2, -25.4, -27.1],
+			'run_final_energy_per_atom_list': [-4.2, -4.6, -5.7],
+			'run_total_time_list': [102.2, 104.5, 6.2]
+		}
+		"""
+
+		data_dictionary = {}
+		data_dictionary['run_final_energy_list'] = [run.get_final_energy(per_atom=False) for run in self.vasp_run_list]
+		data_dictionary['run_final_energy_per_atom_list'] = [run.get_final_energy(per_atom=True) for run in self.vasp_run_list]
+		data_dictionary['run_total_time_list'] = [run.total_time for run in self.vasp_run_list]
+
+		return data_dictionary
+
 	def inner_update(self):
 
 		if self.complete:
