@@ -136,7 +136,7 @@ class VaspRelaxation(VaspRunSet):
 		"""Returns static energy if static is complete, else returns None"""
 
 		if self.complete:
-			return self.get_current_vasp_run().final_energy(per_atom)
+			return self.get_current_vasp_run().get_final_energy(per_atom)
 		else:
 			return None
 
