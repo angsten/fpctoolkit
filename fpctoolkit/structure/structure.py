@@ -85,10 +85,21 @@ class Structure(object):
 
 		pass
 
+	def randomly_displace_site_position(self, site, stdev, max_displacement_distance=None, mean=0.0):
+		"""
+		Randomly displaces a single site in separate random directions with
+		displacement magnitude governed by a normal distribution.
+		!!Parameters are given in angstroms!!
+		Site will be converted to direct coordinates for sites represented
+		in direct coordinates. Modifies site.
+		"""
+
+		
+
 	def randomly_displace_site_positions(self, stdev, max_displacement_distance=None, mean=0.0):
 		"""
 		Randomly displace all sites in separate random directions with
-		dipslacement magnitude governed by a normal distribution.
+		displacement magnitude governed by a normal distribution.
 		!!Parameters are given in angstroms!!
 		These will be converted to direct coordinates for sites represented
 		in direct coordinates. Modifies self.
@@ -110,17 +121,27 @@ class Structure(object):
 
 			site.displace(displacement_vector)
 
-	def ensure_no_atoms_too_close_to_site(self, test_site, minimum_atomic_distance):
+	def any_sites_are_too_close(self, test_site, minimum_atomic_distance, N_max=3):
 		"""
 		Returns False if any site in this structure is within minimum_atomic_distance (angstroms) of test_site
-		Ignores if test_site is the same object (address compared) as a site in the structure.
+		Ignores if test_site is the same object (address compared) as a site in the structure. 
+		N_max controls how many images to search. Higher means higher accuracy in weird sheared structures
 		"""
 
 		self.convert_sites_to_direct_coordinates()
 
-		for site in self.sites:
-			Vector.get_minimum_distance_between_two_periodic_points(fractional_coordinate_1, fractional_coordinate_2, lattice, N_max=3):
+		test_site_fractional_coordinates = test_site['position'] if test_site['coordinate_mode'] == 'Direct' else Vector.get_in_direct_coordinates(test_site['position'])
 
+		for site in self.sites:
+			if test_site is site: #don't consider case where these are the same site objects
+				continue
+
+			minimum_distance = Vector.get_minimum_distance_between_two_periodic_points(test_site_fractional_coordinates, site['position'], self.lattice, N_max)
+
+			if minimum_distance < minimum_atomic_distance:
+				return False
+
+		return True
 
 
 	def convert_sites_to_cartesian_coordinates(self):
