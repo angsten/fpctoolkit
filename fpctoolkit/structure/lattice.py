@@ -53,13 +53,16 @@ class Lattice(object):
 		"""
 
 		strain_tensor = []
-		strain_tensor.append([np.random.normal(1.0, stdev),     np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev)/2.0])
-		strain_tensor.append([np.random.normal(0.0, stdev)/2.0, np.random.normal(1.0, stdev),     np.random.normal(0.0, stdev)/2.0])
-		strain_tensor.append([np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev)/2.0, np.random.normal(1.0, stdev)])
+		strain_tensor.append([np.random.normal(0.0, stdev),     np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev)/2.0])
+		strain_tensor.append([np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev),     np.random.normal(0.0, stdev)/2.0])
+		strain_tensor.append([np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev)])
 
 		for i in range(3):
 			for j in range(3):
 				strain_tensor[i][j] = strain_tensor[i][j]*mask_array[i][j]
+
+		for i in range(3):
+			strain_tensor[i][i] += 1.0
 
 		self.strain(strain_tensor)
 
@@ -75,7 +78,7 @@ class Lattice(object):
 
 		voigt equivalent is: (e11, e22, e33, 2*e23, 2*e13, 2*e12)
 
-		##not supported yet: If upper_triangle_only is True, e21, e31, and e32
+		##not supported yet: If upper_triangle_only is True, e21, e31, and e32!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		"""
 
 		strain_tensor = np.array(strain_tensor)

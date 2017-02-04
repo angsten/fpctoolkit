@@ -79,6 +79,7 @@ class Structure(object):
 		"""
 		Randomly displace all sites in separate random directions with
 		displacement magnitude governed by a normal distribution.
+		Note: mean effectively is the shell about which atoms on average sit around there original position.
 		!!Parameters are given in angstroms!!
 		These will be converted to direct coordinates for sites represented
 		in direct coordinates. Modifies self.
