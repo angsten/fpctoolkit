@@ -150,16 +150,17 @@ self = self_c()
 
 #struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\dist.vasp")
 
-
-structure = Perovskite(supercell_dimensions = [4, 4, 1], lattice=[[14.4, 0.0, 0.0], [0.0, 14.4, 0.0], [0.0, 0.0, 4.7]], species_list=['K', 'V', 'O'])
+a = 15.16
+structure = Perovskite(supercell_dimensions = [4, 4, 1], lattice=[[a, 0.0, 0.0], [0.0, a, 0.0], [0.0, 0.0, a/4.0]], species_list=['K', 'V', 'O'])
 
 shear_factor = 1.0
-structure.lattice.randomly_strain(stdev=0.04, mask_array=[[0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 1.0]]) #for (100) epitaxy
+structure.lattice.randomly_strain(stdev=0.06, mask_array=[[0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 1.0]]) #for (100) epitaxy
 
+mult = 1.8
 min_atomic_distance = 1.5
-print structure.randomly_displace_site_positions(stdev=0.2, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.5, mean=0.2, types_list=['K'])
-print structure.randomly_displace_site_positions(stdev=0.6, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.7, mean=0.4, types_list=['V'])
-print structure.randomly_displace_site_positions(stdev=0.6, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.8, mean=0.4, types_list=['O'])
+print structure.randomly_displace_site_positions(stdev=0.2*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.3*mult, mean=0.2, types_list=['K'])
+print structure.randomly_displace_site_positions(stdev=0.6*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.6*mult, mean=0.4, types_list=['V'])
+print structure.randomly_displace_site_positions(stdev=0.8*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=1.0*mult, mean=0.6, types_list=['O'])
 
 
 structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\dist.vasp")
