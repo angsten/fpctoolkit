@@ -100,7 +100,6 @@ class VaspRun(object):
 		incar.write_to_path(Path.clean(self.path, 'INCAR'))
 		kpoints.write_to_path(Path.clean(self.path, 'KPOINTS'))
 		potcar.write_to_path(Path.clean(self.path, 'POTCAR'))
-		print submission_script_file, '***********'
 		submission_script_file.write_to_path(Path.clean(self.path, 'submit.sh'))
 
 		if wavecar_path and Path.exists(wavecar_path):
