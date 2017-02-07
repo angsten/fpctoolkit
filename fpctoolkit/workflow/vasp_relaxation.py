@@ -10,6 +10,7 @@ from fpctoolkit.structure.structure import Structure
 from fpctoolkit.util.path import Path
 from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 from fpctoolkit.util.queue_adapter import QueueAdapter, QueueStatus
+from fpctoolkit.io.file import File
 
 class VaspRelaxation(VaspRunSet):
 	"""
