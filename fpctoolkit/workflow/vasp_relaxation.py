@@ -337,6 +337,63 @@ class VaspRelaxation(VaspRunSet):
 			self.run_count += 1
 
 
+	def quick_view(self):
+		"""
+		Gives queue properties, energy list, tail of _JOB_OUTPUT.txt file
+		"""
+
+		extend_count = 200
+
+		print "\n"*5
+		print "-"*extend_count
+		print "-"*extend_count
+		print "-"*extend_count
+		print "           Relaxation Run at " + self.path
+		print "-"*extend_count
+		print "-"*extend_count
+		print "-"*extend_count
+
+		if self.run_count == self.external_relaxation_count:
+			run_str = "Static Run"
+		else:
+			run_str = "Relax_" + str(self.run_count + 1)
+
+		print "\n"
+		print "V"*80 + "__  " + run_str + "  __" + "V"*80
+		print "\n"*3
+		
+		if self.run_count > 0:
+			run = self.get_current_vasp_run()
+
+			print run.path, '\n\n'
+			print queue_properties, '\n\n'
+
+			std_out_path = run.get_extended_path('_JOB_OUTPUT.txt')
+
+			if Path.exists(std_out_path):
+				std_out_file = File(run.get_extended_path('_JOB_OUTPUT.txt'))
+
+				print std_out_file[-40:]
+
+
+
+		print "\n"*3
+		print "^"*80 + "__  END " + run_str + "  __" + "^"*80
+		print "\n"
+
+		print "o"*extend_count
+		print "          END Relaxation Run at " + self.path
+		print "o"*extend_count
+
+		print "\n"*2
+
+		
+
+
+		output_string += "\n\n" + 30*"-" + "End VaspRun View for Job ID " + str(self.job_id_string) + 30*"-" + "\n\n\n\n"
+
+		print output_string,
+
 	def view(self, files_to_view=['Potcar', 'Kpoints', 'Incar', 'Poscar', 'Contcar', 'Submit.sh', '_JOB_OUTPUT.txt']):
 		"""
 		See printing of actual text input files written in run directories, not internally stored input files.

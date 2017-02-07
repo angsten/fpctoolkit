@@ -360,8 +360,6 @@ class VaspRun(object):
 			raise Exception(log_string)
 
 
-
-
 	def view(self, files_to_view=['Potcar', 'Kpoints', 'Incar', 'Poscar', 'Contcar', 'Submit.sh', '_JOB_OUTPUT.txt']):
 		"""
 		See printing of actual text input files written in directory, not internally stored input files.
