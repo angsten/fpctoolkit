@@ -378,11 +378,11 @@ class QueueAdapter(object):
 
 
 class QueueStatus(object):
-	off_queue = 1
-	queued = 2 #i.e., has 'Q' as status
-	running = 3 #'R'
-	complete = 4 #'C'
-	errored = 5
+	off_queue = 'Off Queue'
+	queued = 'Q' #i.e., has 'Q' as status
+	running = 'R' #'R'
+	complete = 'C' #'C'
+	errored = 'E'
 
 	@staticmethod
 	def is_status_active(queue_status):

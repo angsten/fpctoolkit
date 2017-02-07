@@ -374,7 +374,7 @@ class VaspRelaxation(VaspRunSet):
 			if Path.exists(std_out_path):
 				std_out_file = File(run.get_extended_path('_JOB_OUTPUT.txt'))
 
-				print std_out_file[-40:]
+				print "\n".join(std_out_file[-40:])
 
 
 
@@ -387,13 +387,6 @@ class VaspRelaxation(VaspRunSet):
 		print "o"*extend_count
 
 		print "\n"*2
-
-		
-
-
-		output_string += "\n\n" + 30*"-" + "End VaspRun View for Job ID " + str(self.job_id_string) + 30*"-" + "\n\n\n\n"
-
-		print output_string,
 
 	def view(self, files_to_view=['Potcar', 'Kpoints', 'Incar', 'Poscar', 'Contcar', 'Submit.sh', '_JOB_OUTPUT.txt']):
 		"""
