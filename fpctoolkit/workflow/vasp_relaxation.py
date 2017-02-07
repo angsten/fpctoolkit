@@ -366,13 +366,15 @@ class VaspRelaxation(VaspRunSet):
 			if Path.exists(std_out_path):
 				std_out_file = File(run.get_extended_path('_JOB_OUTPUT.txt'))
 
-				print "-"*100
+				print "-"*140
 				print "\n".join(std_out_file[:40])
-				print "."
-				print "."
-				print "."
+				print "                 ."
+				print "                 ."
+				print "                 ."
+				print "                 ."
+				print "                 ."
 				print "\n".join(std_out_file[-40:])
-				print "-"*100
+				print "-"*140
 			else:
 				print "No _JOB_OUTPUT.txt file found"
 
