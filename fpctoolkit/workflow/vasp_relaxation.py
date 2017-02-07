@@ -345,23 +345,15 @@ class VaspRelaxation(VaspRunSet):
 
 		extend_count = 200
 
-		print "\n"*5
-		print "-"*extend_count
-		print "-"*extend_count
+		print "\n"*3
 		print "-"*extend_count
 		print "           Relaxation Run at " + self.path
-		print "-"*extend_count
-		print "-"*extend_count
 		print "-"*extend_count
 
 		if self.run_count == self.external_relaxation_count:
 			run_str = "Static Run"
 		else:
-			run_str = "Relax_" + str(self.run_count + 1)
-
-		print "\n"
-		print "V"*80 + "__  " + run_str + "  __" + "V"*80
-		print "\n"*3
+			run_str = "Relax_" + str(self.run_count)
 		
 		if self.run_count > 0:
 			run = self.get_current_vasp_run()
@@ -374,19 +366,17 @@ class VaspRelaxation(VaspRunSet):
 			if Path.exists(std_out_path):
 				std_out_file = File(run.get_extended_path('_JOB_OUTPUT.txt'))
 
+				print "-"*100
+				print "\n".join(std_out_file[40:])
+				print "."
+				print "."
+				print "."
 				print "\n".join(std_out_file[-40:])
-
-
+				print "-"*100
+			else:
+				print "No _JOB_OUTPUT.txt file found"
 
 		print "\n"*3
-		print "^"*80 + "__  END " + run_str + "  __" + "^"*80
-		print "\n"
-
-		print "o"*extend_count
-		print "          END Relaxation Run at " + self.path
-		print "o"*extend_count
-
-		print "\n"*2
 
 	def view(self, files_to_view=['Potcar', 'Kpoints', 'Incar', 'Poscar', 'Contcar', 'Submit.sh', '_JOB_OUTPUT.txt']):
 		"""
