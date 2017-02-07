@@ -366,7 +366,7 @@ class VaspRelaxation(VaspRunSet):
 			run = self.get_current_vasp_run()
 
 			print run.path, '\n\n'
-			print queue_properties, '\n\n'
+			print run.queue_properties, '\n\n'
 
 			std_out_path = run.get_extended_path('_JOB_OUTPUT.txt')
 
