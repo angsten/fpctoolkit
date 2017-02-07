@@ -367,7 +367,7 @@ class VaspRelaxation(VaspRunSet):
 				std_out_file = File(run.get_extended_path('_JOB_OUTPUT.txt'))
 
 				print "-"*100
-				print "\n".join(std_out_file[40:])
+				print "\n".join(std_out_file[:40])
 				print "."
 				print "."
 				print "."
