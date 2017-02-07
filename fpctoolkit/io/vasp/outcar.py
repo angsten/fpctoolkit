@@ -55,30 +55,38 @@ class Outcar(File):
 	def get_calculation_time_in_core_hours(self):
 		"""In cpu*hours. Good for comparing speed up when moving from smaller to larger number of cores"""
 
-		cpu_hours = (self.get_total_cpu_time() * self.get_number_of_cores()) / 3600.0
+		total_cpu_time = self.get_total_cpu_time()
+		number_of_cores = self.get_number_of_cores()
+
+		if (not total_cpu_time) or (not number_of_cores):
+			return None
+			
+		cpu_hours = (total_cpu_time * number_of_cores) / 3600.0
 		
 		return round(cpu_hours, 2)
 
 	def get_number_of_cores(self):
 		"""Returns number of cores recorded in outcar"""
 
-		core_count_lines = self.get_lines_containing_string("total cores") #may be fenrir specific!
+		core_count_line = self.get_first_line_containing_string_from_top("total cores") #may be fenrir specific!
 
-		if len(core_count_lines) != 1:
-			raise Exception("Could not find or found more than one core count line in outcar")
+		if not core_count_line:
+			return None
 
-		core_count_line = su.remove_extra_spaces(core_count_lines[0])
+		core_count_line = su.remove_extra_spaces(core_count_line)
+
 		return int(core_count_line.split(' ')[2])
 
 	def get_total_cpu_time(self):
 		"""Returns number after Total CPU time used (sec): string"""
 
-		cpu_time_lines = self.get_lines_containing_string("Total CPU time used (sec):")
+		cpu_time_line = self.get_first_line_containing_string_from_bottom("Total CPU time used (sec):")
 
-		if len(cpu_time_lines) != 1:
-			raise Exception("Could not find or found more than one cpu count line in outcar")
+		if not cpu_time_line:
+			return None
 
-		cpu_time_line = su.remove_extra_spaces(cpu_time_lines[0]).strip()
+		cpu_time_line = su.remove_extra_spaces(cpu_time_line).strip()
+
 		return float(cpu_time_line.split(' ')[5])
 
 
