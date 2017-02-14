@@ -47,8 +47,9 @@ class Population(object):
 
 		i = 1
 		while True:
-			if not Path.exists(Path.join(generation_directory_path, Population.individual_prefix_string + str(i))):
-				return i
+			individual_path = Path.join(generation_directory_path, Population.individual_prefix_string + str(i))
+			if not Path.exists(individual_path):
+				return individual_path
 
 			i += 1
 

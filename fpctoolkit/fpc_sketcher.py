@@ -1,12 +1,12 @@
 import random
 
 import fpctoolkit.util.string_util as su
+from fpctoolkit.io.file import File
 from fpctoolkit.io.vasp.kpoints import Kpoints
 from fpctoolkit.io.vasp.potcar import Potcar
 from fpctoolkit.io.vasp.poscar import Poscar
 from fpctoolkit.io.vasp.incar import Incar
 from fpctoolkit.util.path import Path
-from fpctoolkit.io.file import File
 from fpctoolkit.structure.site import Site
 from fpctoolkit.structure.lattice import Lattice
 from fpctoolkit.structure.structure import Structure
@@ -28,8 +28,8 @@ from fpctoolkit.structure_prediction.ga_driver_100_perovskite_epitaxy import GAD
 
 
 
-ga_path = "C:\Users\Tom\Documents\Coding\python_work\workflow_test"
-
+ga_path = "C:\Users\Tom\Documents\Coding\python_work\workflow_test\ga_test"
+Path.remove(ga_path)
 
 calculation_set_input_dictionary = {
 	'external_relaxation_count': 1,
@@ -42,7 +42,7 @@ calculation_set_input_dictionary = {
 }
 
 ga_input_dictionary = {
-	'species_list':['K', 'V', 'O'],
+	'species_list':['Ba', 'Ti', 'O'],
 	'epitaxial_lattice_constant': 4.0,
 	'supercell_dimensions_list': [1, 1, 1],
 	'max_number_of_generations': 1,
@@ -55,7 +55,7 @@ ga_driver = GADriver100PerovskiteEpitaxy(ga_input_dictionary, calculation_set_in
 
 ga_structure_predictor = GAStructurePredictor(ga_path, ga_driver)
 
-
+ga_structure_predictor.update()
 
 
 

@@ -78,8 +78,8 @@ class GADriver(object):
 	def get_permuted_structure(self, population_of_last_generation):
 		return None
 
-	def get_individuals_per_generation_count(self, genration_count):
-		return self.ga_input_dictionary['individuals_per_generation'][generation_count-1]
+	def get_individuals_per_generation(self, generation_number):
+		return self.ga_input_dictionary['individuals_per_generation'][generation_number-1]
 
 	def get_max_number_of_generations(self):
 		return self.ga_input_dictionary['max_number_of_generations']

@@ -1,6 +1,7 @@
 
 
 from fpctoolkit.util.path import Path
+from fpctoolkit.io.file import File
 
 class Individual(object):
 	"""

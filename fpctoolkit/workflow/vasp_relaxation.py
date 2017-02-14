@@ -63,7 +63,7 @@ class VaspRelaxation(VaspRunSet):
 		#self.run_count = 0 #how many runs have been initiated
 		self.vasp_run_list = []
 
-		self.initial_structure = initial_structure
+		self.input_initial_structure = initial_structure
 
 
 
@@ -79,6 +79,7 @@ class VaspRelaxation(VaspRunSet):
 					#self.load()	
 				else: #input_dictionary parameter is none, but no input_dict saved either This case is not yet supported
 					raise Exception("No input_dictionary given, but also no input_dictionary saved to path. Not yet supported.")
+					
 
 		self.load_input_dictionary(input_dictionary)
 
@@ -248,10 +249,10 @@ class VaspRelaxation(VaspRunSet):
 		return wavecar_path if Path.exists(wavecar_path) else None
 
 	def get_next_structure(self):
-		"""If first relax, return self.initial_structure, else, get the contcar from the current run"""
+		"""If first relax, return self.input_initial_structure, else, get the contcar from the current run"""
 
 		if self.run_count == 0:
-			return self.initial_structure
+			return self.input_initial_structure
 
 		current_contcar_path = self.get_current_vasp_run().get_extended_path('CONTCAR')
 		print current_contcar_path

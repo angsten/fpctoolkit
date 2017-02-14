@@ -1,4 +1,4 @@
-
+import copy
 
 from fpctoolkit.structure_prediction.ga_driver import GADriver
 from fpctoolkit.structure.perovskite import Perovskite
@@ -10,7 +10,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 	def __init__(self, ga_input_dictionary, calculation_set_input_dictionary):
 		"""
-			ga_input_dicitonary should additionally have species_list, epitaxial_lattice_constant (full number, not 5-atom cell equivalent),
+			ga_input_dictionary should additionally have species_list, epitaxial_lattice_constant (full number, not 5-atom cell equivalent),
 			and supercell_dimensions_list keys and values
 		"""
 
@@ -19,7 +19,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		self.structure_creation_id_string = 'none' #will track how the individual's structure was created
 		self.parent_structures_list = None
 
-		if not (ga_input_dicitonary['supercell_dimensions_list'][0] == ga_input_dicitonary['supercell_dimensions_list'][1]):
+		if not (self.ga_input_dictionary['supercell_dimensions_list'][0] == self.ga_input_dictionary['supercell_dimensions_list'][1]):
 			raise Exception("For (100) epitaxial conditions, Nx must = Ny supercell dimensions. Other behavior not yet supported")
 
 
@@ -30,23 +30,23 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		initial_structure = self.get_structure(population_of_last_generation, generation_number)
 
-		relaxation = VaspRelaxation(path=individual_path, initial_structure=initial_structure, input_dictionary=self.calculation_set_input_dictionary)
+		relaxation = VaspRelaxation(path=individual_path, initial_structure=initial_structure, input_dictionary=copy.deepcopy(self.calculation_set_input_dictionary))
 
 		#package this with path and input_dict in calc set (relax) and return as individual
 
 		return Individual(calculation_set=relaxation, structure_creation_id_string=self.structure_creation_id_string, parent_structures_list=self.parent_structures_list)
 
 	def get_random_structure(self, population_of_last_generation):
-		a = self.ga_input_dicitonary['epitaxial_lattice_constant']
+		a = self.ga_input_dictionary['epitaxial_lattice_constant']
 
-		Nx = self.ga_input_dicitonary['supercell_dimensions_list'][0]
-		Nz = self.ga_input_dicitonary['supercell_dimensions_list'][2]
+		Nx = self.ga_input_dictionary['supercell_dimensions_list'][0]
+		Nz = self.ga_input_dictionary['supercell_dimensions_list'][2]
 
 		c = ( a * Nz ) / Nx ##############################eventually base c off of a good volume
 
 		lattice = [[a, 0.0, 0.0], [0.0, a, 0.0], [0.0, 0.0, c]]
 
-		structure = Perovskite(supercell_dimensions=self.ga_input_dicitonary['supercell_dimensions_list'], lattice=lattice, species_list=self.ga_input_dicitonary['species_list'])
+		structure = Perovskite(supercell_dimensions=self.ga_input_dictionary['supercell_dimensions_list'], lattice=lattice, species_list=self.ga_input_dictionary['species_list'])
 
 		shear_factor = 0.8
 		structure.lattice.randomly_strain(stdev=0.06, mask_array=[[0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 1.0]]) #for (100) epitaxy
