@@ -49,7 +49,7 @@ class VaspRelaxation(VaspRunSet):
 	external_relax_basename_string = "relax_"
 	static_basename_string = "static"
 
-	def __init__(self, path, initial_structure=None, input_dictionary=None, verbose=True):
+	def __init__(self, path, initial_structure=None, input_dictionary=None, verbose=False):
 		"""
 		Cases:
 		1. path does not exist or is empty ==> make the relaxation directory, enforce input file arguments all exists

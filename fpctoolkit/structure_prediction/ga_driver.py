@@ -34,14 +34,14 @@ class GADriver(object):
 		self.mutate_fractions_list = ParameterList(self.ga_input_dictionary['mutate_fractions_list']) if 'mutate_fractions_list' in self.ga_input_dictionary else ParameterList([0.0])
 		self.permute_fractions_list = ParameterList(self.ga_input_dictionary['permute_fractions_list']) if 'permute_fractions_list' in self.ga_input_dictionary else ParameterList([0.0])
 
-	def get_new_individual(self, individual_path, generation_number):
+	def get_new_individual(self, individual_path, population_of_last_generation, generation_number):
 		"""
 		Main workhorse - supplies an individual by randomly chosen means (heredity, random, mutate, ...etc.)
 		"""
 
 		return None
 
-	def get_structure(self, generation_number):
+	def get_structure(self, population_of_last_generation, generation_number):
 		
 
 		probabilities_list = []
@@ -54,25 +54,25 @@ class GADriver(object):
 		event_index = random_selector.get_event_index()
 
 		if event_index == 0:
-			return self.get_random_structure()
+			return self.get_random_structure(population_of_last_generation)
 		elif event_index == 1:
-			return self.get_mated_structure()
+			return self.get_mated_structure(population_of_last_generation)
 		elif event_index == 2:
-			return self.get_mutated_structure()
+			return self.get_mutated_structure(population_of_last_generation)
 		elif event_index == 3:
-			return self.get_permuted_structure()
+			return self.get_permuted_structure(population_of_last_generation)
 
 
-	def get_random_structure(self):
+	def get_random_structure(self, population_of_last_generation):
 		return None
 
-	def get_mated_structure(self):
+	def get_mated_structure(self, population_of_last_generation):
 		return None
 
-	def get_mutated_structure(self):
+	def get_mutated_structure(self, population_of_last_generation):
 		return None
 
-	def get_permuted_structure(self):
+	def get_permuted_structure(self, population_of_last_generation):
 		return None
 
 	def get_individuals_per_generation_count(self, genration_count):

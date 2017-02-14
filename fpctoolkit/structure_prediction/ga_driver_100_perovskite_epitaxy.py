@@ -2,6 +2,8 @@
 
 from fpctoolkit.structure_prediction.ga_driver import GADriver
 from fpctoolkit.structure.perovskite import Perovskite
+from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
+from fpctoolkit.strucutre_prediction.individual import Individual
 
 class GADriver100PerovskiteEpitaxy(GADriver):
 
@@ -14,19 +16,24 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		super(GADriver100Epitaxy, self).__init__(ga_input_dictionary, calculation_set_input_dictionary)
 
+		self.structure_creation_id_string = 'none' #will track how the individual's structure was created
+		self.parent_structures_list = None
 
-	def get_new_individual(self, individual_path, generation_number):
+
+	def get_new_individual(self, individual_path, population_of_last_generation, generation_number):
 		"""
 		Main workhorse - supplies an individual by randomly chosen means (heredity, random, mutate, ...etc.)
 		"""
 
-		structure = self.get_structure()
+		initial_structure = self.get_structure(population_of_last_generation, generation_number)
+
+		relaxation = VaspRelaxation(path=individual_path, initial_structure=initial_structure, input_dictionary=self.calculation_set_input_dictionary)
 
 		#package this with path and input_dict in calc set (relax) and return as individual
 
-		return None
+		return Individual(calculation_set=relaxation, structure_creation_id_string=self.structure_creation_id_string, parent_structures_list=self.parent_structures_list)
 
-	def get_random_structure(self):
+	def get_random_structure(self, population_of_last_generation):
 		a = self.ga_input_dicitonary['epitaxial_lattice_constant']
 
 		Nx = self.ga_input_dicitonary['supercell_dimensions_list'][0]
@@ -47,11 +54,14 @@ class GADriver100PerovskiteEpitaxy(GADriver):
     	structure.randomly_displace_site_positions(stdev=0.6*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.6*mult, mean=0.5, types_list=['V'])
     	structure.randomly_displace_site_positions(stdev=0.8*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=1.2*mult, mean=0.7, types_list=['O'])
 
+    	self.structure_creation_id_string = 'random_standard'
+    	self.parent_structures_list = None
+
 		return structure
 
 
 
 
 
-	def get_mated_structure(self):
+	def get_mated_structure(self, population_of_last_generation):
 		pass
