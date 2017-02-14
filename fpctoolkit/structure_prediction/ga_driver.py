@@ -1,4 +1,5 @@
 import random
+import copy
 
 from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
 from fpctoolkit.structure_prediction.individual import Individual
@@ -87,4 +88,4 @@ class GADriver(object):
 	def directory_to_individual_conversion_method(self, path):
 		"""Default to a vasp relaxation"""
 
-		return Individual(calculation_set=VaspRelaxation(path=path, input_dictionary=self.calculation_set_input_dictionary))
+		return Individual(calculation_set=VaspRelaxation(path=path, input_dictionary=copy.deepcopy(self.calculation_set_input_dictionary)))
