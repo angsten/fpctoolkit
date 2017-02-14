@@ -7,7 +7,7 @@ class Population(object):
 	A collection of individuals. Used for GA structure searching.
 	"""
 
-	individual_prefix="individual_"
+	individual_prefix_string = "individual_"
 
 	def __init__(self, generation_directory_path=None, directory_to_individual_conversion_method=None):
 		self.individuals = []
@@ -20,7 +20,7 @@ class Population(object):
 				raise Exception("Generation directory path does not exist.")
 
 
-			elligible_directory_basenames = Path.get_all_directory_basenames_containing_string(generation_directory_path, Population.individual_prefix)
+			elligible_directory_basenames = Path.get_all_directory_basenames_containing_string(generation_directory_path, Population.individual_prefix_string)
 
 			for basename in elligible_directory_basenames:
 				self.individuals.append(directory_to_individual_conversion_method(Path.join(generation_directory_path, basename)))
@@ -46,4 +46,4 @@ class Population(object):
 
 		self.individuals = sorted(self.individuals, key = lambda individual: individual.energy)
 
-	
+
