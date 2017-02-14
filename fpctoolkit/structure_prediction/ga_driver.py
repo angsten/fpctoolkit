@@ -87,4 +87,4 @@ class GADriver(object):
 	def directory_to_individual_conversion_method(self, path):
 		"""Default to a vasp relaxation"""
 
-		return Individual(calculation_set=VaspRelaxation(path, self.calculation_set_input_dictionary))
+		return Individual(calculation_set=VaspRelaxation(path=path, input_dictionary=self.calculation_set_input_dictionary))
