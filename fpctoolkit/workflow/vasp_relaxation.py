@@ -142,6 +142,20 @@ class VaspRelaxation(VaspRunSet):
 			return None
 
 	@property
+	def initial_structure(self):
+		if self.run_count > 0:
+			return self.vasp_run_list[0].initial_structure
+		else:
+			return None
+
+	@property
+	def final_structure(self):
+		if self.complete:
+			return self.get_current_vasp_run().final_structure
+		else:
+			return None
+
+	@property
 	def total_time(self, in_cpu_hours=True):
 		"""Defaults to cpu*hours for now (best measure of total resources used)"""
 

@@ -71,6 +71,10 @@ class Path(object):
 		return [file for file in os.listdir(path) if os.path.isfile(Path.join(path,file))]
 
 	@staticmethod
+	def get_list_of_directories_at_path(path):
+		return [file for file in os.listdir(path) if os.path.isdir(Path.join(path,file))]
+
+	@staticmethod
 	def get_case_insensitive_file_name(path, file_string):
 		"""Looks at files in path, if one matches file_string in all aspects except case,
 		return this file (first one for which this is true). If no file, return None
@@ -92,3 +96,15 @@ class Path(object):
 				return False
 
 		return True
+
+	@staticmethod
+	def get_all_directory_basenames_containing_string(path, sub_string):
+		"""Returns directory basenames containing sub_string at path"""
+
+		directory_basenames = Path.get_list_of_directories_at_path(path)
+
+		directories_containing_string_list = []
+
+		for directory_basename in directory_basenames:
+			if directory_basename.find(sub_string) != 
+

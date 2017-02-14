@@ -120,17 +120,24 @@ class VaspRun(object):
 
 	@property
 	def initial_structure(self):
-		return Structure(self.get_extended_path('./POSCAR'))
+		if Path.exists(self.get_extended_path('./POSCAR')):
+			return Structure(self.get_extended_path('./POSCAR'))
+		else
+			return None
 
 	@property
 	def current_structure(self):
 		if Path.exists(self.get_extended_path('./CONTCAR')):
 			return Structure(self.get_extended_path('./CONTCAR'))
+		else:
+			return self.initial_structure
 
 	@property
 	def final_structure(self):
 		if Path.exists(self.get_extended_path('./CONTCAR')) and self.complete:
 			return Structure(self.get_extended_path('./CONTCAR'))
+		else:
+			return None
 
 	@property
 	def incar(self):
