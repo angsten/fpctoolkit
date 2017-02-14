@@ -1,6 +1,6 @@
 
 
-from fpctoolkit.strucutre_prediction.ga_driver import GADriver
+from fpctoolkit.structure_prediction.ga_driver import GADriver
 from fpctoolkit.structure.perovskite import Perovskite
 
 class GADriver100PerovskiteEpitaxy(GADriver):

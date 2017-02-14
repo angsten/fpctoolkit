@@ -98,7 +98,7 @@ class Path(object):
 		return True
 
 	@staticmethod
-	def get_all_directory_basenames_containing_string(path, sub_string):
+	def get_list_of_directory_basenames_containing_string(path, sub_string):
 		"""Returns directory basenames containing sub_string at path"""
 
 		directory_basenames = Path.get_list_of_directories_at_path(path)

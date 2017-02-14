@@ -27,3 +27,6 @@ class Individual(object):
 	@property
 	def final_structure(self):
 		return self.calculation_set.final_structure
+
+	def update(self):
+		self.calculation_set.update()

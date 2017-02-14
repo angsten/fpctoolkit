@@ -20,7 +20,7 @@ class Population(object):
 				raise Exception("Generation directory path does not exist.")
 
 
-			elligible_directory_basenames = Path.get_all_directory_basenames_containing_string(generation_directory_path, Population.individual_prefix_string)
+			elligible_directory_basenames = Path.get_list_of_directory_basenames_containing_string(generation_directory_path, Population.individual_prefix_string)
 
 			for basename in elligible_directory_basenames:
 				self.individuals.append(directory_to_individual_conversion_method(Path.join(generation_directory_path, basename)))
