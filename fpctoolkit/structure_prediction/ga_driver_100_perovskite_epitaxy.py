@@ -15,6 +15,16 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		super(GADriver100Epitaxy, self).__init__(ga_input_dictionary, calculation_set_input_dictionary)
 
 
+	def get_new_individual(self, individual_path, generation_number):
+		"""
+		Main workhorse - supplies an individual by randomly chosen means (heredity, random, mutate, ...etc.)
+		"""
+
+		structure = self.get_structure()
+
+		#package this with path and input_dict in calc set (relax) and return as individual
+
+		return None
 
 	def get_random_structure(self):
 		a = self.ga_input_dicitonary['epitaxial_lattice_constant']

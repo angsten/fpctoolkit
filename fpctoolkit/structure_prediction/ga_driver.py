@@ -51,11 +51,16 @@ class GADriver(object):
 		probabilities_list.append(self.permute_fractions_list[generation_number-1])
 
 		random_selector = RandomSelector(probabilities_list)
-		random_number = random.uniform(0.0, 1.0)
+		event_index = random_selector.get_event_index()
 
-		if random_number < self.ga_input_dictionary['random_fractions_list'][generation_number-1]:
+		if event_index == 0:
 			return self.get_random_structure()
-
+		elif event_index == 1:
+			return self.get_mated_structure()
+		elif event_index == 2:
+			return self.get_mutated_structure()
+		elif event_index == 3:
+			return self.get_permuted_structure()
 
 
 	def get_random_structure(self):
