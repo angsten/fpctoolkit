@@ -103,8 +103,6 @@ class Path(object):
 
 		directory_basenames = Path.get_list_of_directories_at_path(path)
 
-		directories_containing_string_list = []
+		return [directory_basename for directory_basename in directory_basenames if directory_basename.find(sub_string) != -1]
 
-		for directory_basename in directory_basenames:
-			if directory_basename.find(sub_string) != 
 
