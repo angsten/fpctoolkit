@@ -3,7 +3,7 @@
 from fpctoolkit.structure_prediction.ga_driver import GADriver
 from fpctoolkit.structure.perovskite import Perovskite
 from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
-from fpctoolkit.strucutre_prediction.individual import Individual
+from fpctoolkit.structure_prediction.individual import Individual
 
 class GADriver100PerovskiteEpitaxy(GADriver):
 
@@ -14,10 +14,13 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 			and supercell_dimensions_list keys and values
 		"""
 
-		super(GADriver100Epitaxy, self).__init__(ga_input_dictionary, calculation_set_input_dictionary)
+		super(GADriver100PerovskiteEpitaxy, self).__init__(ga_input_dictionary, calculation_set_input_dictionary)
 
 		self.structure_creation_id_string = 'none' #will track how the individual's structure was created
 		self.parent_structures_list = None
+
+		if not (ga_input_dicitonary['supercell_dimensions_list'][0] == ga_input_dicitonary['supercell_dimensions_list'][1]):
+			raise Exception("For (100) epitaxial conditions, Nx must = Ny supercell dimensions. Other behavior not yet supported")
 
 
 	def get_new_individual(self, individual_path, population_of_last_generation, generation_number):
@@ -46,16 +49,16 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		structure = Perovskite(supercell_dimensions=self.ga_input_dicitonary['supercell_dimensions_list'], lattice=lattice, species_list=self.ga_input_dicitonary['species_list'])
 
 		shear_factor = 0.8
-    	structure.lattice.randomly_strain(stdev=0.06, mask_array=[[0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 1.0]]) #for (100) epitaxy
+		structure.lattice.randomly_strain(stdev=0.06, mask_array=[[0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 1.0]]) #for (100) epitaxy
 
-   		mult = 2.5
-    	min_atomic_distance = 1.5
-    	structure.randomly_displace_site_positions(stdev=0.2*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.3*mult, mean=0.3, types_list=['K'])
-    	structure.randomly_displace_site_positions(stdev=0.6*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.6*mult, mean=0.5, types_list=['V'])
-    	structure.randomly_displace_site_positions(stdev=0.8*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=1.2*mult, mean=0.7, types_list=['O'])
+		mult = 2.5
+		min_atomic_distance = 1.5
+		structure.randomly_displace_site_positions(stdev=0.2*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.3*mult, mean=0.3, types_list=['K'])
+		structure.randomly_displace_site_positions(stdev=0.6*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.6*mult, mean=0.5, types_list=['V'])
+		structure.randomly_displace_site_positions(stdev=0.8*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=1.2*mult, mean=0.7, types_list=['O'])
 
-    	self.structure_creation_id_string = 'random_standard'
-    	self.parent_structures_list = None
+		self.structure_creation_id_string = 'random_standard'
+		self.parent_structures_list = None
 
 		return structure
 
@@ -64,4 +67,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 
 	def get_mated_structure(self, population_of_last_generation):
+
+		#select parents from population first
+
 		pass

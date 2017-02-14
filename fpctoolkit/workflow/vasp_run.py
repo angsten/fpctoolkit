@@ -122,7 +122,7 @@ class VaspRun(object):
 	def initial_structure(self):
 		if Path.exists(self.get_extended_path('./POSCAR')):
 			return Structure(self.get_extended_path('./POSCAR'))
-		else
+		else:
 			return None
 
 	@property

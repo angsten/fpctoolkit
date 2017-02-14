@@ -1,5 +1,6 @@
 import random
 
+import fpctoolkit.util.string_util as su
 from fpctoolkit.io.vasp.kpoints import Kpoints
 from fpctoolkit.io.vasp.potcar import Potcar
 from fpctoolkit.io.vasp.poscar import Poscar
@@ -17,7 +18,70 @@ from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
 from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 from fpctoolkit.io.vasp.incar_maker import IncarMaker
 from fpctoolkit.util.vector import Vector
-#import fpctoolkit.util.string_util as su
+from fpctoolkit.structure_prediction.ga_structure_predictor import GAStructurePredictor
+from fpctoolkit.structure_prediction.ga_driver_100_perovskite_epitaxy import GADriver100PerovskiteEpitaxy
+
+
+
+
+
+
+
+
+ga_path = "C:\Users\Tom\Documents\Coding\python_work\workflow_test"
+
+
+calculation_set_input_dictionary = {
+	'external_relaxation_count': 1,
+	'kpoint_schemes_list': ['Monkhorst'],
+	'kpoint_subdivisions_lists': [[2, 2, 2]],
+	'submission_script_modification_keys_list': ['100'],
+	'submission_node_count_list': [1],
+	'ediff': [0.001],
+	'encut': [400]
+}
+
+ga_input_dictionary = {
+	'species_list':['K', 'V', 'O'],
+	'epitaxial_lattice_constant': 4.0,
+	'supercell_dimensions_list': [1, 1, 1],
+	'max_number_of_generations': 1,
+	'individuals_per_generation': [3],
+	'random_fractions_list': [1.0, 0.3, 0.2],
+	'mate_fractions_list': [0.0, 0.7, 0.8]
+}
+
+ga_driver = GADriver100PerovskiteEpitaxy(ga_input_dictionary, calculation_set_input_dictionary)
+
+ga_structure_predictor = GAStructurePredictor(ga_path, ga_driver)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class self_c:
@@ -150,17 +214,17 @@ self = self_c()
 
 #struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\dist.vasp")
 
-a = 15.16
-structure = Perovskite(supercell_dimensions = [4, 4, 1], lattice=[[a, 0.0, 0.0], [0.0, a, 0.0], [0.0, 0.0, a/4.0]], species_list=['K', 'V', 'O'])
+# a = 15.16
+# structure = Perovskite(supercell_dimensions = [4, 4, 1], lattice=[[a, 0.0, 0.0], [0.0, a, 0.0], [0.0, 0.0, a/4.0]], species_list=['K', 'V', 'O'])
 
-shear_factor = 1.0
-structure.lattice.randomly_strain(stdev=0.06, mask_array=[[0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 1.0]]) #for (100) epitaxy
+# shear_factor = 1.0
+# structure.lattice.randomly_strain(stdev=0.06, mask_array=[[0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 1.0]]) #for (100) epitaxy
 
-mult = 1.8
-min_atomic_distance = 1.5
-print structure.randomly_displace_site_positions(stdev=0.2*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.3*mult, mean=0.2, types_list=['K'])
-print structure.randomly_displace_site_positions(stdev=0.6*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.6*mult, mean=0.4, types_list=['V'])
-print structure.randomly_displace_site_positions(stdev=0.8*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=1.0*mult, mean=0.6, types_list=['O'])
+# mult = 1.8
+# min_atomic_distance = 1.5
+# print structure.randomly_displace_site_positions(stdev=0.2*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.3*mult, mean=0.2, types_list=['K'])
+# print structure.randomly_displace_site_positions(stdev=0.6*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.6*mult, mean=0.4, types_list=['V'])
+# print structure.randomly_displace_site_positions(stdev=0.8*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=1.0*mult, mean=0.6, types_list=['O'])
 
 
-structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\dist.vasp")
+# structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\dist.vasp")

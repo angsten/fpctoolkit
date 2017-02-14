@@ -16,14 +16,17 @@ class GADriver(object):
 		At minimum, ga_input_dictionary looks like:
 
 		{
-			max_number_of_generations = 15,
-			individuals_per_generation = [50, 40, 30], (flexible param list)
-			random_fractions_list = [1.0, 0.3, 0.2, ...],
-			mate_fractions_list = [0.0, 0.7, 0.8, ...]
+			'max_number_of_generations': 15,
+			'individuals_per_generation': [50, 40, 30], (flexible param list)
+			'random_fractions_list': [1.0, 0.3, 0.2, ...],
+			'mate_fractions_list': [0.0, 0.7, 0.8, ...]
 		}
 
 		Can also contain species lists, constraints, etc.
 		"""
+
+		self.ga_input_dictionary = ga_input_dictionary
+		self.calculation_set_input_dictionary = calculation_set_input_dictionary
 
 		self.individuals_per_generation = ParameterList(self.ga_input_dictionary['individuals_per_generation'])
 		self.ga_input_dictionary = ga_input_dictionary

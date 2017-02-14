@@ -1,7 +1,7 @@
 
 
 from fpctoolkit.util.path import Path
-from fpctoolkit.strucutre_prediction.population import Population
+from fpctoolkit.structure_prediction.population import Population
 
 class GAStructurePredictor(object):
 	"""
@@ -27,19 +27,21 @@ class GAStructurePredictor(object):
 			Path.make(self.get_next_generation_path())
 			current_generation_path = self.get_current_generation_path()
 
-		population = Population(current_generation_path)
-
 		current_generation_count = self.get_generation_count()
 
-		while len(population) < self.ga_driver.get_individuals_per_generation_count(current_generation_count):
-			new_individual = self.ga_driver.get_new_individual(population.get_next_available_individual_path(current_generation_path), population_of_last_generation, current_generation_count)
+		
+		population_of_last_generation = Population(self.get_last_generation_path()) if current_generation_count > 1 else None
+		current_population = current_Population(current_generation_path)
 
-			population.append(new_individual)
+		while len(current_population) < self.ga_driver.get_individuals_per_generation_count(current_generation_count):
+			new_individual = self.ga_driver.get_new_individual(current_population.get_next_available_individual_path(current_generation_path), population_of_last_generation, current_generation_count)
+
+			current_population.append(new_individual)
 
 
 		all_complete = True
 
-		for each individual in population:
+		for individual in current_population:
 
 			if not individual.complete:
 				individual.update()
@@ -53,10 +55,12 @@ class GAStructurePredictor(object):
 	def get_current_generation_path(self):
 		generation_count = self.get_generation_count()
 
-		if generation_count == 0:
-			return None
-		else:
-			return self.get_extended_path(GAStructurePredictor.generation_prefix_string + str(generation_count))
+		return self.get_extended_path(GAStructurePredictor.generation_prefix_string + str(generation_count)) if generation_count > 0 else None
+
+	def get_last_generation_path(self):
+		generation_count = self.get_generation_count()
+
+		return self.get_extended_path(GAStructurePredictor.generation_prefix_string + str(generation_count-1)) if generation_count > 1 else None
 
 	def get_next_generation_path(self):
 		generation_count = self.get_generation_count()
@@ -70,8 +74,6 @@ class GAStructurePredictor(object):
 				return i - 1
 
 			i += 1
-
-		#return len(Path.get_list_of_directory_basenames_containing_string(GAStructurePredictor.generation_prefix_string))
 
 
 	def get_extended_path(self, relative_path):
