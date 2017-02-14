@@ -40,6 +40,19 @@ class Population(object):
 	def append(self, value):
 		self.individuals.append(value)
 
+	def get_next_available_individual_path(self, generation_directory_path):
+
+		if not Path.exists(generation_directory_path):
+			raise Exception("Generation path does not exist")
+
+		i = 1
+		while True:
+			if not Path.exists(Path.join(generation_directory_path, Population.individual_prefix_string + str(i))):
+				return i
+
+			i += 1
+
+
 
 	def sort(self):
 		"""Sorts self.individuals list by energy"""
