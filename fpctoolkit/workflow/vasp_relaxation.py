@@ -79,7 +79,7 @@ class VaspRelaxation(VaspRunSet):
 					#self.load()	
 				else: #input_dictionary parameter is none, but no input_dict saved either This case is not yet supported
 					raise Exception("No input_dictionary given, but also no input_dictionary saved to path. Not yet supported.")
-					
+
 
 		self.load_input_dictionary(input_dictionary)
 
@@ -255,7 +255,7 @@ class VaspRelaxation(VaspRunSet):
 			return self.input_initial_structure
 
 		current_contcar_path = self.get_current_vasp_run().get_extended_path('CONTCAR')
-		print current_contcar_path
+
 		if not Path.exists(current_contcar_path):
 			raise Exception("Method get_next_structure called, but Contcar for current run doesn't exist")
 		elif not self.get_current_vasp_run().complete:
