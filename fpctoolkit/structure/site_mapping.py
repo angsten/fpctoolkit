@@ -28,6 +28,9 @@ class SiteMapping(object):
 
 		return out_string
 
+	def __repr__(self):
+		return str(self)
+
 	def get_distance_and_displacement_vector(self, lattice):
 
 		self.initial_site.convert_to_direct_coordinates(lattice)

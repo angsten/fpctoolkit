@@ -75,18 +75,23 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		#select parents from population first
 
-		sites_1 = SiteCollection([Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.1, 0.5]}), Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.35]})])
-		sites_2 = SiteCollection([Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.1]}), Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.6]})])
+		#sites_1 = SiteCollection([Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.1, 0.5]}), Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.35]})])
+		#sites_2 = SiteCollection([Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.1]}), Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.6]})])
 
-		parent_structure_1 = Structure(lattice=[[4.0, 0.0, 0.0], [0.0, 4.0, 0.0], [0.0, 0.0, 4.0]], sites=sites_1)
-		parent_structure_2 = Structure(lattice=[[4.0, 0.0, 0.0], [0.0, 4.0, 0.0], [0.0, 0.0, 4.0]], sites=sites_2)
+		parent_structure_1 = Structure(file_path="C:\Users\Tom\Documents\Coding\python_work\workflow_test/relax_6.vasp")
+		#parent_structure_1 = Structure(lattice=[[4.0, 0.0, 0.0], [0.0, 4.0, 0.0], [0.0, 0.0, 4.0]], sites=sites_1)
+		#parent_structure_2 = Structure(lattice=[[4.0, 0.0, 0.0], [0.0, 4.0, 0.0], [0.0, 0.0, 4.0]], sites=sites_2)
 
 		#randomly shift structures here###################
 
-		parent_structure_list = [parent_structure_1, parent_structure_2]
+		parent_structure_list = [parent_structure_1]#, parent_structure_2]
 
 		for parent_structure in parent_structure_list:
+			perovskite_reference_structure = Perovskite(supercell_dimensions=self.ga_input_dictionary['supercell_dimensions_list'], lattice=parent_structure.lattice, species_list=self.ga_input_dictionary['species_list'])
+			perovskite_reference_structure.convert_sites_to_direct_coordinates()
 			parent_structure.convert_sites_to_direct_coordinates()
+
+			site_mapping_collection = SiteMappingCollection(perovskite_reference_structure.sites, parent_structure.sites, lattice=parent_structure.lattice)
 
 
 
@@ -96,4 +101,4 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		# print site_mapping
 
-		site_mapping_collection = SiteMappingCollection(parent_structure_1.sites, parent_structure_2.sites, lattice=parent_structure_1.lattice)
+		#site_mapping_collection = SiteMappingCollection(parent_structure_1.sites, parent_structure_2.sites, lattice=parent_structure_1.lattice)

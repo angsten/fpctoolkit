@@ -18,14 +18,14 @@ class SiteMappingCollection(object):
 		self.site_collection_final = site_collection_final
 		self.lattice = lattice
 
-		self.mapping_dictionary = self.get_site_mapping_index_dictionary()
+		self.mapping_dictionary = self.get_site_mapping_dictionary()
 
 
-	def get_site_mapping_index_dictionary(self):
+	def get_site_mapping_dictionary(self):
 		
 		munk = Munkres()
 
-		site_mapping_index_dictionary = {} #will look like {'Ba':[site_mapping_1, site_mapping_2, ...], 'Ti':...}
+		site_mapping_lists_dictionary = {} #will look like {'Ba':[site_mapping_1, site_mapping_2, ...], 'Ti':...}
 
 		for type_string in self.site_collection_initial.keys():
 			print type_string
@@ -40,12 +40,10 @@ class SiteMappingCollection(object):
 
 			site_mapping_list = [site_mapping_matrix[i][j] for i, j in mapping_indices]
 
-			site_mapping_index_dictionary[type_string] = site_mapping_list
+			site_mapping_lists_dictionary[type_string] = site_mapping_list
 
-
-
-
-		return site_mapping_index_dictionary
+		print site_mapping_lists_dictionary
+		return site_mapping_lists_dictionary
 
 	def get_site_mapping_matrix(self, type_string):
 		"""
