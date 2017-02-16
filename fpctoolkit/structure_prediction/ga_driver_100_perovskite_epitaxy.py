@@ -75,8 +75,11 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		#select parents from population first
 
-		parent_structure_1 = Structure(lattice=[[4.0, 0.0, 0.0], [0.0, 4.0, 0.0], [0.0, 0.0, 4.0]], sites=SiteCollection([Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.0]})]))
-		parent_structure_2 = Structure(lattice=[[4.0, 0.0, 0.0], [0.0, 4.0, 0.0], [0.0, 0.0, 4.0]], sites=SiteCollection([Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.9]})]))
+		sites_1 = SiteCollection([Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.1, 0.5]}), Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.35]})])
+		sites_2 = SiteCollection([Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.1]}), Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.6]})])
+
+		parent_structure_1 = Structure(lattice=[[4.0, 0.0, 0.0], [0.0, 4.0, 0.0], [0.0, 0.0, 4.0]], sites=sites_1)
+		parent_structure_2 = Structure(lattice=[[4.0, 0.0, 0.0], [0.0, 4.0, 0.0], [0.0, 0.0, 4.0]], sites=sites_2)
 
 		#randomly shift structures here###################
 
