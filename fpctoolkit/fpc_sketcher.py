@@ -57,7 +57,7 @@ ga_driver = GADriver100PerovskiteEpitaxy(ga_input_dictionary, calculation_set_in
 
 # ga_structure_predictor.update()
 
-
+ga_driver.get_mated_structure(None)
 
 
 

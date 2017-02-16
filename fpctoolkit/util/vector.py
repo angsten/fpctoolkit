@@ -181,7 +181,7 @@ class Vector(object):
 
 					if distance_squared < minimum_distance_squared:
 						minimum_distance_squared = distance_squared
-						minimum_distance_vector_in_direct_coordinates = [fa - N_max, fb - N_max, fc - N_max]
+						minimum_distance_vector_in_direct_coordinates = [fa - Na, fb - Nb, fc - Nc]
 						#min_set = [Na, Nb, Nc]
 
 

@@ -44,6 +44,12 @@ class SiteCollection(object):
 	def __len__(self):
 		return len(self.get_sorted_list())
 
+	def keys(self):
+		return self.sites.keys()
+
+	def __contains__(self, key):
+		return key in self.sites
+
 	def append(self, site):
 		if isinstance(site, Site):
 			self.add_site(site)
@@ -83,3 +89,19 @@ class SiteCollection(object):
 
 	def get_coordinates_list(self):
 		return [site['position'] for site in self]
+
+
+	@staticmethod
+	def are_commensurate(site_collection_1, site_collection_2):
+		"""
+		Returns true if same types of sites and same number of each site in each collection
+		"""
+
+		for key in site_collection_1.keys():
+			if not key in site_collection_2.keys():
+				return False
+			else:
+				if len(site_collection_1[key]) != len(site_collection_2[key]):
+					return False
+
+		return True

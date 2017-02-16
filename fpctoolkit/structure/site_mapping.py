@@ -17,11 +17,20 @@ class SiteMapping(object):
 			distance_and_displacement_vector = self.get_distance_and_displacement_vector(lattice)
 			self.distance = distance_and_displacement_vector[0]
 			self.displacement_vector = distance_and_displacement_vector[1]
+		else:
+			self.distance = None
+			self.displacement_vector = None
 
+	def __str__(self):
+		out_string = ""
+
+		out_string = " ".join(str(x) for x in (self.initial_site['position'], '->', self.final_site['position'], ' distance:', self.distance, ' direction:', self.displacement_vector))
+
+		return out_string
 
 	def get_distance_and_displacement_vector(self, lattice):
 
 		self.initial_site.convert_to_direct_coordinates(lattice)
 		self.final_site.convert_to_direct_coordinates(lattice)
 
-		return Vector.get_minimum_distance_between_two_periodic_points(fractional_coordinate_1, fractional_coordinate_2, lattice, N_max=3, return_vector=False)
+		return Vector.get_minimum_distance_between_two_periodic_points(self.initial_site['position'], self.final_site['position'], lattice, return_vector=True)

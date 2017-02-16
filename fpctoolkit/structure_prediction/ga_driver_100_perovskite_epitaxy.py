@@ -4,6 +4,11 @@ from fpctoolkit.structure_prediction.ga_driver import GADriver
 from fpctoolkit.structure.perovskite import Perovskite
 from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
 from fpctoolkit.structure_prediction.individual import Individual
+from fpctoolkit.structure.structure import Structure
+from fpctoolkit.structure.site_collection import SiteCollection
+from fpctoolkit.structure.site import Site
+from fpctoolkit.structure.site_mapping import SiteMapping
+from fpctoolkit.structure.site_mapping_collection import SiteMappingCollection
 
 class GADriver100PerovskiteEpitaxy(GADriver):
 
@@ -71,5 +76,21 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		#select parents from population first
 
 		parent_structure_1 = Structure(lattice=[[4.0, 0.0, 0.0], [0.0, 4.0, 0.0], [0.0, 0.0, 4.0]], sites=SiteCollection([Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.0]})]))
+		parent_structure_2 = Structure(lattice=[[4.0, 0.0, 0.0], [0.0, 4.0, 0.0], [0.0, 0.0, 4.0]], sites=SiteCollection([Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.9]})]))
 
-		
+		#randomly shift structures here###################
+
+		parent_structure_list = [parent_structure_1, parent_structure_2]
+
+		for parent_structure in parent_structure_list:
+			parent_structure.convert_sites_to_direct_coordinates()
+
+
+
+
+
+		# site_mapping = SiteMapping(parent_structure_1.sites[0], parent_structure_2.sites[0], lattice=parent_structure_1.lattice)
+
+		# print site_mapping
+
+		site_mapping_collection = SiteMappingCollection(parent_structure_1.sites, parent_structure_2.sites, lattice=parent_structure_1.lattice)
