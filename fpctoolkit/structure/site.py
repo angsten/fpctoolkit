@@ -24,6 +24,7 @@ class Site(object):
 		if properties: #safeley add given properties
 			for key, value in properties.items():
 				self[key] = value
+
 	def __nonzero__(self):
 		return bool(self._properties)
 
@@ -63,6 +64,26 @@ class Site(object):
 
 	def get_properties_dictionary(self):
 		return self._properties
+
+	def convert_to_cartesian_coordinates(self, lattice):
+		"""
+		Takes site in direct coordinates and changes
+		its position and coordinate mode to be in cartesian coordinate system
+		"""
+
+		if self['coordinate_mode'] == 'Direct':
+			self['coordinate_mode'] = 'Cartesian'
+			self['position'] = Vector.get_in_cartesian_coordinates(self['position'], lattice).to_list()
+
+	def convert_to_direct_coordinates(self, lattice):
+		"""
+		Takes site in cartesian coordinates and changes
+		its position and coordinate mode to be in direct coordinate system
+		"""
+
+		if self['coordinate_mode'] == 'Cartesian':
+			self['coordinate_mode'] = 'Direct'
+			self['position'] = Vector.get_in_direct_coordinates(self['position'], lattice).to_list()
 
 	def displace(self, vector):
 		"""Displaces site's position by vector - no knowledge of

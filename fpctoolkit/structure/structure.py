@@ -183,9 +183,7 @@ class Structure(object):
 		"""
 
 		for site in self.sites:
-			if site['coordinate_mode'] == 'Direct':
-				site['coordinate_mode'] = 'Cartesian'
-				site['position'] = Vector.get_in_cartesian_coordinates(site['position'], self.lattice).to_list()
+			site.convert_to_cartesian_coordinates(self.lattice)
 
 	def convert_sites_to_direct_coordinates(self):
 		"""Takes any site in sites that is in cartesian coordinates and changes
@@ -193,9 +191,7 @@ class Structure(object):
 		"""
 
 		for site in self.sites:
-			if site['coordinate_mode'] == 'Cartesian':
-				site['coordinate_mode'] = 'Direct'
-				site['position'] = Vector.get_in_direct_coordinates(site['position'], self.lattice).to_list()
+			site.convert_to_direct_coordinates(self.lattice)
 
 	def get_supercell(self, supercell_dimensions_list):
 		"""

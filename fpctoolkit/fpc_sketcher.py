@@ -53,9 +53,9 @@ ga_input_dictionary = {
 
 ga_driver = GADriver100PerovskiteEpitaxy(ga_input_dictionary, calculation_set_input_dictionary)
 
-ga_structure_predictor = GAStructurePredictor(ga_path, ga_driver)
+# ga_structure_predictor = GAStructurePredictor(ga_path, ga_driver)
 
-ga_structure_predictor.update()
+# ga_structure_predictor.update()
 
 
 

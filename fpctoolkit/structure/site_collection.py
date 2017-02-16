@@ -29,11 +29,17 @@ class SiteCollection(object):
 	def __iter__(self):
 		return iter(self.get_sorted_list())
 
-	def __getitem__(self, index):
-		if not isinstance(index, int):
-			raise Exception("Site collection index must be an integer")
+	def __getitem__(self, key):
+		if isinstance(key, basestring): #access by type like 'Ba'
+			if key in self.sites:
+				return self.sites[key]
+			else:
+				return []
+		elif isinstance(key, int):
+			return self.get_sorted_list()[key]
 		else:
-			return self.get_sorted_list()[index]
+			raise Exception("Site collection key must be an integer or string")
+		
 
 	def __len__(self):
 		return len(self.get_sorted_list())

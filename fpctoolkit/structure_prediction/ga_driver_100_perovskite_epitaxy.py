@@ -70,4 +70,6 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		#select parents from population first
 
-		pass
+		parent_structure_1 = Structure(lattice=[[4.0, 0.0, 0.0], [0.0, 4.0, 0.0], [0.0, 0.0, 4.0]], sites=SiteCollection([Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.0]})]))
+
+		

@@ -126,13 +126,15 @@ class Vector(object):
 				coordinate[i] += 1.0
 
 	@staticmethod
-	def get_minimum_distance_between_two_periodic_points(fractional_coordinate_1, fractional_coordinate_2, lattice, N_max=3):
+	def get_minimum_distance_between_two_periodic_points(fractional_coordinate_1, fractional_coordinate_2, lattice, N_max=3, return_vector=False):
 		"""
 		Given periodic boundary conditions specified by lattice and positions 1 and 2 in 
 		fractional coordinates, return the shorted distance between these two points
 
 		N_max controls how many images out to search - in general, need a higher N max for lattices with larger a*c b*c and a*b dot products
 		Scales (2.0*N_max)^3 in computing time though!
+
+		If return_vector, (min_dist_float, min_dist_vector_in_direct_coords) tuple is returned
 		"""
 
 		#first, normalize fractional coordinate components to be within 0.0 and 1.0
@@ -169,6 +171,7 @@ class Vector(object):
 		fc = d[2]
 
 		minimum_distance_squared = G(fa - N_max, fb - N_max, fc - N_max)
+		minimum_distance_vector_in_direct_coordinates = [fa - N_max, fb - N_max, fc - N_max]
 		#min_set = [N_max]*3
 
 		for Na in range(-N_max, N_max + 1):
@@ -178,10 +181,14 @@ class Vector(object):
 
 					if distance_squared < minimum_distance_squared:
 						minimum_distance_squared = distance_squared
-
+						minimum_distance_vector_in_direct_coordinates = [fa - N_max, fb - N_max, fc - N_max]
 						#min_set = [Na, Nb, Nc]
 
 
 
 		#print "Min set ", min_set
-		return minimum_distance_squared**0.5
+
+		if return_vector:
+			return (minimum_distance_squared**0.5, minimum_distance_vector_in_direct_coordinates)
+		else:
+			return minimum_distance_squared**0.5
