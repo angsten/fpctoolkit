@@ -1,8 +1,10 @@
+import copy
 from collections import OrderedDict
+from munkres import Munkres
 
 from fpctoolkit.structure.site_collection import SiteCollection
 from fpctoolkit.structure.site_mapping import SiteMapping
-from munkres import Munkres
+from fpctoolkit.util.vector import Vector
 
 class SiteMappingCollection(object):
 	"""
@@ -28,21 +30,21 @@ class SiteMappingCollection(object):
 		site_mapping_lists_dictionary = OrderedDict() #will look like {'Ba':[site_mapping_1, site_mapping_2, ...], 'Ti':...}
 
 		for type_string in self.site_collection_initial.keys():
-			print type_string
+			# print type_string
 			site_mapping_matrix = self.get_site_mapping_matrix(type_string)
 
 			distance_matrix = [[site_mapping.distance for site_mapping in site_mapping_row] for site_mapping_row in site_mapping_matrix]
 
-			print distance_matrix
+			# print distance_matrix
 
 			mapping_indices = munk.compute(distance_matrix) #looks like [(0, 4), (1, 2), (2, 7), ...] where first in each tuple is row index in site_mapping_matrix
-			print mapping_indices
+			# print mapping_indices
 
 			site_mapping_list = [site_mapping_matrix[i][j] for i, j in mapping_indices]
 
 			site_mapping_lists_dictionary[type_string] = site_mapping_list
 
-		print site_mapping_lists_dictionary
+		# print site_mapping_lists_dictionary
 		return site_mapping_lists_dictionary
 
 	def get_site_mapping_matrix(self, type_string):
@@ -59,7 +61,7 @@ class SiteMappingCollection(object):
 			mapping_row = []
 			for final_site in sites_list_final:
 				site_mapping = SiteMapping(initial_site, final_site, self.lattice)
-				print site_mapping
+				# print site_mapping
 				mapping_row.append(site_mapping)
 
 			mapping_matrix.append(mapping_row)
@@ -77,20 +79,6 @@ class SiteMappingCollection(object):
 			average_distance_dictionary[type_string] = average_distance
 
 		return average_distance_dictionary
-
-	# def get_average_displacement_vector_type_dictionary(self):
-	# 	"""
-	# 	Returns dict that looks like {'Ba':average_direct_coord_vec_Ba_atoms_from_eachother_in_mapping, 'Ti':...}
-	# 	"""
-	# 	average_displacement_vector_dictionary = OrderedDict()
-
-	# 	for type_string in self.site_collection_initial.keys():
-	# 		average_x = sum([site_mapping.displacement_vector[0] for site_mapping in self.mapping_dictionary[type_string]])/len(self.mapping_dictionary[type_string])
-	# 		average_y = sum([site_mapping.displacement_vector[1] for site_mapping in self.mapping_dictionary[type_string]])/len(self.mapping_dictionary[type_string])
-	# 		average_z = sum([site_mapping.displacement_vector[2] for site_mapping in self.mapping_dictionary[type_string]])/len(self.mapping_dictionary[type_string])
-	# 		average_displacement_vector_dictionary[type_string] = [average_x, average_y, average_z]
-
-	# 	return average_displacement_vector_dictionary
 
 	def get_average_displacement_vector(self):
 		"""
@@ -111,11 +99,9 @@ class SiteMappingCollection(object):
 		"""
 		Shifts final sites toward initial sites to reduce average displacement vector to zero
 		"""
-		print '\n\n\n'
-		print self.site_collection_final[0]
+
 		self.site_collection_final.shift_direct_coordinates(self.get_average_displacement_vector(), reverse=True)
 		self.recalculate_distances_and_displacements()
-		print self.site_collection_final[0]
 
 
 	def recalculate_distances_and_displacements(self):
@@ -124,6 +110,45 @@ class SiteMappingCollection(object):
 			for site_mapping in self.mapping_dictionary[type_string]:
 				site_mapping.calculate_distance_and_displacement_vector(self.lattice)
 
-	def interpolate_site_collection(self, reference_sites, interpolation_function):
+	def get_interpolated_site_collection(self, sites_to_be_interpolated, interpolation_function):
 		"""
-		This 
+		This takes sites_to_be_interpolated and interpolates them between self.site_collection_initial and self.site_collection_final
+		using the interpolation_function applied to the self.site_collection_initial sites as a reference
+		"""
+
+		if not SiteCollection.are_commensurate(self.site_collection_initial, sites_to_be_interpolated):
+			raise Exception("Site collections are not commensurate: they have different types or counts of each type. Cannot interpolate")
+
+		interpolated_sites = copy.deepcopy(sites_to_be_interpolated)
+
+		self.recalculate_distances_and_displacements()
+
+		for type_string in self.site_collection_initial.keys():
+			for i, reference_site in enumerate(self.site_collection_initial[type_string]):
+				interpolated_displacement_vector = interpolation_function*Vector(self.mapping_dictionary[type_string][i].displacement_vector)
+
+				interpolated_sites[type_string][i].displace(interpolated_displacement_vector)
+
+		return interpolated_sites
+
+
+
+
+
+
+
+
+
+	# def get_average_displacement_vector_type_dictionary(self):
+	# 	"""
+	# 	Returns dict that looks like {'Ba':average_direct_coord_vec_Ba_atoms_from_eachother_in_mapping, 'Ti':...}
+	# 	"""
+	# 	average_displacement_vector_dictionary = OrderedDict()
+
+	# 	for type_string in self.site_collection_initial.keys():
+	# 		average_x = sum([site_mapping.displacement_vector[0] for site_mapping in self.mapping_dictionary[type_string]])/len(self.mapping_dictionary[type_string])
+	# 		average_y = sum([site_mapping.displacement_vector[1] for site_mapping in self.mapping_dictionary[type_string]])/len(self.mapping_dictionary[type_string])
+	# 		average_z = sum([site_mapping.displacement_vector[2] for site_mapping in self.mapping_dictionary[type_string]])/len(self.mapping_dictionary[type_string])
+	# 		average_displacement_vector_dictionary[type_string] = [average_x, average_y, average_z]
+
+	# 	return average_displacement_vector_dictionary

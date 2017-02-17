@@ -107,11 +107,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 			parent_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_shifted.vasp")
 
-			# average_distance_dictionary_2 = site_mapping_collection.get_average_distance_type_dictionary()
-			# average_displacement_vector_dictionary_2 = site_mapping_collection.get_average_displacement_vector() #{'Ba':average_direct_coord_vec_Ba_atoms_from_eachother_in_mapping, 'Ti':...}
+			interpolated_sites = site_mapping_collection.get_interpolated_site_collection(perovskite_reference_structure.sites, 1.0)
 
-		# site_mapping = SiteMapping(parent_structure_1.sites[0], parent_structure_2.sites[0], lattice=parent_structure_1.lattice)
-
-		# print site_mapping
-
-		#site_mapping_collection = SiteMappingCollection(parent_structure_1.sites, parent_structure_2.sites, lattice=parent_structure_1.lattice)
+			interp_struct = Structure(sites=interpolated_sites, lattice=parent_structure_1.lattice)
+			interp_struct.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_interp_1o0.vasp")
