@@ -43,7 +43,7 @@ calculation_set_input_dictionary = {
 
 ga_input_dictionary = {
 	'species_list':['K', 'V', 'O'],
-	'epitaxial_lattice_constant': 4.0,
+	'epitaxial_lattice_constant': 8.0,
 	'supercell_dimensions_list': [2, 2, 1],
 	'max_number_of_generations': 1,
 	'individuals_per_generation': [3],

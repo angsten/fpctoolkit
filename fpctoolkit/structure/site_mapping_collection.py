@@ -125,7 +125,8 @@ class SiteMappingCollection(object):
 
 		for type_string in self.site_collection_initial.keys():
 			for i, reference_site in enumerate(self.site_collection_initial[type_string]):
-				interpolated_displacement_vector = interpolation_function*Vector(self.mapping_dictionary[type_string][i].displacement_vector)
+				interpolation_value = interpolation_function(reference_site['position'][0], reference_site['position'][1], reference_site['position'][2])
+				interpolated_displacement_vector = interpolation_value*Vector(self.mapping_dictionary[type_string][i].displacement_vector)
 
 				interpolated_sites[type_string][i].displace(interpolated_displacement_vector)
 
