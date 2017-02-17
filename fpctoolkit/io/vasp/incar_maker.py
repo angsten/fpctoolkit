@@ -36,11 +36,13 @@ class IncarMaker(object):
 				incar[key] = value
 
 
-		if not incar['ibrion'] == -1:
-			raise Exception("IBRION must be -1 in a static calculation")
+		incar['ibrion'] = -1
+		incar['nsw'] = 0
+		# if not incar['ibrion'] == -1:
+		# 	raise Exception("IBRION must be -1 in a static calculation")
 
-		if not incar['nsw'] == 0:
-			raise Exception("NSW must be 0 in a static calculation")
+		# if not incar['nsw'] == 0:
+		# 	raise Exception("NSW must be 0 in a static calculation")
 
 		del incar['ediffg'] #ediffg controls ionic loop convergence - no sense having in static calculation
 
@@ -73,7 +75,7 @@ class IncarMaker(object):
 		if incar['ibrion'] not in [1, 2, 3]:
 			raise Exception("IBRION must be 1, 2, or 3 in an external relaxation")
 
-		if incar['nsw'] == 0:
+		if incar['nsw'] <= 0:
 			raise Exception("NSW must be > 0 in an external relaxation")
 
 		if incar['isif'] != 3:

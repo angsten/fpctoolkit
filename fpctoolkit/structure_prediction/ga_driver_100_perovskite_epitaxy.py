@@ -77,8 +77,9 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		#sites_1 = SiteCollection([Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.1, 0.5]}), Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.35]})])
 		#sites_2 = SiteCollection([Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.1]}), Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.6]})])
-
+		print "start"
 		parent_structure_1 = self.get_random_structure(None)
+		print "rand struct made"
 		#parent_structure_1 = Structure(file_path="C:\Users\Tom\Documents\Coding\python_work\workflow_test/relax_6.vasp")
 		#parent_structure_1 = Perovskite(supercell_dimensions=self.ga_input_dictionary['supercell_dimensions_list'], lattice=parent_structure_1.lattice, species_list=self.ga_input_dictionary['species_list'])
 		#parent_structure_1.sites.shift_direct_coordinates_by_type({'K':[0.1, 0.1, 0.1], 'V':[0.0, 0.0, 0.3], 'O':[0.0,0.0,0.0]})
@@ -97,6 +98,8 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 			perovskite_reference_structure.convert_sites_to_direct_coordinates()
 			parent_structure.convert_sites_to_direct_coordinates()
 
+			print "Making site map collection"
+
 			site_mapping_collection = SiteMappingCollection(perovskite_reference_structure.sites, parent_structure.sites, lattice=parent_structure.lattice)
 
 
@@ -108,12 +111,18 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 			parent_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_shifted.vasp")
 
-
+			print "interping sites"
 			for i in range(0, 10):
 				def interpolation_function(da, db, dc):
-					return float(i)/10.0
+					if da >= 0.5:
+						return 0.0
+					else:
+						return 1.0
+
+					#return float(i)/10.0+0.01
 
 				interpolated_sites = site_mapping_collection.get_interpolated_site_collection(perovskite_reference_structure.sites, interpolation_function)
 
 				interp_struct = Structure(sites=interpolated_sites, lattice=parent_structure_1.lattice)
-				interp_struct.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_interp_"+str(round(i,1)).replace('.','o')+".vasp")
+				interp_struct.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_interp_"+str(round(i/10.0,1)).replace('.','o')+".vasp")
+				print i
