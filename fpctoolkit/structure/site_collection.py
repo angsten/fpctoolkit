@@ -90,17 +90,24 @@ class SiteCollection(object):
 	def get_coordinates_list(self):
 		return [site['position'] for site in self]
 
-	def shift_direct_coordinates(self, shift_vector_dictionary, reverse=False):
+	def shift_direct_coordinates(self, displacement_vector, reverse=False):
+		if reverse:
+			for j in range(3):
+				displacement_vector[j] = -displacement_vector[j]
+
+		for site in self:
+			site.displace(displacement_vector)
+
+	def shift_direct_coordinates_by_type(self, shift_vector_dictionary, reverse=False):
 		"""
 		Shifts all sites of type 'type' in collection by shift_vector_dictionary['type'] or -shift_vector_dictionary['type'] if reverse is true
 		"""
 
+		if len(self.keys()) != len(shift_vector_dictionary.keys()):
+			raise Exception("Shift vector dictionary is not commensurate with sites")
+
 		for type_string in shift_vector_dictionary.keys():
-
-			if len(shift_vector_dictionary[type_string]) != len(self[type_string]):
-				raise Exception("Shift vector dictionary is not commensurate with sites")
-
-			for i in len(self[type_string]):
+			for i, site in enumerate(self[type_string]):
 				site = self[type_string][i]
 
 				if not (site['coordinate_mode'] == 'Direct'):
@@ -108,9 +115,9 @@ class SiteCollection(object):
 				else:
 					for j in range(3):
 						if reverse:
-							site['position'][j] += -shift_vector_dictionary[type_string][i][j]
+							site['position'][j] += -shift_vector_dictionary[type_string][j]
 						else:
-							site['position'][j] += shift_vector_dictionary[type_string][i][j]
+							site['position'][j] += shift_vector_dictionary[type_string][j]
 
 
 	@staticmethod

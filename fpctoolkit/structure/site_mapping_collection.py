@@ -78,23 +78,52 @@ class SiteMappingCollection(object):
 
 		return average_distance_dictionary
 
-	def get_average_displacement_vector_type_dictionary(self):
-		"""
-		Returns dict that looks like {'Ba':average_direct_coord_vec_Ba_atoms_from_eachother_in_mapping, 'Ti':...}
-		"""
-		average_displacement_vector_dictionary = OrderedDict()
+	# def get_average_displacement_vector_type_dictionary(self):
+	# 	"""
+	# 	Returns dict that looks like {'Ba':average_direct_coord_vec_Ba_atoms_from_eachother_in_mapping, 'Ti':...}
+	# 	"""
+	# 	average_displacement_vector_dictionary = OrderedDict()
 
+	# 	for type_string in self.site_collection_initial.keys():
+	# 		average_x = sum([site_mapping.displacement_vector[0] for site_mapping in self.mapping_dictionary[type_string]])/len(self.mapping_dictionary[type_string])
+	# 		average_y = sum([site_mapping.displacement_vector[1] for site_mapping in self.mapping_dictionary[type_string]])/len(self.mapping_dictionary[type_string])
+	# 		average_z = sum([site_mapping.displacement_vector[2] for site_mapping in self.mapping_dictionary[type_string]])/len(self.mapping_dictionary[type_string])
+	# 		average_displacement_vector_dictionary[type_string] = [average_x, average_y, average_z]
+
+	# 	return average_displacement_vector_dictionary
+
+	def get_average_displacement_vector(self):
+		"""
+		Get average displacement vector over all mappings of all types
+		"""
+		average_vector = [0.0, 0.0, 0.0]
+
+		count = 0
 		for type_string in self.site_collection_initial.keys():
-			average_x = sum([site_mapping.displacement_vector[0] for site_mapping in self.mapping_dictionary[type_string]])/len(self.mapping_dictionary[type_string])
-			average_y = sum([site_mapping.displacement_vector[1] for site_mapping in self.mapping_dictionary[type_string]])/len(self.mapping_dictionary[type_string])
-			average_z = sum([site_mapping.displacement_vector[2] for site_mapping in self.mapping_dictionary[type_string]])/len(self.mapping_dictionary[type_string])
-			average_displacement_vector_dictionary[type_string] = [average_x, average_y, average_z]
+			for site_mapping in self.mapping_dictionary[type_string]:
+				for j in range(3):
+					average_vector[j] += site_mapping.displacement_vector[j]
+				count += 1
 
-		return average_displacement_vector_dictionary
+		return [component/count for component in average_vector]
 
 	def shift_sites_to_minimize_average_distance(self):
 		"""
 		Shifts final sites toward initial sites to reduce average displacement vector to zero
 		"""
+		print '\n\n\n'
+		print self.site_collection_final[0]
+		self.site_collection_final.shift_direct_coordinates(self.get_average_displacement_vector(), reverse=True)
+		self.recalculate_distances_and_displacements()
+		print self.site_collection_final[0]
 
-		
+
+	def recalculate_distances_and_displacements(self):
+
+		for type_string in self.mapping_dictionary:
+			for site_mapping in self.mapping_dictionary[type_string]:
+				site_mapping.calculate_distance_and_displacement_vector(self.lattice)
+
+	def interpolate_site_collection(self, reference_sites, interpolation_function):
+		"""
+		This 

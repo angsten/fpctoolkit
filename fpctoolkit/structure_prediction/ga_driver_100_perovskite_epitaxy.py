@@ -79,6 +79,9 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		#sites_2 = SiteCollection([Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.1]}), Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':[0.0, 0.0, 0.6]})])
 
 		parent_structure_1 = Structure(file_path="C:\Users\Tom\Documents\Coding\python_work\workflow_test/relax_6.vasp")
+		#parent_structure_1 = Perovskite(supercell_dimensions=self.ga_input_dictionary['supercell_dimensions_list'], lattice=parent_structure_1.lattice, species_list=self.ga_input_dictionary['species_list'])
+		#parent_structure_1.sites.shift_direct_coordinates_by_type({'K':[0.1, 0.1, 0.1], 'V':[0.0, 0.0, 0.3], 'O':[0.0,0.0,0.0]})
+		#parent_structure_1 = Structure(file_path="C:\Users\Tom\Documents\Coding\python_work\workflow_test/relax_6.vasp")
 		#parent_structure_1 = Structure(lattice=[[4.0, 0.0, 0.0], [0.0, 4.0, 0.0], [0.0, 0.0, 4.0]], sites=sites_1)
 		#parent_structure_2 = Structure(lattice=[[4.0, 0.0, 0.0], [0.0, 4.0, 0.0], [0.0, 0.0, 4.0]], sites=sites_2)
 
@@ -87,6 +90,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		parent_structure_list = [parent_structure_1]#, parent_structure_2]
 
 		for parent_structure in parent_structure_list:
+			parent_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_initial.vasp")
 			perovskite_reference_structure = Perovskite(supercell_dimensions=self.ga_input_dictionary['supercell_dimensions_list'], lattice=parent_structure.lattice, species_list=self.ga_input_dictionary['species_list'])
 			perovskite_reference_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/ref.vasp")
 			perovskite_reference_structure.convert_sites_to_direct_coordinates()
@@ -95,19 +99,16 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 			site_mapping_collection = SiteMappingCollection(perovskite_reference_structure.sites, parent_structure.sites, lattice=parent_structure.lattice)
 
 
-			average_distance_dictionary = site_mapping_collection.get_average_distance_type_dictionary()
-			average_displacement_vector_dictionary = site_mapping_collection.get_average_displacement_vector_type_dictionary() #{'Ba':average_direct_coord_vec_Ba_atoms_from_eachother_in_mapping, 'Ti':...}
+			# average_distance_dictionary_1 = site_mapping_collection.get_average_distance_type_dictionary()
+			# average_displacement_vector_dictionary_1 = site_mapping_collection.get_average_displacement_vector() #{'Ba':average_direct_coord_vec_Ba_atoms_from_eachother_in_mapping, 'Ti':...}
 
-			print average_distance_dictionary, average_displacement_vector_dictionary
-			print '\n\n'
+			#parent_structure.sites.shift_direct_coordinates(average_displacement_vector_dictionary_1, reverse=True)
+			site_mapping_collection.shift_sites_to_minimize_average_distance() #this shifts parent_struct's sites too
 
-			parent_structure.sites.shift_direct_coordinates(average_displacement_vector_dictionary, reverse=True)
+			parent_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_shifted.vasp")
 
-			average_distance_dictionary = site_mapping_collection.get_average_distance_type_dictionary()
-			average_displacement_vector_dictionary = site_mapping_collection.get_average_displacement_vector_type_dictionary() #{'Ba':average_direct_coord_vec_Ba_atoms_from_eachother_in_mapping, 'Ti':...}			
-
-			print average_distance_dictionary, average_displacement_vector_dictionary
-			print '\n\n'
+			# average_distance_dictionary_2 = site_mapping_collection.get_average_distance_type_dictionary()
+			# average_displacement_vector_dictionary_2 = site_mapping_collection.get_average_displacement_vector() #{'Ba':average_direct_coord_vec_Ba_atoms_from_eachother_in_mapping, 'Ti':...}
 
 		# site_mapping = SiteMapping(parent_structure_1.sites[0], parent_structure_2.sites[0], lattice=parent_structure_1.lattice)
 
