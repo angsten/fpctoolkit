@@ -1,4 +1,4 @@
-
+from collections import OrderedDict
 
 from fpctoolkit.structure.site_collection import SiteCollection
 from fpctoolkit.structure.site_mapping import SiteMapping
@@ -25,7 +25,7 @@ class SiteMappingCollection(object):
 		
 		munk = Munkres()
 
-		site_mapping_lists_dictionary = {} #will look like {'Ba':[site_mapping_1, site_mapping_2, ...], 'Ti':...}
+		site_mapping_lists_dictionary = OrderedDict() #will look like {'Ba':[site_mapping_1, site_mapping_2, ...], 'Ti':...}
 
 		for type_string in self.site_collection_initial.keys():
 			print type_string
@@ -65,3 +65,36 @@ class SiteMappingCollection(object):
 			mapping_matrix.append(mapping_row)
 
 		return mapping_matrix
+
+	def get_average_distance_type_dictionary(self):
+		"""
+		Returns dict that looks like {'Ba':average_dist_Ba_atoms_from_eachother_in_mapping, 'Ti':...}
+		"""
+		average_distance_dictionary = OrderedDict()
+
+		for type_string in self.site_collection_initial.keys():
+			average_distance = sum([site_mapping.distance for site_mapping in self.mapping_dictionary[type_string]])/len(self.mapping_dictionary[type_string])
+			average_distance_dictionary[type_string] = average_distance
+
+		return average_distance_dictionary
+
+	def get_average_displacement_vector_type_dictionary(self):
+		"""
+		Returns dict that looks like {'Ba':average_direct_coord_vec_Ba_atoms_from_eachother_in_mapping, 'Ti':...}
+		"""
+		average_displacement_vector_dictionary = OrderedDict()
+
+		for type_string in self.site_collection_initial.keys():
+			average_x = sum([site_mapping.displacement_vector[0] for site_mapping in self.mapping_dictionary[type_string]])/len(self.mapping_dictionary[type_string])
+			average_y = sum([site_mapping.displacement_vector[1] for site_mapping in self.mapping_dictionary[type_string]])/len(self.mapping_dictionary[type_string])
+			average_z = sum([site_mapping.displacement_vector[2] for site_mapping in self.mapping_dictionary[type_string]])/len(self.mapping_dictionary[type_string])
+			average_displacement_vector_dictionary[type_string] = [average_x, average_y, average_z]
+
+		return average_displacement_vector_dictionary
+
+	def shift_sites_to_minimize_average_distance(self):
+		"""
+		Shifts final sites toward initial sites to reduce average displacement vector to zero
+		"""
+
+		

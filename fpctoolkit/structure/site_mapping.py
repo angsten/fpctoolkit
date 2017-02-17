@@ -37,3 +37,4 @@ class SiteMapping(object):
 		self.final_site.convert_to_direct_coordinates(lattice)
 
 		return Vector.get_minimum_distance_between_two_periodic_points(self.initial_site['position'], self.final_site['position'], lattice, return_vector=True)
+

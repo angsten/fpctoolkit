@@ -90,6 +90,28 @@ class SiteCollection(object):
 	def get_coordinates_list(self):
 		return [site['position'] for site in self]
 
+	def shift_direct_coordinates(self, shift_vector_dictionary, reverse=False):
+		"""
+		Shifts all sites of type 'type' in collection by shift_vector_dictionary['type'] or -shift_vector_dictionary['type'] if reverse is true
+		"""
+
+		for type_string in shift_vector_dictionary.keys():
+
+			if len(shift_vector_dictionary[type_string]) != len(self[type_string]):
+				raise Exception("Shift vector dictionary is not commensurate with sites")
+
+			for i in len(self[type_string]):
+				site = self[type_string][i]
+
+				if not (site['coordinate_mode'] == 'Direct'):
+					raise Exception("Site not in direct coordinate mode - cannot shift")
+				else:
+					for j in range(3):
+						if reverse:
+							site['position'][j] += -shift_vector_dictionary[type_string][i][j]
+						else:
+							site['position'][j] += shift_vector_dictionary[type_string][i][j]
+
 
 	@staticmethod
 	def are_commensurate(site_collection_1, site_collection_2):
