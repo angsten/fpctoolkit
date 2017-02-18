@@ -27,7 +27,7 @@ class Population(object):
 
 	def __str__(self):
 		self.sort
-		return "\n".join(" ".join(str(x) for x in [individual.path, individual.energy]) for inidividual in self.individuals)
+		return "\n".join(" ".join(str(x) for x in [individual.path, individual.energy]) for individual in self.individuals)
 
 	def __len__(self):
 		return len(self.individuals)
