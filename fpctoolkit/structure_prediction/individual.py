@@ -52,7 +52,7 @@ class Individual(object):
 		return self.get_extended_path('.creation_id')
 
 	def get_structure_creation_id_string(self):
-		return File(self.get_structure_creation_id_file_path())[0]
+		return File(self.get_structure_creation_id_file_path())[0] if Path.exists(self.get_structure_creation_id_file_path) else None
 
 	def get_parent_structures_list(self):
 		structure_list = []
