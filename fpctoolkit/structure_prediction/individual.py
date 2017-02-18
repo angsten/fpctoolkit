@@ -11,7 +11,7 @@ class Individual(object):
 
 	def __init__(self, calculation_set, structure_creation_id_string=None, parent_structures_list=None, parent_paths_list=None):
 		self.calculation_set = calculation_set
-		self.structure_creation_id_string = structure_creation_id_string if structure_creation_id_string else self.get_structure_creation_id_file_path()
+		self.structure_creation_id_string = structure_creation_id_string if structure_creation_id_string else self.get_structure_creation_id_string()
 
 		self.parent_structures_list = parent_structures_list
 		self.parent_paths_list = parent_paths_list
@@ -51,7 +51,7 @@ class Individual(object):
 	def get_structure_creation_id_file_path(self):
 		return self.get_extended_path('.creation_id')
 
-	def get_structure_creation_id_file_path(self):
+	def get_structure_creation_id_string(self):
 		return File(self.get_structure_creation_id_file_path())[0]
 
 	def write_structure_creation_id_string_to_file(self):
