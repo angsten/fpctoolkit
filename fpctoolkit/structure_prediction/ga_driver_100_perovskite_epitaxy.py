@@ -89,11 +89,11 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		individual_1 = population_of_last_generation.get_individual_by_deterministic_tournament_selection(N=3)
 		individual_2 = population_of_last_generation.get_individual_by_deterministic_tournament_selection(N=3, avoid_individuals_list=[individual_1])
 
-		self.parent_structure_list = [individual_1.final_structure, individual_2.final_structure]
+		self.parent_structures_list = [individual_1.final_structure, individual_2.final_structure]
 		self.parent_paths_list = [individual_1.calculation_set.path, individual_2.calculation_set.path]
 		site_mapping_collections_list = []
 
-		for i, parent_structure in enumerate(self.parent_structure_list):
+		for i, parent_structure in enumerate(self.parent_structures_list):
 			print "Parent structure " + str(i+1)
 			#parent_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_initial_"+str(i+1)+".vasp")
 
@@ -165,7 +165,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 
 		#make this a weighted-average at some point
-		averaged_lattice = Lattice.average(self.parent_structure_list[0].lattice, self.parent_structure_list[1].lattice)
+		averaged_lattice = Lattice.average(self.parent_structures_list[0].lattice, self.parent_structures_list[1].lattice)
 
 		interpolated_sites_1 = site_mapping_collections_list[0].get_interpolated_site_collection(perovskite_reference_structure.sites, interpolation_function_1)
 		interp_struct_1 = Structure(sites=interpolated_sites_1, lattice=averaged_lattice)
@@ -176,5 +176,6 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		#interp_struct_2.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_interp_2.vasp")
 
 
+		self.structure_creation_id_string = 'mating_interpolated'
 
 		return interp_struct_2
