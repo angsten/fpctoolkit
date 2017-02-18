@@ -83,7 +83,8 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		parent_structure_1 = Structure(file_path="C:\Users\Tom\Documents\Coding\python_work\workflow_test/20_atom_parent_1.vasp")
 		parent_structure_2 = Structure(file_path="C:\Users\Tom\Documents\Coding\python_work\workflow_test/20_atom_parent_2.vasp")
 
-		parent_structure_2.sites.shift_direct_coordinates([0.25, 0.25, 0.25])
+		#parent_structure_2 = Perovskite(supercell_dimensions=self.ga_input_dictionary['supercell_dimensions_list'], lattice=parent_structure_2.lattice, species_list=self.ga_input_dictionary['species_list'])
+		#parent_structure_2.sites.shift_direct_coordinates([0.25, 0.25, 0.25])
 
 		#randomly shift structures here###################
 
@@ -93,20 +94,34 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		for i, parent_structure in enumerate(parent_structure_list):
 			parent_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_initial_"+str(i+1)+".vasp")
 
-			#parent_structure.sites.shift_direct_coordinates([random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5)])
-
-			#parent_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_initial_rnd_shift_"+str(i+1)+".vasp")
-
 			perovskite_reference_structure = Perovskite(supercell_dimensions=self.ga_input_dictionary['supercell_dimensions_list'], lattice=parent_structure.lattice, species_list=self.ga_input_dictionary['species_list'])
 			perovskite_reference_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/ref_"+str(i+1)+".vasp")
 			perovskite_reference_structure.convert_sites_to_direct_coordinates()
 			parent_structure.convert_sites_to_direct_coordinates()
 
-			print "Making site map collection"
+			parent_structure.sites.shift_direct_coordinates([random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5)])
+			parent_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_initial_rnd_shift_"+str(i+1)+".vasp")
 
-			site_mapping_collection = SiteMappingCollection(perovskite_reference_structure.sites, parent_structure.sites, lattice=parent_structure.lattice)
+			#This aligns the lattices - sloppy but it works...figure out a better way later
+			#Should change to be done until average disp vec components are all within epsilon of 0.0 - throw error if can't
+			for j in range(8):
+				site_mapping_collection = SiteMappingCollection(perovskite_reference_structure.sites, parent_structure.sites, lattice=parent_structure.lattice)
 
-			site_mapping_collection.shift_sites_to_minimize_average_distance() #this shifts parent_struct's sites too because sites passed by reference
+				print site_mapping_collection.get_average_displacement_vector()
+
+				site_mapping_collection.shift_sites_to_minimize_average_distance() #this shifts parent_struct's sites too because sites passed by reference
+
+			parent_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_shifted_"+str(i+1)+".vasp")
+
+			#
+
+			#################
+			# if i == 1:
+			# 	structs = site_mapping_collection.get_interpolated_structure_list()
+
+			# 	for j, struct in enumerate(structs):
+			# 		struct.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/interp_" + str(j) + ".vasp")
+			#################
 
 			site_mapping_collections_list.append(site_mapping_collection)
 
@@ -127,7 +142,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		def interpolation_function_db(da, db, dc):
 			return interpolation_function_da(db, da, dc)
 
-		if random.uniform(0.0, 1.0) >= 0.5:
+		if random.uniform(0.0, 1.0) >= 0.0:################################################CHANGE BACK!!!!!!#0.5:
 			interpolation_function_1 = interpolation_function_da
 		else:
 			interpolation_function_1 = interpolation_function_db

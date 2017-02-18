@@ -5,6 +5,7 @@ from munkres import Munkres
 from fpctoolkit.structure.site_collection import SiteCollection
 from fpctoolkit.structure.site_mapping import SiteMapping
 from fpctoolkit.util.vector import Vector
+from fpctoolkit.structure.structure import Structure
 
 class SiteMappingCollection(object):
 	"""
@@ -135,7 +136,20 @@ class SiteMappingCollection(object):
 
 
 
+	def get_interpolated_structure_list(self, interpolation_increment=0.2):
 
+		structure_list = []
+
+		for i in range(0,1 + int(1/interpolation_increment)):
+
+			def interpolation_function(da, db, dc):
+				return interpolation_increment*(i+0.01)
+
+			interpolated_sites = self.get_interpolated_site_collection(self.site_collection_initial, interpolation_function)
+
+			structure_list.append(Structure(lattice=self.lattice, sites=interpolated_sites))
+
+		return structure_list
 
 
 
