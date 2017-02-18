@@ -62,7 +62,7 @@ class Population(object):
 
 		self.individuals = sorted(self.individuals, key = lambda individual: individual.energy)
 
-	def get_individual_by_deterministic_tournament_selection(N=3, avoid_individuals_list=None):
+	def get_individual_by_deterministic_tournament_selection(self, N=3, avoid_individuals_list=None):
 		"""
 		Pits N individuals against each other, one with lowest energy is automatically chosen.
 
