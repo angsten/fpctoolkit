@@ -58,11 +58,11 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		shear_factor = 0.8
 		structure.lattice.randomly_strain(stdev=0.06, mask_array=[[0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 1.0]]) #for (100) epitaxy
 
-		mult = 2.5
+		mult = 4.0
 		min_atomic_distance = 1.5
 		structure.randomly_displace_site_positions(stdev=0.2*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.3*mult, mean=0.3, types_list=['K'])
-		structure.randomly_displace_site_positions(stdev=0.6*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.6*mult, mean=0.5, types_list=['V'])
-		structure.randomly_displace_site_positions(stdev=0.8*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=1.2*mult, mean=0.7, types_list=['O'])
+		structure.randomly_displace_site_positions(stdev=0.6*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.6*mult, mean=0.6, types_list=['V'])
+		structure.randomly_displace_site_positions(stdev=0.8*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=1.2*mult, mean=0.8, types_list=['O'])
 
 		self.structure_creation_id_string = 'random_standard'
 		self.parent_structures_list = None
@@ -85,6 +85,9 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		#parent_structure_2 = Perovskite(supercell_dimensions=self.ga_input_dictionary['supercell_dimensions_list'], lattice=parent_structure_2.lattice, species_list=self.ga_input_dictionary['species_list'])
 		#parent_structure_2.sites.shift_direct_coordinates([0.25, 0.25, 0.25])
+
+
+		######NOTE: Should avoid selecting combos that have already mated?
 
 		individual_1 = population_of_last_generation.get_individual_by_deterministic_tournament_selection(N=3)
 		individual_2 = population_of_last_generation.get_individual_by_deterministic_tournament_selection(N=3, avoid_individuals_list=[individual_1])
