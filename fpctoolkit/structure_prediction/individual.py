@@ -62,9 +62,9 @@ class Individual(object):
 		return structure_list
 
 	def get_parent_paths_list(self):
-		file = File(".parent_paths")
+		file = File(self.get_extended_path(".parent_paths"))
 		paths_list = [line for line in file]
-		
+
 		return paths_list
 
 	def write_structure_creation_id_string_to_file(self):
