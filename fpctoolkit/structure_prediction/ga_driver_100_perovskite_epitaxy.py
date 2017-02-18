@@ -86,7 +86,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		#parent_structure_2 = Perovskite(supercell_dimensions=self.ga_input_dictionary['supercell_dimensions_list'], lattice=parent_structure_2.lattice, species_list=self.ga_input_dictionary['species_list'])
 		#parent_structure_2.sites.shift_direct_coordinates([0.25, 0.25, 0.25])
 
-		individual_1 = population_of_last_generation.get_individual_by_deterministic_tournament_selection(N=3)
+		individual_1 = population_of_last_generation.get_individual_by_deterministic_tournament_selection()
 		individual_2 = population_of_last_generation.get_individual_by_deterministic_tournament_selection(N=3, avoid_individuals_list=[individual_1])
 
 		self.parent_structure_list = [individual_1.final_structure, individual_2.final_structure]
