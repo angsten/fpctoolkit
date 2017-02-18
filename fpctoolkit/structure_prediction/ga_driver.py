@@ -80,7 +80,7 @@ class GADriver(object):
 		return None
 
 	def get_individuals_per_generation(self, generation_number):
-		return self.ga_input_dictionary['individuals_per_generation'][generation_number-1]
+		return self.individuals_per_generation[generation_number-1]
 
 	def get_max_number_of_generations(self):
 		return self.ga_input_dictionary['max_number_of_generations']
