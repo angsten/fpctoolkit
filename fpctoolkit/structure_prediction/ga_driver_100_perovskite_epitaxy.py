@@ -41,7 +41,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		#package this with path and input_dict in calc set (relax) and return as individual
 
-		return Individual(calculation_set=relaxation, structure_creation_id_string=self.structure_creation_id_string, parent_structures_list=self.parent_structures_list, parent_paths_list=self.parent_paths)
+		return Individual(calculation_set=relaxation, structure_creation_id_string=self.structure_creation_id_string, parent_structures_list=self.parent_structures_list, parent_paths_list=self.parent_paths_list)
 
 	def get_random_structure(self, population_of_last_generation):
 		a = self.ga_input_dictionary['epitaxial_lattice_constant']
