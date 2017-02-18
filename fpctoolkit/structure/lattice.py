@@ -123,3 +123,19 @@ class Lattice(object):
 		full_tensor.append([voigt_tensor[4]/2.0, voigt_tensor[3]/2.0, voigt_tensor[2]])
 
 		return np.array(full_tensor)
+
+	@staticmethod
+	def average(lattice_1, lattice_2):
+		new_lattice = []
+
+		for i in range(3):
+			if len(lattice_1[i]) != 3 or len(lattice_2[i]) != 3:
+				raise Exception("Lattices not formatted properly")
+
+		for i in range(3):
+			lattice_vec = []
+			for j in range(3):
+				lattice_vec.append(0.5*(lattice_1[i][j] + lattice_2[i][j]))
+			new_lattice.append(lattice_vec)
+
+		return Lattice(a=new_lattice[0], b=new_lattice[1], c=new_lattice[2])

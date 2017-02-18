@@ -90,13 +90,13 @@ class SiteCollection(object):
 	def get_coordinates_list(self):
 		return [site['position'] for site in self]
 
-	def shift_direct_coordinates(self, displacement_vector, reverse=False):
+	def shift_direct_coordinates(self, direct_displacement_vector, reverse=False):
 		if reverse:
 			for j in range(3):
-				displacement_vector[j] = -displacement_vector[j]
+				direct_displacement_vector[j] = -direct_displacement_vector[j]
 
 		for site in self:
-			site.displace(displacement_vector)
+			site.displace(direct_displacement_vector)
 
 	def shift_direct_coordinates_by_type(self, shift_vector_dictionary, reverse=False):
 		"""

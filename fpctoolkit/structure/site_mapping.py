@@ -42,3 +42,12 @@ class SiteMapping(object):
 
 		return Vector.get_minimum_distance_between_two_periodic_points(self.initial_site['position'], self.final_site['position'], lattice, return_vector=True)
 
+
+	def get_interpolated_structure_list(self, interpolation_increment=0.1):
+
+		for i in range(0,int(1/interpolation_increment)):
+
+			def interpolation_function(da, db, dc):
+				return interpolation_increment*i
+
+			

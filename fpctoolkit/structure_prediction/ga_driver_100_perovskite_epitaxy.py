@@ -1,7 +1,9 @@
 import copy
+import random
 
 from fpctoolkit.structure_prediction.ga_driver import GADriver
 from fpctoolkit.structure.perovskite import Perovskite
+from fpctoolkit.structure.lattice import Lattice
 from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
 from fpctoolkit.structure_prediction.individual import Individual
 from fpctoolkit.structure.structure import Structure
@@ -75,10 +77,13 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		#select parents from population first#################################
 
-		parent_structure_1 = self.get_random_structure(None)
-		parent_structure_2 = self.get_random_structure(None)
+		#parent_structure_1 = self.get_random_structure(None)
+		#parent_structure_2 = self.get_random_structure(None)
 
-		#parent_structure_1 = Structure(file_path="C:\Users\Tom\Documents\Coding\python_work\workflow_test/relax_6.vasp")
+		parent_structure_1 = Structure(file_path="C:\Users\Tom\Documents\Coding\python_work\workflow_test/20_atom_parent_1.vasp")
+		parent_structure_2 = Structure(file_path="C:\Users\Tom\Documents\Coding\python_work\workflow_test/20_atom_parent_2.vasp")
+
+		parent_structure_2.sites.shift_direct_coordinates([0.25, 0.25, 0.25])
 
 		#randomly shift structures here###################
 
@@ -86,9 +91,14 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		site_mapping_collections_list = []
 
 		for i, parent_structure in enumerate(parent_structure_list):
-			parent_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_initial.vasp")
+			parent_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_initial_"+str(i+1)+".vasp")
+
+			#parent_structure.sites.shift_direct_coordinates([random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5), random.uniform(-0.5, 0.5)])
+
+			#parent_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_initial_rnd_shift_"+str(i+1)+".vasp")
+
 			perovskite_reference_structure = Perovskite(supercell_dimensions=self.ga_input_dictionary['supercell_dimensions_list'], lattice=parent_structure.lattice, species_list=self.ga_input_dictionary['species_list'])
-			perovskite_reference_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/ref.vasp")
+			perovskite_reference_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/ref_"+str(i+1)+".vasp")
 			perovskite_reference_structure.convert_sites_to_direct_coordinates()
 			parent_structure.convert_sites_to_direct_coordinates()
 
@@ -100,20 +110,34 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 			site_mapping_collections_list.append(site_mapping_collection)
 
-			parent_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_shifted.vasp")
+			parent_structure.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_shifted_"+str(i+1)+".vasp")
 
 
-		def interpolation_function_1(da, db, dc):
-			if da >= 0.5:
-				return 0.0
-			else:
-				return 1.0
+		if self.ga_input_dictionary['supercell_dimensions_list'][0] == 2:
+			discrete_interpolation_values = [1.0, 0.8, 0.0, 0.2] #one for each plane of perov atoms
+		if self.ga_input_dictionary['supercell_dimensions_list'][0] == 4:
+			discrete_interpolation_values = [1.0, 1.0, 0.9, 0.75, 0.0, 0.0, 0.1, 0.75]
+
+		def interpolation_function_da(da, db, dc):
+			transition_increment = 0.5/self.ga_input_dictionary['supercell_dimensions_list'][0] #distance between perf perov planes in a direction
+			transition_index = int(da/transition_increment)
+
+			return discrete_interpolation_values[transition_index]
+
+		def interpolation_function_db(da, db, dc):
+			return interpolation_function_da(db, da, dc)
+
+		if random.uniform(0.0, 1.0) >= 0.5:
+			interpolation_function_1 = interpolation_function_da
+		else:
+			interpolation_function_1 = interpolation_function_db
 
 		def interpolation_function_2(da, db, dc):
-			return 1.0 - interpolation_function(da, db, dc)
+			return 1.0 - interpolation_function_1(da, db, dc)
 
 
-		averaged_lattice = parent_structure_list[0].lattice #################actually take average here
+		#make this a weighted-average at some point
+		averaged_lattice = Lattice.average(parent_structure_list[0].lattice, parent_structure_list[1].lattice)
 
 		interpolated_sites_1 = site_mapping_collections_list[0].get_interpolated_site_collection(perovskite_reference_structure.sites, interpolation_function_1)
 		interp_struct_1 = Structure(sites=interpolated_sites_1, lattice=averaged_lattice)
