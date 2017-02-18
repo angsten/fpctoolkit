@@ -1,4 +1,4 @@
-
+import random
 
 from fpctoolkit.util.path import Path
 
@@ -24,6 +24,10 @@ class Population(object):
 
 			for basename in elligible_directory_basenames:
 				self.individuals.append(directory_to_individual_conversion_method(Path.join(generation_directory_path, basename)))
+
+	def __str__(self):
+		self.sort
+		return "\n".join(" ".join(str(x) for x in [individual.path, individual.energy]) for inidividual in self.individuals)
 
 	def __len__(self):
 		return len(self.individuals)
@@ -53,11 +57,32 @@ class Population(object):
 
 			i += 1
 
-
-
 	def sort(self):
 		"""Sorts self.individuals list by energy"""
 
 		self.individuals = sorted(self.individuals, key = lambda individual: individual.energy)
+
+	def get_individual_by_deterministic_tournament_selection(N=3, avoid_individuals_list=None):
+		"""
+		Pits N individuals against each other, one with lowest energy is automatically chosen.
+
+		does not return individual if in avoid_individuals_list - retries in this case
+		"""
+		if avoid_individuals_list == None:
+			avoid_individuals_list = []
+
+		if len(self.individuals) < (N + len(avoid_individuals_list)):
+			raise Exception("Not enough individuals in the population to perform this type of selection")
+
+		self.sort
+
+		for try_count in range(81):
+			if try_count == 80:
+				raise Exception("Failed to select individual")
+			
+
+			for i in range(N):
+				individual = self.individuals[random.randint()]
+
 
 
