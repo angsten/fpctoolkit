@@ -25,6 +25,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		self.structure_creation_id_string = 'none' #will track how the individual's structure was created
 		self.parent_structures_list = None
+		self.parent_paths_list = None
 
 		if not (self.ga_input_dictionary['supercell_dimensions_list'][0] == self.ga_input_dictionary['supercell_dimensions_list'][1]):
 			raise Exception("For (100) epitaxial conditions, Nx must = Ny supercell dimensions. Other behavior not yet supported")
