@@ -20,6 +20,7 @@ from fpctoolkit.io.vasp.incar_maker import IncarMaker
 from fpctoolkit.util.vector import Vector
 from fpctoolkit.structure_prediction.ga_structure_predictor import GAStructurePredictor
 from fpctoolkit.structure_prediction.ga_driver_100_perovskite_epitaxy import GADriver100PerovskiteEpitaxy
+from fpctoolkit.structure_prediction.population import Population
 
 
 
@@ -57,8 +58,16 @@ ga_driver = GADriver100PerovskiteEpitaxy(ga_input_dictionary, calculation_set_in
 
 # ga_structure_predictor.update()
 
-ga_driver.get_mated_structure(None)
+#ga_driver.get_mated_structure(None)
 
+def func():
+	return None
+
+struct = Structure(file_path="C:\Users\Tom\Documents\Coding\python_work\workflow_test/20_atom_parent_1.vasp")
+
+pop = Population(directory_to_individual_conversion_method=func)
+
+pop.individuals = []
 
 
 

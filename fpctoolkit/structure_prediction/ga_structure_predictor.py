@@ -47,8 +47,12 @@ class GAStructurePredictor(object):
 				individual.update()
 				all_complete = False
 
+		print "Population for this generation looks like: \n\n" + str(current_population)
+
 		if all_complete and (current_generation_count < self.ga_driver.get_max_number_of_generations()):
+			print "Generation complete. Making next generation path"
 			Path.make(self.get_next_generation_path())
+
 
 
 

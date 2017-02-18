@@ -68,6 +68,7 @@ class Population(object):
 
 		does not return individual if in avoid_individuals_list - retries in this case
 		"""
+
 		if avoid_individuals_list == None:
 			avoid_individuals_list = []
 
@@ -80,9 +81,18 @@ class Population(object):
 			if try_count == 80:
 				raise Exception("Failed to select individual")
 			
-
+			random_number_list = []
 			for i in range(N):
-				individual = self.individuals[random.randint()]
+				random_number_list.append(random.randint(0, len(self.individuals)-1))
+
+			random_number_list.sort()
+
+			individual = self.individuals[random_number_list[0]] #list is sorted - can just take smallest number
+
+			if individual not in avoid_individuals_list:
+				return individual
+			else:
+				continue
 
 
 

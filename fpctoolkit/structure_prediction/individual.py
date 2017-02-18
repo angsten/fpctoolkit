@@ -9,14 +9,16 @@ class Individual(object):
 	Just a calculation_set class wrapper with some added functionalities.
 	"""
 
-	def __init__(self, calculation_set, structure_creation_id_string=None, parent_structures_list=None):
+	def __init__(self, calculation_set, structure_creation_id_string=None, parent_structures_list=None, parent_paths_list=None):
 		self.calculation_set = calculation_set
 		self.structure_creation_id_string = structure_creation_id_string
 
 		self.parent_structures_list = parent_structures_list
+		self.parent_paths_list = parent_paths_list
 
 		self.write_structure_creation_id_string_to_file() #store how this individual was made
 		self.write_parent_structures_to_poscar_files()
+		self.write_parent_paths_to_file()
 
 
 	@property
@@ -59,3 +61,12 @@ class Individual(object):
 		if self.parent_structures_list:
 			for i, parent_structure in enumerate(self.parent_structures_list):
 				parent_structure.to_poscar_file_path(self.get_extended_path('.parent_poscar_' + str(i) + '.vasp'))
+
+	def write_parent_paths_to_file(self):
+		if self.parent_paths_list:
+			file = File()
+
+			for path in self.parent_paths_list:
+				file += path
+
+			file.write_to_path(self.get_extended_path(".parent_paths"))
