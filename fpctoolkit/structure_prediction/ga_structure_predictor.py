@@ -47,6 +47,7 @@ class GAStructurePredictor(object):
 				individual.update()
 				all_complete = False
 
+		print "Population for last generation looks like: \n\n" + str(population_of_last_generation)
 		print "Population for this generation looks like: \n\n" + str(current_population)
 
 		if all_complete and (current_generation_count < self.ga_driver.get_max_number_of_generations()):
