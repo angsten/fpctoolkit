@@ -13,8 +13,8 @@ class Individual(object):
 		self.calculation_set = calculation_set
 		self.structure_creation_id_string = structure_creation_id_string if structure_creation_id_string else self.get_structure_creation_id_string()
 
-		self.parent_structures_list = parent_structures_list
-		self.parent_paths_list = parent_paths_list
+		self.parent_structures_list = parent_structures_list if parent_structures_list else self.get_parent_structures_list()
+		self.parent_paths_list = parent_paths_list if parent_paths_list else self.get_parent_paths_list()
 
 		self.write_structure_creation_id_string_to_file() #store how this individual was made
 		self.write_parent_structures_to_poscar_files()
@@ -53,6 +53,19 @@ class Individual(object):
 
 	def get_structure_creation_id_string(self):
 		return File(self.get_structure_creation_id_file_path())[0]
+
+	def get_parent_structures_list(self):
+		structure_list = []
+
+		#######implement##################################################
+		
+		return structure_list
+
+	def get_parent_paths_list(self):
+		file = File(".parent_paths")
+		paths_list = [line for line in file]
+		
+		return paths_list
 
 	def write_structure_creation_id_string_to_file(self):
 		if self.structure_creation_id_string:
