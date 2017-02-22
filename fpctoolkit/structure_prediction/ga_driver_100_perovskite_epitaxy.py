@@ -63,12 +63,13 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 
 
-		probabilities_list = [0.05, 0.65, 0.3]
-
+		
+		probabilities_list = [0.1, 0.6, 0.3]
 		random_selector = RandomSelector(probabilities_list)
 		event_index = random_selector.get_event_index()
 
 
+		minimum_atomic_distance_list = [1.5, 1.5, 1.3]
 		#The direction of displacement is always spherically uniformly distributed, but we can control the
 		#mean radius of this sphere, the standard deviation of this sphere radius, and the max limiting 
 		#outer shell of the sphere. These factors are given for A, B, and O atoms separately.
@@ -78,27 +79,30 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 			strain_stdev = 0.06
 
 			mean_displacement_magnitude_list = [0.0*unit_cell_a, 0.15*unit_cell_a, 0.0*unit_cell_a]
-			displacement_stdev_list = [0.1*unit_cell_a, 0.2*unit_cell_a, 0.1*unit_cell_a]
-			max_atomic_displacement_list = [0.3*(0.7071*unit_cell_a), 0.7*(0.5*unit_cell_a), 0.5*(0.7071*unit_cell_a)]
+			displacement_stdev_list = [0.1*unit_cell_a, 0.2*unit_cell_a, 0.15*unit_cell_a]
+			max_atomic_displacement_list = [0.3*(0.7071*unit_cell_a), 0.7*(0.5*unit_cell_a), 0.4*(0.7071*unit_cell_a)]
+
+			minimum_atomic_distance_list = [1.5, 1.2, 1.2] #this controls the min dist when A is displaced, B is displaced, etc.
 		elif event_index == 1: #A lot of displacement all alround, little shear strain
 			shear_factor = 0.1
-			strain_stdev = 0.10
+			strain_stdev = 0.08
 
 			mean_displacement_magnitude_list = [0.0*unit_cell_a, 0.0*unit_cell_a, 0.0*unit_cell_a]
-			displacement_stdev_list = [0.25*unit_cell_a, 0.4*unit_cell_a, 0.5*unit_cell_a]
-			max_atomic_displacement_list = [0.5*(0.7071*unit_cell_a), 1.0*(0.5*unit_cell_a), 1.0*(0.7071*unit_cell_a)]
+			displacement_stdev_list = [0.22*unit_cell_a, 0.4*unit_cell_a, 0.4*unit_cell_a]
+			max_atomic_displacement_list = [0.3*(0.7071*unit_cell_a), 1.0*(0.5*unit_cell_a), 0.9*(0.7071*unit_cell_a)]
+			minimum_atomic_distance_list = [1.3, 1.2, 1.2]
 		elif event_index == 2: #A lot of displacement all around, significant shear
-			shear_factor = 0.7
-			strain_stdev = 0.14
+			shear_factor = 0.5
+			strain_stdev = 0.12
 
 			mean_displacement_magnitude_list = [0.0*unit_cell_a, 0.0*unit_cell_a, 0.0*unit_cell_a]
-			displacement_stdev_list = [0.25*unit_cell_a, 0.4*unit_cell_a, 0.5*unit_cell_a]
-			max_atomic_displacement_list = [0.5*(0.7071*unit_cell_a), 1.0*(0.5*unit_cell_a), 1.0*(0.7071*unit_cell_a)]
-			
+			displacement_stdev_list = [0.2*unit_cell_a, 0.45*unit_cell_a, 0.45*unit_cell_a]
+			max_atomic_displacement_list = [0.3*(0.7071*unit_cell_a), 1.0*(0.5*unit_cell_a), 0.9*(0.7071*unit_cell_a)]
+			minimum_atomic_distance_list = [1.3, 1.2, 1.2]
 
 		structure.lattice.randomly_strain(stdev=strain_stdev, mask_array=[[0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 1.0]])
 
-		minimum_atomic_distance_list = [1.5, 1.5, 1.3]
+
 
 		#iterate through each type (A, B, O) and apply the specific random distributions when displacing
 		for i in range(3):

@@ -186,7 +186,7 @@ class Vector(object):
 
 
 
-		print A, B, C, D, E, F
+		#print A, B, C, D, E, F
 		#print "Min set ", min_set
 
 		if return_vector:
