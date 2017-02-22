@@ -26,7 +26,7 @@ class Population(object):
 				self.individuals.append(directory_to_individual_conversion_method(Path.join(generation_directory_path, basename)))
 
 	def __str__(self):
-		self.sort
+		self.sort()
 		return "\n".join(" ".join(str(x) for x in [individual.energy, individual.calculation_set.path, individual.structure_creation_id_string]) for individual in self.individuals)
 
 	def __len__(self):
@@ -59,13 +59,8 @@ class Population(object):
 
 	def sort(self):
 		"""Sorts self.individuals list by energy"""
-		print "in sort call"
-		print "orig:"
-		print self.individuals
-		self.individuals = sorted(self.individuals, key = lambda individual: individual.energy)
 
-		print "after"
-		print self.individuals
+		self.individuals = sorted(self.individuals, key = lambda individual: individual.energy)
 
 	def get_individual_by_deterministic_tournament_selection(self, N=3, avoid_individuals_list=None):
 		"""
