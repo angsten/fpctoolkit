@@ -59,8 +59,13 @@ class Population(object):
 
 	def sort(self):
 		"""Sorts self.individuals list by energy"""
-
+		print "in sort call"
+		print "orig:"
+		print self.individuals
 		self.individuals = sorted(self.individuals, key = lambda individual: individual.energy)
+
+		print "after"
+		print self.individuals
 
 	def get_individual_by_deterministic_tournament_selection(self, N=3, avoid_individuals_list=None):
 		"""
