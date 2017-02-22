@@ -11,8 +11,8 @@ class Individual(object):
 
 	def __init__(self, calculation_set, structure_creation_id_string=None, parent_structures_list=None, parent_paths_list=None):
 		self.calculation_set = calculation_set
-		self.structure_creation_id_string = structure_creation_id_string if structure_creation_id_string else self.get_structure_creation_id_string()
 
+		self.structure_creation_id_string = structure_creation_id_string if structure_creation_id_string else self.get_structure_creation_id_string()
 		self.parent_structures_list = parent_structures_list if parent_structures_list else self.get_parent_structures_list()
 		self.parent_paths_list = parent_paths_list if parent_paths_list else self.get_parent_paths_list()
 
@@ -52,10 +52,19 @@ class Individual(object):
 		return self.get_extended_path('.creation_id')
 
 	def get_structure_creation_id_string(self):
-		return File(self.get_structure_creation_id_file_path())[0] if Path.exists(self.get_structure_creation_id_file_path()) else None
+		if not Path.exists(self.get_structure_creation_id_file_path()):
+			return None
+		else:
+			file = File(self.get_structure_creation_id_file_path())
+
+		if len(file) < 1:
+			return None
+		else:
+			return file[0]
 
 	def get_parent_structures_list(self):
 		structure_list = []
+		structure_list = None
 
 		#######implement##################################################
 		
@@ -77,7 +86,7 @@ class Individual(object):
 			file.write_to_path(self.get_structure_creation_id_file_path())
 
 	def write_parent_structures_to_poscar_files(self):
-		if self.parent_structures_list:
+		if self.parent_structures_list and (not Path.exists(self.get_extended_path(".parent_paths"))):
 			for i, parent_structure in enumerate(self.parent_structures_list):
 				parent_structure.to_poscar_file_path(self.get_extended_path('.parent_poscar_' + str(i) + '.vasp'))
 

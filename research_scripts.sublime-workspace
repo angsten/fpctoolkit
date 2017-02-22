@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"pop",
+				"population"
+			],
+			[
+				"di",
+				"distance_squared"
+			],
+			[
+				"pos",
+				"position_2"
+			],
+			[
 				"get_structure_creation_id",
 				"get_structure_creation_id_file_path"
 			],
@@ -129,10 +141,6 @@
 			],
 			[
 				"disp",
-				"displacement_vector"
-			],
-			[
-				"di",
 				"displacement_vector"
 			],
 			[
@@ -506,14 +514,6 @@
 			[
 				"Qu",
 				"QueueAdapter"
-			],
-			[
-				"job_prp",
-				"job_property_dictionary"
-			],
-			[
-				"get_queu",
-				"get_queue_job_property_dictionary"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "fpctoolkit/fpc_sketcher.py",
 			"settings":
 			{
-				"buffer_size": 8163,
+				"buffer_size": 9192,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -532,7 +532,7 @@
 			"file": "fpctoolkit/structure_prediction/ga_structure_predictor.py",
 			"settings":
 			{
-				"buffer_size": 2897,
+				"buffer_size": 3357,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -559,7 +559,7 @@
 			"file": "fpctoolkit/structure_prediction/population.py",
 			"settings":
 			{
-				"buffer_size": 3079,
+				"buffer_size": 3081,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -792,12 +792,12 @@
 	],
 	"file_history":
 	[
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/vector.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/individual.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/lattice.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_mapping.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/vector.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/perovskite.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar_maker.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar.py",
@@ -1094,7 +1094,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -1103,15 +1103,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8163,
+						"buffer_size": 9192,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2266,
-								2266
+								7889,
+								7889
 							]
 						],
 						"settings":
@@ -1120,10 +1120,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2721.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -1132,15 +1132,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2897,
+						"buffer_size": 3357,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								730,
-								759
+								3104,
+								3104
 							]
 						],
 						"settings":
@@ -1149,10 +1149,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 84.0,
+						"translation.y": 672.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -1177,10 +1177,10 @@
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 444.0,
+						"translation.y": 342.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -1205,10 +1205,10 @@
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1736.0,
+						"translation.y": 476.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -1217,15 +1217,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3079,
+						"buffer_size": 3081,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2154,
-								2154
+								2090,
+								2090
 							]
 						],
 						"settings":
@@ -1234,10 +1234,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 103.0,
+						"translation.y": 126.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -1266,7 +1266,7 @@
 						"translation.y": 979.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
@@ -1295,7 +1295,7 @@
 						"translation.y": 442.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
@@ -1395,7 +1395,7 @@
 	},
 	"output.exec":
 	{
-		"height": 33.0
+		"height": 24.0
 	},
 	"output.find_results":
 	{

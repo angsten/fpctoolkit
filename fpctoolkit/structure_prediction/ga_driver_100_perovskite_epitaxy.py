@@ -23,7 +23,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		super(GADriver100PerovskiteEpitaxy, self).__init__(ga_input_dictionary, calculation_set_input_dictionary)
 
-		self.structure_creation_id_string = 'none' #will track how the individual's structure was created
+		self.structure_creation_id_string = None #will track how the individual's structure was created
 		self.parent_structures_list = None
 		self.parent_paths_list = None
 		
