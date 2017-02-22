@@ -83,3 +83,18 @@ class GAStructurePredictor(object):
 
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)
+
+	def get_total_population(self):
+		"""
+		Returns population instance with all individuals from all generations in it
+		"""
+
+		total_population = Population()
+
+		for i in range(self.get_generation_count()):
+			population = Population(self.get_extended_path(GAStructurePredictor.generation_prefix_string + str(i)), self.ga_driver.directory_to_individual_conversion_method)
+
+			total_population.individuals += population.individuals
+
+
+		return total_population

@@ -532,7 +532,7 @@
 			"file": "fpctoolkit/structure_prediction/ga_structure_predictor.py",
 			"settings":
 			{
-				"buffer_size": 2802,
+				"buffer_size": 2897,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -541,7 +541,7 @@
 			"file": "fpctoolkit/structure_prediction/ga_driver.py",
 			"settings":
 			{
-				"buffer_size": 3829,
+				"buffer_size": 3806,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -1094,7 +1094,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -1132,15 +1132,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2802,
+						"buffer_size": 2897,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1196,
-								1196
+								730,
+								759
 							]
 						],
 						"settings":
@@ -1149,10 +1149,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 178.0,
+						"translation.y": 84.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -1161,15 +1161,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3829,
+						"buffer_size": 3806,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3829,
-								3829
+								3446,
+								3446
 							]
 						],
 						"settings":
@@ -1177,10 +1177,10 @@
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 738.0,
+						"translation.y": 444.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{

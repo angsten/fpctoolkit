@@ -29,47 +29,45 @@ from fpctoolkit.structure_prediction.population import Population
 
 
 
-ga_path = "C:\Users\Tom\Documents\Coding\python_work\workflow_test\ga_test"
-Path.remove(ga_path)
+# ga_path = "C:\Users\Tom\Documents\Coding\python_work\workflow_test\ga_test"
+# Path.remove(ga_path)
 
-calculation_set_input_dictionary = {
-	'external_relaxation_count': 1,
-	'kpoint_schemes_list': ['Monkhorst'],
-	'kpoint_subdivisions_lists': [[2, 2, 2]],
-	'submission_script_modification_keys_list': ['100'],
-	'submission_node_count_list': [1],
-	'ediff': [0.001],
-	'encut': [400]
-}
+# calculation_set_input_dictionary = {
+# 	'external_relaxation_count': 1,
+# 	'kpoint_schemes_list': ['Monkhorst'],
+# 	'kpoint_subdivisions_lists': [[2, 2, 2]],
+# 	'submission_script_modification_keys_list': ['100'],
+# 	'submission_node_count_list': [1],
+# 	'ediff': [0.001],
+# 	'encut': [400]
+# }
 
-ga_input_dictionary = {
-	'species_list':['K', 'V', 'O'],
-	'epitaxial_lattice_constant': 7.8,
-	'supercell_dimensions_list': [2, 2, 1],
-	'max_number_of_generations': 1,
-	'individuals_per_generation': [3],
-	'random_fractions_list': [1.0, 0.3, 0.2],
-	'mate_fractions_list': [0.0, 0.7, 0.8]
-}
+# ga_input_dictionary = {
+# 	'species_list':['K', 'V', 'O'],
+# 	'epitaxial_lattice_constant': 7.8,
+# 	'supercell_dimensions_list': [2, 2, 1],
+# 	'max_number_of_generations': 1,
+# 	'individuals_per_generation': [3],
+# 	'random_fractions_list': [1.0, 0.3, 0.2],
+# 	'mate_fractions_list': [0.0, 0.7, 0.8]
+# }
 
-ga_driver = GADriver100PerovskiteEpitaxy(ga_input_dictionary, calculation_set_input_dictionary)
+# ga_driver = GADriver100PerovskiteEpitaxy(ga_input_dictionary, calculation_set_input_dictionary)
 
-# ga_structure_predictor = GAStructurePredictor(ga_path, ga_driver)
+# # ga_structure_predictor = GAStructurePredictor(ga_path, ga_driver)
 
-# ga_structure_predictor.update()
+# # ga_structure_predictor.update()
 
-#ga_driver.get_mated_structure(None)
+# #ga_driver.get_mated_structure(None)
 
-def func():
-	return None
+# def func():
+# 	return None
 
-struct = Structure(file_path="C:\Users\Tom\Documents\Coding\python_work\workflow_test/20_atom_parent_1.vasp")
+# struct = Structure(file_path="C:\Users\Tom\Documents\Coding\python_work\workflow_test/20_atom_parent_1.vasp")
 
-pop = Population(directory_to_individual_conversion_method=func)
+# pop = Population(directory_to_individual_conversion_method=func)
 
-pop.individuals = []
-
-
+# pop.individuals = []
 
 
 
@@ -77,13 +75,16 @@ pop.individuals = []
 
 
 
+# a = 6
+# b = 4
+# c = 2
+# structure = Perovskite(supercell_dimensions = [a, b, c], lattice=[[4.0*a, 0.0, 0.0], [0.0, 4.0*b, 0.0], [0.0, 0.0, 5.0*c]], species_list=['Sr', 'Ti', 'O'])
 
+# structure.to_poscar_file_path("C:\Users\Tom\Documents\Berkeley/research\Presentation Slides/tms_spring_17_files/substrate.vasp")
 
+# structure = Perovskite(supercell_dimensions = [1, 1, 1], lattice=[[4.8, 0.0, 0.0], [0.0, 4.8, 0.0], [0.0, 0.0, 3.5]], species_list=['Sr', 'Ti', 'O'])
 
-
-
-
-
+# structure.to_poscar_file_path("C:\Users\Tom\Documents\Berkeley/research\Presentation Slides/tms_spring_17_files/film_5_atom.vasp")
 
 
 
@@ -205,19 +206,24 @@ self = self_c()
 
 # for i in range(400):
 
-# 	position_1 = [random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5)]
-# 	position_2 = [random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5)]
-# 	#lattice=[[random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0)], [random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0)], [random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0)]]
+position_1 = [0.9422665545626425, -0.2517860326278374, -0.6958826837443033]#[random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5)]
+position_2 = [-0.5027141823998538, 2.4234172864246624, 2.0401555768756516]#[random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5), random.uniform(-2.5, 2.5)]
+print position_1
+print position_2
+#lattice=[[random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0)], [random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0)], [random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0), random.uniform(-5.0, 5.0)]]
 
-# 	lattice=[[14.4, 0.0, 0.0],[0.0, 14.4, 0.0], [random.uniform(-4.0, 4.0), random.uniform(-4.0, 4.0), random.uniform(4.0, 16.0)]]
+#lattice=[[14.4, 0.0, 0.0],[0.0, 14.4, 0.0], [random.uniform(-4.0, 4.0), random.uniform(-4.0, 4.0), random.uniform(4.0, 16.0)]]
+
+lattice = [[2.576367, -1.48291388128, -0.880068632348], [0.850487776997, 1.06646115307, 1.21942862744], [1.99347821842, 3.27132357289, 4.44781854544]]
+
+print "Lattice:"
+print Lattice(lattice)
 
 
-# 	#print "Lattice:"
-# 	#print Lattice(lattice)
 
-
-
-# 	Vector.get_minimum_distance_between_two_periodic_points(position_1, position_2, lattice)
+print Vector.get_minimum_distance_between_two_periodic_points(position_1, position_2, lattice, 5, True)
+print '\n\n'
+print Vector.get_min(position_1, position_2, lattice, 5, True)
 
 #struct = Structure(lattice=lattice, sites=SiteCollection([Site({'type':'Ba', 'coordinate_mode': 'Direct', 'position':position_1}), Site({'type':'Ti', 'coordinate_mode': 'Direct', 'position':position_2})]))
 

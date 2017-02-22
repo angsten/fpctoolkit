@@ -186,9 +186,13 @@ class Vector(object):
 
 
 
+		print A, B, C, D, E, F
 		#print "Min set ", min_set
 
 		if return_vector:
 			return (minimum_distance_squared**0.5, minimum_distance_vector_in_direct_coordinates)
 		else:
 			return minimum_distance_squared**0.5
+
+
+
