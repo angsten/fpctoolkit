@@ -92,7 +92,7 @@ class GAStructurePredictor(object):
 		total_population = Population()
 
 		for i in range(self.get_generation_count()):
-			population = Population(self.get_extended_path(GAStructurePredictor.generation_prefix_string + str(i)), self.ga_driver.directory_to_individual_conversion_method)
+			population = Population(self.get_extended_path(GAStructurePredictor.generation_prefix_string + str(i+1)), self.ga_driver.directory_to_individual_conversion_method)
 
 			total_population.individuals += population.individuals
 
