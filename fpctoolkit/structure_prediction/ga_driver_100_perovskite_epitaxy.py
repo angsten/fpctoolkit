@@ -11,6 +11,7 @@ from fpctoolkit.structure.site_collection import SiteCollection
 from fpctoolkit.structure.site import Site
 from fpctoolkit.structure.site_mapping import SiteMapping
 from fpctoolkit.structure.site_mapping_collection import SiteMappingCollection
+from fpctoolkit.util.random_selector import RandomSelector
 
 class GADriver100PerovskiteEpitaxy(GADriver):
 
@@ -46,10 +47,13 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		return Individual(calculation_set=relaxation, structure_creation_id_string=self.structure_creation_id_string, parent_structures_list=self.parent_structures_list, parent_paths_list=self.parent_paths_list)
 
 	def get_random_structure(self, population_of_last_generation):
-		a = self.ga_input_dictionary['epitaxial_lattice_constant']
 
 		Nx = self.ga_input_dictionary['supercell_dimensions_list'][0]
+		Ny = self.ga_input_dictionary['supercell_dimensions_list'][1]
 		Nz = self.ga_input_dictionary['supercell_dimensions_list'][2]
+
+		a = self.ga_input_dictionary['epitaxial_lattice_constant']
+		unit_cell_a = a/Nx
 
 		c = ( a * Nz ) / Nx ##############################eventually base c off of a good volume
 
@@ -57,16 +61,52 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		structure = Perovskite(supercell_dimensions=self.ga_input_dictionary['supercell_dimensions_list'], lattice=lattice, species_list=self.ga_input_dictionary['species_list'])
 
-		shear_factor = 0.8
-		structure.lattice.randomly_strain(stdev=0.06, mask_array=[[0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 1.0]]) #for (100) epitaxy
 
-		mult = 4.0
-		min_atomic_distance = 1.5
-		structure.randomly_displace_site_positions(stdev=0.2*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.3*mult, mean=0.3, types_list=['K'])
-		structure.randomly_displace_site_positions(stdev=0.6*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=0.6*mult, mean=0.6, types_list=['V'])
-		structure.randomly_displace_site_positions(stdev=0.8*mult, enforced_minimum_atomic_distance=min_atomic_distance, max_displacement_distance=1.2*mult, mean=0.8, types_list=['O'])
 
-		self.structure_creation_id_string = 'random_standard'
+		probabilities_list = [0.05, 0.65, 0.3]
+
+		random_selector = RandomSelector(probabilities_list)
+		event_index = random_selector.get_event_index()
+
+
+		#The direction of displacement is always spherically uniformly distributed, but we can control the
+		#mean radius of this sphere, the standard deviation of this sphere radius, and the max limiting 
+		#outer shell of the sphere. These factors are given for A, B, and O atoms separately.
+
+		if event_index == 0: #very close to perfect perovskite, little strain, mostly B-cation displacements
+			shear_factor = 0.2
+			strain_stdev = 0.06
+
+			mean_displacement_magnitude_list = [0.0*unit_cell_a, 0.15*unit_cell_a, 0.0*unit_cell_a]
+			displacement_stdev_list = [0.1*unit_cell_a, 0.2*unit_cell_a, 0.1*unit_cell_a]
+			max_atomic_displacement_list = [0.3*(0.7071*unit_cell_a), 0.7*(0.5*unit_cell_a), 0.5*(0.7071*unit_cell_a)]
+		elif event_index == 1: #A lot of displacement all alround, little shear strain
+			shear_factor = 0.1
+			strain_stdev = 0.10
+
+			mean_displacement_magnitude_list = [0.0*unit_cell_a, 0.0*unit_cell_a, 0.0*unit_cell_a]
+			displacement_stdev_list = [0.25*unit_cell_a, 0.4*unit_cell_a, 0.5*unit_cell_a]
+			max_atomic_displacement_list = [0.5*(0.7071*unit_cell_a), 1.0*(0.5*unit_cell_a), 1.0*(0.7071*unit_cell_a)]
+		elif event_index == 2: #A lot of displacement all around, significant shear
+			shear_factor = 0.7
+			strain_stdev = 0.14
+
+			mean_displacement_magnitude_list = [0.0*unit_cell_a, 0.0*unit_cell_a, 0.0*unit_cell_a]
+			displacement_stdev_list = [0.25*unit_cell_a, 0.4*unit_cell_a, 0.5*unit_cell_a]
+			max_atomic_displacement_list = [0.5*(0.7071*unit_cell_a), 1.0*(0.5*unit_cell_a), 1.0*(0.7071*unit_cell_a)]
+			
+
+		structure.lattice.randomly_strain(stdev=strain_stdev, mask_array=[[0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 1.0]])
+
+		minimum_atomic_distance_list = [1.5, 1.5, 1.3]
+
+		#iterate through each type (A, B, O) and apply the specific random distributions when displacing
+		for i in range(3):
+			structure.randomly_displace_site_positions(stdev=displacement_stdev_list[i], enforced_minimum_atomic_distance=minimum_atomic_distance_list[i], 
+				max_displacement_distance=max_atomic_displacement_list[i], mean=mean_displacement_magnitude_list[i], types_list=self.ga_input_dictionary['species_list'][i])
+		
+
+		self.structure_creation_id_string = 'random_standard_type_' + str(event_index)
 		self.parent_structures_list = None
 
 		return structure
