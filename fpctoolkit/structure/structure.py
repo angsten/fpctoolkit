@@ -75,23 +75,48 @@ class Structure(object):
 	def site_count(self):
 		return len(self.sites)
 
-	def displace_site_positions(self, displacement_vector_distribution_function_dictionary_by_type=None, minimum_atomic_distance=None):
+	def displace_site_positions(self, displacement_vector_function_dictionary_by_type=None, minimum_atomic_distance=None):
 		"""
 		Displace the atoms of this structure rusing the specified probability distribution functions for each atom type.
 		This method preserves the overall distribution rho(x1, y1, z1, x2, y2, z2, ...) resulting from multiplication
 		of the indiviidual independent atomic distributions but with the regions of atoms too close (distance < min_atomic_dist) set to rho = 0.
+		This just renormalizes the other parts of the distribution space so integral of rho sums to unity.
 
 		displacement_vector_distribution_function_dictionary_by_type should look like:
 		{
-			'Ba': dist_func_1(),
+			'Ba': dist_func_1(), #dist funcs are methods that return cartesian vectors in angstroms ([x, y, z]) using distributions of your choosing
 			'Ti': dist_func_2(),
 			...
 		}
 
-		Where calling dist_funcs returns a displacement vector. If no function is given for a type, the zero vector function is used.
+		Where calling any of the dist_funcs must return a displacement vector that uses cartesian coordinates and angstroms as its units. 
+		If no function is given for a type, the zero vector function is used.
 
 		Structures are randomly displaced until no two atoms are within minimum_atomic_distance under periodic boundary conditions
 		"""
+
+		if (displacement_vector_function_dictionary_by_type == None) or len(displacement_vector_function_dictionary_by_type) == 0:
+			raise Exception("A displacement vector function for at least one atom type must be specified.")
+
+		for species_type in displacement_vector_function_dictionary_by_type:
+			if not species_type in self.sites:
+				raise Exception("Strucuture does not have a site of type " + str(species_type))
+
+		#If a distribution function is not provided for a given type, set that type's function to the zero vector function
+		for species_type in self.sites:
+			if not species_type in displacement_vector_function_dictionary_by_type:
+				displacement_vector_function_dictionary_by_type[species_type] = lambda: [0, 0, 0]
+
+
+		for species_type in self.sites:
+			for site in self.sites[species_type]:
+
+				displacement_vector = displacement_vector_function_dictionary_by_type[species_type]()
+
+				if site['coordinate_mode'] == 'Direct':
+					displacement_vector = Vector.get_in_direct_coordinates(displacement_vector, self.lattice)
+
+
 
 
 

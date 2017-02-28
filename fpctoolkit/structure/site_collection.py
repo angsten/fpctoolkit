@@ -11,7 +11,7 @@ class SiteCollection(object):
 
 	self.sites is actually an ordered dictionary that looks like:
 
-	sites = {'Ba': [ba_site_1, ba_site_2], 'Ti': [ti_site_1, ...]}
+	sites = {'Ba': [Ba_site_1, Ba_site_2], 'Ti': [Ti_site_1, ...]}
 
 
 
