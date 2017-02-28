@@ -75,7 +75,7 @@ class Structure(object):
 	def site_count(self):
 		return len(self.sites)
 
-	def displace_site_positions(self, displacement_vector_function_dictionary_by_type=None, minimum_atomic_distance=None):
+	def displace_site_positions_with_minimum_distance_constraint(self, displacement_vector_function_dictionary_by_type=None, minimum_atomic_distance=None):
 		"""
 		Displace the atoms of this structure rusing the specified probability distribution functions for each atom type.
 		This method preserves the overall distribution rho(x1, y1, z1, x2, y2, z2, ...) resulting from multiplication
@@ -95,6 +95,18 @@ class Structure(object):
 		Structures are randomly displaced until no two atoms are within minimum_atomic_distance under periodic boundary conditions
 		"""
 
+		original_structure = copy.deepcopy(self)
+
+		for try_count in range(100):
+			self.displace_site_positions(displacement_vector_function_dictionary_by_type)
+
+
+
+	def displace_site_positions(self, displacement_vector_function_dictionary_by_type=None):
+		"""
+		Inner loop helper function for displace_site_positions_with_minimum_distance_constraint
+		"""
+
 		if (displacement_vector_function_dictionary_by_type == None) or len(displacement_vector_function_dictionary_by_type) == 0:
 			raise Exception("A displacement vector function for at least one atom type must be specified.")
 
@@ -111,11 +123,13 @@ class Structure(object):
 		for species_type in self.sites:
 			for site in self.sites[species_type]:
 
+				#get a displacement vector (in cartesian coordinates)
 				displacement_vector = displacement_vector_function_dictionary_by_type[species_type]()
 
 				if site['coordinate_mode'] == 'Direct':
 					displacement_vector = Vector.get_in_direct_coordinates(displacement_vector, self.lattice)
 
+					site.displace(displacement_vector)
 
 
 
@@ -168,7 +182,7 @@ class Structure(object):
 		for attempt_count in range(max_attempt_count):
 			self.randomly_displace_site_position(site, stdev, max_displacement_distance, mean)
 
-			if self.any_sites_are_too_close(site, enforced_minimum_atomic_distance):
+			if self.any_sites_are_too_close_to_site(site, enforced_minimum_atomic_distance):
 				site['position'] = copy.deepcopy(original_position)
 				continue
 			else:
@@ -201,24 +215,57 @@ class Structure(object):
 		site.displace(displacement_vector)
 
 
-	def any_sites_are_too_close(self, test_site, enforced_minimum_atomic_distance, N_max=3):
+	def any_sites_are_too_close(self, minimum_atomic_distances_nested_dictionary_by_type, nearest_neighbors_max=3):
 		"""
-		Returns True if any site in this structure is within enforced_minimum_atomic_distance (angstroms) of test_site
+		Returns True if any two sites in this structure are within minimum_atomic_distance (angstroms) of each other.
+		nearest_neighbors_max controls how many nearest neighbor cell images to search.	Min distances is different for
+		each type pair, as specified by the input dictionary.
+
+		minimum_atomic_distances_nested_dictionary_by_type is in angstroms and looks like:
+		{
+			'Ba': {'Ti': 1.2, 'O': 1.4},
+			'Ti': {'Ba': 1.2, 'O': 1.3},
+			'O':  {'Ba': 1.4, 'Ti': 1.3}
+		}
+		"""
+
+		sites_list = self.sites.get_sorted_list()
+
+		for site_1_index in range(len(sites_list)):
+			for site_2_index in range(site_1_index+1, len(sites_list)):
+
+	def any_sites_are_too_close_to_site(self, test_site, minimum_atomic_distances_nested_dictionary_by_type, nearest_neighbors_max=3):
+		"""
+		Returns True if any site in this structure is within minimum_atomic_distance (angstroms) of test_site.
+		Minimum distance is different for each type pair, as specified in minimum_atomic_distances_nested_dictionary_by_type
 		Ignores if test_site is the same object (address compared) as a site in the structure. 
-		N_max controls how many images to search. Higher means higher accuracy in heavily sheared structures
+		nearest_neighbors_max controls how many nearest neighbor cell images to search. Higher means higher accuracy in heavily sheared structures
+
+
+		minimum_atomic_distances_nested_dictionary_by_type is in angstroms and looks like:
+		{
+			'Ba': {'Ti': 1.2, 'O': 1.4},
+			'Ti': {'Ba': 1.2, 'O': 1.3},
+			'O':  {'Ba': 1.4, 'Ti': 1.3}
+		}
 		"""
+
+		for species_type in self.sites:
+			if species_type not in minimum_atomic_distances_nested_dictionary_by_type:
+				raise Exception("Minimum atomic for all pairs of types in this structure not specified.")
 
 		self.convert_sites_to_direct_coordinates()
 
 		test_site_fractional_coordinates = test_site['position'] if test_site['coordinate_mode'] == 'Direct' else Vector.get_in_direct_coordinates(test_site['position'])
 
-		for site in self.sites:
-			if test_site is site: #don't consider case where these are the same site objects
+		for other_site in self.sites:
+			if test_site is other_site: #don't consider case where these are the same site objects
 				continue
 
-			minimum_distance = Vector.get_minimum_distance_between_two_periodic_points(test_site_fractional_coordinates, site['position'], self.lattice, N_max)
+			minimum_distance = Vector.get_minimum_distance_between_two_periodic_points(test_site_fractional_coordinates, other_site['position'], self.lattice, nearest_neighbors_max)
+			minimum_atomic_distance = minimum_atomic_distances_nested_dictionary_by_type[test_site['type']][other_site['type']]
 
-			if minimum_distance < enforced_minimum_atomic_distance:
+			if minimum_distance < minimum_atomic_distance:
 				return True
 
 		return False

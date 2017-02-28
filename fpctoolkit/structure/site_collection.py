@@ -70,9 +70,10 @@ class SiteCollection(object):
 			site['type'].remove(site)
 
 	def get_sorted_list(self):
-		"""Returns list of sites for which following is true:
-		Makes sure contiguous elements of self.sites of are same type, also
-		first type to appear is first type added, second is second type added, ...etc.
+		"""
+		Returns list of sites for which following is true:
+			Contiguous elements of self.sites of are of the same type
+			The first type to appear is the first type that was added, second is second type added, ...etc.
 		"""
 		sorted_list = []
 
