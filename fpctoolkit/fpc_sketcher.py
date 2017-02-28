@@ -21,38 +21,54 @@ from fpctoolkit.util.vector import Vector
 from fpctoolkit.structure_prediction.ga_structure_predictor import GAStructurePredictor
 from fpctoolkit.structure_prediction.ga_driver_100_perovskite_epitaxy import GADriver100PerovskiteEpitaxy
 from fpctoolkit.structure_prediction.population import Population
+from fpctoolkit.util.distribution import Distribution
+
+
+
+max_x = 10.0
+
+def func(x, n, max_x):
+	n = 3.0
+	return 1.0 - ((x**n)/(max_x**n))
+
+def dist_func(x):
+	return func(x, 3.0, max_x)
+
+dist = Distribution(dist_func, 0.0, max_x)
+
+
+for i in range(4000):
+	print dist.get_random_value()
 
 
 
 
 
 
+# ga_path = "C:\Users\Tom\Documents\Coding\python_work\workflow_test\ga_test"
+# Path.remove(ga_path)
 
+# calculation_set_input_dictionary = {
+# 	'external_relaxation_count': 1,
+# 	'kpoint_schemes_list': ['Monkhorst'],
+# 	'kpoint_subdivisions_lists': [[2, 2, 2]],
+# 	'submission_script_modification_keys_list': ['100'],
+# 	'submission_node_count_list': [1],
+# 	'ediff': [0.001],
+# 	'encut': [400]
+# }
 
-ga_path = "C:\Users\Tom\Documents\Coding\python_work\workflow_test\ga_test"
-Path.remove(ga_path)
+# ga_input_dictionary = {
+# 	'species_list':['K', 'V', 'O'],
+# 	'epitaxial_lattice_constant': 15.16,
+# 	'supercell_dimensions_list': [4, 4, 1],
+# 	'max_number_of_generations': 1,
+# 	'individuals_per_generation': [3],
+# 	'random_fractions_list': [1.0, 0.3, 0.2],
+# 	'mate_fractions_list': [0.0, 0.7, 0.8]
+# }
 
-calculation_set_input_dictionary = {
-	'external_relaxation_count': 1,
-	'kpoint_schemes_list': ['Monkhorst'],
-	'kpoint_subdivisions_lists': [[2, 2, 2]],
-	'submission_script_modification_keys_list': ['100'],
-	'submission_node_count_list': [1],
-	'ediff': [0.001],
-	'encut': [400]
-}
-
-ga_input_dictionary = {
-	'species_list':['K', 'V', 'O'],
-	'epitaxial_lattice_constant': 15.16,
-	'supercell_dimensions_list': [4, 4, 1],
-	'max_number_of_generations': 1,
-	'individuals_per_generation': [3],
-	'random_fractions_list': [1.0, 0.3, 0.2],
-	'mate_fractions_list': [0.0, 0.7, 0.8]
-}
-
-ga_driver = GADriver100PerovskiteEpitaxy(ga_input_dictionary, calculation_set_input_dictionary)
+# ga_driver = GADriver100PerovskiteEpitaxy(ga_input_dictionary, calculation_set_input_dictionary)
 
 # # ga_structure_predictor = GAStructurePredictor(ga_path, ga_driver)
 
@@ -87,10 +103,10 @@ ga_driver = GADriver100PerovskiteEpitaxy(ga_input_dictionary, calculation_set_in
 # structure.to_poscar_file_path("C:\Users\Tom\Documents\Berkeley/research\Presentation Slides/tms_spring_17_files/film_5_atom.vasp")
 
 
-for i in range(6):
-	structure = ga_driver.get_random_structure(None)
-	print ga_driver.structure_creation_id_string
-	structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/rand_made_"+ga_driver.structure_creation_id_string+"_"+str(i)+".vasp")
+# for i in range(6):
+# 	structure = ga_driver.get_random_structure(None)
+# 	print ga_driver.structure_creation_id_string
+# 	structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/rand_made_"+ga_driver.structure_creation_id_string+"_"+str(i)+".vasp")
 
 
 

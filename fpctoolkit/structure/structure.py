@@ -9,7 +9,8 @@ from fpctoolkit.structure.site_collection import SiteCollection
 from fpctoolkit.util.vector import Vector
 
 class Structure(object):
-	"""Abstract crystal structure class.
+	"""
+	Abstract crystal structure class.
 
 	Holds 2D array for lattice and a SiteCollection instance
 	Compatible with poscar file class only for now.
@@ -75,8 +76,9 @@ class Structure(object):
 	def site_count(self):
 		return len(self.sites)
 
-		def convert_sites_to_cartesian_coordinates(self):
-		"""Takes any site in sites that is in direct coordinates and changes
+	def convert_sites_to_cartesian_coordinates(self):
+		"""
+		Takes any site in sites that is in direct coordinates and changes
 		its position and coordinate mode to be in cartesian coordinate system
 		"""
 

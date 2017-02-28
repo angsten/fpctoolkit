@@ -5,9 +5,14 @@ import numpy as np
 class Distribution(object):
 	"""
 	Custom defined distribution
+
+	Inputs:
+	distribution_function: any function f(x) that returns a float - does not have to be normalized
+	min_x: the minimum x value in the domain of the distribution function
+	max_x: the maximum x vaue in the domain of the distribution function
 	"""
 
-	point_count = 5000
+	point_count = 50000
 
 	def __init__(self, distribution_function, min_x, max_x):
 		
@@ -23,23 +28,40 @@ class Distribution(object):
 		self.calculate_cumulative_function()
 		self.normalize_cumulative_function()
 
-	def calculate_cumulative_function():
+		self.inverse_cumulative_function = []
+		self.calculate_inverse_cumulative_function()
+
+	def calculate_cumulative_function(self):
 
 		total = 0.0
 		for i in range(0, Distribution.point_count):
+
 			x_value = self.get_x_value_from_index(i)
 
-			total += self.distribution_function(x_value)
+			probability = self.distribution_function(x_value)
+
+			if probability < 0.0:
+				raise Exception("Cannot have a negative probability")
+
+			total += probability
 
 			self.cumulative_function.append(total)
 
-	def normalize_cumulative_function():
+	def normalize_cumulative_function(self):
 		normalizing_ratio = 1.0/self.cumulative_function[-1]
 		self.cumulative_function = [value*normalizing_ratio for value in self.cumulative_function]
 
-	def calculate_inverse_cumulative_function():
+	def calculate_inverse_cumulative_function(self):
 
+		cumulative_probability_counter = 0.0
 		for i in range(len(self.cumulative_function)):
+			current_cumulative_probability = self.cumulative_function[i]
+
+			while cumulative_probability_counter < current_cumulative_probability:
+				self.inverse_cumulative_function.append(self.get_x_value_from_index(i))
+
+				cumulative_probability_counter += (1.0/Distribution.point_count)
+
 
 
 	def get_x_value_from_index(self, index):
@@ -50,11 +72,20 @@ class Distribution(object):
 
 		return x_difference/self.tick_width
 
+	def get_index_from_cumulative_probability(self, cumulative_probability):
+		return int(cumulative_probability*Distribution.point_count)
 
 
-	def get_random_value():
+
+	def get_random_value(self):
 		"""
 		Returns a random floating point number that follows the distribution
 		"""
 
-		probability = np.random.random()
+		cumulative_probability = np.random.random() #y value of cumulative distribution
+
+
+		#convert cumulative_probability to be one of ticks
+		inverse_cumulative_index = self.get_index_from_cumulative_probability(cumulative_probability)
+
+		return self.inverse_cumulative_function[inverse_cumulative_index] #get corresponding x value
