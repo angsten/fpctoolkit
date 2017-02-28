@@ -86,7 +86,8 @@ class Site(object):
 			self['position'] = Vector.get_in_direct_coordinates(self['position'], lattice).to_list()
 
 	def displace(self, vector):
-		"""Displaces site's position by vector - no knowledge of
+		"""
+		Displaces site's position by vector with no knowledge of what the current
 		coordinate mode.
 		"""
 

@@ -75,6 +75,26 @@ class Structure(object):
 	def site_count(self):
 		return len(self.sites)
 
+	def displace_site_positions(self, displacement_vector_distribution_function_dictionary_by_type=None, minimum_atomic_distance=None):
+		"""
+		Displace the atoms of this structure rusing the specified probability distribution functions for each atom type.
+		This method preserves the overall distribution rho(x1, y1, z1, x2, y2, z2, ...) resulting from multiplication
+		of the indiviidual independent atomic distributions but with the regions of atoms too close (distance < min_atomic_dist) set to rho = 0.
+
+		displacement_vector_distribution_function_dictionary_by_type should look like:
+		{
+			'Ba': dist_func_1(),
+			'Ti': dist_func_2(),
+			...
+		}
+
+		Where calling dist_funcs returns a displacement vector. If no function is given for a type, the zero vector function is used.
+
+		Structures are randomly displaced until no two atoms are within minimum_atomic_distance under periodic boundary conditions
+		"""
+
+
+
 	def randomly_displace_site_positions(self, stdev, enforced_minimum_atomic_distance=None, max_displacement_distance=None, mean=0.0, types_list=None):
 		"""
 		Randomly displace all sites in separate random directions with
@@ -83,6 +103,8 @@ class Structure(object):
 		!!Parameters are given in angstroms!!
 		These will be converted to direct coordinates for sites represented
 		in direct coordinates. Modifies self.
+
+		Note: This method is suboptimal for preserving the distributions of displacements in certain cases
 
 		If types_list is specified, only sites with type in types_list will be perturbed
 
@@ -158,7 +180,7 @@ class Structure(object):
 		"""
 		Returns True if any site in this structure is within enforced_minimum_atomic_distance (angstroms) of test_site
 		Ignores if test_site is the same object (address compared) as a site in the structure. 
-		N_max controls how many images to search. Higher means higher accuracy in weird sheared structures
+		N_max controls how many images to search. Higher means higher accuracy in heavily sheared structures
 		"""
 
 		self.convert_sites_to_direct_coordinates()
