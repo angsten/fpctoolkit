@@ -81,6 +81,7 @@ class Vector(object):
 	    """
 	    Get a random 3D unit vector with uniform spherical distribution
 	    """
+	    
 	    phi = np.random.uniform(0.0, np.pi*2.0)
 	    cosoftheta = np.random.uniform(-1.0, 1.0)
 	    theta = np.arccos(cosoftheta)
@@ -93,7 +94,8 @@ class Vector(object):
 
 	@staticmethod
 	def get_random_vector(magnitude_average, magnitude_stdev):
-		"""returns vector with random direction and magnitude
+		"""
+		returns a vector with random direction and magnitude
 		governed by normal distribution. No absolute value
 		is taken on the magnitude - can be negative or positive.
 		"""

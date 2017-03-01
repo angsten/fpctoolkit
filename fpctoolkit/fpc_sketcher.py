@@ -22,27 +22,52 @@ from fpctoolkit.structure_prediction.ga_structure_predictor import GAStructurePr
 from fpctoolkit.structure_prediction.ga_driver_100_perovskite_epitaxy import GADriver100PerovskiteEpitaxy
 from fpctoolkit.structure_prediction.population import Population
 from fpctoolkit.util.distribution import Distribution
-
+from fpctoolkit.util.vector_distribution import VectorDistribution
 
 
 max_x = 10.0
 
 def func(x, n, max_x):
-	n = 3.0
 	return 1.0 - ((x**n)/(max_x**n))
 
 def dist_func(x):
-	return func(x, 3.0, max_x)
+	return func(x, 0.1, max_x)
 
 dist = Distribution(dist_func, 0.0, max_x)
 
+magnitude_dist_function = dist.get_random_value
+direction_dist_function = Vector.get_random_unit_vector
 
-for i in range(4000):
-	print dist.get_random_value()
+vdist = VectorDistribution(direction_dist_function, magnitude_dist_function)
+
+print vdist.get_random_vector()
 
 
 
+# def dist_func(x):
+# 	if x < 1.0:
+# 		return 0.0
 
+# 	if x > 2.0 and x < 5.0:
+# 		return 0.0
+
+# 	return x**6
+
+# dist = Distribution(dist_func, 0.0, 6.0)
+
+# l = []
+# sample_size = 1000000
+# for i in range(sample_size):
+# 	l.append(dist.get_random_value())
+
+
+# count = 0
+# for i in range(len(l)):
+# 	if l[i] < 2.0:
+# 		count += 1
+
+# print count
+# print "Expected: ", 0.000629302*sample_size
 
 
 # ga_path = "C:\Users\Tom\Documents\Coding\python_work\workflow_test\ga_test"
