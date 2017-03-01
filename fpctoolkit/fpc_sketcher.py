@@ -25,23 +25,23 @@ from fpctoolkit.util.distribution import Distribution
 from fpctoolkit.util.vector_distribution import VectorDistribution
 
 
-max_x = 10.0
+# max_x = 10.0
 
-def func(x, n, max_x):
-	return 1.0 - ((x**n)/(max_x**n))
+# def func(x, n, max_x):
+# 	return 1.0 - ((x**n)/(max_x**n))
 
-def dist_func(x):
-	return func(x, 0.1, max_x)
+# def dist_func(x):
+# 	return func(x, 0.1, max_x)
 
-dist = Distribution(dist_func, 0.0, max_x)
+# dist = Distribution(dist_func, 0.0, max_x)
 
-magnitude_dist_function = dist.get_random_value
-direction_dist_function = Vector.get_random_unit_vector
+# magnitude_dist_function = dist.get_random_value
+# direction_dist_function = Vector.get_random_unit_vector
 
-vdist = VectorDistribution(direction_dist_function, magnitude_dist_function)
+# vdist = VectorDistribution(direction_dist_function, magnitude_dist_function)
 
-for i in range(100):
-	print vdist.get_random_vector()
+# for i in range(100):
+# 	print vdist.get_random_vector()
 
 
 
@@ -74,31 +74,35 @@ for i in range(100):
 # ga_path = "C:\Users\Tom\Documents\Coding\python_work\workflow_test\ga_test"
 # Path.remove(ga_path)
 
-# calculation_set_input_dictionary = {
-# 	'external_relaxation_count': 1,
-# 	'kpoint_schemes_list': ['Monkhorst'],
-# 	'kpoint_subdivisions_lists': [[2, 2, 2]],
-# 	'submission_script_modification_keys_list': ['100'],
-# 	'submission_node_count_list': [1],
-# 	'ediff': [0.001],
-# 	'encut': [400]
-# }
+calculation_set_input_dictionary = {
+	'external_relaxation_count': 1,
+	'kpoint_schemes_list': ['Monkhorst'],
+	'kpoint_subdivisions_lists': [[2, 2, 2]],
+	'submission_script_modification_keys_list': ['100'],
+	'submission_node_count_list': [1],
+	'ediff': [0.001],
+	'encut': [400]
+}
 
-# ga_input_dictionary = {
-# 	'species_list':['K', 'V', 'O'],
-# 	'epitaxial_lattice_constant': 15.16,
-# 	'supercell_dimensions_list': [4, 4, 1],
-# 	'max_number_of_generations': 1,
-# 	'individuals_per_generation': [3],
-# 	'random_fractions_list': [1.0, 0.3, 0.2],
-# 	'mate_fractions_list': [0.0, 0.7, 0.8]
-# }
+ga_input_dictionary = {
+	'species_list':['K', 'V', 'O'],
+	'epitaxial_lattice_constant': 15.16,
+	'supercell_dimensions_list': [4, 4, 1],
+	'max_number_of_generations': 1,
+	'individuals_per_generation': [3],
+	'random_fractions_list': [1.0, 0.3, 0.2],
+	'mate_fractions_list': [0.0, 0.7, 0.8]
+}
 
-# ga_driver = GADriver100PerovskiteEpitaxy(ga_input_dictionary, calculation_set_input_dictionary)
+ga_driver = GADriver100PerovskiteEpitaxy(ga_input_dictionary, calculation_set_input_dictionary)
 
-# # ga_structure_predictor = GAStructurePredictor(ga_path, ga_driver)
+struct = ga_driver.get_random_structure(None)
+struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\disp.vasp")
 
-# # ga_structure_predictor.update()
+
+# ga_structure_predictor = GAStructurePredictor(ga_path, ga_driver)
+
+# ga_structure_predictor.update()
 
 # #ga_driver.get_mated_structure(None)
 

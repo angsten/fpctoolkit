@@ -77,3 +77,115 @@
 			displacement_vector = Vector.get_in_direct_coordinates(displacement_vector, self.lattice)
 
 		site.displace(displacement_vector)
+
+
+	def get_random_structure(self, population_of_last_generation):
+
+		A_type = self.ga_input_dictionary['species_list'][0]
+		B_type = self.ga_input_dictionary['species_list'][1]
+		X_type = self.ga_input_dictionary['species_list'][2]
+
+		Nx = self.ga_input_dictionary['supercell_dimensions_list'][0]
+		Ny = self.ga_input_dictionary['supercell_dimensions_list'][1]
+		Nz = self.ga_input_dictionary['supercell_dimensions_list'][2]
+
+		a = self.ga_input_dictionary['epitaxial_lattice_constant']
+		unit_cell_a = a/Nx
+
+		c = ( a * Nz ) / Nx ##############################eventually base c off of a good volume
+
+		lattice = [[a, 0.0, 0.0], [0.0, a, 0.0], [0.0, 0.0, c]]
+
+		structure = Perovskite(supercell_dimensions=self.ga_input_dictionary['supercell_dimensions_list'], lattice=lattice, species_list=self.ga_input_dictionary['species_list'])
+
+
+
+		
+		probabilities_list = [0.1, 0.6, 0.3]
+		random_selector = RandomSelector(probabilities_list)
+		event_index = random_selector.get_event_index()
+
+
+		minimum_atomic_distance_list = [1.5, 1.5, 1.3]
+		#The direction of displacement is always spherically uniformly distributed, but we can control the
+		#mean radius of this sphere, the standard deviation of this sphere radius, and the max limiting 
+		#outer shell of the sphere. These factors are given for A, B, and O atoms separately.
+
+		if event_index == 0: #very close to perfect perovskite, little strain, mostly B-cation displacements
+			shear_factor = 0.2
+			strain_stdev = 0.06
+
+			mean_displacement_magnitude_list = [0.0*unit_cell_a, 0.15*unit_cell_a, 0.0*unit_cell_a]
+			displacement_stdev_list = [0.1*unit_cell_a, 0.2*unit_cell_a, 0.15*unit_cell_a]
+			max_atomic_displacement_list = [0.3*(0.7071*unit_cell_a), 0.7*(0.5*unit_cell_a), 0.4*(0.7071*unit_cell_a)]
+
+			minimum_atomic_distance_list = [1.5, 1.2, 1.2] #this controls the min dist when A is displaced, B is displaced, etc.
+		elif event_index == 1: #A lot of displacement all alround, little shear strain
+			shear_factor = 0.1
+			strain_stdev = 0.08
+
+			mean_displacement_magnitude_list = [0.0*unit_cell_a, 0.0*unit_cell_a, 0.0*unit_cell_a]
+			displacement_stdev_list = [0.22*unit_cell_a, 0.4*unit_cell_a, 0.4*unit_cell_a]
+			max_atomic_displacement_list = [0.3*(0.7071*unit_cell_a), 1.0*(0.5*unit_cell_a), 0.9*(0.7071*unit_cell_a)]
+			minimum_atomic_distance_list = [1.3, 1.2, 1.2]
+		elif event_index == 2: #A lot of displacement all around, significant shear
+			shear_factor = 0.5
+			strain_stdev = 0.12
+
+			mean_displacement_magnitude_list = [0.0*unit_cell_a, 0.0*unit_cell_a, 0.0*unit_cell_a]
+			displacement_stdev_list = [0.2*unit_cell_a, 0.45*unit_cell_a, 0.45*unit_cell_a]
+			max_atomic_displacement_list = [0.3*(0.7071*unit_cell_a), 1.0*(0.5*unit_cell_a), 0.9*(0.7071*unit_cell_a)]
+			minimum_atomic_distance_list = [1.3, 1.2, 1.2]
+
+
+
+
+		structure.lattice.randomly_strain(stdev=strain_stdev, mask_array=[[0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 1.0]])
+
+
+
+		max_x = 10.0
+
+		def envelope_function(curvature_parameter, max_displacement_distance):
+			"""
+			curvature_parameter: closer to 0 means sharper peak at 0, closer to 3 or more, very constant until sharp drop to 0 at max_disp_dist
+			"""
+
+			return lambda x: 1.0 - ((x**curvature_parameter)/(max_displacement_distance**n))
+
+
+		A_site_vector_magnitude_distribution_function = Distribution(envelope_function(A_site_curvature_parameter, A_site_max_displacement), 0.0, A_site_max_displacement)
+		B_site_vector_magnitude_distribution_function = Distribution(envelope_function(B_site_curvature_parameter, B_site_max_displacement), 0.0, B_site_max_displacement)
+		X_site_vector_magnitude_distribution_function = Distribution(envelope_function(X_site_curvature_parameter, X_site_max_displacement), 0.0, X_site_max_displacement)
+
+		A_site_vector_distribution_function = VectorDistribution(Vector.get_random_unit_vector, A_site_vector_magnitude_distribution_function)
+		B_site_vector_distribution_function = VectorDistribution(Vector.get_random_unit_vector, B_site_vector_magnitude_distribution_function)
+		X_site_vector_distribution_function = VectorDistribution(Vector.get_random_unit_vector, X_site_vector_magnitude_distribution_function)
+
+		displacement_vector_distribution_function_dictionary_by_type = {
+			A_type: A_site_vector_distribution_function.get_random_vector,
+			B_type: B_site_vector_distribution_function.get_random_vector,
+			X_type: X_site_vector_distribution_function.get_random_vector
+		}
+
+		minimum_atomic_distances_nested_dictionary_by_type = 
+		{
+			A_type: {A_type: AA_minimum_distance, B_type: AB_minimum_distance, X_type: AX_minimum_distance},
+			B_type: {A_type: AB_minimum_distance, B_type: BB_minimum_distance, X_type: BX_minimum_distance},
+			X_type: {A_type: AX_minimum_distance, B_type: BX_minimum_distance, X_type: XX_minimum_distance}
+		}
+
+		displace_site_positions_with_minimum_distance_constraints(displacement_vector_distribution_function_dictionary_by_type, minimum_atomic_distances_nested_dictionary_by_type)
+	
+
+
+		#iterate through each type (A, B, O) and apply the specific random distributions when displacing
+		for i in range(3):
+			structure.randomly_displace_site_positions(stdev=displacement_stdev_list[i], enforced_minimum_atomic_distance=minimum_atomic_distance_list[i], 
+				max_displacement_distance=max_atomic_displacement_list[i], mean=mean_displacement_magnitude_list[i], types_list=self.ga_input_dictionary['species_list'][i])
+		
+
+		self.structure_creation_id_string = 'random_standard_type_' + str(event_index)
+		self.parent_structures_list = None
+
+		return structure

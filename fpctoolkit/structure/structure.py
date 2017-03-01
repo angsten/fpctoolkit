@@ -137,16 +137,16 @@ class Structure(object):
 
 		displacement_vector_distribution_function_dictionary_by_type should look like:
 		{
-			'Ba': dist_func_1(), #dist funcs are methods that return cartesian vectors in angstroms ([x, y, z]) using distributions of your choosing
-			'Ti': dist_func_2(),
+			'Ba': dist_func_1, #dist funcs are methods that return cartesian vectors in angstroms ([x, y, z]) using distributions of your choosing
+			'Ti': dist_func_2,
 			...
 		}
 
 		minimum_atomic_distances_nested_dictionary_by_type is in angstroms and looks like:
 		{
-			'Ba': {'Ti': 1.2, 'O': 1.4},
-			'Ti': {'Ba': 1.2, 'O': 1.3},
-			'O':  {'Ba': 1.4, 'Ti': 1.3}
+			'Ba': {'Ba': 1.5, 'Ti': 1.2, 'O': 1.4},
+			'Ti': {'Ba': 1.2, 'Ti': 1.3, 'O': 1.3},
+			'O':  {'Ba': 1.4, 'Ti': 1.3, 'O': 0.8}
 		}
 
 		Where calling any of the dist_funcs must return a displacement vector that uses cartesian coordinates and angstroms as its units. 
@@ -158,7 +158,7 @@ class Structure(object):
 		original_structure = copy.deepcopy(self)
 
 		for try_count in range(100):
-			print "try is ", try_count
+			print "displace sites in structure try is ", try_count
 
 			self.displace_site_positions(displacement_vector_distribution_function_dictionary_by_type)
 
@@ -180,16 +180,16 @@ class Structure(object):
 			raise Exception("A displacement vector function for at least one atom type must be specified.")
 
 		for species_type in displacement_vector_distribution_function_dictionary_by_type:
-			if not species_type in self.sites:
+			if not species_type in self.sites.keys():
 				raise Exception("Strucuture does not have a site of type " + str(species_type))
 
 		#If a distribution function is not provided for a given type, set that type's function to the zero vector function
-		for species_type in self.sites:
+		for species_type in self.sites.keys():
 			if not species_type in displacement_vector_distribution_function_dictionary_by_type:
 				displacement_vector_distribution_function_dictionary_by_type[species_type] = lambda: [0, 0, 0]
 
 
-		for species_type in self.sites:
+		for species_type in self.sites.keys():
 			for site in self.sites[species_type]:
 
 				#get a displacement vector (in cartesian coordinates)
@@ -209,9 +209,9 @@ class Structure(object):
 
 		minimum_atomic_distances_nested_dictionary_by_type is in angstroms and looks like:
 		{
-			'Ba': {'Ti': 1.2, 'O': 1.4},
-			'Ti': {'Ba': 1.2, 'O': 1.3},
-			'O':  {'Ba': 1.4, 'Ti': 1.3}
+			'Ba': {'Ba': 1.5, 'Ti': 1.2, 'O': 1.4},
+			'Ti': {'Ba': 1.2, 'Ti': 1.3, 'O': 1.3},
+			'O':  {'Ba': 1.4, 'Ti': 1.3, 'O': 0.8}
 		}
 		"""
 
@@ -224,11 +224,10 @@ class Structure(object):
 
 				minimum_atomic_distance = minimum_atomic_distances_nested_dictionary_by_type[site_1['type']][site_2['type']]
 
-				if site_pair_is_too_close(site_1, site_2, minimum_atomic_distance, nearest_neighbors_max):
+				if self.site_pair_is_too_close(site_1, site_2, minimum_atomic_distance, nearest_neighbors_max):
 					return True
 
 		return False
-
 
 
 	def site_pair_is_too_close(self, site_1, site_2, minimum_atomic_distance, nearest_neighbors_max=3):
@@ -264,7 +263,7 @@ class Structure(object):
 
 		####################not implemented yet
 
-		for species_type in self.sites:
+		for species_type in self.sites.keys():
 			if species_type not in minimum_atomic_distances_nested_dictionary_by_type:
 				raise Exception("Minimum atomic for all pairs of types in this structure not specified.")
 
