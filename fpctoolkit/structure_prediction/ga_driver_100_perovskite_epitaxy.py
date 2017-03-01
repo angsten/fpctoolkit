@@ -100,6 +100,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 			max_atomic_displacement_list = [0.3*(0.7071*unit_cell_a), 1.0*(0.5*unit_cell_a), 0.9*(0.7071*unit_cell_a)]
 			minimum_atomic_distance_list = [1.3, 1.2, 1.2]
 
+
 		structure.lattice.randomly_strain(stdev=strain_stdev, mask_array=[[0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 2.0*shear_factor], [0.0, 0.0, 1.0]])
 
 

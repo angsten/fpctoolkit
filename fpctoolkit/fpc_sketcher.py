@@ -40,7 +40,8 @@ direction_dist_function = Vector.get_random_unit_vector
 
 vdist = VectorDistribution(direction_dist_function, magnitude_dist_function)
 
-print vdist.get_random_vector()
+for i in range(100):
+	print vdist.get_random_vector()
 
 
 

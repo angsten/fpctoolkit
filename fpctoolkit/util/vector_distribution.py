@@ -19,9 +19,6 @@ class VectorDistribution(object):
 		unit_vector = self.direction_distribution_function()
 		magnitude = self.magnitude_distribution_function()
 
-		print magnitude
-		print unit_vector
-
 		return unit_vector*magnitude
 
 
