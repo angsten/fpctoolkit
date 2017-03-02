@@ -294,7 +294,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		if self.ga_input_dictionary['supercell_dimensions_list'][0] == 2:
 			discrete_interpolation_values = [1.0, 0.8, 0.0, 0.2] #one for each plane of perov atoms
 		if self.ga_input_dictionary['supercell_dimensions_list'][0] == 4:
-			discrete_interpolation_values = [1.0, 1.0, 0.9, 0.75, 0.0, 0.0, 0.1, 0.75]
+			discrete_interpolation_values = [1.0, 1.0, 1.0, 0.8, 0.0, 0.0, 0.0, 0.2]
 
 		def interpolation_function_da(da, db, dc):
 			transition_increment = 0.5/self.ga_input_dictionary['supercell_dimensions_list'][0] #distance between perf perov planes in a direction
@@ -326,6 +326,6 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		#interp_struct_2.to_poscar_file_path("C:\Users\Tom\Documents\Coding\python_work\workflow_test/parent_interp_2.vasp")
 
 
-		self.structure_creation_id_string = 'mating_interpolated'
+		self.structure_creation_id_string = 'mating_interpolated_fixed'
 
 		return interp_struct_2
