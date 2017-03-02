@@ -7,6 +7,7 @@ from fpctoolkit.structure.site import Site
 from fpctoolkit.structure.lattice import Lattice
 from fpctoolkit.structure.site_collection import SiteCollection
 from fpctoolkit.util.vector import Vector
+from fpctoolkit.util.random_selector import RandomSelector
 
 class Structure(object):
 	"""
@@ -128,6 +129,8 @@ class Structure(object):
 		return Structure(lattice=new_lattice, sites=new_sites)
 
 
+
+
 	def displace_site_positions_with_minimum_distance_constraints(self, displacement_vector_distribution_function_dictionary_by_type=None, minimum_atomic_distances_nested_dictionary_by_type=None):
 		"""
 		Displace the atoms of this structure rusing the specified probability distribution functions for each atom type.
@@ -156,16 +159,52 @@ class Structure(object):
 		"""
 
 		original_structure = copy.deepcopy(self)
+		original_sites_list = copy.deepcopy(self.sites.get_sorted_list())
+		new_sites_list = self.sites.get_sorted_list()
 
-		for try_count in range(100):
+		sites_to_check_indices_list = range(len(new_sites_list))
+
+		self.displace_site_positions(displacement_vector_distribution_function_dictionary_by_type)
+
+		#self.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\dispinit.vasp")
+
+		for try_count in range(200):
 			print "displace sites in structure try is ", try_count
 
-			self.displace_site_positions(displacement_vector_distribution_function_dictionary_by_type)
+			indices_of_site_pairs_that_are_too_close_list = self.get_indices_of_site_pairs_that_are_too_close_to_sites_list(sites_to_check_indices_list, minimum_atomic_distances_nested_dictionary_by_type)
+			sites_to_check_indices_list = []
+			indices_to_displace_list = []
 
-			if self.any_sites_are_too_close(minimum_atomic_distances_nested_dictionary_by_type):
-				self = copy.deepcopy(original_structure)
+			if indices_of_site_pairs_that_are_too_close_list != []:
+				print indices_of_site_pairs_that_are_too_close_list
+
+				for (site_1_index, site_2_index) in indices_of_site_pairs_that_are_too_close_list:
+					probabilities_list = [0.5, 0.5]
+					random_selector = RandomSelector(probabilities_list)
+					event_index = random_selector.get_event_index()
+
+					if event_index == 0:
+						index_to_displace = site_1_index
+					else:
+						index_to_displace = site_2_index
+
+					print "moving randomly selected index " + str(index_to_displace) + " of pair " + str((site_1_index, site_2_index))
+
+					if index_to_displace in indices_to_displace_list:
+						print "already in index list of sites that have been moved"
+						continue
+
+					new_sites_list[index_to_displace]['coordinate_mode'] = original_sites_list[index_to_displace]['coordinate_mode']
+					new_sites_list[index_to_displace]['position'] = copy.deepcopy(original_sites_list[index_to_displace]['position'])
+
+					new_sites_list[index_to_displace].randomly_displace(displacement_vector_distribution_function_dictionary_by_type, self.lattice)
+					sites_to_check_indices_list.append(index_to_displace)
+					indices_to_displace_list.append(index_to_displace)
+
 			else:
 				return
+
+			#self.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\disptry_"+str(try_count)+".vasp")
 
 		raise Exception("Could not displace this structure while satisfying the given constraints")
 
@@ -191,14 +230,7 @@ class Structure(object):
 
 		for species_type in self.sites.keys():
 			for site in self.sites[species_type]:
-
-				#get a displacement vector (in cartesian coordinates)
-				displacement_vector = displacement_vector_distribution_function_dictionary_by_type[species_type]()
-
-				if site['coordinate_mode'] == 'Direct':
-					displacement_vector = Vector.get_in_direct_coordinates(displacement_vector, self.lattice)
-
-					site.displace(displacement_vector)
+				site.randomly_displace(displacement_vector_distribution_function_dictionary_by_type, self.lattice)
 
 
 	def any_sites_are_too_close(self, minimum_atomic_distances_nested_dictionary_by_type, nearest_neighbors_max=3):
@@ -243,7 +275,46 @@ class Structure(object):
 
 		return (distance < minimum_atomic_distance)
 
+	def get_indices_of_site_pairs_that_are_too_close_to_sites_list(self, site_index_list, minimum_atomic_distances_nested_dictionary_by_type, nearest_neighbors_max=3):
+		"""
+		Returns list of site pair indices for sites that are within minimum_atomic_distance (angstroms) of each other for any site in sites_list.
+		Min distances is different for each type pair, as specified by the input dictionary.
+		nearest_neighbors_max controls how many nearest neighbor cell images to search.	
 
+		minimum_atomic_distances_nested_dictionary_by_type is in angstroms and looks like:
+		{
+			'Ba': {'Ba': 1.5, 'Ti': 1.2, 'O': 1.4},
+			'Ti': {'Ba': 1.2, 'Ti': 1.3, 'O': 1.3},
+			'O':  {'Ba': 1.4, 'Ti': 1.3, 'O': 0.8}
+		}
+		"""
+
+		site_pairs_list = []
+
+		pair_hash = {}
+
+		all_sites_list = self.sites.get_sorted_list()
+
+		for site_1_index in site_index_list:
+			for site_2_index in range(len(all_sites_list)):
+				hash_key = str(site_1_index)+"_"+str(site_2_index)
+				hash_key_mirror = str(site_2_index)+"_"+str(site_1_index)
+
+				site_1 = all_sites_list[site_1_index]
+				site_2 = all_sites_list[site_2_index]
+
+				if pair_hash.has_key(hash_key) or site_1_index == site_2_index:
+					continue
+
+				pair_hash[hash_key] = True
+				pair_hash[hash_key_mirror] = True
+
+				minimum_atomic_distance = minimum_atomic_distances_nested_dictionary_by_type[site_1['type']][site_2['type']]
+
+				if self.site_pair_is_too_close(site_1, site_2, minimum_atomic_distance, nearest_neighbors_max):
+					site_pairs_list.append([site_1_index, site_2_index])
+
+		return site_pairs_list
 
 	def any_sites_are_too_close_to_site(self, test_site, minimum_atomic_distances_nested_dictionary_by_type, nearest_neighbors_max=3):
 		"""

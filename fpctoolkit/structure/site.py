@@ -94,6 +94,14 @@ class Site(object):
 		for i in range(3):
 			self._properties['position'][i] += vector[i]
 
+	def randomly_displace(self, displacement_vector_distribution_function_dictionary_by_type, lattice):
+
+		displacement_vector = displacement_vector_distribution_function_dictionary_by_type[self['type']]()
+
+		if self['coordinate_mode'] == 'Direct':
+			displacement_vector = Vector.get_in_direct_coordinates(displacement_vector, lattice)
+
+			self.displace(displacement_vector)
 
 	@staticmethod
 	def get_coordinate_mode_string(coord_sys_line):
@@ -103,3 +111,12 @@ class Site(object):
 			return 'Cartesian'
 		else:
 			raise Exception("Coordinate system type not valid for site: " + coord_sys_line)
+
+	@staticmethod
+	def sites_are_equal(site_1, site_2): ##############improve this!!!
+		if site_1['type'] != site_2['type']:
+			return False
+
+		for component in range(3):
+			if (site_1['position'][component] - site_2['position'][component]) > 0.0000000001:
+				return False

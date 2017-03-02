@@ -69,64 +69,125 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		structure = Perovskite(supercell_dimensions=self.ga_input_dictionary['supercell_dimensions_list'], lattice=lattice, species_list=self.ga_input_dictionary['species_list'])
 
 
-		def envelope_function(curvature_parameter, max_displacement_distance):
+		def envelope_function(curvature_parameter, max_displacement_distance, bell=True):
 			"""
-			curvature_parameter: closer to 0 means sharper peak at 0, closer to 3 or more, very constant until sharp drop to 0 at max_disp_dist
+			for bell == True:
+				Get a curve that is high at 0, lower as you get away from 0
+				curvature_parameter: closer to 0 means sharper peak at 0, closer to 3 or more, very constant until sharp drop to 0 at max_disp_dist
+			for bell == False:
+				Curve is 0 at 0, highest at max_disp_dist
+				curvature_parameter: closer to 0 means curve gets to large value faster (less of an abyss around 0), larger means sharp increase near max_disp
 			"""
 
-			return lambda x: 1.0 - ((x**curvature_parameter)/(max_displacement_distance**curvature_parameter))
+			if bell:
+				offset = 1.0
+				sign = -1.0
+			else:
+				offset = 0.0
+				sign = 1.0
+
+
+			if max_displacement_distance == 0:
+				return lambda x: 1.0
+			else:
+				return lambda x: offset + sign*((x**curvature_parameter)/(max_displacement_distance**curvature_parameter))
 		
 
-		#probabilities_list = [0.1, 0.6, 0.3]
-		probabilities_list = [1.0]
+		strain_probabilities_list = [0.7, 0.2, 0.1]
+		random_selector = RandomSelector(strain_probabilities_list)
+		event_index = random_selector.get_event_index()
+
+		if event_index == 0:
+			shear_factor = 0.1
+			strain_stdev = 0.04
+		elif event_index == 1:
+			shear_factor = 0.2
+			strain_stdev = 0.08
+		elif event_index == 2:
+			shear_factor = 0.7
+			strain_stdev = 0.1
+
+		probabilities_list = [0.05, 0.45, 0.5]
 		random_selector = RandomSelector(probabilities_list)
 		event_index = random_selector.get_event_index()
 
 
-		if event_index == 0: 
-			shear_factor = 0.0
-			strain_stdev = 0.001
+		if event_index == 0:
+			"""
+			A and X sites relatively static - explore B-cation arrangements
+			"""
+			A_site_curvature_parameter = 0.1
+			A_site_max_displacement = 0.15*unit_cell_a
+			A_bell = True
 
-			A_site_curvature_parameter = 0.5
-			A_site_max_displacement = 0.01*unit_cell_a
-
-			B_site_curvature_parameter = 2.0
+			B_site_curvature_parameter = 2.5
 			B_site_max_displacement = 0.3*unit_cell_a
+			B_bell = True
 
-			X_site_curvature_parameter = 1.0
-			X_site_max_displacement = 0.01*unit_cell_a
+			X_site_curvature_parameter = 0.4
+			X_site_max_displacement = 0.2*unit_cell_a
+			X_bell = True
 
-			AA_minimum_distance = 1.8
+			AA_minimum_distance = 2.0
 			AB_minimum_distance = 1.5
 			BB_minimum_distance = 1.8
+			AX_minimum_distance = 1.2
+			BX_minimum_distance = 1.2
+			XX_minimum_distance = 1.2
+
+		elif event_index == 1:
+			"""
+			A sites and B sites fairly static - X sites very random. Trying to find octahedral rotations or tetrahedral or other bonding.
+			Also, focus is placed on keeping A sites and B sites spread from each other
+			"""
+
+			A_site_curvature_parameter = 0.7
+			A_site_max_displacement = 0.15*unit_cell_a
+			A_bell = True
+
+			B_site_curvature_parameter = 0.8
+			B_site_max_displacement = 0.3*unit_cell_a
+			B_bell = True
+
+			X_site_curvature_parameter = 3.0
+			X_site_max_displacement = 0.4*unit_cell_a
+			X_bell = False #encourage X atoms to be away from perfect perov sites
+
+			AA_minimum_distance = 1.7
+			AB_minimum_distance = 1.7
+			BB_minimum_distance = 1.7
 			AX_minimum_distance = 1.0
 			BX_minimum_distance = 1.0
-			XX_minimum_distance = 0.8
+			XX_minimum_distance = 1.7
 
-		elif event_index == 1: 
-			shear_factor = 0.2
-			strain_stdev = 0.06
+		elif event_index == 2:
+			"""
+			Basic random
+			"""
 
-			A_site_curvature_parameter = 0.5
-			A_site_max_displacement = 0.3*unit_cell_a
+			A_site_curvature_parameter = 0.8
+			A_site_max_displacement = 0.25*unit_cell_a
+			A_bell = True
 
-			B_site_curvature_parameter = 1.5
-			B_site_max_displacement = 0.5*unit_cell_a
+			B_site_curvature_parameter = 0.5
+			B_site_max_displacement = 0.35*unit_cell_a
+			B_bell = False
 
-			X_site_curvature_parameter = 1.0
-			X_site_max_displacement = 0.5*unit_cell_a
+			X_site_curvature_parameter = 0.5
+			X_site_max_displacement = 0.4*unit_cell_a
+			X_bell = False
 
-			AA_minimum_distance = 1.8
+			AA_minimum_distance = 1.5
 			AB_minimum_distance = 1.5
-			BB_minimum_distance = 1.8
+			BB_minimum_distance = 1.5
 			AX_minimum_distance = 1.0
 			BX_minimum_distance = 1.0
-			XX_minimum_distance = 0.8
+			XX_minimum_distance = 1.0
 
 
-		A_site_vector_magnitude_distribution_function = Distribution(envelope_function(A_site_curvature_parameter, A_site_max_displacement), 0.0, A_site_max_displacement).get_random_value
-		B_site_vector_magnitude_distribution_function = Distribution(envelope_function(B_site_curvature_parameter, B_site_max_displacement), 0.0, B_site_max_displacement).get_random_value
-		X_site_vector_magnitude_distribution_function = Distribution(envelope_function(X_site_curvature_parameter, X_site_max_displacement), 0.0, X_site_max_displacement).get_random_value
+		A_site_vector_magnitude_distribution_function = Distribution(envelope_function(A_site_curvature_parameter, A_site_max_displacement, A_bell), 0.0, A_site_max_displacement).get_random_value
+		B_site_vector_magnitude_distribution_function = Distribution(envelope_function(B_site_curvature_parameter, B_site_max_displacement, B_bell), 0.0, B_site_max_displacement).get_random_value
+		X_site_vector_magnitude_distribution_function = Distribution(envelope_function(X_site_curvature_parameter, X_site_max_displacement, X_bell), 0.0, X_site_max_displacement).get_random_value
 
 		A_site_vector_distribution_function = VectorDistribution(Vector.get_random_unit_vector, A_site_vector_magnitude_distribution_function)
 		B_site_vector_distribution_function = VectorDistribution(Vector.get_random_unit_vector, B_site_vector_magnitude_distribution_function)
@@ -150,7 +211,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 	
 
 
-		self.structure_creation_id_string = 'random_standard_type_' + str(event_index)
+		self.structure_creation_id_string = 'random_standard_second_type_' + str(event_index)
 		self.parent_structures_list = None
 
 		return structure

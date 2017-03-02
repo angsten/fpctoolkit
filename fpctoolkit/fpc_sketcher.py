@@ -96,8 +96,9 @@ ga_input_dictionary = {
 
 ga_driver = GADriver100PerovskiteEpitaxy(ga_input_dictionary, calculation_set_input_dictionary)
 
-struct = ga_driver.get_random_structure(None)
-struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\disp.vasp")
+for i in range(10):
+	struct = ga_driver.get_random_structure(None)
+	struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\disp_"+str(i)+".vasp")
 
 
 # ga_structure_predictor = GAStructurePredictor(ga_path, ga_driver)

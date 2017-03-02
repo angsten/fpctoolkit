@@ -11,9 +11,7 @@ class RandomSelector(object):
 	"""
 
 	def __init__(self, probabilities_list):
-
-
-		if not sum(probabilities_list) == 1.0:
+		if not (sum(probabilities_list) - 1.0) < 0.000000000001:
 			raise Exception("List of probabilities does not sum to one")
 
 		self.probabilities_list = probabilities_list
