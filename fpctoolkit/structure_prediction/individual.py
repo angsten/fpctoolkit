@@ -20,6 +20,9 @@ class Individual(object):
 		self.write_parent_structures_to_poscar_files()
 		self.write_parent_paths_to_file()
 
+	@property
+	def complete(self):
+		return self.calculation_set.complete
 
 	@property
 	def energy(self):
@@ -30,12 +33,12 @@ class Individual(object):
 		return self.calculation_set.initial_structure
 
 	@property
-	def complete(self):
-		return self.calculation_set.complete
-
-	@property
 	def final_structure(self):
 		return self.calculation_set.final_structure
+
+	@property
+	def structure_list(self):
+		return self.calculation_set.structure_list
 
 	@property
 	def how_structure_was_made(self):
