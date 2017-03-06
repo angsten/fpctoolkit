@@ -116,6 +116,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 			"""
 			A and X sites relatively static - explore B-cation arrangements
 			"""
+			
 			A_site_curvature_parameter = 0.1
 			A_site_max_displacement = 0.15*unit_cell_a
 			A_bell = True

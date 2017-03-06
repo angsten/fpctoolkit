@@ -4,6 +4,70 @@
 		"selected_items":
 		[
 			[
+				"displa",
+				"displacement_vector"
+			],
+			[
+				"site",
+				"site_2"
+			],
+			[
+				"indic",
+				"indices_to_displace_list"
+			],
+			[
+				"pro",
+				"probabilities_list"
+			],
+			[
+				"even",
+				"event_index"
+			],
+			[
+				"max_",
+				"max_displacement_distance"
+			],
+			[
+				"hash_k",
+				"hash_key_mirror"
+			],
+			[
+				"all",
+				"all_sites_list"
+			],
+			[
+				"get",
+				"get_sorted_list"
+			],
+			[
+				"site_1",
+				"site_1_index"
+			],
+			[
+				"displ",
+				"displacement_vector_distribution_function_dictionary_by_type"
+			],
+			[
+				"origin",
+				"original_sites_list"
+			],
+			[
+				"index",
+				"index_to_displace"
+			],
+			[
+				"site_",
+				"site_1_index"
+			],
+			[
+				"site_2",
+				"site_2_index"
+			],
+			[
+				"site_pairs_",
+				"site_pairs_that_are_too_close_list"
+			],
+			[
 				"get_random",
 				"get_random_structure"
 			],
@@ -240,10 +304,6 @@
 				"interpolation_function"
 			],
 			[
-				"site",
-				"site_collection_initial"
-			],
-			[
 				"av",
 				"average_vector"
 			],
@@ -412,10 +472,6 @@
 				"QueueAdapter"
 			],
 			[
-				"all",
-				"all_five_inputs_exists"
-			],
-			[
 				"load_",
 				"load_dictionary"
 			],
@@ -458,62 +514,6 @@
 			[
 				"exter",
 				"external_relaxation_count"
-			],
-			[
-				"conc",
-				"contcar_path"
-			],
-			[
-				"get_nex",
-				"get_next_run_path"
-			],
-			[
-				"pre",
-				"previous_verbose"
-			],
-			[
-				"param",
-				"parameter_list"
-			],
-			[
-				"get_cu",
-				"get_current_vasp_run"
-			],
-			[
-				"vasp",
-				"vasp_run_list"
-			],
-			[
-				"kp",
-				"kpoint_subdivisions_lists"
-			],
-			[
-				"Vasp",
-				"VaspRunSet"
-			],
-			[
-				"con",
-				"constraint_vector"
-			],
-			[
-				"Con",
-				"ConstrainedLattice"
-			],
-			[
-				"super",
-				"supercell_dimensions_list"
-			],
-			[
-				"conver",
-				"convert_sites_to_direct_coordinates"
-			],
-			[
-				"sup",
-				"supercell_dimensions_list"
-			],
-			[
-				"ful",
-				"full_tensor"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "fpctoolkit/fpc_sketcher.py",
 			"settings":
 			{
-				"buffer_size": 10489,
+				"buffer_size": 10522,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -532,7 +532,7 @@
 			"file": "fpctoolkit/structure_prediction/ga_driver_100_perovskite_epitaxy.py",
 			"settings":
 			{
-				"buffer_size": 12629,
+				"buffer_size": 14383,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -541,7 +541,16 @@
 			"file": "fpctoolkit/structure/structure.py",
 			"settings":
 			{
-				"buffer_size": 11274,
+				"buffer_size": 14339,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/structure/site.py",
+			"settings":
+			{
+				"buffer_size": 3777,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -775,6 +784,7 @@
 	],
 	"file_history":
 	[
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/random_selector.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop/dead_code_drop.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/epitaxial_100_ga_global_structure_finder.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/vector_distribution.py",
@@ -798,7 +808,6 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/ediff_relax_convergence.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/simple_vasp_relaxation.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/random_selector.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/file.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/encut_kpoints_converger.py",
@@ -921,6 +930,16 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"randomly_displace",
+			"GAStructurePredictor",
+			"sites_to_check_list",
+			"get_indices_of_site_pairs_that_are_too_close_to_sites_list",
+			"sites_to_displace_list",
+			"get_indices_of_site_pairs_that_are_too_close_to_sites_list",
+			"get_indices_of_site_pairs_that_are_too_close",
+			"{\n",
+			"site_pairs_that_are_too_close_list",
+			"get_site_pair_indices_that_are_too_close",
 			"for species_type in self.sites",
 			"O_site_vector_magnitude_distribution_function",
 			"self.ga_input_dictionary['species_list'][2]",
@@ -1038,17 +1057,7 @@
 			"input_dict",
 			"contcar_path",
 			"Poscar",
-			"get_current_path",
-			"get_next_path",
-			"run_count",
-			" '",
-			"get_current_path",
-			"VaspRunSet",
-			"old_coord",
-			"supercell_dimensions",
-			"print",
-			"verbose",
-			"get_basenames_list"
+			"get_current_path"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1077,7 +1086,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -1086,15 +1095,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10489,
+						"buffer_size": 10522,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2523,
-								2523
+								2706,
+								2706
 							]
 						],
 						"settings":
@@ -1103,10 +1112,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1041.0,
+						"translation.y": 1043.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -1115,15 +1124,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12629,
+						"buffer_size": 14383,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4098,
-								4098
+								12771,
+								12771
 							]
 						],
 						"settings":
@@ -1132,10 +1141,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1091.0,
+						"translation.y": 4090.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -1144,15 +1153,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 11274,
+						"buffer_size": 14339,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7808,
-								7808
+								7822,
+								7822
 							]
 						],
 						"settings":
@@ -1161,7 +1170,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2594.0,
+						"translation.y": 2576.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
@@ -1169,6 +1178,35 @@
 				},
 				{
 					"buffer": 3,
+					"file": "fpctoolkit/structure/site.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3777,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3195,
+								3195
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
 					"file": "fpctoolkit/structure/site_collection.py",
 					"semi_transient": false,
 					"settings":
@@ -1193,11 +1231,11 @@
 						"translation.y": 118.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 5,
 					"file": "fpctoolkit/util/vector.py",
 					"semi_transient": false,
 					"settings":
@@ -1226,7 +1264,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 6,
 					"file": "fpctoolkit/util/vector_distribution.py",
 					"semi_transient": false,
 					"settings":
@@ -1250,11 +1288,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 7,
 					"file": "fpctoolkit/util/distribution.py",
 					"semi_transient": false,
 					"settings":
@@ -1279,7 +1317,7 @@
 						"translation.y": 940.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 7,
 					"type": "text"
 				}
 			]
@@ -1322,7 +1360,7 @@
 	},
 	"output.exec":
 	{
-		"height": 94.0
+		"height": 141.0
 	},
 	"output.find_results":
 	{
@@ -1382,7 +1420,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 238.0,
+	"side_bar_width": 136.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
