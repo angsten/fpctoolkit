@@ -60,7 +60,7 @@ class VaspRelaxation(VaspRunSet):
 
 		self.path = Path.clean(path)
 		self.verbose = verbose
-		#self.run_count = 0 #how many runs have been initiated
+
 		self.vasp_run_list = []
 
 		self.input_initial_structure = initial_structure
@@ -171,6 +171,20 @@ class VaspRelaxation(VaspRunSet):
 			return self.get_current_vasp_run().final_structure
 		else:
 			return None
+
+	@property
+	def structure_list(self):
+		"""
+		Returns a list of structures starting with the initial structure and continuing to the last run's (usually static) poscar (which should be the final structure)
+		It is assumed that the last run in the relaxation is a static calculation
+		"""
+
+		structure_list = [self.initial_structure]
+
+		for run in self.vasp_run_list:
+			structure_list.append(run.initial_structure)
+
+		return structure_list
 
 	@property
 	def timing_list(self):
@@ -324,55 +338,8 @@ class VaspRelaxation(VaspRunSet):
 
 
 
-	def save(self):
-		"""
-		Saves class to pickled file at {self.path}/.relaxation_pickle
 
-		Saves all attributes except vasp_run_list - this list is recreated
-		later by saving all runs now and loading them later from the run directories. 
-		"""
-		return #********************************************************
-		save_path = self.get_save_path()
 
-		#save_dictionary = {key: value for key, value in self.__dict__.items() if not key == 'vasp_run_list'}
-		save_dictionary = {'run_count': self.__dict__['run_count']} #############################################need to think about what to save!
-
-		file = open(save_path, 'w')
-		file.write(cPickle.dumps(save_dictionary))
-		file.close()
-
-		for run in self.vasp_run_list:
-			run.save()
-
-	def load(self, load_path=None):
-		previous_path = self.path
-		previous_verbose = self.verbose
-
-		if not load_path:
-			load_path = self.get_save_path()
-
-		if not Path.exists(load_path):
-			self.log("Load file path does not exist: " + load_path, raise_exception=True)
-
-		file = open(load_path, 'r')
-		data_pickle = file.read()
-		file.close()
-
-		load_dictionary = cPickle.loads(data_pickle) #need to think about what to save
-		self.__dict__['run_count'] = load_dictionary['run_count']
-
-		self.verbose = previous_verbose #so this can be overridden upon init
-		self.path = previous_path #in case relaxation is moved
-
-		saved_run_count = self.run_count
-
-		self.vasp_run_list = []
-		self.run_count = 0
-
-		for count in range(saved_run_count):
-			self.vasp_run_list.append(VaspRun(path=self.get_next_run_path()))
-
-			self.run_count += 1
 
 
 	def quick_view(self):
