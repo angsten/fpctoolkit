@@ -73,19 +73,35 @@ class VaspRelaxation(VaspRunSet):
 			Path.make(self.path)
 		else: #self.path is a non-empty directory. See if there's an old relaxation to load
 			if not input_dictionary:
-				if Path.exists(self.get_save_path()):
-					raise Exception("No input_dictionary given, future implementation should load it here. Not yet supported.")
-					input_dictionary = {} #load input dictionary*******************************************************************
-					#self.load()	
+				if Path.exists(self.get_input_dictionary_save_path()):
+					input_dictionary = self.load_input_dictionary_from_file()
 				else: #input_dictionary parameter is none, but no input_dict saved either This case is not yet supported
-					raise Exception("No input_dictionary given, but also no input_dictionary saved to path. Not yet supported.")
-
+					raise Exception("No input_dictionary given, but also no input_dictionary saved to path.")
+			else:
+				self.save_input_dictionary_to_file(input_dictionary)
 
 		self.load_input_dictionary(input_dictionary)
 
 		self.initialize_run_list()
 			
-		#self.save()
+
+	def save_input_dictionary_to_file(self, input_dictionary):
+		"""Saves input_dictionary items in a file"""
+
+		file = open(self.get_input_dictionary_save_path(), 'w')
+		file.write(cPickle.dumps(input_dictionary))
+		file.close()
+
+	def load_input_dictionary_from_file(self):
+		"""Load the previously saved input_dictionary items from a file into a dictionary and return this dictionary"""
+
+		file = open(self.get_input_dictionary_save_path(), 'r')
+		data_pickle = file.read()
+		file.close()
+
+		input_dictionary = cPickle.loads(data_pickle)
+
+		return input_dictionary
 
 	def load_input_dictionary(self, input_dictionary):
 		"""Takes items in input_dictionary and loads them into self."""
@@ -297,8 +313,8 @@ class VaspRelaxation(VaspRunSet):
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)
 
-	def get_save_path(self):
-		return self.get_extended_path(".relaxation_pickle")
+	def get_input_dictionary_save_path(self):
+		return self.get_extended_path(".relaxation_most_recent_input_dictionary")
 
 	def get_current_vasp_run(self):
 		if self.run_count == 0:

@@ -30,8 +30,6 @@ class GADriver(object):
 		self.calculation_set_input_dictionary = calculation_set_input_dictionary
 
 		self.individuals_per_generation = ParameterList(self.ga_input_dictionary['individuals_per_generation'])
-		self.ga_input_dictionary = ga_input_dictionary
-		self.calculation_set_input_dictionary = calculation_set_input_dictionary
 
 		self.random_fractions_list = ParameterList(self.ga_input_dictionary['random_fractions_list']) if 'random_fractions_list' in self.ga_input_dictionary else ParameterList([0.0])
 		self.mate_fractions_list = ParameterList(self.ga_input_dictionary['mate_fractions_list']) if 'mate_fractions_list' in self.ga_input_dictionary else ParameterList([0.0])
