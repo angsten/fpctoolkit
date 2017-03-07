@@ -210,7 +210,7 @@ class VaspRelaxation(VaspRunSet):
 
 		return data_dictionary
 
-	def inner_update(self):
+	def update(self):
 
 		if self.complete:
 			return True
@@ -219,12 +219,9 @@ class VaspRelaxation(VaspRunSet):
 
 		self.get_current_vasp_run().update()
 
-		#delete all wavecars when finished or if True is returned
+		return False
 
-	def update(self):
-		completed = self.inner_update()
-		self.save()
-		return completed
+		#delete all wavecars when finished or if True is returned
 
 	def create_next_run(self):
 		run_path = self.get_next_run_path()
