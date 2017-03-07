@@ -246,11 +246,6 @@ class VaspRun(object):
 
 		return False
 
-	def update(self):
-		completed = self.inner_update()
-		
-		return completed
-
 	def start(self):
 		"""Submit the calculation at self.path"""
 
