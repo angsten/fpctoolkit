@@ -44,6 +44,7 @@ class Population(object):
 	def append(self, value):
 		self.individuals.append(value)
 
+
 	def get_next_available_individual_path(self, generation_directory_path):
 
 		if not Path.exists(generation_directory_path):
@@ -57,10 +58,12 @@ class Population(object):
 
 			i += 1
 
+
 	def sort(self):
 		"""Sorts self.individuals list by energy"""
 
 		self.individuals = sorted(self.individuals, key = lambda individual: individual.energy)
+		
 
 	def get_individual_by_deterministic_tournament_selection(self, N=3, avoid_individuals_list=None):
 		"""

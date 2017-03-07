@@ -87,14 +87,14 @@ class VaspRun(object):
 						self.log("Overwriting existing partially-present run files with input parameter files")
 						self.write_input_files_to_path(structure, incar, kpoints, potcar, submission_script_file, wavecar_path)
 			
-		self.save()
+		
 
 	def write_input_files_to_path(self, structure, incar, kpoints, potcar, submission_script_file, wavecar_path):
 		"""
 		Simply write files to path
 		"""
 
-		self.log("Writing input files to path.")
+		#self.log("Writing input files to path.")
 
 		structure.to_poscar_file_path(Path.clean(self.path, 'POSCAR'))
 		incar.write_to_path(Path.clean(self.path, 'INCAR'))
@@ -206,10 +206,8 @@ class VaspRun(object):
 			return QueueAdapter.get_job_properties_from_id_string(self.job_id_string)
 
 
-	def inner_update(self):
+	def update(self):
 		"""Returns True if run is completed"""
-		
-		self.log("Updating run")
 
 		#only if there is not job_id_string associated with this run should we start the run
 		if not self.job_id_string:
@@ -219,7 +217,6 @@ class VaspRun(object):
 
 		#check if run is complete
 		if self.complete:
-			self.log("Run is complete.")
 			return True
 
 		#check status on queue:
@@ -234,22 +231,24 @@ class VaspRun(object):
 			queue_status = queue_properties['status']
 
 		if queue_status == QueueStatus.queued:
-			self.log("Job is on queue waiting.")
+			pass
+			#self.log("Job is on queue waiting.")
 
 		elif queue_status == QueueStatus.running:
-			self.log("Job is on queue running. Queue properties: " + str(self.queue_properties))
+			pass
+			#self.log("Job is on queue running. Queue properties: " + str(self.queue_properties))
 
 			#use handler to check for run time errors here
 		else:
-			self.log("Run is not active on queue ('C', 'E', or absent) but still isn't complete. An error must have occured.")
-
+			#self.log("Run is not active on queue ('C', 'E', or absent) but still isn't complete. An error must have occured.")
+			pass
 			#use handler to check for errors here
 
 		return False
 
 	def update(self):
 		completed = self.inner_update()
-		self.save()
+		
 		return completed
 
 	def start(self):
@@ -279,57 +278,6 @@ class VaspRun(object):
 
 	def get_archive_path(self):
 		return self.get_extended_path(".run_archive")
-
-
-
-
-	def save(self):
-		"""Saves class to pickled file at {self.path}/.run_pickle
-		"""
-
-		self.log("Saving run")
-
-		#We don't want to waste space with storing full potcars - just store basenames and recreate on loading
-		# self.potcar_minimal_form = self.potcar.get_minimal_form()
-		# stored_potcar = self.potcar
-		# self.potcar = None
-
-		save_path = self.get_save_path()
-
-		# file = open(save_path, 'w')
-		# file.write(cPickle.dumps(self.__dict__))
-		# file.close()
-
-		# self.potcar = stored_potcar
-
-		self.log("Save successful")
-
-	def load(self, load_path=None):
-		# previous_path = self.path
-		# previous_verbose = self.verbose
-
-		self.log("Loading run")
-
-		# if not load_path:
-		# 	load_path = self.get_save_path()
-
-		# if not Path.exists(load_path):
-		# 	self.log("Load file path does not exist: " + load_path, raise_exception=True)
-
-		# file = open(load_path, 'r')
-		# data_pickle = file.read()
-		# file.close()
-
-		# self.__dict__ = cPickle.loads(data_pickle)
-		# self.verbose = previous_verbose #so this can be overridden upon init
-		# self.path = previous_path #in case run is moved
-
-		# #restore the full potcar from the basenames that were saved
-		# if self.potcar_minimal_form:
-		# 	self.potcar = Potcar(minimal_form=self.potcar_minimal_form)
-		# 	del self.potcar_minimal_form
-
-		self.log("Load successful")
 
 	def archive_file(self, file_basename):
 		"""

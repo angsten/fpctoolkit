@@ -1,3 +1,50 @@
+	def save(self):
+		"""Saves class to pickled file at {self.path}/.run_pickle
+		"""
+
+		self.log("Saving run")
+
+		#We don't want to waste space with storing full potcars - just store basenames and recreate on loading
+		# self.potcar_minimal_form = self.potcar.get_minimal_form()
+		# stored_potcar = self.potcar
+		# self.potcar = None
+
+		save_path = self.get_save_path()
+
+		# file = open(save_path, 'w')
+		# file.write(cPickle.dumps(self.__dict__))
+		# file.close()
+
+		# self.potcar = stored_potcar
+
+		self.log("Save successful")
+
+	def load(self, load_path=None):
+		# previous_path = self.path
+		# previous_verbose = self.verbose
+
+		self.log("Loading run")
+
+		# if not load_path:
+		# 	load_path = self.get_save_path()
+
+		# if not Path.exists(load_path):
+		# 	self.log("Load file path does not exist: " + load_path, raise_exception=True)
+
+		# file = open(load_path, 'r')
+		# data_pickle = file.read()
+		# file.close()
+
+		# self.__dict__ = cPickle.loads(data_pickle)
+		# self.verbose = previous_verbose #so this can be overridden upon init
+		# self.path = previous_path #in case run is moved
+
+		# #restore the full potcar from the basenames that were saved
+		# if self.potcar_minimal_form:
+		# 	self.potcar = Potcar(minimal_form=self.potcar_minimal_form)
+		# 	del self.potcar_minimal_form
+
+
 	def randomly_displace_site_positions(self, stdev, enforced_minimum_atomic_distance=None, max_displacement_distance=None, mean=0.0, types_list=None):
 		"""
 		Randomly displace all sites in separate random directions with

@@ -30,21 +30,25 @@ class GAStructurePredictor(object):
 		current_generation_count = self.get_generation_count()
 
 		
+		
 		population_of_last_generation = Population(self.get_last_generation_path(), self.ga_driver.directory_to_individual_conversion_method) if current_generation_count > 1 else None
 		current_population = Population(generation_directory_path=current_generation_path, directory_to_individual_conversion_method=self.ga_driver.directory_to_individual_conversion_method)
 
+
 		while len(current_population) < self.ga_driver.get_individuals_per_generation(current_generation_count):
 			new_individual = self.ga_driver.get_new_individual(current_population.get_next_available_individual_path(current_generation_path), population_of_last_generation, current_generation_count)
-
 			current_population.append(new_individual)
 
 
 		all_complete = True
-
 		for individual in current_population:
 			if not individual.complete:
 				individual.update()
 				all_complete = False
+
+
+
+
 
 		print "\n\nPopulation for last generation looks like: \n\n" + str(population_of_last_generation)
 		print "\n\nPopulation for this generation looks like: \n\n" + str(current_population)
