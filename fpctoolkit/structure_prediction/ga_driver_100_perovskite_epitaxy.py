@@ -17,6 +17,9 @@ from fpctoolkit.util.distribution import Distribution
 from fpctoolkit.util.vector_distribution import VectorDistribution
 
 class GADriver100PerovskiteEpitaxy(GADriver):
+	"""
+	A GADriver used for finding minimum energy perovskite (100)-oriented film structures.
+	"""
 
 
 	def __init__(self, ga_input_dictionary, calculation_set_input_dictionary):
@@ -36,18 +39,20 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 			raise Exception("For (100) epitaxial conditions, Nx must = Ny supercell dimensions. Other behavior not yet supported")
 
 
+
 	def get_new_individual(self, individual_path, population_of_last_generation, generation_number):
 		"""
-		Main workhorse - supplies an individual by randomly chosen means (heredity, random, mutate, ...etc.)
+		This method will supply a new individual by randomly chosen means (heredity, random, mutate, ...etc.)
 		"""
 
 		initial_structure = self.get_structure(population_of_last_generation, generation_number)
 
 		relaxation = VaspRelaxation(path=individual_path, initial_structure=initial_structure, input_dictionary=copy.deepcopy(self.calculation_set_input_dictionary))
 
-		#package this with path and input_dict in calc set (relax) and return as individual
-
 		return Individual(calculation_set=relaxation, structure_creation_id_string=self.structure_creation_id_string, parent_structures_list=self.parent_structures_list, parent_paths_list=self.parent_paths_list)
+
+
+
 
 	def get_random_structure(self, population_of_last_generation):
 
