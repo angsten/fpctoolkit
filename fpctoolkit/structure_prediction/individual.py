@@ -2,6 +2,7 @@
 
 from fpctoolkit.util.path import Path
 from fpctoolkit.io.file import File
+from fpctoolkit.structure.structure import Structure
 
 class Individual(object):
 	"""
