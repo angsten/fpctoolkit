@@ -182,7 +182,7 @@ class VaspRelaxation(VaspRunSet):
 		return [run.initial_structure for run in self.vasp_run_list]
 
 	@property
-	def timing_list(self):
+	def total_time_list(self):
 		"""Returns list of cpu*hours used for each component of this run set"""
 
 		return [run.total_time for run in self.vasp_run_list]

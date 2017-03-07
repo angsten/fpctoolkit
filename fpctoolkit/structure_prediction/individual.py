@@ -37,10 +37,6 @@ class Individual(object):
 		return self.calculation_set.final_structure
 
 	@property
-	def structure_list(self):
-		return self.calculation_set.structure_list
-
-	@property
 	def how_structure_was_made(self):
 		file = File(self.get_structure_creation_id_file_path())
 		return file[0]
