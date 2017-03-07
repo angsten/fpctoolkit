@@ -76,7 +76,7 @@ class Path(object):
 
 	@staticmethod
 	def remove_all_files_at_path(path):
-		for file_path in Path.get_list_of_file_paths_at_path():
+		for file_path in Path.get_list_of_file_paths_at_path(path):
 			Path.remove(file_path)
 
 	@staticmethod
