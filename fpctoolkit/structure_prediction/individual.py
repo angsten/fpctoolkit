@@ -36,11 +36,6 @@ class Individual(object):
 	def final_structure(self):
 		return self.calculation_set.final_structure
 
-	@property
-	def how_structure_was_made(self):
-		file = File(self.get_structure_creation_id_file_path())
-		return file[0]
-
 	def update(self):
 		self.calculation_set.update()
 
@@ -65,7 +60,15 @@ class Individual(object):
 		structure_list = []
 		structure_list = None
 
-		#######implement##################################################
+		i = 0
+		while True:
+			parent_path = self.get_extended_path('.parent_poscar_' + str(i) + '.vasp')
+
+			if Path.exists(parent_path):
+				structure_list.append(Structure(parent_path))
+				i += 1
+			else:
+				break
 		
 		return structure_list
 
