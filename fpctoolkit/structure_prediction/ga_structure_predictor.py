@@ -47,40 +47,39 @@ class GAStructurePredictor(object):
 
 	def update(self):
 		"""
-		Main update loop - create individuals until quota is reached and also update the individuals that have been created in this generation.
+		Main update method - create individuals until quota is reached, update the individuals in the current generation, create next generation path if current generation is complete.
 		"""
-			
-		current_generation_path = self.get_current_generation_path()
-		current_generation_count = self.get_generation_count()
-		
-		population_of_last_generation = self.get_population_of_last_generation()
+
+		self.populate_current_generation()
+
+		generation_complete = self.update_all_individuals_of_current_generation()
+
+		if generation_complete and (self.get_generation_count() < self.ga_driver.get_max_number_of_generations()):
+			Path.make(self.get_next_generation_path())
+
+	def populate_current_generation(self):
+		"""
+		Creates additional individuals until the current generation has been fully populated.
+		"""
+
 		current_population = self.get_population_of_current_generation()
 
+		while len(current_population) < self.ga_driver.get_max_individuals_count_of_generation_number(self.get_generation_count()):
+			self.ga_driver.create_new_individual(current_population.get_next_available_individual_path(self.get_current_generation_path()), self.get_population_of_last_generation(), self.get_generation_count())
 
-
+	def update_all_individuals_of_current_generation(self):
+		"""
+		Runs update on all individuals in the current generation. Returns True if all individuals are completed.
+		"""
 
 		all_complete = True
-		for individual in current_population:
+
+		for individual in self.get_population_of_current_generation():
 			if not individual.complete:
 				individual.update()
 				all_complete = False
 
-
-		if all_complete and (current_generation_count < self.ga_driver.get_max_number_of_generations()):
-			print "Generation complete. Making next generation path"
-			Path.make(self.get_next_generation_path())
-
-	def populate_generation(self):
-		"""
-		Create additional individuals until the current generation has been fully populated.
-		"""
-
-		population_of_last_generation = self.get_population_of_last_generation()
-		current_population = self.get_population_of_current_generation()
-
-		while len(current_population) < self.ga_driver.get_max_individuals_count_of_generation_number(self.get_generation_count()):
-			new_individual = self.ga_driver.get_new_individual(current_population.get_next_available_individual_path(self.get_current_generation_path()), population_of_last_generation, self.get_generation_count())
-			current_population.append(new_individual)
+		return all_complete
 
 
 	def get_generation_count(self):

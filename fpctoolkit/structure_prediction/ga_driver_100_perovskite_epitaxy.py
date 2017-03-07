@@ -40,9 +40,9 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 
 
-	def get_new_individual(self, individual_path, population_of_last_generation, generation_number):
+	def create_new_individual(self, individual_path, population_of_last_generation, generation_number):
 		"""
-		This method will supply a new individual by randomly chosen means (heredity, random, mutate, ...etc.)
+		This method will create (and return) a new individual whose initial structure was created by randomly chosen means (heredity, random, mutate, ...etc.)
 		"""
 
 		initial_structure = self.get_structure(population_of_last_generation, generation_number)

@@ -51,7 +51,7 @@ class GADriver(object):
 		return Individual(calculation_set=VaspRelaxation(path=path, input_dictionary=copy.deepcopy(self.calculation_set_input_dictionary)))
 
 
-	def get_new_individual(self, individual_path, population_of_last_generation, generation_number):
+	def create_new_individual(self, individual_path, population_of_last_generation, generation_number):
 		"""
 		To be implemented by child class. This method should supply an individual by randomly chosen means (heredity, random, mutate, ...etc.)
 		"""
