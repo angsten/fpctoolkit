@@ -107,7 +107,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 			shear_factor = 0.7
 			strain_stdev = 0.1
 
-		probabilities_list = [0.05, 0.45, 0.5]
+		probabilities_list = [0.05, 0.15, 0.8]
 		random_selector = RandomSelector(probabilities_list)
 		event_index = random_selector.get_event_index()
 
@@ -116,7 +116,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 			"""
 			A and X sites relatively static - explore B-cation arrangements
 			"""
-			
+
 			A_site_curvature_parameter = 0.1
 			A_site_max_displacement = 0.15*unit_cell_a
 			A_bell = True
@@ -167,11 +167,11 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 			"""
 
 			A_site_curvature_parameter = 0.8
-			A_site_max_displacement = 0.25*unit_cell_a
+			A_site_max_displacement = 0.3*unit_cell_a
 			A_bell = True
 
 			B_site_curvature_parameter = 0.5
-			B_site_max_displacement = 0.35*unit_cell_a
+			B_site_max_displacement = 0.4*unit_cell_a
 			B_bell = False
 
 			X_site_curvature_parameter = 0.5
@@ -179,11 +179,11 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 			X_bell = False
 
 			AA_minimum_distance = 1.5
-			AB_minimum_distance = 1.5
-			BB_minimum_distance = 1.5
-			AX_minimum_distance = 1.0
-			BX_minimum_distance = 1.0
-			XX_minimum_distance = 1.0
+			AB_minimum_distance = 1.2
+			BB_minimum_distance = 1.2
+			AX_minimum_distance = 0.8
+			BX_minimum_distance = 0.8
+			XX_minimum_distance = 0.8
 
 
 		A_site_vector_magnitude_distribution_function = Distribution(envelope_function(A_site_curvature_parameter, A_site_max_displacement, A_bell), 0.0, A_site_max_displacement).get_random_value
