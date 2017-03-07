@@ -179,12 +179,7 @@ class VaspRelaxation(VaspRunSet):
 		It is assumed that the last run in the relaxation is a static calculation
 		"""
 
-		structure_list = [self.initial_structure]
-
-		for run in self.vasp_run_list:
-			structure_list.append(run.initial_structure)
-
-		return structure_list
+		return [run.initial_structure for run in self.vasp_run_list]
 
 	@property
 	def timing_list(self):
