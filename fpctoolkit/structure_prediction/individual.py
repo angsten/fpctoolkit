@@ -58,7 +58,6 @@ class Individual(object):
 
 	def get_parent_structures_list(self):
 		structure_list = []
-		structure_list = None
 
 		i = 0
 		while True:
