@@ -68,11 +68,20 @@ class Path(object):
 
 	@staticmethod
 	def get_list_of_files_at_path(path):
-		return [file for file in os.listdir(path) if os.path.isfile(Path.join(path,file))]
+		return [file for file in os.listdir(path) if os.path.isfile(Path.join(path, file))]
+
+	@staticmethod
+	def get_list_of_file_paths_at_path(path):
+		return [Path.join(path, file) for file in os.listdir(path) if os.path.isfile(Path.join(path, file))]
+
+	@staticmethod
+	def remove_all_files_at_path(path):
+		for file_path in Path.get_list_of_file_paths_at_path:
+			Path.remove(file_path)
 
 	@staticmethod
 	def get_list_of_directories_at_path(path):
-		return [file for file in os.listdir(path) if os.path.isdir(Path.join(path,file))]
+		return [file for file in os.listdir(path) if os.path.isdir(Path.join(path, file))]
 
 	@staticmethod
 	def get_case_insensitive_file_name(path, file_string):
