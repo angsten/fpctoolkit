@@ -58,9 +58,9 @@ class GADriver(object):
 
 		return None
 
-	def get_individuals_per_generation(self, generation_number):
+	def get_max_individuals_count_of_generation_number(self, generation_number):
 		"""
-		Returns the total number of individuals in generation generation_number.
+		Returns the number of individuals to be created in generation generation_number.
 		"""
 		return self.individuals_per_generation[generation_number-1]
 
