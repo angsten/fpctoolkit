@@ -1,3 +1,5 @@
+#from fpctoolkit.util.queue_adapter import QueueAdapter, QueueStatus
+
 import os
 import subprocess
 import time
@@ -7,8 +9,8 @@ from fpctoolkit.util.path import Path
 import fpctoolkit.util.string_util as su
 
 class QueueAdapter(object):
-	host = os.environ['QUEUE_ADAPTER_HOST']
-	user = 'angsten'#os.environ['USER']######################################!!!!!!!!!!!!!!!!!!!!!!!!##############
+	host = os.environ['QUEUE_ADAPTER_HOST']  #add   export QUEUE_ADAPTER_HOST=what_is_your_host_name     to .bash_profile
+	user = os.environ['USER']
 	id_path = ".job_id" #where id's are saved upon submission
 	error_path = "QUEUE_SUBMISSION_ERROR_OUTPUT"
 
@@ -16,7 +18,8 @@ class QueueAdapter(object):
 
 	@staticmethod
 	def submit_job(calculation_path, override_existing_job=False):
-		"""This safely submits jobs and records the associated id at calculation_path/.job_id
+		"""
+		This safely submits jobs and records the associated id at calculation_path/.job_id
 
 		If an id exists in this file, it is first checked that it is not active on the queue.
 		If it is active ('R' or 'Q' status), the override_existing_job parameter determines whether or not to cancel that job
@@ -37,7 +40,7 @@ class QueueAdapter(object):
 				time.sleep(QueueAdapter.sleep_buffer_time)
 
 
-		if QueueAdapter.host == 'Fenrir':
+		if QueueAdapter.host in ['Fenrir', 'Asathor']:
 			cwd = os.getcwd()
 			os.chdir(calculation_path)
 
@@ -71,19 +74,26 @@ class QueueAdapter(object):
 
 	@staticmethod
 	def terminate_job(id_string):
-		"""Terminates job with id id_string only if this job is active on queue"""
+		"""
+		Terminates job with id id_string only if this job is active on queue
+		"""
 
-		if QueueAdapter.job_id_is_active(id_string):
-			process = subprocess.Popen(['qdel', id_string], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-			output, error = process.communicate()
+		if QueueAdapter.host in ['Fenrir', 'Asathor']:
+			if QueueAdapter.job_id_is_active(id_string):
+				process = subprocess.Popen(['qdel', id_string], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+				output, error = process.communicate()
 
-			if error:
-				raise Exception("Failure deleting active job with id: " + id_string)
+				if error:
+					raise Exception("Failure deleting active job with id: " + id_string)
+		else:
+			raise Exception("QueueAdapter.host not supported")
 
 
 	@staticmethod
 	def get_job_id_at_path(calculation_path):
-		"""Looks in the .job_id file for an id. Returns id as a string if present, None if not present"""
+		"""
+		Looks in the .job_id file for an id. Returns id as a string if present, None if not present
+		"""
 
 		id_path = Path.join(calculation_path, QueueAdapter.id_path)
 
@@ -94,12 +104,14 @@ class QueueAdapter(object):
 
 	@staticmethod
 	def job_id_is_active(id_string):
-		"""Returns true if job id is on the queue with queued or running status ('Q' or 'R')"""
+		"""
+		Returns true if job id is on the queue with queued or running status ('Q' or 'R')
+		"""
 
 		if not id_string: #if it's none, return false
 			return False
 
-		if QueueAdapter.host == 'Fenrir':
+		if QueueAdapter.host in ['Fenrir', 'Asathor']:
 			job_properties = QueueAdapter.get_job_properties_from_id_string(id_string)
 
 			if not job_properties: #job does not show up on queue at all
@@ -117,7 +129,9 @@ class QueueAdapter(object):
 
 	@staticmethod
 	def write_id_string_to_path(calculation_path, id_string):
-		"""Writes id_string to the first line of the id file at id_path"""
+		"""
+		Writes id_string to the first line of the id file at id_path
+		"""
 
 		id_path = Path.join(calculation_path, QueueAdapter.id_path)
 		file = File()
@@ -133,7 +147,9 @@ class QueueAdapter(object):
 
 	@staticmethod
 	def get_job_properties_from_id_string(id_string):
-		"""Takes in id_string like '32223' and return dictionary of run properties of the job"""
+		"""
+		Takes in id_string like '32223' and return dictionary of run properties of the job
+		"""
 
 		job_property_dictionary = QueueAdapter.get_job_property_dictionary()
 
@@ -154,7 +170,7 @@ class QueueAdapter(object):
 		"""
 		output_dictionary = {}
 
-		if QueueAdapter.host == 'Fenrir':
+		if QueueAdapter.host in ['Fenrir', 'Asathor']:
 			line_string = su.remove_extra_spaces(line_string) #'682554.fenrir.bw angsten default job 16794 1 -- -- 16:00 R 00:01'
 			node_count = line_string.split(' ')[5]
 			wall_time_limit = line_string.split(' ')[8]
@@ -183,7 +199,8 @@ class QueueAdapter(object):
 
 	@staticmethod
 	def get_queue_view_file():
-		"""Returns a file that gives information of all jobs for this user. Looks something like like:
+		"""
+		Returns a file that gives information of all jobs for this user. Looks something like like:
 
 		682554.fenrir.bw     angsten  default  job               16794     1  --    --  16:00 R 00:01
 		682555.fenrir.bw     angsten  default  job               16794     1  --    --  16:00 R 00:01
@@ -191,7 +208,7 @@ class QueueAdapter(object):
 		"""
 		output_file = File()
 
-		if QueueAdapter.host == 'Fenrir':
+		if QueueAdapter.host in ['Fenrir', 'Asathor']:
 			queue_view_process = subprocess.Popen("qstat -a | grep " + QueueAdapter.user, shell=True, stdout=subprocess.PIPE)
 			output, error = queue_view_process.communicate()
 
@@ -210,13 +227,14 @@ class QueueAdapter(object):
 
 	@staticmethod
 	def get_job_property_dictionary():
-		"""returns a dictionary of all job property dictionaries for jobs showing up on the queue that looks like:
+		"""
+		Returns a dictionary of all job property dictionaries for jobs showing up on the queue that looks like:
 			
 		{'46442':{'status': QueueStatus.running, 'node_count': 1, 'wall_time_limit': '16:00', 'elapsed_time': '00:01'}, '3324':...etc}
 		"""
 
 		job_property_dictionary = {}
-		if QueueAdapter.host == 'Fenrir':
+		if QueueAdapter.host in ['Fenrir', 'Asathor']:
 			queue_view_file = QueueAdapter.get_queue_view_file()
 
 			for queue_line in queue_view_file:
@@ -237,7 +255,9 @@ class QueueAdapter(object):
 
 	@staticmethod
 	def get_queue_count():
-		"""Returns count of jobs either queued 'Q' or running 'R'"""
+		"""
+		Returns count of jobs either queued 'Q' or running 'R'
+		"""
 
 		active_job_count = 0
 
@@ -251,7 +271,7 @@ class QueueAdapter(object):
 
 	@staticmethod
 	def _template():
-		if QueueAdapter.host == 'Fenrir':
+		if QueueAdapter.host in ['Fenrir', 'Asathor']:
 			pass
 		elif QueueAdapter.host == 'Tom_hp':
 			pass
@@ -261,7 +281,7 @@ class QueueAdapter(object):
 
 	@staticmethod
 	def get_submission_file():
-		if QueueAdapter.host == 'Fenrir':
+		if QueueAdapter.host in ['Fenrir', 'Asathor']:
 			return File(Path.clean("/home/angsten/.submit.sh"))
 
 		elif QueueAdapter.host == 'Tom_hp':
@@ -277,7 +297,7 @@ class QueueAdapter(object):
 		on the size of a calculation
 		"""
 
-		if QueueAdapter.host == 'Fenrir':
+		if QueueAdapter.host in ['Fenrir', 'Asathor']:
 			node_count = 1
 			if num_atoms >= 40:
 				node_count = 2
@@ -296,18 +316,55 @@ class QueueAdapter(object):
 		return submission_file
 
 	@staticmethod
+	def get_number_of_nodes(submission_file):
+
+		if QueueAdapter.host in ['Fenrir']:
+
+			node_count_line_indices = submission_file.get_line_indices_containing_string("#PBS -l nodes=")
+
+			if len(node_count_line_indices) != 1:
+				raise Exception("Could not find node count line (or there are multiple) in submission file")
+			
+			line = submission_file[node_count_line_indices[0]]
+
+			return int(line.split('=')[1].split(':')[0])
+
+		elif QueueAdapter.host in ['Asathor']:
+
+			node_count_line_indices = submission_file.get_line_indices_containing_string("#PBS -l nodes=")
+
+			if len(node_count_line_indices) != 1:
+				raise Exception("Could not find node count line (or there are multiple) in submission file")
+			
+			line = submission_file[node_count_line_indices[0]]
+			
+			return int( int(line.split('=')[2])/16 )
+
+	@staticmethod
 	def set_number_of_nodes(submission_file, node_count):
 		"""
 		Modifies submission file to have node_count nodes.
 		"""
 
-		if QueueAdapter.host == 'Fenrir':
+		if QueueAdapter.host in ['Fenrir']:
+
 			node_count_line_indices = submission_file.get_line_indices_containing_string("#PBS -l nodes=")
 
 			if len(node_count_line_indices) != 1:
 				raise Exception("Could not find node count line (or there are multiple) in submission file")
 				
 			submission_file[node_count_line_indices[0]] = "#PBS -l nodes=" + str(node_count) + ":ppn=8:node"
+
+		elif QueueAdapter.host in ['Asathor']:
+
+			node_count_line_indices = submission_file.get_line_indices_containing_string("#PBS -l nodes=")
+
+			if len(node_count_line_indices) != 1:
+				raise Exception("Could not find node count line (or there are multiple) in submission file")
+			
+			processor_count = 16*node_count
+			submission_file[node_count_line_indices[0]] = "#PBS -l nodes=1:ppn=" + str(processor_count) #should never change nodes from 1 - only change num processors
+
 		elif QueueAdapter.host == 'Tom_hp':
 			pass
 		else:
@@ -319,8 +376,14 @@ class QueueAdapter(object):
 
 	@staticmethod
 	def get_optimal_npar(submission_file):
-		if QueueAdapter.host == 'Fenrir':
+
+		node_count = QueueAdapter.
+
+		if QueueAdapter.host in ['Fenrir']:
 			return 2 #this is almost always the best choice on fenrir
+		elif QueueAdapter.host in ['Asathor']:
+
+
 		elif QueueAdapter.host == 'Tom_hp':
 			return 1
 		else:
@@ -333,7 +396,7 @@ class QueueAdapter(object):
 		'100', '' with gamma = True, '100', 'standard',...etc. Any with gamma = True okay too
 		"""
 
-		if QueueAdapter.host == 'Fenrir':
+		if QueueAdapter.host in ['Fenrir', 'Asathor']:
 			program_line_indices = submission_file.get_line_indices_containing_string("MYMPIPROG=")
 
 			if len(program_line_indices) != 1:
