@@ -27,7 +27,7 @@ class GAStructurePredictor(object):
 		generation_complete = True ##################################################################################################REMOVE
 
 		if generation_complete and (self.population_collection.get_generation_count() < self.ga_driver.get_max_number_of_generations()):
-			Path.make(self.get_next_generation_path())
+			Path.make(self.population_collection.get_next_generation_path())
 
 	def populate_current_generation(self):
 		"""
