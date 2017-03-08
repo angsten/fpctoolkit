@@ -1,6 +1,7 @@
 #from fpctoolkit.workflow.vasp_run_set import VaspRunSet
 
 
+from fpctoolkit.util.path import Path
 
 class VaspRunSet(object):
 	"""
