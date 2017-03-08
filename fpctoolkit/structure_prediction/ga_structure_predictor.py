@@ -29,7 +29,7 @@ class GAStructurePredictor(object):
 
 	def populate_current_generation(self):
 		"""
-		Creates additional individuals until the current generation has been fully populated.
+		Creates additional individuals (and runs one update on them to put them on the queue) until the current generation has been fully populated.
 		"""
 
 		current_population = self.population_collection.get_population_of_current_generation()
@@ -41,6 +41,8 @@ class GAStructurePredictor(object):
 				self.population_collection.get_population_of_last_generation(), self.population_collection.get_generation_count())
 
 			current_population.append(new_individual)
+
+			new_individual.update()
 
 
 	def update_all_individuals_of_current_generation(self):

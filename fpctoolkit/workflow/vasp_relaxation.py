@@ -54,7 +54,6 @@ class VaspRelaxation(VaspRunSet):
 
 		If no input_dictionary is provided, this class will attempt to load a saved pickled instance.
 		"""
-		print 'INITIAL STRUCT IS ', initial_structure
 
 		self.path = Path.clean(path)
 
