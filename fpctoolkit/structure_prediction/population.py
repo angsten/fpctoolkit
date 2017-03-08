@@ -1,6 +1,7 @@
 import random
 
 from fpctoolkit.util.path import Path
+from fpctoolkit.workflow.vasp_run_set import VaspRunSet
 
 class Population(object):
 	"""
@@ -19,6 +20,9 @@ class Population(object):
 			elif not Path.exists(generation_directory_path):
 				raise Exception("Generation directory path does not exist.")
 
+
+			if not directory_to_individual_conversion_method:
+				directory_to_individual_conversion_method = self.generic_directory_to_individual_conversion_method
 
 			elligible_directory_basenames = Path.get_list_of_directory_basenames_containing_string(generation_directory_path, Population.individual_prefix_string)
 
@@ -43,6 +47,9 @@ class Population(object):
 
 	def append(self, value):
 		self.individuals.append(value)
+
+	def generic_directory_to_individual_conversion_method(self, path):
+		return Individual(calculation_set=VaspRunSet(path=path))
 
 
 	def get_next_available_individual_path(self, generation_directory_path):

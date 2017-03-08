@@ -1,3 +1,5 @@
+#from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
+
 import collections
 import cPickle
 
@@ -30,19 +32,6 @@ class VaspRelaxation(VaspRunSet):
 
 	To not have wavecars copied and used in the relaxation chain to increase performance, include WAVECAR=Flase in the
 	incar modifications. If wavecar exists in previous relax step's output, it will be copied to next step.
-	
-	Input dicitonary should look something like:
-	{
-		'external_relaxation_count': 4		
-		'kpoint_schemes_list': ['Gamma'],
-		'kpoint_subdivisions_lists': [[1, 1, 1], [1, 1, 2], [2, 2, 4]],
-		'submission_script_modification_keys_list': ['100', 'standard', 'standard_gamma'], #optional - will default to whatever queue adapter gives
-		'submission_node_count_list': [1, 2],
-		'ediff': [0.001, 0.00001, 0.0000001],
-		'encut': [200, 400, 600, 800],
-		'isif' : [21, 33, 111]
-		#any other incar parameters with value as a list
-	}
 
 	"""
 
@@ -51,60 +40,45 @@ class VaspRelaxation(VaspRunSet):
 
 	def __init__(self, path, initial_structure=None, input_dictionary=None, verbose=False):
 		"""
-		Cases:
-		1. path does not exist or is empty ==> make the relaxation directory, enforce input file arguments all exists
-		2. path exists and is non-empty
-			1. If input_dictionary is None, load in old input_dictionary that was saved and use that
-			2. Else, use current input_dictionary
+		Input dicitonary should look something like:
+		{
+			'external_relaxation_count': 4,
+			'kpoint_schemes_list': ['Gamma'],
+			'kpoint_subdivisions_lists': [[1, 1, 1], [1, 1, 2], [2, 2, 4]],
+			'submission_script_modification_keys_list': ['100', 'standard', 'standard_gamma'], #optional - will default to whatever queue adapter gives
+			'submission_node_count_list': [1, 2],
+			'ediff': [0.001, 0.00001, 0.0000001],
+			'encut': [200, 400, 600, 800],
+			'isif' : [21, 33, 111]
+			#any other incar parameters with value as a list
+		}
+
+		If no input_dictionary is provided, this class will attempt to load a saved pickled instance.
 		"""
 
 		self.path = Path.clean(path)
-		self.verbose = verbose
 
-		self.vasp_run_list = []
+		if not input_dictionary:
+			self.load()
+		else:
+			self.verbose = verbose
+			self.vasp_run_list = []
+			self.input_initial_structure = initial_structure
 
-		self.input_initial_structure = initial_structure
-
-
-
-		self.vasp_run_list = []
-
-		if not Path.exists(self.path) or Path.is_empty(self.path): #self.path is either an empty directory or does not exist
 			Path.make(self.path)
-		else: #self.path is a non-empty directory. See if there's an old relaxation to load
-			if not input_dictionary:
-				if Path.exists(self.get_input_dictionary_save_path()):
-					input_dictionary = self.load_input_dictionary_from_file()
-				else: #input_dictionary parameter is none, but no input_dict saved either This case is not yet supported
-					raise Exception("No input_dictionary given, but also no input_dictionary saved to path.")
-			else:
-				self.save_input_dictionary_to_file(input_dictionary)
 
-		self.load_input_dictionary(input_dictionary)
+			self.unpack_input_dictionary_into_self(input_dictionary)
+			self.save()
 
 		self.initialize_run_list()
-			
 
-	def save_input_dictionary_to_file(self, input_dictionary):
-		"""Saves input_dictionary items in a file"""
 
-		file = open(self.get_input_dictionary_save_path(), 'w')
-		file.write(cPickle.dumps(input_dictionary))
-		file.close()
 
-	def load_input_dictionary_from_file(self):
-		"""Load the previously saved input_dictionary items from a file into a dictionary and return this dictionary"""
-
-		file = open(self.get_input_dictionary_save_path(), 'r')
-		data_pickle = file.read()
-		file.close()
-
-		input_dictionary = cPickle.loads(data_pickle)
-
-		return input_dictionary
-
-	def load_input_dictionary(self, input_dictionary):
+	def unpack_input_dictionary_into_self(self, input_dictionary):
 		"""Takes items in input_dictionary and loads them into self."""
+
+		if not input_dictionary:
+			raise Exception("No input dictionary supplied")
 
 		self.external_relaxation_count = input_dictionary.pop('external_relaxation_count')
 		self.kpoint_schemes = ParameterList(input_dictionary.pop('kpoint_schemes_list'))
@@ -124,6 +98,7 @@ class VaspRelaxation(VaspRunSet):
 			else:
 				self.incar_modifier_lists_dictionary[key] = ParameterList(value)
 
+
 	def initialize_run_list(self):
 		"""sets self.vasp_run_list based on directories present"""
 
@@ -139,6 +114,9 @@ class VaspRelaxation(VaspRunSet):
 		static_path = self.get_extended_path(VaspRelaxation.static_basename_string)
 		if Path.exists(static_path):
 			self.vasp_run_list.append(VaspRun(static_path, verbose=self.verbose))
+
+
+
 
 	@property
 	def complete(self):
@@ -314,13 +292,6 @@ class VaspRelaxation(VaspRunSet):
 
 	def get_current_run_path(self):
 		return self.get_extended_path(self.get_current_run_path_basename())
-
-
-	def get_extended_path(self, relative_path):
-		return Path.join(self.path, relative_path)
-
-	def get_input_dictionary_save_path(self):
-		return self.get_extended_path(".relaxation_most_recent_input_dictionary")
 
 	def get_current_vasp_run(self):
 		if self.run_count == 0:
