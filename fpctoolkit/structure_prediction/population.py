@@ -78,6 +78,8 @@ class Population(object):
 		does not return individual if in avoid_individuals_list - retries in this case
 		"""
 
+		print "get_individual_by_deterministic_tournament_selection called"
+
 		if avoid_individuals_list == None:
 			avoid_individuals_list = []
 
