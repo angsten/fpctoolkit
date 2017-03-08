@@ -29,9 +29,9 @@ class PopulationCollection(object):
 
 	def __init__(self, path, directory_to_individual_conversion_method=None):
 		"""
-		directory_to_individual_conversion_method can be left as None - then calc sets will load in pickled saved version of instances.
+		directory_to_individual_conversion_method can be left as None - then calc sets of individuals will load in pickled saved version of instances.
 		"""
-		
+
 		self.path = path
 		self.directory_to_individual_conversion_method = directory_to_individual_conversion_method
 		self.initialize_paths()

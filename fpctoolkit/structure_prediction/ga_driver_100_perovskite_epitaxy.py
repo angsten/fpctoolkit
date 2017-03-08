@@ -231,7 +231,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		individual_1 = population_of_last_generation.get_individual_by_deterministic_tournament_selection(N=3)
 		individual_2 = population_of_last_generation.get_individual_by_deterministic_tournament_selection(N=3, avoid_individuals_list=[individual_1])
 
-		self.parent_structures_list = [individual_1.final_structure, individual_2.final_structure]
+		self.parent_structures_list = [copy.deepcopy(individual_1.final_structure), copy.deepcopy(individual_2.final_structure)]
 		self.parent_paths_list = [individual_1.calculation_set.path, individual_2.calculation_set.path]
 		site_mapping_collections_list = []
 

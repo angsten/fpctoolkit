@@ -13,21 +13,19 @@ class Population(object):
 	def __init__(self, generation_directory_path=None, directory_to_individual_conversion_method=None):
 		self.individuals = []
 
+
+		if not Path.exists(generation_directory_path):
+			raise Exception("Generation directory path does not exist.")
+
+		if not directory_to_individual_conversion_method:
+			directory_to_individual_conversion_method = self.default_directory_to_individual_conversion_method
+
+
 		#If path exists, look for individuals inside (saved as directories like 'individual_1, individual_2, ...')
-		if generation_directory_path:
-			if not directory_to_individual_conversion_method:
-				raise Exception("Must specify a method for converting directories to individuals")
-			elif not Path.exists(generation_directory_path):
-				raise Exception("Generation directory path does not exist.")
+		elligible_directory_basenames = Path.get_list_of_directory_basenames_containing_string(generation_directory_path, Population.individual_prefix_string)
 
-
-			if not directory_to_individual_conversion_method:
-				directory_to_individual_conversion_method = self.generic_directory_to_individual_conversion_method
-
-			elligible_directory_basenames = Path.get_list_of_directory_basenames_containing_string(generation_directory_path, Population.individual_prefix_string)
-
-			for basename in elligible_directory_basenames:
-				self.individuals.append(directory_to_individual_conversion_method(Path.join(generation_directory_path, basename)))
+		for basename in elligible_directory_basenames:
+			self.individuals.append(directory_to_individual_conversion_method(Path.join(generation_directory_path, basename)))
 
 	def __str__(self):
 		self.sort()
@@ -48,7 +46,8 @@ class Population(object):
 	def append(self, value):
 		self.individuals.append(value)
 
-	def generic_directory_to_individual_conversion_method(self, path):
+
+	def default_directory_to_individual_conversion_method(self, path):
 		return Individual(calculation_set=VaspRunSet(path=path))
 
 
@@ -87,6 +86,9 @@ class Population(object):
 
 		self.sort
 
+		print "\n\nafter sorting, pop looks like: "
+		print self
+
 		for try_count in range(81):
 			if try_count == 80:
 				raise Exception("Failed to select individual")
@@ -95,13 +97,19 @@ class Population(object):
 			for i in range(N):
 				random_number_list.append(random.randint(0, len(self.individuals)-1))
 
+			print "random_number_list before sorting: ", random_number_list
 			random_number_list.sort()
+			print "random_number_list after sorting: ", random_number_list
 
 			individual = self.individuals[random_number_list[0]] #list is sorted - can just take smallest number
+
+			print "Selecting individual ", individual.calculation_set.path
+			print "This is index ", random_number_list[0]
 
 			if individual not in avoid_individuals_list:
 				return individual
 			else:
+				print "Avoiding this individual - retrying"
 				continue
 
 
