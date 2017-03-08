@@ -52,7 +52,6 @@ class GAStructurePredictor(object):
 
 		for individual in self.population_collection.get_population_of_current_generation():
 			if not individual.complete:
-				print individual.calculation_set.
 				individual.update()
 				all_complete = False
 
