@@ -377,11 +377,20 @@ class QueueAdapter(object):
 	@staticmethod
 	def get_optimal_npar(submission_file):
 
-		node_count = QueueAdapter.
+		node_count = QueueAdapter.get_number_of_nodes(submission_file)
 
 		if QueueAdapter.host in ['Fenrir']:
 			return 2 #this is almost always the best choice on fenrir
-		elif QueueAdapter.host in ['Asathor']:
+
+		elif QueueAdapter.host in ['Asathor']: ##################################figure these out better
+			if node_count == 1:
+				return 4
+			if node_count == 2:
+				return 8
+			if node_count == 3:
+				return 12
+			if node_count == 4:
+				return 16
 
 
 		elif QueueAdapter.host == 'Tom_hp':
