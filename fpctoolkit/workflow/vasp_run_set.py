@@ -2,6 +2,7 @@
 
 
 from fpctoolkit.util.path import Path
+import cPickle
 
 class VaspRunSet(object):
 	"""
