@@ -97,7 +97,7 @@ class Population(object):
 			
 			random_number_list = []
 			for i in range(N):
-				random_number_list.append(random.randint(0, len(self.individuals)-1))
+				random_number_list.append(random.randint(0, len(self.individuals)-1)) #########fix - selects repeats
 
 			print "random_number_list before sorting: ", random_number_list
 			random_number_list.sort()
