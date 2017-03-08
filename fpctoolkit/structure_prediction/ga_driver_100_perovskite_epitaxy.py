@@ -98,7 +98,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 				return lambda x: offset + sign*((x**curvature_parameter)/(max_displacement_distance**curvature_parameter))
 		
 
-		strain_probabilities_list = [0.7, 0.2, 0.1]
+		strain_probabilities_list = [0.5, 0.3, 0.2]
 		random_selector = RandomSelector(strain_probabilities_list)
 		event_index = random_selector.get_event_index()
 
@@ -172,20 +172,20 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 			"""
 
 			A_site_curvature_parameter = 0.8
-			A_site_max_displacement = 0.3*unit_cell_a
+			A_site_max_displacement = 0.35*unit_cell_a
 			A_bell = True
 
-			B_site_curvature_parameter = 0.5
-			B_site_max_displacement = 0.4*unit_cell_a
-			B_bell = False
+			B_site_curvature_parameter = 2.0
+			B_site_max_displacement = 0.5*unit_cell_a
+			B_bell = True
 
-			X_site_curvature_parameter = 0.5
-			X_site_max_displacement = 0.4*unit_cell_a
-			X_bell = False
+			X_site_curvature_parameter = 2.0
+			X_site_max_displacement = 0.5*unit_cell_a
+			X_bell = True
 
-			AA_minimum_distance = 1.5
-			AB_minimum_distance = 1.2
-			BB_minimum_distance = 1.2
+			AA_minimum_distance = 1.4
+			AB_minimum_distance = 1.0
+			BB_minimum_distance = 1.0
 			AX_minimum_distance = 0.8
 			BX_minimum_distance = 0.8
 			XX_minimum_distance = 0.8
