@@ -71,19 +71,19 @@ class PopulationCollection(object):
 		"""
 		Returns the path to the current generation (path may or may not exist) 
 		"""
-		return self.get_generation_path_of_generation_number(self.generation_count())
+		return self.get_generation_path_of_generation_number(self.get_generation_count())
 
 	def get_last_generation_path(self):
 		"""
 		Returns the path to the last generation (path may or may not exist) 
 		"""
-		return self.get_generation_path_of_generation_number(self.generation_count()-1)
+		return self.get_generation_path_of_generation_number(self.get_generation_count()-1)
 
 	def get_next_generation_path(self):
 		"""
 		Returns the path to the next generation (path may or may not exist) 
 		"""
-		return self.get_generation_path_of_generation_number(self.generation_count()+1)
+		return self.get_generation_path_of_generation_number(self.get_generation_count()+1)
 
 
 	def get_extended_path(self, relative_path):
