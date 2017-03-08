@@ -41,7 +41,7 @@ class GAStructurePredictor(object):
 				self.population_collection.get_population_of_last_generation(), self.population_collection.get_generation_count())
 
 			current_population.append(new_individual)
-			
+
 
 	def update_all_individuals_of_current_generation(self):
 		"""
@@ -52,6 +52,7 @@ class GAStructurePredictor(object):
 
 		for individual in self.population_collection.get_population_of_current_generation():
 			if not individual.complete:
+				print individual.calculation_set.
 				individual.update()
 				all_complete = False
 

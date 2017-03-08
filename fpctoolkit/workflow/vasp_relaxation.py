@@ -54,11 +54,11 @@ class VaspRelaxation(VaspRunSet):
 
 		If no input_dictionary is provided, this class will attempt to load a saved pickled instance.
 		"""
+		print 'INITIAL STRUCT IS ', initial_structure
 
 		self.path = Path.clean(path)
 
 		if not input_dictionary:
-			print "LOADING RELAXATION"
 			self.load()
 		else:
 			self.verbose = verbose
@@ -218,13 +218,6 @@ class VaspRelaxation(VaspRunSet):
 		#Override node count in submission script over the auto generated count based on atom count
 		if self.submission_node_count_list:
 			input_set.set_node_count(self.submission_node_count_list[self.run_count])
-
-		print "INPUT SET LOOKS LIKE:", input_set
-		print input_set.structure
-		print input_set.kpoints
-		print input_set.incar
-		print input_set.potcar
-		print input_set.submission_script_file
 
 		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose, wavecar_path=self.get_wavecar_path())
 
