@@ -1,5 +1,7 @@
 #from fpctoolkit.structure_prediction.individual import Individual
 
+import cPickle
+
 from fpctoolkit.util.path import Path
 from fpctoolkit.io.file import File
 from fpctoolkit.structure.structure import Structure
