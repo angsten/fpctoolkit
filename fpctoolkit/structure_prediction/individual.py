@@ -1,4 +1,4 @@
-
+#from fpctoolkit.structure_prediction.individual import Individual
 
 from fpctoolkit.util.path import Path
 from fpctoolkit.io.file import File

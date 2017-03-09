@@ -1,6 +1,7 @@
 import random
 
 from fpctoolkit.util.path import Path
+from fpctoolkit.structure_prediction.individual import Individual
 from fpctoolkit.workflow.vasp_run_set import VaspRunSet
 
 class Population(object):
