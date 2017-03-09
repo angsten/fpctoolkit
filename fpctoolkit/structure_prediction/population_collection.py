@@ -94,7 +94,7 @@ class PopulationCollection(object):
 
 	def get_population_of_generation_number(self, generation_number):
 		"""
-		Returns a population instance populated with individuals from generation number generation_number (doesn't have to be complete). Returns none if generation generation_number doesn't exists yet or is < 1.
+		Returns a population instance populated with individuals from generation number generation_number (doesn't have to be complete). Returns none if generation generation_number doesn't exist yet or is < 1.
 		"""
 
 		if (self.get_generation_count() < generation_number) or (generation_number < 1):

@@ -18,6 +18,9 @@ class Path(object):
 
 	@staticmethod
 	def exists(path):
+		if path == None:
+			return False
+
 		return os.path.exists(path)
 
 	@staticmethod
