@@ -11,21 +11,21 @@ class Population(object):
 	individual_prefix_string = "individual_"
 
 	def __init__(self, generation_directory_path=None, directory_to_individual_conversion_method=None):
+		"""
+		If generation_directory_path is not none, loads in existing individuals at this path. If generation_directory_path is None, population is initialized as empty.
+		"""
 		self.individuals = []
 
-
-		if not Path.exists(generation_directory_path):
-			raise Exception("Generation directory path does not exist.")
 
 		if not directory_to_individual_conversion_method:
 			directory_to_individual_conversion_method = self.default_directory_to_individual_conversion_method
 
+		if generation_directory_path:
+			if not Path.exists(generation_directory_path):
+				raise Exception("Generation directory path does not exist.")
 
-		#If path exists, look for individuals inside (saved as directories like 'individual_1, individual_2, ...')
-		elligible_directory_basenames = Path.get_list_of_directory_basenames_containing_string(generation_directory_path, Population.individual_prefix_string)
 
-		for basename in elligible_directory_basenames:
-			self.individuals.append(directory_to_individual_conversion_method(Path.join(generation_directory_path, basename)))
+			self.append_individuals_at_path(generation_directory_path)
 
 	def __str__(self):
 		self.sort()
@@ -45,6 +45,17 @@ class Population(object):
 
 	def append(self, value):
 		self.individuals.append(value)
+
+	def append_individuals_at_path(self, path):
+		"""
+		Looks for individuals inside path (saved as directories like 'individual_1, individual_2, ...') and appends to self.individuals
+		"""
+
+		#put all valid basenames in list like like: [individual_1, individual_2, ...]
+		elligible_directory_basenames = Path.get_list_of_directory_basenames_containing_string(path, Population.individual_prefix_string)
+
+		for basename in elligible_directory_basenames:
+			self.individuals.append(directory_to_individual_conversion_method(Path.join(path, basename)))
 
 
 	def default_directory_to_individual_conversion_method(self, path):
