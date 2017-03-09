@@ -325,6 +325,31 @@ class QueueAdapter(object):
 		return submission_file
 
 	@staticmethod
+	def get_optimal_npar(submission_file):
+
+		node_count = QueueAdapter.get_number_of_nodes(submission_file)
+
+		if QueueAdapter.host in ['Fenrir']:
+			return 2 #this is almost always the best choice on fenrir
+
+		elif QueueAdapter.host in ['Asathor']:
+			if node_count == 1:
+				return 1
+			if node_count == 2:
+				return 4
+			if node_count == 3:
+				return 4
+			if node_count == 4:
+				return 4
+
+
+		elif QueueAdapter.host == 'Tom_hp':
+			return 1
+		else:
+			raise Exception("QueueAdapter.host not supported")
+
+
+	@staticmethod
 	def get_number_of_nodes(submission_file):
 
 		if QueueAdapter.host in ['Fenrir']:
@@ -381,31 +406,6 @@ class QueueAdapter(object):
 
 		return submission_file
 
-
-
-	@staticmethod
-	def get_optimal_npar(submission_file):
-
-		node_count = QueueAdapter.get_number_of_nodes(submission_file)
-
-		if QueueAdapter.host in ['Fenrir']:
-			return 2 #this is almost always the best choice on fenrir
-
-		elif QueueAdapter.host in ['Asathor']:
-			if node_count == 1:
-				return 1
-			if node_count == 2:
-				return 1
-			if node_count == 3:
-				return 4
-			if node_count == 4:
-				return 4
-
-
-		elif QueueAdapter.host == 'Tom_hp':
-			return 1
-		else:
-			raise Exception("QueueAdapter.host not supported")
 
 	@staticmethod
 	def modify_submission_script(submission_file, modification_key, gamma=False):
