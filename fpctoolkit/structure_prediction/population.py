@@ -57,7 +57,7 @@ class Population(object):
 
 
 	def default_directory_to_individual_conversion_method(self, path):
-		return Individual(calculation_set=VaspRunSet(path=path))
+		return Individual(calculation_set=VaspRunSet(path))
 
 
 	def get_next_available_individual_path(self, generation_directory_path):

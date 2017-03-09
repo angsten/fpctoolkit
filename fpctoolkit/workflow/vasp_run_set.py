@@ -13,6 +13,12 @@ class VaspRunSet(object):
 	Complete and update and others must be implemented in child classes.
 	"""
 
+	def __init__(self, path):
+		self.path = path
+
+		self.load()
+
+
 	def complete(self):
 		pass
 
