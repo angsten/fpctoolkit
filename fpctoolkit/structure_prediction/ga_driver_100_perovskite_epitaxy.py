@@ -23,13 +23,13 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 	"""
 
 
-	def __init__(self, ga_input_dictionary, calculation_set_input_dictionary):
+	def __init__(self, ga_input_dictionary, selection_function, calculation_set_input_dictionary):
 		"""
 			ga_input_dictionary should additionally have species_list, epitaxial_lattice_constant (full number, not 5-atom cell equivalent),
 			and supercell_dimensions_list keys and values
 		"""
 
-		super(GADriver100PerovskiteEpitaxy, self).__init__(ga_input_dictionary, calculation_set_input_dictionary)
+		super(GADriver100PerovskiteEpitaxy, self).__init__(ga_input_dictionary, selection_function, calculation_set_input_dictionary)
 
 		self.structure_creation_id_string = None #will track how the individual's structure was created
 		self.parent_structures_list = None
