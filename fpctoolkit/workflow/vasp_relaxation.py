@@ -115,7 +115,41 @@ class VaspRelaxation(VaspRunSet):
 			self.vasp_run_list.append(VaspRun(static_path, verbose=self.verbose))
 
 
+	def update(self):
 
+		if self.complete:
+			return True
+		elif self.run_count == 0 or self.get_current_vasp_run().complete:
+			self.create_next_run()
+
+		self.get_current_vasp_run().update()
+
+		return False
+
+		#delete all wavecars when finished or if True is returned
+
+	def create_next_run(self):
+		run_path = self.get_next_run_path()
+
+
+		structure = self.get_next_structure()
+		kpoints = Kpoints(scheme_string=self.kpoint_schemes[self.run_count], subdivisions_list=self.kpoint_subdivisions_lists[self.run_count])
+		incar = self.get_next_incar()
+
+		submission_script_file = None
+		if self.submission_script_modification_keys_list:
+			submission_script_file = QueueAdapter.modify_submission_script(QueueAdapter.get_submission_file(), self.submission_script_modification_keys_list[self.run_count])
+
+		input_set = VaspInputSet(structure, kpoints, incar, submission_script_file=submission_script_file)
+
+		#Override node count in submission script over the auto generated count based on atom count
+		if self.submission_node_count_list:
+			input_set.set_node_count(self.submission_node_count_list[self.run_count])
+
+		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose, wavecar_path=self.get_wavecar_path())
+
+		#self.run_count += 1 #increment at end - this tracks how many runs have been created up to now
+		self.vasp_run_list.append(vasp_run)
 
 	@property
 	def complete(self):
@@ -187,41 +221,6 @@ class VaspRelaxation(VaspRunSet):
 
 		return data_dictionary
 
-	def update(self):
-
-		if self.complete:
-			return True
-		elif self.run_count == 0 or self.get_current_vasp_run().complete:
-			self.create_next_run()
-
-		self.get_current_vasp_run().update()
-
-		return False
-
-		#delete all wavecars when finished or if True is returned
-
-	def create_next_run(self):
-		run_path = self.get_next_run_path()
-
-
-		structure = self.get_next_structure()
-		kpoints = Kpoints(scheme_string=self.kpoint_schemes[self.run_count], subdivisions_list=self.kpoint_subdivisions_lists[self.run_count])
-		incar = self.get_next_incar()
-
-		submission_script_file = None
-		if self.submission_script_modification_keys_list:
-			submission_script_file = QueueAdapter.modify_submission_script(QueueAdapter.get_submission_file(), self.submission_script_modification_keys_list[self.run_count])
-
-		input_set = VaspInputSet(structure, kpoints, incar, submission_script_file=submission_script_file)
-
-		#Override node count in submission script over the auto generated count based on atom count
-		if self.submission_node_count_list:
-			input_set.set_node_count(self.submission_node_count_list[self.run_count])
-
-		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose, wavecar_path=self.get_wavecar_path())
-
-		#self.run_count += 1 #increment at end - this tracks how many runs have been created up to now
-		self.vasp_run_list.append(vasp_run)
 
 	def get_next_incar(self):
 		"""
