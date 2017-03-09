@@ -17,6 +17,7 @@ class Individual(object):
 			if not path:
 				raise Exception("Path must be given if no calculation set is provided.")
 
+			self.path = path
 			self.load()
 		else:
 			self.path = calculation_set.path
