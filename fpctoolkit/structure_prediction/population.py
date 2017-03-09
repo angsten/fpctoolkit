@@ -15,10 +15,7 @@ class Population(object):
 		If generation_directory_path is not none, loads in existing individuals at this path. If generation_directory_path is None, population is initialized as empty.
 		"""
 		self.individuals = []
-
-
-		if not directory_to_individual_conversion_method:
-			directory_to_individual_conversion_method = self.default_directory_to_individual_conversion_method
+		self.directory_to_individual_conversion_method = directory_to_individual_conversion_method if directory_to_individual_conversion_method else self.default_directory_to_individual_conversion_method
 
 		if generation_directory_path:
 			if not Path.exists(generation_directory_path):
@@ -55,7 +52,7 @@ class Population(object):
 		elligible_directory_basenames = Path.get_list_of_directory_basenames_containing_string(path, Population.individual_prefix_string)
 
 		for basename in elligible_directory_basenames:
-			self.individuals.append(directory_to_individual_conversion_method(Path.join(path, basename)))
+			self.individuals.append(self.directory_to_individual_conversion_method(Path.join(path, basename)))
 
 
 	def default_directory_to_individual_conversion_method(self, path):

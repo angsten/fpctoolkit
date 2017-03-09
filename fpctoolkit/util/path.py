@@ -88,7 +88,8 @@ class Path(object):
 
 	@staticmethod
 	def get_case_insensitive_file_name(path, file_string):
-		"""Looks at files in path, if one matches file_string in all aspects except case,
+		"""
+		Looks at files in path, if one matches file_string in all aspects except case,
 		return this file (first one for which this is true). If no file, return None
 		"""
 
@@ -100,7 +101,10 @@ class Path(object):
 
 	@staticmethod
 	def all_files_are_present(path, file_basenames_list):
-		"""Returns true if every file in the list is present at path"""
+		"""
+		Returns true if every file in the list is present at path
+		"""
+
 		files_present = Path.get_list_of_files_at_path(path)
 
 		for required_file in file_basenames_list:
@@ -111,7 +115,9 @@ class Path(object):
 
 	@staticmethod
 	def get_list_of_directory_basenames_containing_string(path, sub_string):
-		"""Returns directory basenames containing sub_string at path"""
+		"""
+		Returns directory basenames containing sub_string at path
+		"""
 
 		directory_basenames = Path.get_list_of_directories_at_path(path)
 
