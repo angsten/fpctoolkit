@@ -390,6 +390,7 @@ class QueueAdapter(object):
 			if node_count == 3:
 				return 12
 			if node_count == 4:
+				print "******************if node_count == 4"
 				return 16
 
 
