@@ -40,7 +40,11 @@ class Individual(object):
 		"""
 		In all inherited classes, this function should return some float that increases with greater fitness
 		"""
-		return -self.energy
+
+		if self.energy:
+			return -self.energy
+		else:
+			return None
 
 	@property
 	def complete(self):
