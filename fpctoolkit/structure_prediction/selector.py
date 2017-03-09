@@ -38,7 +38,7 @@ class Selector(object):
 
 			individuals_list = []
 
-			poulation_copy = copy.deepcopy(population)
+			population_copy = copy.deepcopy(population)
 
 			for i in range(number_of_individuals_to_return):
 				individual = Selector.get_individual_by_deterministic_tournament_selection(population_copy, number_of_competitors=number_of_competitors)
