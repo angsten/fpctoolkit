@@ -228,6 +228,10 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 	def get_mated_structure(self, population_of_last_generation):
 
+		Na = self.ga_input_dictionary['supercell_dimensions_list'][0]
+		Nb = self.ga_input_dictionary['supercell_dimensions_list'][1]
+		Nc = self.ga_input_dictionary['supercell_dimensions_list'][2]
+
 		individual_1 = population_of_last_generation.get_individual_by_deterministic_tournament_selection(N=3)
 		individual_2 = population_of_last_generation.get_individual_by_deterministic_tournament_selection(N=3, avoid_individuals_list=[individual_1])
 
@@ -268,14 +272,14 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 
 
-		#This should be a separately inputted block controlling how interpolation is run
-		if self.ga_input_dictionary['supercell_dimensions_list'][0] == 2:
+		#This should be a separately inputted block controlling how interpolation is run##################
+		if Na == 2:
 			discrete_interpolation_values = [1.0, 0.8, 0.0, 0.2] #one for each plane of perov atoms
-		if self.ga_input_dictionary['supercell_dimensions_list'][0] == 4:
+		if Na == 4:
 			discrete_interpolation_values = [1.0, 1.0, 1.0, 0.8, 0.0, 0.0, 0.0, 0.2]
 
 		def interpolation_function_da(da, db, dc):
-			transition_increment = 0.5/self.ga_input_dictionary['supercell_dimensions_list'][0] #distance between perf perov planes in a direction
+			transition_increment = 0.5/Na #distance between perf perov planes in a direction
 			transition_index = int(da/transition_increment)
 
 			return discrete_interpolation_values[transition_index]
@@ -283,10 +287,18 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		def interpolation_function_db(da, db, dc):
 			return interpolation_function_da(db, da, dc)
 
+		def interpolation_function_dc(da, db, dc):
+			return interpolation_function_da(dc, da, db)
+
 		if random.uniform(0.0, 1.0) >= 0.5:
 			interpolation_function_1 = interpolation_function_da
 		else:
 			interpolation_function_1 = interpolation_function_db
+
+		if Na == 2 and Nc == 2:
+			if random.uniform(0.0, 1.0) >= 0.66666:
+				interpolation_function_1 = interpolation_function_dc	
+
 
 		def interpolation_function_2(da, db, dc):
 			return 1.0 - interpolation_function_1(da, db, dc)
