@@ -51,7 +51,11 @@ class VaspInputSet(object):
 		submission script accordingly
 		"""
 
+		print "before mod", self.submission_script_file
+
 		self.submission_script_file = QueueAdapter.modify_number_of_cores_from_num_atoms(self.submission_script_file, self.structure.site_count)
+
+		print "after mod", self.submission_script_file
 
 	def set_lreal_from_structure_size(self):
 		if self.structure.site_count > 20:
