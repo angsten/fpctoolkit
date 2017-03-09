@@ -15,7 +15,6 @@ class VaspInputSet(object):
 	"""
 
 	def __init__(self, structure=None, kpoints=None, incar=None, potcar=None, submission_script_file=None):
-		print "**initVaspInputSet**"
 		self.structure = structure
 		self.incar = incar
 		self.kpoints = kpoints

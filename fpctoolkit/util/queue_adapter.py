@@ -337,6 +337,10 @@ class QueueAdapter(object):
 				raise Exception("Could not find node count line (or there are multiple) in submission file")
 			
 			line = submission_file[node_count_line_indices[0]]
+
+			print line
+			print int(line.split('=')[2])
+			print int( int(line.split('=')[2])/16 )
 			
 			return int( int(line.split('=')[2])/16 )
 
@@ -390,7 +394,6 @@ class QueueAdapter(object):
 			if node_count == 3:
 				return 12
 			if node_count == 4:
-				print "******************if node_count == 4"
 				return 16
 
 
