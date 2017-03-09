@@ -11,7 +11,7 @@ class GADriver(object):
 	Abstract parent class defining the specifics of the GA search, including operators and how individual calculation sets are defined.
 	"""
 
-	def __init__(self, ga_input_dictionary, calculation_set_input_dictionary):
+	def __init__(self, ga_input_dictionary, selection_function, calculation_set_input_dictionary):
 		"""
 		ga_input_dictionary controls how operators are performed and the rates at which various operators are randomly chosen to generate a new individual (a structure).
 
@@ -26,11 +26,15 @@ class GADriver(object):
 
 		ga_input_dictionary can also contain species lists, constraints, etc => dependent on the child class implementation.
 
+		selection_function is any function that looks like selection_function(population, number_of_individuals_to_return) and returns 
+		a list of individuals of length number_of_individuals_to_return that were selected from population.
+
 		See VaspRelaxation class for an example of what calculation_set_input_dictionary should look like. This input_dictionary
 		determines how the actual calculations are carried out for each individual in the population.
 		"""
 
 		self.ga_input_dictionary = ga_input_dictionary
+		self.selection_function = selection_function
 		self.calculation_set_input_dictionary = calculation_set_input_dictionary
 
 		self.individuals_per_generation = ParameterList(self.ga_input_dictionary['individuals_per_generation'])

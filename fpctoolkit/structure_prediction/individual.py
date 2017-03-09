@@ -36,6 +36,13 @@ class Individual(object):
 			self.save()
 
 	@property
+	def fitness(self):
+		"""
+		In all inherited classes, this function should return some float that increases with greater fitness
+		"""
+		return -self.energy
+
+	@property
 	def complete(self):
 		return self.calculation_set.complete
 

@@ -55,6 +55,14 @@ class Population(object):
 		for basename in elligible_directory_basenames:
 			self.individuals.append(self.directory_to_individual_conversion_method(Path.join(path, basename)))
 
+	def remove_individual(self, individual_to_remove):
+		"""
+		Compares addresses to find and remove individual in self.individuals
+		"""
+
+		individual = self.individuals.remove(individual_to_remove)
+
+
 
 	def default_directory_to_individual_conversion_method(self, path):
 		return Individual(path=path)
@@ -75,53 +83,10 @@ class Population(object):
 
 
 	def sort(self):
-		"""Sorts self.individuals list by energy"""
+		"""Sorts self.individuals list by fitness (least fit at bottom, most fit at top)"""
 
-		self.individuals = sorted(self.individuals, key = lambda individual: individual.energy)
+		self.individuals = sorted(self.individuals, key = lambda individual: -individual.fitness)
 		
-
-	def get_individual_by_deterministic_tournament_selection(self, N=3, avoid_individuals_list=None):
-		"""
-		Pits N individuals against each other, one with lowest energy is automatically chosen.
-
-		does not return individual if in avoid_individuals_list - retries in this case
-		"""
-
-		print "get_individual_by_deterministic_tournament_selection called"
-
-		if avoid_individuals_list == None:
-			avoid_individuals_list = []
-
-		if len(self.individuals) < (N + len(avoid_individuals_list)):
-			raise Exception("Not enough individuals in the population to perform this type of selection")
-
-		self.sort
-
-		print "\n\nafter sorting, pop looks like: "
-		print self
-
-		for try_count in range(81):
-			if try_count == 80:
-				raise Exception("Failed to select individual")
-			
-			random_number_list = []
-			for i in range(N):
-				random_number_list.append(random.randint(0, len(self.individuals)-1)) #########fix - selects repeats
-
-			print "random_number_list before sorting: ", random_number_list
-			random_number_list.sort()
-			print "random_number_list after sorting: ", random_number_list
-
-			individual = self.individuals[random_number_list[0]] #list is sorted - can just take smallest number
-
-			print "Selecting individual ", individual.calculation_set.path
-			print "This is index ", random_number_list[0]
-
-			if individual not in avoid_individuals_list:
-				return individual
-			else:
-				print "Avoiding this individual - retrying"
-				continue
 
 
 

@@ -15,6 +15,7 @@ from fpctoolkit.util.random_selector import RandomSelector
 from fpctoolkit.util.vector import Vector
 from fpctoolkit.util.distribution import Distribution
 from fpctoolkit.util.vector_distribution import VectorDistribution
+from fpctoolkit.structure_prediction.selector import Selector
 
 class GADriver100PerovskiteEpitaxy(GADriver):
 	"""
@@ -232,11 +233,14 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		Nb = self.ga_input_dictionary['supercell_dimensions_list'][1]
 		Nc = self.ga_input_dictionary['supercell_dimensions_list'][2]
 
-		individual_1 = population_of_last_generation.get_individual_by_deterministic_tournament_selection(N=3)
-		individual_2 = population_of_last_generation.get_individual_by_deterministic_tournament_selection(N=3, avoid_individuals_list=[individual_1])
+		individuals_list = self.selection_function(population=population_of_last_generation, number_of_individuals_to_return=2)
 
-		self.parent_structures_list = [copy.deepcopy(individual_1.final_structure), copy.deepcopy(individual_2.final_structure)]
-		self.parent_paths_list = [individual_1.calculation_set.path, individual_2.calculation_set.path]
+
+
+		#everything below should be factored out into a function that takes in two structures (and interpolators) and returns one
+
+		self.parent_structures_list = [copy.deepcopy(individual.final_structure) for individual in individuals_list]
+		self.parent_paths_list = [individual.calculation_set.path for individual in individuals_list]
 		site_mapping_collections_list = []
 
 		for i, parent_structure in enumerate(self.parent_structures_list):
