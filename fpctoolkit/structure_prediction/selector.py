@@ -27,23 +27,23 @@ class Selector(object):
 
 
 	@staticmethod 
-	def get_selection_function_of_N_unique_individuals_by_x_way_deterministic_tournament_selection(population, number_of_individuals_to_return, number_of_competitors):
+	def get_selection_function_for_selecting_N_unique_individuals_by_x_way_deterministic_tournament_selection(number_of_competitors):
 		"""
-		Returns a selection function by closure (curried function).
+		Returns a tournament selection function by closure (curried function).
 		"""
 
-		def selection_function(population_inner, number_of_individuals_to_return_inner):
-			if len(population_inner) < ( (number_of_individuals_to_return_inner-1) + number_of_competitors):
+		def selection_function(population, number_of_individuals_to_return):
+			if len(population) < ( (number_of_individuals_to_return-1) + number_of_competitors):
 				raise Exception("Not enough individuals in population to conduct this selection method.")
 
 			individuals_list = []
 
-			poulation_copy = copy.deepcopy(population_inner)
+			poulation_copy = copy.deepcopy(population)
 
-			for i in range(number_of_individuals_to_return_inner):
+			for i in range(number_of_individuals_to_return):
 				individual = Selector.get_individual_by_deterministic_tournament_selection(population_copy, number_of_competitors=number_of_competitors)
 				population_copy.remove_individual(individual)
 
 			return individuals_list
 
-		return selection_function(population_inner=population, number_of_individuals_to_return_inner=number_of_individuals_to_return)
+		return selection_function
