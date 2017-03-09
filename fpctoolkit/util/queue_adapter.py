@@ -303,7 +303,7 @@ class QueueAdapter(object):
 				node_count = 2
 			if num_atoms >= 80:
 				node_count = 4
-			if num_atoms >= 160:
+			if num_atoms >= 160 and QueueAdapter.host == 'Fenrir':
 				node_count = 8
 
 			submission_file = QueueAdapter.set_number_of_nodes(submission_file, node_count)
@@ -337,10 +337,6 @@ class QueueAdapter(object):
 				raise Exception("Could not find node count line (or there are multiple) in submission file")
 			
 			line = submission_file[node_count_line_indices[0]]
-
-			# print line
-			# print int(line.split('=')[2])
-			# print int( int(line.split('=')[2])/16 ) ##################################################################################
 			
 			return int( int(line.split('=')[2])/16 )
 
@@ -365,10 +361,6 @@ class QueueAdapter(object):
 
 			if len(node_count_line_indices) != 1:
 				raise Exception("Could not find node count line (or there are multiple) in submission file")
-			
-			# print "in set_number_of_nodes"
-			# print submission_file
-			# print "node count is ", node_count ######################################################################################
 
 			processor_count = 16*node_count
 			submission_file[node_count_line_indices[0]] = "#PBS -l nodes=1:ppn=" + str(processor_count) #should never change nodes from 1 - only change num processors

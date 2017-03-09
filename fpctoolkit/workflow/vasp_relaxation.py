@@ -140,24 +140,65 @@ class VaspRelaxation(VaspRunSet):
 		if self.submission_script_modification_keys_list:
 			submission_script_file = QueueAdapter.modify_submission_script(QueueAdapter.get_submission_file(), self.submission_script_modification_keys_list[self.run_count])
 
-		print "first rleax sub script", submission_script_file
-
 		input_set = VaspInputSet(structure, kpoints, incar, submission_script_file=submission_script_file)
-
-		print '\n\n\n\n'
-		print "second rleax sub script", input_set.submission_script_file
 
 		#Override node count in submission script over the auto generated count based on atom count
 		if self.submission_node_count_list:
 			input_set.set_node_count(self.submission_node_count_list[self.run_count])
 
-		print '\n\n\n\n'
-		print "third rleax sub script", input_set.submission_script_file
+		#override npar if inputted
+		for key in self.incar_modifier_lists_dictionary.keys():
+			if key.upper() == 'INCAR':
+				input_set.incar['npar'] = self.incar_modifier_lists_dictionary['npar'][self.run_count]
 
 		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose, wavecar_path=self.get_wavecar_path())
 
 		#self.run_count += 1 #increment at end - this tracks how many runs have been created up to now
 		self.vasp_run_list.append(vasp_run)
+
+	def get_next_incar(self):
+		"""
+		Returns the incar corresponding to the next run in the relaxation set
+		"""
+
+		incar_modifications_dict = {} #will look like {'ediff':base_ediff, 'encut':encut, ...}
+		for key, value_list in self.incar_modifier_lists_dictionary.items():
+			incar_modifications_dict[key] = value_list[self.run_count]
+
+		if self.run_count < self.external_relaxation_count:
+			incar = IncarMaker.get_external_relaxation_incar(incar_modifications_dict)
+		else:
+			incar = IncarMaker.get_static_incar(incar_modifications_dict)
+
+		return incar
+	
+	def get_wavecar_path(self):
+		"""
+		If lwave of current run is true, returns path to wavecar of current run, else None
+		"""
+		if self.run_count == 0:
+			return None
+
+		current_run = self.get_current_vasp_run()
+		if current_run.incar['lwave']:
+			wavecar_path = current_run.get_extended_path('WAVECAR')
+
+		return wavecar_path if Path.exists(wavecar_path) else None
+
+	def get_next_structure(self):
+		"""If first relax, return self.input_initial_structure, else, get the contcar from the current run"""
+
+		if self.run_count == 0:
+			return self.input_initial_structure
+
+		current_contcar_path = self.get_current_vasp_run().get_extended_path('CONTCAR')
+
+		if not Path.exists(current_contcar_path):
+			raise Exception("Method get_next_structure called, but Contcar for current run doesn't exist")
+		elif not self.get_current_vasp_run().complete:
+			raise Exception("Method get_next_structure called, but current run is not yet complete")
+
+		return Structure(current_contcar_path)
 
 	@property
 	def complete(self):
@@ -229,50 +270,6 @@ class VaspRelaxation(VaspRunSet):
 
 		return data_dictionary
 
-
-	def get_next_incar(self):
-		"""
-		Returns the incar corresponding to the next run in the relaxation set
-		"""
-
-		incar_modifications_dict = {} #will look like {'ediff':base_ediff, 'encut':encut, ...}
-		for key, value_list in self.incar_modifier_lists_dictionary.items():
-			incar_modifications_dict[key] = value_list[self.run_count]
-
-		if self.run_count < self.external_relaxation_count:
-			incar = IncarMaker.get_external_relaxation_incar(incar_modifications_dict)
-		else:
-			incar = IncarMaker.get_static_incar(incar_modifications_dict)
-
-		return incar
-	
-	def get_wavecar_path(self):
-		"""
-		If lwave of current run is true, returns path to wavecar of current run, else None
-		"""
-		if self.run_count == 0:
-			return None
-
-		current_run = self.get_current_vasp_run()
-		if current_run.incar['lwave']:
-			wavecar_path = current_run.get_extended_path('WAVECAR')
-
-		return wavecar_path if Path.exists(wavecar_path) else None
-
-	def get_next_structure(self):
-		"""If first relax, return self.input_initial_structure, else, get the contcar from the current run"""
-
-		if self.run_count == 0:
-			return self.input_initial_structure
-
-		current_contcar_path = self.get_current_vasp_run().get_extended_path('CONTCAR')
-
-		if not Path.exists(current_contcar_path):
-			raise Exception("Method get_next_structure called, but Contcar for current run doesn't exist")
-		elif not self.get_current_vasp_run().complete:
-			raise Exception("Method get_next_structure called, but current run is not yet complete")
-
-		return Structure(current_contcar_path)
 
 	def get_next_run_path_basename(self):
 		"""
