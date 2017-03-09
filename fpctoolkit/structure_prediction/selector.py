@@ -42,6 +42,9 @@ class Selector(object):
 
 			for i in range(number_of_individuals_to_return):
 				individual = Selector.get_individual_by_deterministic_tournament_selection(population_copy, number_of_competitors=number_of_competitors)
+
+				indivduals_list.append(individual)
+
 				population_copy.remove_individual(individual)
 
 			return individuals_list
