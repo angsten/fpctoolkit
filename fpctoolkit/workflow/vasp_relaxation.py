@@ -140,11 +140,19 @@ class VaspRelaxation(VaspRunSet):
 		if self.submission_script_modification_keys_list:
 			submission_script_file = QueueAdapter.modify_submission_script(QueueAdapter.get_submission_file(), self.submission_script_modification_keys_list[self.run_count])
 
+		print "first rleax sub script", submission_script_file
+
 		input_set = VaspInputSet(structure, kpoints, incar, submission_script_file=submission_script_file)
+
+		print '\n\n\n\n'
+		print "second rleax sub script", input_set.submission_script_file
 
 		#Override node count in submission script over the auto generated count based on atom count
 		if self.submission_node_count_list:
 			input_set.set_node_count(self.submission_node_count_list[self.run_count])
+
+		print '\n\n\n\n'
+		print "third rleax sub script", input_set.submission_script_file
 
 		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose, wavecar_path=self.get_wavecar_path())
 

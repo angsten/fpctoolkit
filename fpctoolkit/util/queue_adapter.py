@@ -366,9 +366,9 @@ class QueueAdapter(object):
 			if len(node_count_line_indices) != 1:
 				raise Exception("Could not find node count line (or there are multiple) in submission file")
 			
-			print "in set_number_of_nodes"
-			print submission_file
-			print "node count is ", node_count
+			# print "in set_number_of_nodes"
+			# print submission_file
+			# print "node count is ", node_count ######################################################################################
 
 			processor_count = 16*node_count
 			submission_file[node_count_line_indices[0]] = "#PBS -l nodes=1:ppn=" + str(processor_count) #should never change nodes from 1 - only change num processors
