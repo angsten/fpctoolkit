@@ -85,7 +85,7 @@ class Population(object):
 	def sort(self):
 		"""Sorts self.individuals list by fitness (least fit at bottom, most fit at top)"""
 
-		self.individuals = sorted(self.individuals, key = lambda individual: -individual.fitness)
+		self.individuals = sorted(self.individuals, key = lambda individual: individual.fitness, reverse=True)
 		
 
 
