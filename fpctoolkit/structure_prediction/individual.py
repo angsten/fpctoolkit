@@ -10,16 +10,26 @@ class Individual(object):
 	Just a calculation_set class wrapper with some added functionalities.
 	"""
 
-	def __init__(self, calculation_set, structure_creation_id_string=None, parent_structures_list=None, parent_paths_list=None):
-		self.calculation_set = calculation_set
+	def __init__(self, path=None, calculation_set=None, structure_creation_id_string=None, parent_structures_list=None, parent_paths_list=None):
 
-		self.structure_creation_id_string = structure_creation_id_string if structure_creation_id_string else self.get_structure_creation_id_string()
-		self.parent_structures_list = parent_structures_list if parent_structures_list else self.get_parent_structures_list()
-		self.parent_paths_list = parent_paths_list if parent_paths_list else self.get_parent_paths_list()
 
-		self.write_structure_creation_id_string_to_file() #store how this individual was made
-		self.write_parent_structures_to_poscar_files()
-		self.write_parent_paths_to_file()
+		if not calculation_set:
+			if not path:
+				raise Exception("Path must be given if no calculation set is provided.")
+
+			self.load()
+		else:
+			self.calculation_set = calculation_set
+
+			self.structure_creation_id_string = structure_creation_id_string if structure_creation_id_string else self.get_structure_creation_id_string()
+			self.parent_structures_list = parent_structures_list if parent_structures_list else self.get_parent_structures_list()
+			self.parent_paths_list = parent_paths_list if parent_paths_list else self.get_parent_paths_list()
+
+			self.write_structure_creation_id_string_to_file() #store how this individual was made
+			self.write_parent_structures_to_poscar_files()
+			self.write_parent_paths_to_file()
+
+			self.save()
 
 	@property
 	def complete(self):
@@ -100,3 +110,28 @@ class Individual(object):
 				file += path
 
 			file.write_to_path(self.get_extended_path(".parent_paths"))
+
+
+	def save(self):
+		"""Saves self to a pickled file"""
+
+		file = open(self.get_save_path(), 'w')
+		file.write(cPickle.dumps(self.__dict__))
+		file.close()
+
+	def load(self):
+		"""
+		Loads the previously saved pickled instance of self at self.path.
+		"""
+
+		if not Path.exists(self.get_save_path()):
+			raise Exception("Cannot load individual: no instance saved to file.")
+
+		file = open(self.get_save_path(), 'r')
+		data_pickle = file.read()
+		file.close()
+
+		self.__dict__ = cPickle.loads(data_pickle)
+
+	def get_save_path(self):
+		return self.get_extended_path(".individual_pickle")
