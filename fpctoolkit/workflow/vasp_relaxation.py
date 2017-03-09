@@ -148,7 +148,7 @@ class VaspRelaxation(VaspRunSet):
 
 		#override npar if inputted
 		for key in self.incar_modifier_lists_dictionary.keys():
-			if key.upper() == 'INCAR':
+			if key.upper() == 'NPAR':
 				input_set.incar['npar'] = self.incar_modifier_lists_dictionary['npar'][self.run_count]
 
 		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose, wavecar_path=self.get_wavecar_path())
