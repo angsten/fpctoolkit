@@ -145,6 +145,7 @@ class VaspRelaxation(VaspRunSet):
 		#Override node count in submission script over the auto generated count based on atom count
 		if self.submission_node_count_list:
 			input_set.set_node_count(self.submission_node_count_list[self.run_count])
+			input_set.set_npar_from_number_of_cores()
 
 		#override npar if inputted
 		for key in self.incar_modifier_lists_dictionary.keys():

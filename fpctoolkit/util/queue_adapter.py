@@ -297,21 +297,30 @@ class QueueAdapter(object):
 		on the size of a calculation
 		"""
 
-		if QueueAdapter.host in ['Fenrir', 'Asathor']:
+		if QueueAdapter.host in ['Fenrir']:
 			node_count = 1
 			if num_atoms >= 40:
 				node_count = 2
 			if num_atoms >= 80:
 				node_count = 4
-			if num_atoms >= 160 and QueueAdapter.host == 'Fenrir':
+			if num_atoms >= 160:
 				node_count = 8
 
-			submission_file = QueueAdapter.set_number_of_nodes(submission_file, node_count)
+		elif QueueAdapter.host in ['Asathor']:
+			node_count = 1
+			if num_atoms >= 20:
+				node_count = 2
+			if num_atoms >= 80:
+				node_count = 2
+			if num_atoms >= 160:
+				node_count = 4
 			
 		elif QueueAdapter.host == 'Tom_hp':
-			pass
+			node_count = 1
 		else:
 			raise Exception("QueueAdapter.host not supported")
+
+		submission_file = QueueAdapter.set_number_of_nodes(submission_file, node_count)
 
 		return submission_file
 
@@ -382,15 +391,15 @@ class QueueAdapter(object):
 		if QueueAdapter.host in ['Fenrir']:
 			return 2 #this is almost always the best choice on fenrir
 
-		elif QueueAdapter.host in ['Asathor']: ##################################figure these out better
+		elif QueueAdapter.host in ['Asathor']:
 			if node_count == 1:
-				return 4
+				return 1
 			if node_count == 2:
-				return 8
+				return 1
 			if node_count == 3:
-				return 12
+				return 4
 			if node_count == 4:
-				return 16
+				return 4
 
 
 		elif QueueAdapter.host == 'Tom_hp':
