@@ -278,7 +278,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		#This should be a separately inputted block controlling how interpolation is run##################
 		if Na == 2:
-			discrete_interpolation_values = [1.0, 0.8, 0.0, 0.2] #one for each plane of perov atoms
+			discrete_interpolation_values = [1.0, 1.0, 0.0, 0.0] #one for each plane of perov atoms
 		if Na == 4:
 			discrete_interpolation_values = [1.0, 1.0, 1.0, 0.8, 0.0, 0.0, 0.0, 0.2]
 
