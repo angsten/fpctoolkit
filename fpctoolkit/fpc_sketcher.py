@@ -25,6 +25,12 @@ from fpctoolkit.util.distribution import Distribution
 from fpctoolkit.util.vector_distribution import VectorDistribution
 
 
+
+
+print Path.split_into_components('~/bin')
+
+
+
 # max_x = 10.0
 
 # def func(x, n, max_x):
@@ -74,31 +80,31 @@ from fpctoolkit.util.vector_distribution import VectorDistribution
 # ga_path = "C:\Users\Tom\Documents\Coding\python_work\workflow_test\ga_test"
 # Path.remove(ga_path)
 
-calculation_set_input_dictionary = {
-	'external_relaxation_count': 1,
-	'kpoint_schemes_list': ['Monkhorst'],
-	'kpoint_subdivisions_lists': [[2, 2, 2]],
-	'submission_script_modification_keys_list': ['100'],
-	'submission_node_count_list': [1],
-	'ediff': [0.001],
-	'encut': [400]
-}
+# calculation_set_input_dictionary = {
+# 	'external_relaxation_count': 1,
+# 	'kpoint_schemes_list': ['Monkhorst'],
+# 	'kpoint_subdivisions_lists': [[2, 2, 2]],
+# 	'submission_script_modification_keys_list': ['100'],
+# 	'submission_node_count_list': [1],
+# 	'ediff': [0.001],
+# 	'encut': [400]
+# }
 
-ga_input_dictionary = {
-	'species_list':['K', 'V', 'O'],
-	'epitaxial_lattice_constant': 15.16,
-	'supercell_dimensions_list': [4, 4, 1],
-	'max_number_of_generations': 1,
-	'individuals_per_generation': [3],
-	'random_fractions_list': [1.0, 0.3, 0.2],
-	'mate_fractions_list': [0.0, 0.7, 0.8]
-}
+# ga_input_dictionary = {
+# 	'species_list':['K', 'V', 'O'],
+# 	'epitaxial_lattice_constant': 15.16,
+# 	'supercell_dimensions_list': [4, 4, 1],
+# 	'max_number_of_generations': 1,
+# 	'individuals_per_generation': [3],
+# 	'random_fractions_list': [1.0, 0.3, 0.2],
+# 	'mate_fractions_list': [0.0, 0.7, 0.8]
+# }
 
-ga_driver = GADriver100PerovskiteEpitaxy(ga_input_dictionary, calculation_set_input_dictionary)
+# ga_driver = GADriver100PerovskiteEpitaxy(ga_input_dictionary, calculation_set_input_dictionary)
 
-for i in range(10):
-	struct = ga_driver.get_random_structure(None)
-	struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\disp_"+str(i)+".vasp")
+# for i in range(10):
+# 	struct = ga_driver.get_random_structure(None)
+# 	struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\disp_"+str(i)+".vasp")
 
 
 # ga_structure_predictor = GAStructurePredictor(ga_path, ga_driver)
@@ -145,26 +151,26 @@ for i in range(10):
 
 
 
-class self_c:
-	def __init__(self):
-		data_path = ""
+# class self_c:
+# 	def __init__(self):
+# 		data_path = ""
 
-	def assertEqual(self, left_arg, right_arg = None):
-		if not right_arg:
-			print left_arg
-		else:
-			print left_arg == right_arg
+# 	def assertEqual(self, left_arg, right_arg = None):
+# 		if not right_arg:
+# 			print left_arg
+# 		else:
+# 			print left_arg == right_arg
 
-	def assertTrue(self, cond):
-		print cond
+# 	def assertTrue(self, cond):
+# 		print cond
 
-def get_string(printed):
-	out_str = '"'
-	for line in printed:
-		out_str += line + r'\n'
-	return out_str + '"'
+# def get_string(printed):
+# 	out_str = '"'
+# 	for line in printed:
+# 		out_str += line + r'\n'
+# 	return out_str + '"'
 
-self = self_c()
+# self = self_c()
 
 #self.data_path = "C:/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/tests/data_structure/"
 # self.data_path = "C:\Users\Tom\Documents\Coding\python_work\workflow_test"

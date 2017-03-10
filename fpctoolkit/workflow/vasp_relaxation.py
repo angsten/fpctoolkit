@@ -55,7 +55,7 @@ class VaspRelaxation(VaspRunSet):
 		If no input_dictionary is provided, this class will attempt to load a saved pickled instance.
 		"""
 
-		self.path = Path.clean(path)
+		self.path = Path.expand_path(path)
 
 		if not input_dictionary:
 			self.load()

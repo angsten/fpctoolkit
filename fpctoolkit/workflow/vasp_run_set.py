@@ -14,7 +14,7 @@ class VaspRunSet(object):
 	"""
 
 	def __init__(self, path):
-		self.path = path
+		self.path = Path.expand_path(path)
 
 		self.load()
 

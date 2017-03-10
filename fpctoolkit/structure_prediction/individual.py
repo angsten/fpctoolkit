@@ -19,7 +19,7 @@ class Individual(object):
 			if not path:
 				raise Exception("Path must be given if no calculation set is provided.")
 
-			self.path = path
+			self.path = Path.expand_path(path)
 			self.load()
 		else:
 			self.path = calculation_set.path
@@ -150,3 +150,18 @@ class Individual(object):
 
 	def get_save_path(self):
 		return self.get_extended_path(".individual_pickle")
+
+	def get_tag_string_from_path(self):
+		"""
+		Takes last two components of self.path, concats them together with a '_' separator, and returns this tag string.
+
+		self.path may look like /home/.../generation_1/individual_3 and returns 'generation_1_individual_3'
+		"""
+
+		path_components_list = Path.split_into_components(self.path)
+
+		if len(path_components_list) < 2:
+			raise Exception("Cannot generate an individual tag string: self.path is too short")
+
+		return path_components_list[-2] + '_' + path_components_list[-1]
+

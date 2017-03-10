@@ -4,6 +4,66 @@
 		"selected_items":
 		[
 			[
+				"in",
+				"individual_index"
+			],
+			[
+				"popul",
+				"population"
+			],
+			[
+				"rank",
+				"rank_fraction"
+			],
+			[
+				"num",
+				"number_of_individuals_to_return"
+			],
+			[
+				"popu",
+				"population"
+			],
+			[
+				"indi",
+				"individual_to_remove"
+			],
+			[
+				"indiv",
+				"individual_to_remove"
+			],
+			[
+				"random",
+				"random_integer"
+			],
+			[
+				"rand",
+				"random_integers_list"
+			],
+			[
+				"rando",
+				"random_integer"
+			],
+			[
+				"indvi",
+				"individuals_list"
+			],
+			[
+				"populat",
+				"population_of_last_generation"
+			],
+			[
+				"sele",
+				"selection_function"
+			],
+			[
+				"def",
+				"default_directory_to_individual_conversion_method"
+			],
+			[
+				"append",
+				"append_individuals_at_path"
+			],
+			[
 				"incar_mo",
 				"incar_modifier_lists_dictionary"
 			],
@@ -196,10 +256,6 @@
 				"cumulative_probability"
 			],
 			[
-				"in",
-				"inverse_cumulative_function"
-			],
-			[
 				"cal",
 				"calculate_inverse_cumulative_function"
 			],
@@ -290,22 +346,6 @@
 			[
 				"ind",
 				"Individual"
-			],
-			[
-				"indi",
-				"individual_1"
-			],
-			[
-				"indiv",
-				"individual_1"
-			],
-			[
-				"random",
-				"random_number_list"
-			],
-			[
-				"rand",
-				"randint"
 			],
 			[
 				"ran",
@@ -440,10 +480,6 @@
 				"return_vector"
 			],
 			[
-				"popu",
-				"population_of_last_generation"
-			],
-			[
 				"calcu",
 				"calculation_set"
 			],
@@ -478,61 +514,53 @@
 			[
 				"rep",
 				"replica_list"
-			],
-			[
-				"replia",
-				"replica_list"
-			],
-			[
-				"std_",
-				"std_out_path"
-			],
-			[
-				"curr",
-				"current_run"
-			],
-			[
-				"stra",
-				"strain_tensor"
-			],
-			[
-				"minim",
-				"minimum_atomic_distance"
-			],
-			[
-				"posi",
-				"position_1"
-			],
-			[
-				"distances_",
-				"distances_squared_list"
-			],
-			[
-				"coord",
-				"coordinate"
-			],
-			[
-				"fra",
-				"fractional_coordinate_1"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "fpctoolkit/workflow/vasp_run_set.py",
+			"file": "fpctoolkit/structure_prediction/ga_structure_predictor.py",
 			"settings":
 			{
-				"buffer_size": 1207,
+				"buffer_size": 2392,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/fpc_sketcher.py",
+			"file": "fpctoolkit/structure_prediction/population_collection.py",
 			"settings":
 			{
-				"buffer_size": 10522,
+				"buffer_size": 4164,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/structure_prediction/population.py",
+			"settings":
+			{
+				"buffer_size": 2988,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/structure_prediction/selector.py",
+			"settings":
+			{
+				"buffer_size": 4132,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/structure_prediction/ga_driver.py",
+			"settings":
+			{
+				"buffer_size": 5084,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
@@ -540,33 +568,25 @@
 			"file": "fpctoolkit/structure_prediction/ga_driver_100_perovskite_epitaxy.py",
 			"settings":
 			{
-				"buffer_size": 12810,
+				"buffer_size": 12898,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/structure/structure.py",
+			"file": "fpctoolkit/workflow/vasp_run_set.py",
 			"settings":
 			{
-				"buffer_size": 14339,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/workflow/vasp_relaxation.py",
-			"settings":
-			{
-				"buffer_size": 12877,
+				"buffer_size": 1270,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/io/vasp/vasp_input_set.py",
+			"file": "fpctoolkit/structure_prediction/individual.py",
 			"settings":
 			{
-				"buffer_size": 2548,
+				"buffer_size": 4245,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -577,14 +597,6 @@
 			{
 				"buffer_size": 14899,
 				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/workflow/vasp_run.py",
-			"settings":
-			{
-				"buffer_size": 12468,
 				"line_ending": "Windows"
 			}
 		}
@@ -775,29 +787,33 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util"
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow"
 	],
 	"file_history":
 	[
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/distribution.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/misc.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/fpc_sketcher.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/path.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/ga_driver_100_perovskite_epitaxy.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/queue_adapter.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/vasp_input_set.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/npar_tester.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/individual.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/ga_driver.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/ga_structure_predictor.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/population_collection.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/population.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/ga_driver_100_perovskite_epitaxy.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/vasp_input_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop/dead_code_drop.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar_element_mapping.json",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/fpc_sketcher.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/epitaxial_100_ga_global_structure_finder.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/ediff_relax_convergence.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/path.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_mapping_collection.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/distribution.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/vector_distribution.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/vector.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_collection.py",
@@ -813,12 +829,10 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/file.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/encut_kpoints_converger.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/__init__.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/queue_adapter.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/outcar.py",
 		"/C/Users/Tom/Documents/Berkeley/courses/ME C237 (Stat Mech for Engineers)/hw1_simulation.py",
 		"/C/Users/Tom/.bashrc",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar/poscar_small",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/parameter_list.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/constrained_lattice.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/kpoints.py",
@@ -905,8 +919,7 @@
 		"/C/Users/Tom/Documents/Coding/Web Development/Practice/t.js",
 		"/C/Users/Tom/Documents/Coding/Web Development/BotBreaker/index.html",
 		"/C/Users/Tom/Documents/Coding/Web Development/Practice/Rally Racer/index.html",
-		"/C/Users/Tom/Documents/Coding/Web Development/BotBreaker/lib/game_view.js",
-		"/C/Users/Tom/Documents/Coding/Web Development/Practice/Rally Racer/lib/game_view.js"
+		"/C/Users/Tom/Documents/Coding/Web Development/BotBreaker/lib/game_view.js"
 	],
 	"find":
 	{
@@ -922,9 +935,21 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
+			"number_of_individuals_to_return_inner",
+			"population_inner",
+			"number_of_individuals_to_return",
+			"population",
+			"random_indices_list",
+			"random_number_list",
+			"N",
+			"self",
+			"get_individual_by_deterministic_tournament_selection",
+			"N",
+			"Individual",
+			"generation_directory_path",
 			"self.ga_input_dictionary['supercell_dimensions_list'][0]",
 			"print",
 			"get_optimal_npar",
@@ -1040,19 +1065,7 @@
 			"Na",
 			"iteration_range",
 			"position_2",
-			"position_1",
-			"components",
-			" (",
-			"verbose",
-			"VaspRun",
-			"get_current_vasp_run",
-			"write_input_files_to_path",
-			"external_relax_basename_string",
-			"job_id_string()",
-			"special_handler",
-			"write_file_list_to_path",
-			"self.",
-			"self"
+			"position_1"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1081,24 +1094,114 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 8,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "fpctoolkit/workflow/vasp_run_set.py",
+					"file": "fpctoolkit/structure_prediction/ga_structure_predictor.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1207,
+						"buffer_size": 2392,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								111,
-								111
+								2,
+								2
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "fpctoolkit/structure_prediction/population_collection.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4164,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								90,
+								90
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "fpctoolkit/structure_prediction/population.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2988,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2980,
+								2980
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "fpctoolkit/structure_prediction/selector.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4132,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3238,
+								3238
 							]
 						],
 						"settings":
@@ -1110,24 +1213,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "fpctoolkit/fpc_sketcher.py",
+					"buffer": 4,
+					"file": "fpctoolkit/structure_prediction/ga_driver.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10522,
+						"buffer_size": 5084,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3421,
-								3708
+								2246,
+								2246
 							]
 						],
 						"settings":
@@ -1136,28 +1239,58 @@
 							"syntax": "Packages/Python/Python.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": -0.0,
-						"translation.y": 1344.0,
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "fpctoolkit/structure_prediction/ga_driver_100_perovskite_epitaxy.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12898,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								774,
+								721
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "fpctoolkit/structure_prediction/ga_driver_100_perovskite_epitaxy.py",
+					"buffer": 6,
+					"file": "fpctoolkit/workflow/vasp_run_set.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12810,
+						"buffer_size": 1270,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								10982,
-								10982
+								111,
+								97
 							]
 						],
 						"settings":
@@ -1167,27 +1300,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3612.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "fpctoolkit/structure/structure.py",
+					"buffer": 7,
+					"file": "fpctoolkit/structure_prediction/individual.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14339,
+						"buffer_size": 4245,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1531,
+								1531
 							]
 						],
 						"settings":
@@ -1197,74 +1330,14 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1428.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "fpctoolkit/workflow/vasp_relaxation.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12877,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5665,
-								5665
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1578.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "fpctoolkit/io/vasp/vasp_input_set.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2548,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1081,
-								1112
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 168.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
+					"buffer": 8,
 					"file": "fpctoolkit/util/queue_adapter.py",
 					"semi_transient": false,
 					"settings":
@@ -1276,8 +1349,8 @@
 						"selection":
 						[
 							[
-								9940,
-								9940
+								10649,
+								10649
 							]
 						],
 						"settings":
@@ -1287,40 +1360,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3864.0,
+						"translation.y": 4200.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "fpctoolkit/workflow/vasp_run.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12468,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								435,
-								368
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 630.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]

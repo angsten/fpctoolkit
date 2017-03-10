@@ -6,6 +6,9 @@ import fpctoolkit.util.string_util as su
 class Path(object):
 	@staticmethod
 	def expand_path(path):
+		"""
+		Returns absolute and expanded path. Setting path='~/bin' will return /home/angsten/bin   path='../bin' will return /home/angsten/bin
+		"""
 		return os.path.abspath(os.path.expanduser(path))
 
 	@staticmethod
@@ -68,6 +71,37 @@ class Path(object):
 	@staticmethod
 	def is_empty(path):
 		return os.listdir(path) == []
+
+	@staticmethod
+	def split_into_components(path):
+		"""
+		Returns list of componenents making up path:
+		Path.split_into_components('/home/angsten/bin/') = ['home', 'angsten', 'bin']
+		Path.split_into_components('/home/angsten/bin') = ['home', 'angsten', 'bin']
+		Path.split_into_components('/') = []
+		Path.split_into_components('') = []
+		Path.split_into_components('random_string') = []
+		Path.split_into_components('./angsten/ball/to') = ['.', 'angsten', 'ball', 'to']
+		Path.split_into_components('../angsten/ball/to') = ['..', 'angsten', 'ball', 'to']
+
+		**This function is ONLY compatible with unix operating systems.**
+		"""
+
+		path_components_list = []
+		sub_path = path
+
+		while sub_path not in ['', '/']:
+			split_pair = os.path.split(sub_path)
+			component_to_append = split_pair[1]
+
+			if component_to_append != '':
+				path_components_list.append(component_to_append)
+
+			sub_path = split_pair[0]
+
+		path_components_list.reverse()
+
+		return path_components_list
 
 	@staticmethod
 	def get_list_of_files_at_path(path):
