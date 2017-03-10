@@ -77,6 +77,7 @@ class Selector(object):
 			raise Exception("Distribution function returned value outside of range 0.0 and 1.0 inclusive.")
 
 		individual_index = int( round( rank_fraction*(len(population)-1) ) )
+		print individual_index
 
 		return population[individual_index]
 
