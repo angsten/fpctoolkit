@@ -67,6 +67,7 @@ class Selector(object):
 		by len(population)-1 and rounded to the nearest integer (not floored) to get the index of the individual in the sorted population.
 
 		probability_distribution_function should be a funciton returning a floating point number between 0 and 1 inclusive with some distribution.
+		Favoring higher fitness individuals requires a distribution that gets larger in probability as x nears 0.0.
 		"""
 
 		population.sort() #sort by fitness - most fit individual is at population[0], least at population[-1]
@@ -77,7 +78,6 @@ class Selector(object):
 			raise Exception("Distribution function returned value outside of range 0.0 and 1.0 inclusive.")
 
 		individual_index = int( round( rank_fraction*(len(population)-1) ) )
-		print individual_index
 
 		return population[individual_index]
 
