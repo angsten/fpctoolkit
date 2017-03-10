@@ -340,7 +340,7 @@ class QueueAdapter(object):
 			if node_count == 3:
 				return 4
 			if node_count == 4:
-				return 4
+				return 8
 
 
 		elif QueueAdapter.host == 'Tom_hp':
