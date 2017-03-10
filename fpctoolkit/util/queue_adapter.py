@@ -308,7 +308,7 @@ class QueueAdapter(object):
 
 		elif QueueAdapter.host in ['Asathor']:
 			node_count = 1
-			if num_atoms >= 20:
+			if num_atoms >= 40:
 				node_count = 2
 			if num_atoms >= 80:
 				node_count = 2

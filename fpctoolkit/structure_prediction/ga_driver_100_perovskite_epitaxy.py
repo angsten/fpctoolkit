@@ -68,7 +68,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		a = self.ga_input_dictionary['epitaxial_lattice_constant']
 		unit_cell_a = a/Nx
 
-		c = ( a * Nz ) / Nx ##############################eventually base c off of a good volume
+		c = ( unit_cell_a * Nz ) ##############################eventually base c off of a good volume
 
 		lattice = [[a, 0.0, 0.0], [0.0, a, 0.0], [0.0, 0.0, c]]
 
