@@ -1,3 +1,5 @@
+#from fpctoolkit.util.distribution import Distribution
+
 import numpy as np
 
 
