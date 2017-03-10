@@ -105,15 +105,15 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		if event_index == 0:
 			shear_factor = 0.1
-			strain_stdev = 0.04
-		elif event_index == 1:
-			shear_factor = 0.2
-			strain_stdev = 0.08
-		elif event_index == 2:
-			shear_factor = 0.7
 			strain_stdev = 0.1
+		elif event_index == 1:
+			shear_factor = 0.25
+			strain_stdev = 0.12
+		elif event_index == 2:
+			shear_factor = 0.6
+			strain_stdev = 0.16
 
-		probabilities_list = [0.05, 0.15, 0.8]
+		probabilities_list = [0.0, 0.0, 1.0]
 		random_selector = RandomSelector(probabilities_list)
 		event_index = random_selector.get_event_index()
 
@@ -172,24 +172,24 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 			Basic random
 			"""
 
-			A_site_curvature_parameter = 0.8
+			A_site_curvature_parameter = 1.0
 			A_site_max_displacement = 0.35*unit_cell_a
 			A_bell = True
 
-			B_site_curvature_parameter = 2.0
-			B_site_max_displacement = 0.5*unit_cell_a
+			B_site_curvature_parameter = 2.5
+			B_site_max_displacement = 0.6*unit_cell_a
 			B_bell = True
 
-			X_site_curvature_parameter = 2.0
-			X_site_max_displacement = 0.5*unit_cell_a
+			X_site_curvature_parameter = 3.0
+			X_site_max_displacement = 0.75*unit_cell_a
 			X_bell = True
 
-			AA_minimum_distance = 1.4
-			AB_minimum_distance = 1.0
-			BB_minimum_distance = 1.0
-			AX_minimum_distance = 0.8
-			BX_minimum_distance = 0.8
-			XX_minimum_distance = 0.8
+			AA_minimum_distance = 1.2
+			AB_minimum_distance = 0.8
+			BB_minimum_distance = 0.8
+			AX_minimum_distance = 0.6
+			BX_minimum_distance = 0.6
+			XX_minimum_distance = 0.6
 
 
 		A_site_vector_magnitude_distribution_function = Distribution(envelope_function(A_site_curvature_parameter, A_site_max_displacement, A_bell), 0.0, A_site_max_displacement).get_random_value
