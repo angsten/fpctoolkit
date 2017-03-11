@@ -9,12 +9,12 @@ class Distribution(object):
 	Custom defined distribution
 
 	Inputs:
-	distribution_function: any function f(x) that returns a float - does not have to be normalized in any way
+	distribution_function: any function f(x) that returns a float - does not have to be normalized in any way - it just describes the relative shape of the distribution.
 	min_x: the minimum x value in the domain of the input distribution function f(x)
 	max_x: the maximum x vaue in the domain of the input distribution function f(x)
 
 	This class works by approximating the inverse cumulative distribution function with a list of length point_count.
-	The main function, get_random_value, returns a value in range [min_x, max_x) with frequencies determined by the 
+	The main function, get_random_value, returns a value in range [min_x, max_x) with relative frequencies determined by the 
 	probability distribution function, f(x).
 	"""
 

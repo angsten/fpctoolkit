@@ -41,8 +41,8 @@ class Lattice(object):
 		Load a 2D list (array) into self.a, b, and c. First, it is ensured that array is compatible with a lattice.
 		"""
 
-		if not Lattice.lattice_representation_is_compatible(lattice):
-			raise Exception("The provided list is not in a form compatible with a lattice. Input lattice looks like: " + str(lattice))
+		if not Lattice.lattice_representation_is_compatible(array):
+			raise Exception("The provided list is not in a form compatible with a lattice. Input lattice looks like: " + str(array))
 
 		self.a = copy.deepcopy(array[0])
 		self.b = copy.deepcopy(array[1])
@@ -148,24 +148,17 @@ class Lattice(object):
 		self.from_2D_array(strained_lattice)
 
 
-	def randomly_strain(self, stdev, mask_array=[[1.0, 1.0, 1.0], [1.0, 1.0, 1.0], [1.0, 1.0, 1.0]]):
+	def randomly_strain(self, distribution_function_array):
 		"""
-		Randomly strains using normal distributions for strains
+		Randomly strains self (in place) using the given distribution_function_array.
 
-		mask_array is a 2D array that gets multiplied by strain component by component (use 0 or 1 to mask)
+		distribution_function_array should be a 3x3 array of functions that, when called, supply the corresponding randomly produced strain components.
 		"""
 
 		strain_tensor = []
-		strain_tensor.append([np.random.normal(0.0, stdev),     np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev)/2.0])
-		strain_tensor.append([np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev),     np.random.normal(0.0, stdev)/2.0])
-		strain_tensor.append([np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev)])
-
-		for i in range(3):
-			for j in range(3):
-				strain_tensor[i][j] = strain_tensor[i][j]*mask_array[i][j]
-
-		for i in range(3):
-			strain_tensor[i][i] += 1.0
+		strain_tensor.append([distribution_function_array[0][0](), distribution_function_array[0][1](), distribution_function_array[0][2]()])
+		strain_tensor.append([distribution_function_array[1][0](), distribution_function_array[1][1](), distribution_function_array[1][2]()])
+		strain_tensor.append([distribution_function_array[2][0](), distribution_function_array[2][1](), distribution_function_array[2][2]()])
 
 		self.strain(strain_tensor)
 
@@ -203,14 +196,14 @@ class Lattice(object):
 		Returns True if lattice_representation can represent a lattice (i.e. contains floats, is of dimension two and length 3 for both lists), else False.
 		"""
 
-		if not isinstance(lattice_representation, list):
+		if not isinstance(lattice_representation, (np.ndarray, list)):
 			return False
 
 		if len(lattice_representation) != 3:
 			return False
 
 		for i in range(3):
-			if not isinstance(lattice_representation[i], list):
+			if not isinstance(lattice_representation[i], (np.ndarray, list)):
 				return False
 
 			if len(lattice_representation[i]) != 3:
