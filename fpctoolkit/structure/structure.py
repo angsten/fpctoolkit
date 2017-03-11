@@ -11,11 +11,11 @@ from fpctoolkit.util.random_selector import RandomSelector
 
 class Structure(object):
 	"""
-	Class useful for representing periodic crystal structure (lattice + a basis).
+	Class for representing periodic crystal structures (lattice + basis).
 
-	Holds Lattice instance (2D array) for the lattice and a SiteCollection instance for basis sites
+	Holds Lattice instance (2D array) for the lattice and a SiteCollection instance for basis sites.
 
-	For file representations, this class can only output to the poscar file class (for now).
+	For outputting to or inputting from file representations, this class is only compatible with the poscar file type (for now).
 	"""
 
 	def __init__(self, file_path=None, lattice=None, sites=None):

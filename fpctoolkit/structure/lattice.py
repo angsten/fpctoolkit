@@ -39,7 +39,7 @@ class Lattice(object):
 		Load a 2D list (array) into self.a, b, and c. First, it is ensured that array is compatible with a lattice.
 		"""
 
-		if not Lattice.list_is_compatible(lattice):
+		if not Lattice.lattice_representation_is_compatible(lattice):
 			raise Exception("The provided list is not in a form compatible with a lattice. Input lattice looks like: " + str(lattice))
 
 		self.a = copy.deepcopy(array[0])
@@ -68,12 +68,15 @@ class Lattice(object):
 
 	def to_array(self):
 		"""
-		Returns lattice as a 3x3 list of lists.
+		Returns lattice as a 3x3 list of lists that looks like:
+
+		[[a1, a2, a3], 
+		 [b1, b2, b3], 
+		 [c1, c2, c3]]
 		"""
 
 		return [self.a, self.b, self.c]
 
-	@property
 	def to_np_array(self):
 		"""
 		Returns lattice as a 3x3 numpy array
@@ -105,50 +108,39 @@ class Lattice(object):
 
 
 
-	def randomly_strain(self, stdev, mask_array=[[1.0, 1.0, 1.0], [1.0, 1.0, 1.0], [1.0, 1.0, 1.0]]):
+	def strain(self, strain_tensor):
 		"""
-		Randomly strains using normal distributions for strains
+		Strains self (in place) by the tensor strain_tensor. The strain tensor should take the form of a deformation gradiation tensor F (doesn't have to be symmetric). See examples below.
 
-		mask_array is a 2D array that gets multiplied by strain component by component (use 0 or 1 to mask)
-		"""
+		Argument strain_tensor can be a 6x6 tensor or a 6x1 Voigt-notated tensor
 
-		strain_tensor = []
-		strain_tensor.append([np.random.normal(0.0, stdev),     np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev)/2.0])
-		strain_tensor.append([np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev),     np.random.normal(0.0, stdev)/2.0])
-		strain_tensor.append([np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev)])
-
-		for i in range(3):
-			for j in range(3):
-				strain_tensor[i][j] = strain_tensor[i][j]*mask_array[i][j]
-
-		for i in range(3):
-			strain_tensor[i][i] += 1.0
-
-		self.strain(strain_tensor)
-
-	def strain(self, strain_tensor, upper_triangle_only=False):
-		"""
-		Argument strain_tensor can be a 6x6 full tensor or a 6x1 Voigt-notated tensor
-
-		Note: 1 is not automatically added to the diagonal components of the strain tensor.
+		Note: 1.0 is not automatically added to the diagonal components of the strain tensor.
 
 								| e11 e12 e13 |
-		full tensor looks like:	| e21 e22 e23 |
-								| e31 e32 e33 |
+		full tensor looks like:	| e21 e22 e23 |      where e12 = (dx_1/dX_2), the constant factor by which the x component of a vector (in new coordinates) is displaced per y component in original coordinates.
+								| e31 e32 e33 |      e12 would then correspond to a shear strain applied on the y-plane in the x direction.
 
 		voigt equivalent is: (e11, e22, e33, 2*e23, 2*e13, 2*e12)
 
-		##not supported yet: If upper_triangle_only is True, e21, e31, and e32!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		For an original vecotr a, the strain tensor will take it to a new vector a' given by:
+
+		a'_x = a_x*e11 + a_y*e12 + a_z*e13
+		a'_y = a_x*e21 + a_y*e22 + a_z*e23
+		a'_z = a_x*e31 + a_y*e32 + a_z*e33
+
+		Another example: if e12 (a shear applied to the y-plane in the x direction) is 0.1, and if b was originally [0.0, 10.0, 0.0], the new b vector after shearing will be [1.0, 10.0, 0.0]
+
+		If the strain tensor is the identity matrix, the lattice will not change.
 		"""
 
+		original_lattice_matrix = self.to_np_array()
 		strain_tensor = np.array(strain_tensor)
-		lattice_matrix = self.to_np_array
-
-		if strain_tensor.ndim == 1: #voigt notation [e1, e2, e3, e4, e5, e6]
+		
+		if strain_tensor.ndim == 1:
 			strain_tensor = Lattice.convert_voigt_strain_to_6x6_tensor(strain_tensor)
 
 
-		strained_lattice = np.dot(lattice_matrix.T, strain_tensor).T
+		strained_lattice = np.dot(original_lattice_matrix, strain_tensor.T)
 
 		self.from_2D_array(strained_lattice)
 
@@ -172,8 +164,43 @@ class Lattice(object):
 
 		return np.array(full_tensor)
 
+
+	def randomly_strain(self, stdev, mask_array=[[1.0, 1.0, 1.0], [1.0, 1.0, 1.0], [1.0, 1.0, 1.0]]):
+		"""
+		Randomly strains using normal distributions for strains
+
+		mask_array is a 2D array that gets multiplied by strain component by component (use 0 or 1 to mask)
+		"""
+
+		strain_tensor = []
+		strain_tensor.append([np.random.normal(0.0, stdev),     np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev)/2.0])
+		strain_tensor.append([np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev),     np.random.normal(0.0, stdev)/2.0])
+		strain_tensor.append([np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev)/2.0, np.random.normal(0.0, stdev)])
+
+		for i in range(3):
+			for j in range(3):
+				strain_tensor[i][j] = strain_tensor[i][j]*mask_array[i][j]
+
+		for i in range(3):
+			strain_tensor[i][i] += 1.0
+
+		self.strain(strain_tensor)
+
+
+
 	@staticmethod
-	def average(lattice_1, lattice_2):
+	def average(lattice_1, lattice_2, weight=0.5):
+		"""
+		Returns a lattice which is the weighted average of lattice_1 and lattice_2.
+
+		lattice_1 and lattice_2 can be Lattice instances or compatible 2D lists.
+
+		weight must be in range [0.0, 1.0] and larger weight means more lattice_1 representation in average.
+		"""
+
+		if not (Lattice.lattice_representation_is_compatible(lattice_1) and Lattice.lattice_representation_is_compatible(lattice_2)):
+			raise Exception("Input lattices are not both compatible representations. lattice_1: " + str(lattice_1) + "   lattice_2: " + str(lattice_2))
+
 		new_lattice = []
 
 		for i in range(3):
@@ -190,26 +217,26 @@ class Lattice(object):
 
 
 	@staticmethod
-	def list_is_compatible(lattice_list):
+	def lattice_representation_is_compatible(lattice_representation):
 		"""
-		returns True if lattice_list can represent a lattice (i.e. contains floats, is of dimension two and length 3 for both lists).
+		returns True if lattice_representation can represent a lattice (i.e. contains floats, is of dimension two and length 3 for both lists).
 		"""
 
-		if not isinstance(lattice_list, list):
+		if not isinstance(lattice_representation, list):
 			return False
 
-		if len(lattice_list) != 3:
+		if len(lattice_representation) != 3:
 			return False
 
 		for i in range(3):
-			if not isinstance(lattice_list[i], list):
+			if not isinstance(lattice_representation[i], list):
 				return False
 
-			if len(lattice_list[i]) != 3:
+			if len(lattice_representation[i]) != 3:
 				return False
 
 			for j in range(3):
-				if (not isinstance(lattice_list[i][j], float)) and (not isinstance(lattice_list[i][j], int)):
+				if (not isinstance(lattice_representation[i][j], float)) and (not isinstance(lattice_representation[i][j], int)):
 					return False
 
 		return True
