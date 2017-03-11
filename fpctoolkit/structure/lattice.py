@@ -3,6 +3,8 @@
 import copy
 import numpy as np
 
+from fpctoolkit.util.tensor import Tensor
+
 class Lattice(object):
 	"""
 	Class for representing a lattice (effectively just a 3x3 2D array of floating point numbers). This class can be modified or acessed in the
@@ -108,11 +110,12 @@ class Lattice(object):
 
 
 
+
 	def strain(self, strain_tensor):
 		"""
 		Strains self (in place) by the tensor strain_tensor. The strain tensor should take the form of a deformation gradiation tensor F (doesn't have to be symmetric). See examples below.
 
-		Argument strain_tensor can be a 6x6 tensor or a 6x1 Voigt-notated tensor
+		Argument strain_tensor can be a 3x3 tensor or a 1x6 Voigt-notated tensor
 
 		Note: 1.0 is not automatically added to the diagonal components of the strain tensor.
 
@@ -137,32 +140,12 @@ class Lattice(object):
 		strain_tensor = np.array(strain_tensor)
 		
 		if strain_tensor.ndim == 1:
-			strain_tensor = Lattice.convert_voigt_strain_to_6x6_tensor(strain_tensor)
+			strain_tensor = Tensor.convert_voigt_strain_to_3x3_tensor(strain_tensor)
 
 
 		strained_lattice = np.dot(original_lattice_matrix, strain_tensor.T)
 
 		self.from_2D_array(strained_lattice)
-
-	@staticmethod
-	def convert_voigt_strain_to_6x6_tensor(voigt_tensor):
-		"""
-		Converts [e1, e2, e3, e4, e5, e6] to [[e1, e6/2, e5/2], [e6/2, e2, e4/2], [e5/2, e4/2, e3]]
-		"""
-		if not len(voigt_tensor) == 6:
-			raise Exception("Voigt tensor must have six components")
-
-		voigt_tensor = np.array(voigt_tensor)
-		if not voigt_tensor.ndim == 1:
-			raise Exception("Number of array dimensions of voigt tensor must be 1")
-
-		full_tensor = []
-
-		full_tensor.append([voigt_tensor[0], voigt_tensor[5]/2.0, voigt_tensor[4]/2.0])
-		full_tensor.append([voigt_tensor[5]/2.0, voigt_tensor[1], voigt_tensor[3]/2.0])
-		full_tensor.append([voigt_tensor[4]/2.0, voigt_tensor[3]/2.0, voigt_tensor[2]])
-
-		return np.array(full_tensor)
 
 
 	def randomly_strain(self, stdev, mask_array=[[1.0, 1.0, 1.0], [1.0, 1.0, 1.0], [1.0, 1.0, 1.0]]):
@@ -191,35 +174,33 @@ class Lattice(object):
 	@staticmethod
 	def average(lattice_1, lattice_2, weight=0.5):
 		"""
-		Returns a lattice which is the weighted average of lattice_1 and lattice_2.
+		Returns a lattice which is the weighted arithmetic average of lattice_1 and lattice_2.
 
 		lattice_1 and lattice_2 can be Lattice instances or compatible 2D lists.
 
 		weight must be in range [0.0, 1.0] and larger weight means more lattice_1 representation in average.
 		"""
 
+		if (weight < 0.0) or (weight > 1.0):
+			raise Exception("Weighting factor must be between zero and one inclusive.")
+
 		if not (Lattice.lattice_representation_is_compatible(lattice_1) and Lattice.lattice_representation_is_compatible(lattice_2)):
 			raise Exception("Input lattices are not both compatible representations. lattice_1: " + str(lattice_1) + "   lattice_2: " + str(lattice_2))
 
-		new_lattice = []
+
+		new_lattice = Lattice()
 
 		for i in range(3):
-			if len(lattice_1[i]) != 3 or len(lattice_2[i]) != 3:
-				raise Exception("Lattices not formatted properly")
-
-		for i in range(3):
-			lattice_vec = []
 			for j in range(3):
-				lattice_vec.append(0.5*(lattice_1[i][j] + lattice_2[i][j]))
-			new_lattice.append(lattice_vec)
+				new_lattice[i][j] = weight*lattice_1[i][j] + (1.0-weight)*lattice_2[i][j]
 
-		return Lattice(a=new_lattice[0], b=new_lattice[1], c=new_lattice[2])
+		return new_lattice
 
 
 	@staticmethod
 	def lattice_representation_is_compatible(lattice_representation):
 		"""
-		returns True if lattice_representation can represent a lattice (i.e. contains floats, is of dimension two and length 3 for both lists).
+		Returns True if lattice_representation can represent a lattice (i.e. contains floats, is of dimension two and length 3 for both lists), else False.
 		"""
 
 		if not isinstance(lattice_representation, list):
