@@ -30,7 +30,7 @@ class Lattice(object):
 		if not lattice:
 			lattice = [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
 
-		if not Lattice.lattice_representation_is_compatible(array):
+		if not Lattice.lattice_representation_is_compatible(lattice):
 			raise Exception("The provided lattice argument is not in a form compatible with a lattice. Input lattice looks like: " + str(array))
 
 		self.from_2D_array(lattice)
