@@ -30,13 +30,10 @@ class Lattice(object):
 		if not lattice:
 			lattice = [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
 
+		if not Lattice.lattice_representation_is_compatible(array):
+			raise Exception("The provided lattice argument is not in a form compatible with a lattice. Input lattice looks like: " + str(array))
 
-		if isinstance(lattice, Lattice):
-			print "Making deep copy of lattice in __init__. Lattice instance a looks like: ", lattice.a
-			self = copy.deepcopy(lattice)
-		else:
-			print "going from 2D array in __init__"
-			self.from_2D_array(lattice)
+		self.from_2D_array(lattice)
 
 		print "testing attribute a", self.a
 
@@ -45,9 +42,6 @@ class Lattice(object):
 		"""
 		Load a 2D list (array) into self.a, b, and c. First, it is ensured that array is compatible with a lattice.
 		"""
-
-		if not Lattice.lattice_representation_is_compatible(array):
-			raise Exception("The provided list is not in a form compatible with a lattice. Input lattice looks like: " + str(array))
 
 		self.a = copy.deepcopy(array[0])
 		self.b = copy.deepcopy(array[1])
