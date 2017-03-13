@@ -302,6 +302,9 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		interp_struct_1 = Structure(sites=interpolated_sites_1, lattice=averaged_lattice)
 
 		interpolated_sites_2 = site_mapping_collections_list[1].get_interpolated_site_collection(interpolated_sites_1, interpolation_function_2)
+
+		averaged_lattice.a
+		print "BEFORE INTERP_STRUCT_2 creation"
 		interp_struct_2 = Structure(sites=interpolated_sites_2, lattice=averaged_lattice)
 
 		print "Lattice after mating: ", averaged_lattice

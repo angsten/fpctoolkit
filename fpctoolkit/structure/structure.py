@@ -19,13 +19,14 @@ class Structure(object):
 	"""
 
 	def __init__(self, file_path=None, lattice=None, sites=None):
-
+		print "IN STRUCT INIT"
 		if file_path: #load from file (only poscar supported for now)
 			self.from_poscar_file_path(file_path)
 		else:
-
 			if Lattice.lattice_representation_is_compatible(lattice):
+				print "CREATING LATTICE***********************"
 				self.lattice = Lattice(lattice)
+				print "testing self.lattice.a", self.lattice.a
 			else:
 				raise Exception("Lattice not compatible")
 
