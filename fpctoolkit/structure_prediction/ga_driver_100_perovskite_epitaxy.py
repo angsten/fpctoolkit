@@ -290,6 +290,10 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		###################################################################################
 
 
+		print '\n\nlattice 1:   '
+		print self.parent_structures_list[0].lattice
+		print '\n\nlattice_2:   '
+		print self.parent_structures_list[1].lattice
 
 		#make this a randomly weighted-average at some point
 		averaged_lattice = Lattice.average(self.parent_structures_list[0].lattice, self.parent_structures_list[1].lattice)
