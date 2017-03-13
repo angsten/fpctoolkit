@@ -53,7 +53,7 @@ class GAStructurePredictor(object):
 
 		all_complete = True
 
-		for individual in self.population_collection.get_population_of_generation_number(3):#self.population_collection.get_population_of_current_generation():
+		for individual in self.population_collection.get_population_of_current_generation():
 			if not individual.complete:
 				individual.update()
 				all_complete = False
