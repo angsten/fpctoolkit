@@ -290,11 +290,6 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		###################################################################################
 
 
-		print '\n\nlattice 1:   '
-		print self.parent_structures_list[0].lattice ########################################################################################
-		print '\n\nlattice_2:   '
-		print self.parent_structures_list[1].lattice
-
 		#make this a randomly weighted-average at some point
 		averaged_lattice = Lattice.average(self.parent_structures_list[0].lattice, self.parent_structures_list[1].lattice)
 
@@ -303,13 +298,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		interpolated_sites_2 = site_mapping_collections_list[1].get_interpolated_site_collection(interpolated_sites_1, interpolation_function_2)
 
-		averaged_lattice.a
-		print "BEFORE INTERP_STRUCT_2 creation"
 		interp_struct_2 = Structure(sites=interpolated_sites_2, lattice=averaged_lattice)
-
-		print "Lattice after mating: ", averaged_lattice
-
-		print "testing interp_struct_2 a", interp_struct_2.lattice.a
 
 		self.structure_creation_id_string = 'mating_interpolated_fixed'
 

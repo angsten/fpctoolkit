@@ -25,7 +25,6 @@ class Lattice(object):
 
 		If lattice is None, then a lattice with all zeros is created.
 		"""
-		print "in lattice init. input lattice looks like: ", lattice
 
 		if not lattice:
 			lattice = [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
@@ -34,8 +33,6 @@ class Lattice(object):
 			raise Exception("The provided lattice argument is not in a form compatible with a lattice. Input lattice looks like: " + str(array))
 
 		self.from_2D_array(lattice)
-
-		print "testing attribute a", self.a
 
 
 	def from_2D_array(self, array):

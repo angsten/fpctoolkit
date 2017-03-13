@@ -19,14 +19,11 @@ class Structure(object):
 	"""
 
 	def __init__(self, file_path=None, lattice=None, sites=None):
-		print "IN STRUCT INIT"
 		if file_path: #load from file (only poscar supported for now)
 			self.from_poscar_file_path(file_path)
 		else:
 			if Lattice.lattice_representation_is_compatible(lattice):
-				print "CREATING LATTICE***********************"
 				self.lattice = Lattice(lattice)
-				print "testing self.lattice.a", self.lattice.a
 			else:
 				raise Exception("Lattice not compatible")
 
@@ -42,7 +39,6 @@ class Structure(object):
 	def from_poscar_file_path(self, file_path):
 		poscar = Poscar(file_path)
 		self.lattice = Lattice(poscar.lattice)
-		print "self.lattice in from poscar file path is " + str(self.lattice)
 		self.sites = SiteCollection()
 
 		species_index = 0
@@ -59,7 +55,6 @@ class Structure(object):
 
 
 	def to_poscar_file_path(self, file_path):
-		print "self.lattice in to poscar file path is " + str(self.lattice)
 		lattice = self.lattice.to_array()
 		species_list = self.sites.get_species_list()
 		species_count_list = self.sites.get_species_count_list()
@@ -178,7 +173,6 @@ class Structure(object):
 		#self.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\dispinit.vasp")
 
 		for try_count in range(200):
-			print "displace sites in structure try is ", try_count
 
 			indices_of_site_pairs_that_are_too_close_list = self.get_indices_of_site_pairs_that_are_too_close_to_sites_list(sites_to_check_indices_list, minimum_atomic_distances_nested_dictionary_by_type)
 			sites_to_check_indices_list = []
