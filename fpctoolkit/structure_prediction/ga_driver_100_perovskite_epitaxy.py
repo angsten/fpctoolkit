@@ -306,6 +306,8 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		print "Lattice after mating: ", averaged_lattice
 
+		print "testing interp_struct_2 a", interp_struct_2.lattice.a
+
 		self.structure_creation_id_string = 'mating_interpolated_fixed'
 
 		return interp_struct_2
