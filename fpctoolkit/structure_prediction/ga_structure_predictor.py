@@ -36,7 +36,6 @@ class GAStructurePredictor(object):
 
 		current_population = self.population_collection.get_population_of_current_generation()
 
-
 		while len(current_population) < self.ga_driver.get_max_individuals_count_of_generation_number(self.population_collection.get_generation_count()):
 
 			new_individual = self.ga_driver.create_new_individual(current_population.get_next_available_individual_path(self.population_collection.get_current_generation_path()), 
@@ -54,7 +53,7 @@ class GAStructurePredictor(object):
 
 		all_complete = True
 
-		for individual in self.population_collection.get_population_of_current_generation():
+		for individual in self.population_collection.get_population_of_generation_number(1):#self.population_collection.get_population_of_current_generation():
 			if not individual.complete:
 				individual.update()
 				all_complete = False
