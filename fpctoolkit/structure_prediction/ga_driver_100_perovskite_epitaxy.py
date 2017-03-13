@@ -201,6 +201,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		self.structure_creation_id_string = 'random'
 		self.parent_structures_list = None
+		self.parent_paths_list = None
 
 		return structure
 

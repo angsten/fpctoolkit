@@ -1,3 +1,4 @@
+#from fpctoolkit.io.file import File
 import copy
 
 from fpctoolkit.util.path import Path
