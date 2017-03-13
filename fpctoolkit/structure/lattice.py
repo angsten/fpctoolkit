@@ -193,8 +193,11 @@ class Lattice(object):
 	@staticmethod
 	def lattice_representation_is_compatible(lattice_representation):
 		"""
-		Returns True if lattice_representation can represent a lattice (i.e. contains floats, is of dimension two and length 3 for both lists), else False.
+		Returns True if lattice_representation can represent a lattice (i.e. contains floats, is of dimension two and length 3 for both lists) or is a Lattice class instance, else False.
 		"""
+
+		if isinstance(lattice_representation, Lattice):
+			return True
 
 		if not isinstance(lattice_representation, (np.ndarray, list)):
 			return False
