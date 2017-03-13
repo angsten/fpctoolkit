@@ -291,7 +291,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 
 		print '\n\nlattice 1:   '
-		print self.parent_structures_list[0].lattice
+		print self.parent_structures_list[0].lattice ########################################################################################
 		print '\n\nlattice_2:   '
 		print self.parent_structures_list[1].lattice
 
@@ -304,6 +304,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 		interpolated_sites_2 = site_mapping_collections_list[1].get_interpolated_site_collection(interpolated_sites_1, interpolation_function_2)
 		interp_struct_2 = Structure(sites=interpolated_sites_2, lattice=averaged_lattice)
 
+		print "Lattice after mating: ", averaged_lattice
 
 		self.structure_creation_id_string = 'mating_interpolated_fixed'
 

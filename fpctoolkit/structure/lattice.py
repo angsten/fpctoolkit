@@ -31,6 +31,7 @@ class Lattice(object):
 
 
 		if isinstance(lattice, Lattice):
+			print "Making deep copy of lattice in __init__. Lattice instance a looks like: ", lattce.a
 			self = copy.deepcopy(lattice)
 		else:
 			self.from_2D_array(lattice)
