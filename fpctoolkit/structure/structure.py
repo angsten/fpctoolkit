@@ -41,6 +41,7 @@ class Structure(object):
 	def from_poscar_file_path(self, file_path):
 		poscar = Poscar(file_path)
 		self.lattice = Lattice(poscar.lattice)
+		print "self.lattice in from poscar file path is " + str(self.lattice)
 		self.sites = SiteCollection()
 
 		species_index = 0
@@ -57,6 +58,7 @@ class Structure(object):
 
 
 	def to_poscar_file_path(self, file_path):
+		print "self.lattice in to poscar file path is " + str(self.lattice)
 		lattice = self.lattice.to_array()
 		species_list = self.sites.get_species_list()
 		species_count_list = self.sites.get_species_count_list()
