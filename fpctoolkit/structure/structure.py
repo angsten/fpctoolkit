@@ -24,8 +24,10 @@ class Structure(object):
 			self.from_poscar_file_path(file_path)
 		else:
 
-			if isinstance(lattice, Lattice) or Lattice.lattice_representation_is_compatible(lattice):
+			if Lattice.lattice_representation_is_compatible(lattice):
 				self.lattice = Lattice(lattice)
+			else:
+				raise Exception("Lattice not compatible")
 
 			if isinstance(sites, SiteCollection):
 				self.sites = sites

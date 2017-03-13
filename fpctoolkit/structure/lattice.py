@@ -25,6 +25,7 @@ class Lattice(object):
 
 		If lattice is None, then a lattice with all zeros is created.
 		"""
+		print "in lattice init. input lattice looks like: ", lattice
 
 		if not lattice:
 			lattice = [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
@@ -34,7 +35,10 @@ class Lattice(object):
 			print "Making deep copy of lattice in __init__. Lattice instance a looks like: ", lattice.a
 			self = copy.deepcopy(lattice)
 		else:
+			print "going from 2D array in __init__"
 			self.from_2D_array(lattice)
+
+		print "testing attribute a", self.a
 
 
 	def from_2D_array(self, array):
