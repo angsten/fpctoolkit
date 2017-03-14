@@ -47,10 +47,8 @@ class Site(object):
 		if key in Site.accepted_keys:
 			if key == 'position':
 				if len(value) == 4: #has coord mode string at end [0.1, 0.1, 0.2, 'cart']
-					self._properties['coordinate_mode'] = Site.get_coordinate_mode_string(value[3])
-					value.pop()
-				if not len(value) == 3:
-					raise Exception("Site positions must have three components")
+					self._properties['coordinate_mode'] = Site.get_coordinate_mode_string(value.pop())
+				Vector.validate_3D_vector_representation(value)
 			elif key == 'coordinate_mode':
 				value = Site.get_coordinate_mode_string(value)
 			elif key == 'type':

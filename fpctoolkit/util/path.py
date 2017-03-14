@@ -160,3 +160,23 @@ class Path(object):
 		return [directory_basename for directory_basename in directory_basenames if directory_basename.find(sub_string) != -1]
 
 
+
+	@staticmethod
+	def validate(path, allow_none=False, expand_path=True):
+		"""
+		Raises an exception if the expanded path does not exist. 
+		If allow_none is True, path can be None without raising an exception.
+		If expand_path is True, the path is expanded before checking if it exists.
+		"""
+
+		exception = Exception("Path at ", path, "does not exist.")
+
+		if path == None:
+			if not allow_none:
+				raise exception
+		else:
+			if expand_path:
+				path = Path.expand(path)
+
+			if not Path.exists(path):
+				raise exception

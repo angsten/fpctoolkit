@@ -61,6 +61,21 @@ class SiteCollection(object):
 		else:
 			raise Exception("sites must be either a list of Site instances or a SiteColleciton instance. Type is", type(sites))
 
+	@staticmethod
+	def validate_sites_all_have_same_coordinate_mode(sites):
+		"""
+		Raises an exception if one or more sites have a coordinate mode different from the other sites.
+		"""
+
+		if len(sites) == 0:
+			return
+
+		first_coordinate_mode = sites[0]['coordinate_mode']
+
+		for site in sites:
+			if site['coordinate_mode'] != first_coordinate_mode:
+				raise Exception("Site coordinate modes are not all consistent.")
+
 
 	def __iter__(self):
 		return iter(self.get_sorted_list())

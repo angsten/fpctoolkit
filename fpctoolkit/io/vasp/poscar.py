@@ -102,9 +102,7 @@ class Poscar(File):
 			else:
 				coordinates.append(coordinate)
 
-		self._coordinates = coordinates
-
-		return self._coordinates
+		return coordinates
 
 	@coordinates.setter
 	def coordinates(self, coordinates):
