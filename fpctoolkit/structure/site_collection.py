@@ -84,16 +84,31 @@ class SiteCollection(object):
 		
 
 	def __len__(self):
+		"""
+		Returns the total number of sites in the collection.
+		"""
+
 		return len(self.get_sorted_list())
 
 	def keys(self):
+		"""
+		Returns list of all keys of self.sites (like ['Ba', 'Ti'])
+		"""
+
 		return self.sites.keys()
 
 	def __contains__(self, key):
+		if not isinstance(key, basestring):
+			raise Exception("SiteCollection instance cannot contain non-string key:", key)
+
 		return key in self.sites
 
 
 	def append(self, site):
+		"""
+		Appends a shallow copy of site to self.sites.
+		"""
+
 		Site.validate_site(site)
 
 		site_type = site['type']

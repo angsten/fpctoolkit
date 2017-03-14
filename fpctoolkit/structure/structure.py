@@ -32,14 +32,8 @@ class Structure(object):
 			self.from_poscar_file_path(file_path)
 		else:
 			self.lattice = Lattice(lattice)
+			self.sites = SiteCollection(sites)
 
-			if isinstance(sites, SiteCollection):
-				self.sites = sites
-			else:
-				raise Exception("sites must be of SiteColleciton type")
-
-	def __str__(self):
-		return str(self.lattice) + "\n".join(str(site) for site in self.sites) + "\n"
 
 	@staticmethod
 	def validate_constructor_arguments(file_path, lattice, sites):
@@ -55,10 +49,11 @@ class Structure(object):
 		if not sites:
 			raise Exception("A sites list or SiteColleciton instance must be specified.")
 		else:
-			
+			SiteCollection.validate_sites(sites)
 
 
-
+	def __str__(self):
+		return str(self.lattice) + "\n".join(str(site) for site in self.sites) + "\n"
 
 
 	def from_poscar_file_path(self, file_path):
@@ -92,6 +87,7 @@ class Structure(object):
 
 		poscar = Poscar(None, lattice, species_list, species_count_list, coordinate_mode, coordinates)
 		poscar.write_to_path(file_path)
+		
 
 	def get_species_list(self):
 		return self.sites.get_species_list()
