@@ -93,9 +93,10 @@ class Site(object):
 
 	def displace(self, vector):
 		"""
-		Displaces site's position by vector with no knowledge of what the current
-		coordinate mode.
+		Displaces site's position by vector with no knowledge of what the current coordinate mode.
 		"""
+
+		Vector.validate_3D_vector_representation(vector)
 
 		for i in range(3):
 			self._properties['position'][i] += vector[i]
@@ -139,8 +140,8 @@ class Site(object):
 		if site.has_key('position') and site.has_key('coordinate_mode'):
 			Vector.validate_3D_vector_representation(site['position'])
 		else:
-			raise Exception("A valid site must define a position and coordinate mode. Site is: ", site)
+			raise Exception("A valid site must define a position and coordinate mode. Site is:", site)
 
 
 		if not (site.has_key('type') and isinstance(site['type'], basestring)):
-			raise Exception("A valid site must define a type, and this must be a string. Site is: ", site)
+			raise Exception("A valid site must define a type, and this must be a string. Site is:", site)

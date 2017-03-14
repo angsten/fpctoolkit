@@ -2,19 +2,29 @@ from collections import OrderedDict
 import copy
 
 from fpctoolkit.structure.site import Site
+from fpctoolkit.util.vector import Vector
 
 class SiteCollection(object):
 	"""
-	Collection of Site objects.
+	Collection of Site objects. The objects are validated to at minimum have a position, coordinate mode, and type.
 
 	self.sites is an ordered dictionary that looks like:   {'Ba': [Ba_site_1, Ba_site_2], 'Ti': [Ti_site_1, ...]}
 
 
-	sites['Ba'] will return a list of all sites where site['type'] is 'Ba'. This list will retain
-	the original order of insertion.
+	sites['Ba'] will return a list of all sites where site['type'] is 'Ba'. This list will retain the original order of insertion.
 
-	site_collection.get_sorted_list() returns a single list of all sites, arranged in subgroups of type (by order of type insertion), with each
-	subgroup retaining its original insertion order.
+	sites[1] will give sites.get_sorted_list()[1]
+
+	len(sites) will return length of sites in collection
+
+	sites.keys() returns a list of all site sypes present in the colleciton (['Ba', 'Ti'])
+
+	sites.append(Site(...)) will add the given Site instance to the site colleciotn.
+
+	sites.remove(Site) will remove the (address equivalent) site in the collection.
+
+	site_collection.get_sorted_list() returns a list of all sites grouped by type. The order in which blocks of types appear is determined
+	by type insertion order. Within type blocks, sites are ordered by insertion order.
 
 	An iterator on a SiteCollection will iterate through elements of site_collection.get_sorted_list()
 	"""
@@ -23,6 +33,8 @@ class SiteCollection(object):
 	def __init__(self, sites=None):
 		"""
 		sites must be either None, a list of Site instances, or a SiteCollection instance.
+
+		Only shallow copies are made of the input sites.
 		"""
 
 		SiteCollection.validate_constuctor_arguments(sites)
@@ -47,22 +59,28 @@ class SiteCollection(object):
 			for site in sites:
 				Site.validate_site(site)
 		else:
-			raise Exception("sites must be either a list of Site instances or a SiteColleciton instance")
+			raise Exception("sites must be either a list of Site instances or a SiteColleciton instance. Type is", type(sites))
 
 
 	def __iter__(self):
 		return iter(self.get_sorted_list())
 
 	def __getitem__(self, key):
-		if isinstance(key, basestring): #access by type like 'Ba'
+		if isinstance(key, basestring): #access by type, like site_collection['Ba']
 			if key in self.sites:
 				return self.sites[key]
 			else:
-				return []
+				raise Exception("Species type", key, "does not exist in SiteCollection instance.")
+
 		elif isinstance(key, int):
-			return self.get_sorted_list()[key]
+			sites_list = self.get_sorted_list()
+
+			if key < 0 or key >= len(sites_list):
+				raise IndexError
+			else:
+				return sites_list[key]
 		else:
-			raise Exception("Site collection key must be an integer or string")
+			raise Exception("Site collection key must be an integer or string. Key given is", key)
 		
 
 	def __len__(self):
@@ -74,22 +92,25 @@ class SiteCollection(object):
 	def __contains__(self, key):
 		return key in self.sites
 
+
 	def append(self, site):
 		Site.validate_site(site)
-		self.add_site(site)
 
-
-	def add_site(self, site):
-		if site['type'] not in self.sites:
-			self.sites[site['type']] = [site]
-		else:
-			self.sites[site['type']].append(site)
-
-	def remove_site(self, site):
 		site_type = site['type']
 
 		if site_type not in self.sites:
-			raise Exception("Site type not present in site collection: " + str(site_type))
+			self.sites[site_type] = [site] #start a new list for this specie
+		else:
+			self.sites[site_type].append(site) #add to an existing list of these species
+
+
+	def remove(self, site):
+		Site.validate_site(site)
+
+		site_type = site['type']
+
+		if site_type not in self.sites:
+			raise Exception("Site type not present in site collection:", str(site_type))
 		else:
 			self.sites[site_type].remove(site)
 
@@ -98,9 +119,9 @@ class SiteCollection(object):
 
 	def get_sorted_list(self):
 		"""
-		Returns list of sites for which following is true:
-			Contiguous elements of self.sites of are of the same type
-			The first type to appear is the first type that was added, second is second type added, ...etc.
+		Returns a list of Site instances for which following is true:
+			Contiguous elements of the list of are of the same type
+			The first type to appear in the list is the first type that was added, second is second type added, ...etc.
 		"""
 
 		sorted_list = []
@@ -110,21 +131,50 @@ class SiteCollection(object):
 
 		return sorted_list
 
+
 	def get_species_list(self):
+		"""
+		Returns list of types like: ['Ba', 'Ti', 'O']
+		"""
 		return self.sites.keys()
 
 	def get_species_count_list(self):
+		"""
+		Returns list of counts of each type in the collection like [1, 1, 3]
+		"""
+
 		return [len(self.sites[species_type]) for species_type in self.sites]
 
 	def get_coordinates_list(self):
-		return [site['position'] for site in self]
+		"""
+		Returns a list of 3D vectors representing the coordinates of each site. This list is sorted by type and site insertion.
+		"""
+
+		return [site['position'] for site in self.get_sorted_list()]
+
+
+
+
+	###################################################################################################################
 
 	def shift_direct_coordinates(self, direct_displacement_vector, reverse=False):
+		"""
+		Shifts all sites by the 3D vector (expressed in direct coordinates) direct_displacement_vector.
+		Errors if not all sites in the collection are in direct coordinates already.
+
+		If reverse is True, sites are shifted by -direct_displacement_vector
+		"""
+
+		Vector.validate_3D_vector_representation(direct_displacement_vector)
+
 		if reverse:
 			for j in range(3):
 				direct_displacement_vector[j] = -direct_displacement_vector[j]
 
 		for site in self:
+			if not (site['coordinate_mode'] == 'Direct'):
+				raise Exception("Site not in direct coordinate mode: cannot shift all sites in this SiteCollection.")
+
 			site.displace(direct_displacement_vector)
 
 	def shift_direct_coordinates_by_type(self, shift_vector_dictionary, reverse=False):
@@ -152,11 +202,11 @@ class SiteCollection(object):
 	@staticmethod
 	def are_commensurate(site_collection_1, site_collection_2):
 		"""
-		Returns true if same types of sites and same number of each site in each collection
+		Returns True if the two site collections hold the same set of site types and the same number of each site in each type.
 		"""
 
 		for key in site_collection_1.keys():
-			if not key in site_collection_2.keys():
+			if not (key in site_collection_2.keys()):
 				return False
 			else:
 				if len(site_collection_1[key]) != len(site_collection_2[key]):

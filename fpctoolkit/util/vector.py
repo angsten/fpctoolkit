@@ -218,8 +218,8 @@ class Vector(object):
 		"""
 
 		if (len(vector_representation) != 3):
-			raise Exception("Vector is not of length three. Vector is: ", str(vector_representation))
+			raise Exception("Vector is not of length three. Vector is:", str(vector_representation))
 
 		for i in range(3):
 			if (not isinstance(vector_representation[i], float)) and (not isinstance(vector_representation[i], int)):
-				raise Exception("Vector is not filled with numeric types (float or int). Vector is: ", str(vector_representation))
+				raise Exception("Vector is not filled with numeric types (float or int). Vector is:", str(vector_representation))
