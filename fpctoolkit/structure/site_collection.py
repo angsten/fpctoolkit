@@ -4,27 +4,51 @@ import copy
 from fpctoolkit.structure.site import Site
 
 class SiteCollection(object):
-	"""Collection of sites
+	"""
+	Collection of Site objects.
 
-	Tracks ordering and can sort easily.
-	Will iterate in order of types added, in blocks of type.
-
-	self.sites is actually an ordered dictionary that looks like:
-
-	sites = {'Ba': [Ba_site_1, Ba_site_2], 'Ti': [Ti_site_1, ...]}
+	self.sites is an ordered dictionary that looks like:   {'Ba': [Ba_site_1, Ba_site_2], 'Ti': [Ti_site_1, ...]}
 
 
+	sites['Ba'] will return a list of all sites where site['type'] is 'Ba'. This list will retain
+	the original order of insertion.
 
+	site_collection.get_sorted_list() returns a single list of all sites, arranged in subgroups of type (by order of type insertion), with each
+	subgroup retaining its original insertion order.
+
+	An iterator on a SiteCollection will iterate through elements of site_collection.get_sorted_list()
 	"""
 
 
-	def __init__(self, sites_list=None):
-		self.sites = OrderedDict()
-		self._type_counts = OrderedDict()
+	def __init__(self, sites=None):
+		"""
+		sites must be either None, a list of Site instances, or a SiteCollection instance.
+		"""
 
-		if sites_list:
-			for site in sites_list:
+		SiteCollection.validate_constuctor_arguments(sites)
+
+		self.sites = OrderedDict()
+
+		if sites:
+			for site in sites:
 				self.append(site)
+
+	@staticmethod
+	def validate_constuctor_arguments(sites):
+		SiteCollection.validate_sites(sites)
+
+	@staticmethod
+	def validate_sites(sites):
+		"""
+		sites must be either a list of instances of the Site class or a SiteCollection instance.
+		"""
+
+		if isinstance(sites, list) or isinstance(sites, SiteCollection):
+			for site in sites:
+				Site.validate_site(site)
+		else:
+			raise Exception("sites must be either a list of Site instances or a SiteColleciton instance")
+
 
 	def __iter__(self):
 		return iter(self.get_sorted_list())
@@ -51,10 +75,8 @@ class SiteCollection(object):
 		return key in self.sites
 
 	def append(self, site):
-		if isinstance(site, Site):
-			self.add_site(site)
-		else:
-			raise Exception("Can only append instances of Site to a site collection")
+		Site.validate_site(site)
+		self.add_site(site)
 
 
 	def add_site(self, site):
@@ -64,10 +86,15 @@ class SiteCollection(object):
 			self.sites[site['type']].append(site)
 
 	def remove_site(self, site):
-		if site['type'] not in self.sites:
-			raise Exception("Site type not present in site collection: " + str(species_type))
+		site_type = site['type']
+
+		if site_type not in self.sites:
+			raise Exception("Site type not present in site collection: " + str(site_type))
 		else:
-			site['type'].remove(site)
+			self.sites[site_type].remove(site)
+
+			if len(self.sites[site_type]) == 0: #this type no longer appears in the collection - remove the dictionary key for this type in sites.
+				del sites[site_type]
 
 	def get_sorted_list(self):
 		"""
@@ -75,6 +102,7 @@ class SiteCollection(object):
 			Contiguous elements of self.sites of are of the same type
 			The first type to appear is the first type that was added, second is second type added, ...etc.
 		"""
+
 		sorted_list = []
 
 		for species_type, species_site_list in self.sites.items():

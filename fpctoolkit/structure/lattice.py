@@ -46,6 +46,20 @@ class Lattice(object):
 		self.from_2D_array(lattice_representation) #if lattice_representation is a Lattice instance, still will work as it wraps a 2D array
 
 
+	@staticmethod
+	def validate_lattice_representation(lattice_representation):
+		"""
+		Verifies that lattice_representation can represent a lattice (i.e. it is a 3x3 array of floats or ints).
+		If lattice_representation is not a valid represenation of a lattice, an exception is thrown.
+		"""
+
+		if (len(lattice_representation) != 3):
+			raise Exception("The provided lattice representation does not represent a lattice: ", str(lattice_representation))
+
+		for i in range(3):
+			lattice_vector = lattice_representation[i]
+			Vector.validate_3D_vector_representation(lattice_vector)
+
 	def from_2D_array(self, array):
 		"""
 		Load a 2D list (array) into self.a, self.b, and self.c. Input array should have the form:
@@ -204,22 +218,3 @@ class Lattice(object):
 				new_lattice[i][j] = weight*lattice_1[i][j] + (1.0-weight)*lattice_2[i][j]
 
 		return new_lattice
-
-
-	@staticmethod
-	def validate_lattice_representation(lattice_representation):
-		"""
-		Verifies that lattice_representation can represent a lattice (i.e. it is a 3x3 array of floats or ints).
-		If lattice_representation is not a valid represenation of a lattice, an exception is thrown.
-		"""
-
-		exception = Exception("The provided lattice representation does not represent a lattice: ", str(lattice_representation))
-
-		if (len(lattice_representation) != 3):
-			raise exception
-
-		for i in range(3):
-			lattice_vector = lattice_representation[i]
-
-			if not Vector.is_a_3D_vector_representation(lattice_vector):
-				raise Exception

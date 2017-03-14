@@ -33,7 +33,7 @@ class PopulationCollection(object):
 		directory_to_individual_conversion_method can be left as None - then individuals will load in pickled saved version of instances.
 		"""
 
-		self.path = Path.expand_path(path)
+		self.path = Path.expand(path)
 		self.directory_to_individual_conversion_method = directory_to_individual_conversion_method
 		self.initialize_paths()
 

@@ -212,17 +212,14 @@ class Vector(object):
 
 
 	@staticmethod
-	def is_a_3D_vector_representation(vector_representation):
+	def validate_3D_vector_representation(vector_representation):
 		"""
-		Returns true if vector_representation can represent a 3D vector (i.e. contains a list of three floats, is of dimension one and length 3).
-		If vector_representation is not a valid represenation of a vector, false is returned.
+		Raises exception if vector_representation does not represent a 3D vector (i.e. contains a list of three floats, is of dimension one and length 3).
 		"""
 
 		if (len(vector_representation) != 3):
-			return False
+			raise Exception("Vector is not of length three. Vector is: ", str(vector_representation))
 
 		for i in range(3):
-			if (not isinstance(lattice_vector[i], float)) and (not isinstance(lattice_vector[i], int)):
-				return False
-
-		return True
+			if (not isinstance(vector_representation[i], float)) and (not isinstance(vector_representation[i], int)):
+				raise Exception("Vector is not filled with numeric types (float or int). Vector is: ", str(vector_representation))

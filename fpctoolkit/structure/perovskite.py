@@ -26,7 +26,6 @@ class Perovskite(Structure):
 	def __init__(self, file_path=None, supercell_dimensions=None, lattice=None, species_list=None):
 		sites = None
 		if not file_path:
-			#hand make perovskite sites
 			sites = Perovskite.generate_perfect_site_collection(supercell_dimensions, species_list)
 
 

@@ -7,7 +7,7 @@ import fpctoolkit.util.string_util as su
 
 class Path(object):
 	@staticmethod
-	def expand_path(path):
+	def expand(path):
 		"""
 		Returns absolute and expanded path. Setting path='~/bin' will return /home/angsten/bin   path='../bin' will return /home/angsten/bin
 		"""
@@ -19,7 +19,7 @@ class Path(object):
 
 	@staticmethod
 	def clean(*paths):
-		return Path.expand_path(os.path.join(*paths))
+		return Path.expand(os.path.join(*paths))
 
 	@staticmethod
 	def exists(path):

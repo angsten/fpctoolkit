@@ -19,7 +19,7 @@ class Individual(object):
 			if not path:
 				raise Exception("Path must be given if no calculation set is provided.")
 
-			self.path = Path.expand_path(path)
+			self.path = Path.expand(path)
 			self.load()
 		else:
 			self.path = calculation_set.path

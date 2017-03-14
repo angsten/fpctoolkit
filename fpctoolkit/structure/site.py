@@ -1,15 +1,21 @@
+#from fpctoolkit.structure.site import Site
+
 import numpy as np
 
 from fpctoolkit.util.vector import Vector
 
-class Site(object):
-	"""Sites are generic property sets holding a position in the crystal.
 
-	The properties dictionary holds all properties, including position.
+class Site(object):
+	"""
+	Sites are generic property sets which have a (periodic) position in the crystal.
+
+	A properties dictionary self._properties holds all properties, including position.
 	These can be accessed and set using instance['property_name']
 
-	Example: site = Site()   site['position'] = [0.1, 0.2, 0.0]
-	site['type'] = 'Ba' (it's a good idea to keep this element names always)
+	Example: 
+	site = Site()   
+	site['position'] = [0.1, 0.2, 0.0]
+	site['type'] = 'Ba' (it's a good idea to keep this as element names always)
 	site['coordinate_mode'] = 'Cartesian'
 	del site['magmom']
 
@@ -120,3 +126,21 @@ class Site(object):
 		for component in range(3):
 			if (site_1['position'][component] - site_2['position'][component]) > 0.0000000001:
 				return False
+
+	@staticmethod
+	def validate_site(site):
+		"""
+		Raises an exception if site is not a valid representaiton of a site and does not at least contain a position, coordinate_mode, and a type property.
+		"""
+
+		if not isinstance(site, Site):
+			raise Exception("Site is not of type Site. Type is ", type(site))
+
+		if site.has_key('position') and site.has_key('coordinate_mode'):
+			Vector.validate_3D_vector_representation(site['position'])
+		else:
+			raise Exception("A valid site must define a position and coordinate mode. Site is: ", site)
+
+
+		if not (site.has_key('type') and isinstance(site['type'], basestring)):
+			raise Exception("A valid site must define a type, and this must be a string. Site is: ", site)

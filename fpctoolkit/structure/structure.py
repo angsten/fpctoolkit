@@ -8,6 +8,7 @@ from fpctoolkit.structure.lattice import Lattice
 from fpctoolkit.structure.site_collection import SiteCollection
 from fpctoolkit.util.vector import Vector
 from fpctoolkit.util.random_selector import RandomSelector
+from fpctoolkit.util.path import Path
 
 class Structure(object):
 	"""
@@ -19,6 +20,14 @@ class Structure(object):
 	"""
 
 	def __init__(self, file_path=None, lattice=None, sites=None):
+		"""
+		file_path must be either a valid (relative or absolute) path to a poscar file or None
+		lattice must be either a 2D array of floats or ints or a Lattice class instance
+		sites must be either a list of sites or a SiteColleciton instance
+		"""
+
+		Structure.validate_constructor_arguments(file_path, lattice, sites)
+
 		if file_path:
 			self.from_poscar_file_path(file_path)
 		else:
@@ -31,6 +40,25 @@ class Structure(object):
 
 	def __str__(self):
 		return str(self.lattice) + "\n".join(str(site) for site in self.sites) + "\n"
+
+	@staticmethod
+	def validate_constructor_arguments(file_path, lattice, sites):
+
+		if file_path and (not Path.exists(Path.expand(file_path))):
+			raise Exception("File path must be a valid path to a poscar file.")
+
+		if not lattice:
+			raise Exception("A lattice must be specified.")
+		else:
+			Lattice.validate_lattice_representation(lattice)
+
+		if not sites:
+			raise Exception("A sites list or SiteColleciton instance must be specified.")
+		else:
+			
+
+
+
 
 
 	def from_poscar_file_path(self, file_path):
@@ -88,7 +116,8 @@ class Structure(object):
 			site.convert_to_cartesian_coordinates(self.lattice)
 
 	def convert_sites_to_direct_coordinates(self):
-		"""Takes any site in sites that is in cartesian coordinates and changes
+		"""
+		Takes any site in sites that is in cartesian coordinates and changes
 		its position and coordinate mode to be in direct coordinate system
 		"""
 
@@ -130,11 +159,11 @@ class Structure(object):
 		return Structure(lattice=new_lattice, sites=new_sites)
 
 
-
+	###########################################################################################################################################################################################################
 
 	def displace_site_positions_with_minimum_distance_constraints(self, displacement_vector_distribution_function_dictionary_by_type=None, minimum_atomic_distances_nested_dictionary_by_type=None):
 		"""
-		Displace the atoms of this structure rusing the specified probability distribution functions for each atom type.
+		Displace the atoms of this structure using the specified probability distribution functions for each atom type.
 		This method preserves the overall distribution rho(x1, y1, z1, x2, y2, z2, ...) resulting from multiplication
 		of the indiviidual independent atomic distributions but with the regions of atoms too close (distance < min_atomic_dist) set to rho = 0.
 		This just renormalizes the other parts of the distribution space so integral of rho sums to unity.
@@ -166,8 +195,6 @@ class Structure(object):
 		sites_to_check_indices_list = range(len(new_sites_list))
 
 		self.displace_site_positions(displacement_vector_distribution_function_dictionary_by_type)
-
-		#self.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\dispinit.vasp")
 
 		for try_count in range(200):
 
@@ -204,7 +231,6 @@ class Structure(object):
 			else:
 				return
 
-			#self.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\disptry_"+str(try_count)+".vasp")
 
 		raise Exception("Could not displace this structure while satisfying the given constraints")
 
@@ -231,6 +257,8 @@ class Structure(object):
 		for species_type in self.sites.keys():
 			for site in self.sites[species_type]:
 				site.randomly_displace(displacement_vector_distribution_function_dictionary_by_type, self.lattice)
+
+	###########################################################################################################################################################################################################
 
 
 	def any_sites_are_too_close(self, minimum_atomic_distances_nested_dictionary_by_type, nearest_neighbors_max=3):
