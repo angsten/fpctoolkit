@@ -1,3 +1,5 @@
+#from fpctoolkit.util.vector import Vector
+
 import numpy as np
 
 
@@ -33,6 +35,9 @@ class Vector(object):
 
 	__rmul__ = __mul__
 
+	def __len__(self):
+		return 3
+
 	def __str__(self):
 		return " ".join(str(component) for component in self.to_list())
 
@@ -45,7 +50,8 @@ class Vector(object):
 
 	@staticmethod
 	def get_in_cartesian_coordinates(direct_vector, lattice):
-		"""Returns vector with coordinates transformed to
+		"""
+		Returns vector with coordinates transformed to
 		the equivalent cartesian coordinate representation.
 		No clipping is performed to keep in unit cell.
 		"""
@@ -59,10 +65,12 @@ class Vector(object):
 
 	@staticmethod
 	def get_in_direct_coordinates(cartesian_vector, lattice):
-		"""Returns vector with coordinates transformed to
+		"""
+		Returns vector with coordinates transformed to
 		the equivalent direct coordinate representation.
 		No clipping is performed to keep in unit cell.
 		"""
+
 		a = lattice[0]
 		b = lattice[1]
 		c = lattice[2]
@@ -110,7 +118,10 @@ class Vector(object):
 
 	@staticmethod
 	def normalize_fractional_coordinate(coordinate):
-		"""Puts each component of coordinate in range [0.0 and 1.0)"""
+		"""
+		Puts each component of coordinate in range [0.0 and 1.0)
+		"""
+
 		for i in range(3):
 			while coordinate[i] >= 1.0:
 				coordinate[i] -= 1.0
@@ -119,7 +130,9 @@ class Vector(object):
 
 	@staticmethod
 	def put_fractional_coordinate_nearest_to_origin(coordinate):
-		"""Puts all components in range (-0.5, 0.5]"""
+		"""
+		Puts all components in range (-0.5, 0.5]
+		"""
 
 		for i in range(3):
 			while coordinate[i] > 0.5:
@@ -198,3 +211,18 @@ class Vector(object):
 
 
 
+	@staticmethod
+	def is_a_3D_vector_representation(vector_representation):
+		"""
+		Returns true if vector_representation can represent a 3D vector (i.e. contains a list of three floats, is of dimension one and length 3).
+		If vector_representation is not a valid represenation of a vector, false is returned.
+		"""
+
+		if (len(vector_representation) != 3):
+			return False
+
+		for i in range(3):
+			if (not isinstance(lattice_vector[i], float)) and (not isinstance(lattice_vector[i], int)):
+				return False
+
+		return True

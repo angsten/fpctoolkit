@@ -19,13 +19,10 @@ class Structure(object):
 	"""
 
 	def __init__(self, file_path=None, lattice=None, sites=None):
-		if file_path: #load from file (only poscar supported for now)
+		if file_path:
 			self.from_poscar_file_path(file_path)
 		else:
-			if Lattice.lattice_representation_is_compatible(lattice):
-				self.lattice = Lattice(lattice)
-			else:
-				raise Exception("Lattice not compatible")
+			self.lattice = Lattice(lattice)
 
 			if isinstance(sites, SiteCollection):
 				self.sites = sites

@@ -4,40 +4,55 @@ import copy
 import numpy as np
 
 from fpctoolkit.util.tensor import Tensor
+from fpctoolkit.util.vector import Vector
 
 class Lattice(object):
 	"""
-	Class for representing a lattice (effectively just a 3x3 2D array of floating point numbers). This class can be modified or acessed in the
-	same way as a 2D array (lattice[i][j] = ..., b_x = lattice[1][0]).
+	Class for representing a lattice (effectively just a 3x3 2D array of floating point numbers wrapped in a class). 
+	This class can be modified or accessed in the same way as a 2D array (lattice[i][j] = ..., b_x = lattice[1][0]).
 
-	The a, b, and c attributes hold the three lattice vectors.
+	The a, b, and c attributes hold the three lattice vectors (lists of length 3).
 
-	To get the b lattice vector of instance lattice, one can use lattice.b or lattice[1]
+	To get the b lattice vector of Lattice class instance lattice, one can use lattice.b or lattice[1]
 
 	To get a 2D array representation, one can use lattice.to_array() or lattice.to_np_array()
 
 	To modify, for example, a_y, one can use lattice[0][1] = 0.2.
 	"""
 
-	def __init__(self, lattice=None):
+	def __init__(self, lattice_representation=None):
 		"""
-		lattice can be a Lattice instance, a 3x3 2D array of floats, or left as None. Deep copies are made in the first two cases.
+		The input argument lattice_representation can be one of the following:
 
-		If lattice is None, then a lattice with all zeros is created.
+		1. An instance of the Lattice class, in which case a deep copy is made by copying a, b, and c into self.
+
+		2. A 3x3 2D array of floating point numbers, in which case the rows in the list are deep copied into self. The 2D list could look like:
+			[[4.32, 0.012, 0.0], 
+			 [0.0 5.23, -0.114], 
+			 [-0.1, 0.0, 3.553]]
+
+		3. None
+
+		Deep copies of the input object are made in cases 1. and 2.
+
+		If the argument lattice_representation is None, then a lattice_representation with all zeros is created.
 		"""
 
-		if not lattice:
-			lattice = [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
+		if not lattice_representation:
+			lattice_representation = [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
 
-		if not Lattice.lattice_representation_is_compatible(lattice):
-			raise Exception("The provided lattice argument is not in a form compatible with a lattice. Input lattice looks like: " + str(array))
+		Lattice.validate_lattice_representation(lattice_representation)
 
-		self.from_2D_array(lattice)
+		self.from_2D_array(lattice_representation) #if lattice_representation is a Lattice instance, still will work as it wraps a 2D array
 
 
 	def from_2D_array(self, array):
 		"""
-		Load a 2D list (array) into self.a, b, and c. First, it is ensured that array is compatible with a lattice.
+		Load a 2D list (array) into self.a, self.b, and self.c. Input array should have the form:
+
+		[[a1, a2, a3], 
+		 [b1, b2, b3], 
+		 [c1, c2, c3]]
 		"""
 
 		self.a = copy.deepcopy(array[0])
@@ -48,6 +63,12 @@ class Lattice(object):
 	def __str__(self):
 		return " ".join(str(x) for x in self.a) + '\n' + " ".join(str(x) for x in self.b) + '\n' + " ".join(str(x) for x in self.c) + '\n'
 
+	def __len__(self):
+		"""
+		Always returns 3 because representation of the lattice will always have a, b, and c.
+		"""
+
+		return 3
 
 	def __getitem__(self, key):
 		"""
@@ -66,7 +87,7 @@ class Lattice(object):
 
 	def to_array(self):
 		"""
-		Returns lattice as a 3x3 list of lists that looks like:
+		Returns lattice as a 3x3 list of (shallow-copied) lists that looks like:
 
 		[[a1, a2, a3], 
 		 [b1, b2, b3], 
@@ -173,9 +194,8 @@ class Lattice(object):
 		if (weight < 0.0) or (weight > 1.0):
 			raise Exception("Weighting factor must be between zero and one inclusive.")
 
-		if not (Lattice.lattice_representation_is_compatible(lattice_1) and Lattice.lattice_representation_is_compatible(lattice_2)):
-			raise Exception("Input lattices are not both compatible representations. lattice_1: " + str(lattice_1) + "   lattice_2: " + str(lattice_2))
-
+		lattice_1 = Lattice(lattice_1) #this will validate these lattices and ensure they are of the correct form
+		lattice_2 = Lattice(lattice_2)
 
 		new_lattice = Lattice()
 
@@ -187,29 +207,19 @@ class Lattice(object):
 
 
 	@staticmethod
-	def lattice_representation_is_compatible(lattice_representation):
+	def validate_lattice_representation(lattice_representation):
 		"""
-		Returns True if lattice_representation can represent a lattice (i.e. contains floats, is of dimension two and length 3 for both lists) or is a Lattice class instance, else False.
+		Verifies that lattice_representation can represent a lattice (i.e. it is a 3x3 array of floats or ints).
+		If lattice_representation is not a valid represenation of a lattice, an exception is thrown.
 		"""
 
-		if isinstance(lattice_representation, Lattice):
-			return True
+		exception = Exception("The provided lattice representation does not represent a lattice: ", str(lattice_representation))
 
-		if not isinstance(lattice_representation, (np.ndarray, list)):
-			return False
-
-		if len(lattice_representation) != 3:
-			return False
+		if (len(lattice_representation) != 3):
+			raise exception
 
 		for i in range(3):
-			if not isinstance(lattice_representation[i], (np.ndarray, list)):
-				return False
+			lattice_vector = lattice_representation[i]
 
-			if len(lattice_representation[i]) != 3:
-				return False
-
-			for j in range(3):
-				if (not isinstance(lattice_representation[i][j], float)) and (not isinstance(lattice_representation[i][j], int)):
-					return False
-
-		return True
+			if not Vector.is_a_3D_vector_representation(lattice_vector):
+				raise Exception
