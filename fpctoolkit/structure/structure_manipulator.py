@@ -93,7 +93,7 @@ class StructureManipulator(object):
 
 		sites_to_check_indices_list = range(len(new_sites_list))
 
-		Structure.displace_site_positions(structure, displacement_vector_distribution_function_dictionary_by_type)
+		StructureManipulator.displace_site_positions(structure, displacement_vector_distribution_function_dictionary_by_type)
 
 		for try_count in range(200):
 

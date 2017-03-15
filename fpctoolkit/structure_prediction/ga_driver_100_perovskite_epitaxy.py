@@ -212,6 +212,8 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 	def get_mated_structure(self, population_of_last_generation):
 
+		#########need to add min atomic distance check!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 		Na = self.ga_input_dictionary['supercell_dimensions_list'][0]
 		Nb = self.ga_input_dictionary['supercell_dimensions_list'][1]
 		Nc = self.ga_input_dictionary['supercell_dimensions_list'][2]
