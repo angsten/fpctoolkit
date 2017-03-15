@@ -11,7 +11,7 @@ class GADriver(object):
 	Abstract parent class defining the specifics of the GA search, including operators and how individual calculation sets are defined.
 	"""
 
-	def __init__(self, ga_input_dictionary, selection_function, calculation_set_input_dictionary):
+	def __init__(self, ga_input_dictionary, calculation_set_input_dictionary, selection_function, random_structure_creation_function, structure_mating_function):
 		"""
 		ga_input_dictionary controls how operators are performed and the rates at which various operators are randomly chosen to generate a new individual (a structure).
 
@@ -44,6 +44,9 @@ class GADriver(object):
 		self.mutate_fractions_list = ParameterList(self.ga_input_dictionary['mutate_fractions_list']) if 'mutate_fractions_list' in self.ga_input_dictionary else ParameterList([0.0])
 		self.permute_fractions_list = ParameterList(self.ga_input_dictionary['permute_fractions_list']) if 'permute_fractions_list' in self.ga_input_dictionary else ParameterList([0.0])
 
+		self.structure_creation_id_string = None #will track how the individual's structure was created
+		self.parent_structures_list = None
+		self.parent_paths_list = None
 
 
 	def directory_to_individual_conversion_method(self, path):
@@ -57,15 +60,21 @@ class GADriver(object):
 
 	def create_new_individual(self, individual_path, population_of_last_generation, generation_number):
 		"""
-		To be implemented by child class. This method should supply an individual by randomly chosen means (heredity, random, mutate, ...etc.)
+		This method will create (and return) a new individual whose initial structure was created by randomly chosen means (heredity, random, mutate, ...etc.)
 		"""
 
-		return None
+		initial_structure = self.get_structure(population_of_last_generation, generation_number)
+
+		relaxation = VaspRelaxation(path=individual_path, initial_structure=initial_structure, input_dictionary=copy.deepcopy(self.calculation_set_input_dictionary))
+
+		return Individual(calculation_set=relaxation, structure_creation_id_string=self.structure_creation_id_string, parent_structures_list=self.parent_structures_list, parent_paths_list=self.parent_paths_list)
+
 
 	def get_max_individuals_count_of_generation_number(self, generation_number):
 		"""
 		Returns the number of individuals to be created in generation generation_number.
 		"""
+		
 		return self.individuals_per_generation[generation_number-1]
 
 	def get_max_number_of_generations(self):
@@ -98,10 +107,21 @@ class GADriver(object):
 
 
 	def get_random_structure(self, population_of_last_generation):
-		return None
+		self.structure_creation_id_string = 'random'
+		self.parent_structures_list = None
+		self.parent_paths_list = None
+
+		return self.random_structure_creation_function()
 
 	def get_mated_structure(self, population_of_last_generation):
-		return None
+		self.structure_creation_id_string = 'mating'
+
+		individuals_list = self.selection_function(population=population_of_last_generation, number_of_individuals_to_return=2)
+
+		self.parent_structures_list = [copy.deepcopy(individual.final_structure) for individual in individuals_list]
+		self.parent_paths_list = [individual.calculation_set.path for individual in individuals_list]
+
+		return self.structure_mating_function(self.parent_structures_list[0], self.parent_structures_list[1])
 
 	def get_mutated_structure(self, population_of_last_generation):
 		return None

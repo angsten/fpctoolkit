@@ -24,7 +24,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 	"""
 
 
-	def __init__(self, ga_input_dictionary, selection_function, calculation_set_input_dictionary):
+	def __init__(self, ga_input_dictionary, calculation_set_input_dictionary, selection_function, random_structure_creation_function, structure_mating_function):
 		"""
 			ga_input_dictionary should additionally have species_list, epitaxial_lattice_constant (full number, not 5-atom cell equivalent),
 			and supercell_dimensions_list keys and values
@@ -57,6 +57,12 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 
 	def get_random_structure(self, population_of_last_generation):
+
+		self.structure_creation_id_string = 'random'
+		self.parent_structures_list = None
+		self.parent_paths_list = None
+
+		return self.random_structure_creation_function()
 
 		A_type = self.ga_input_dictionary['species_list'][0]
 		B_type = self.ga_input_dictionary['species_list'][1]
@@ -211,6 +217,15 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 
 	def get_mated_structure(self, population_of_last_generation):
+
+		self.structure_creation_id_string = 'mating'
+
+		individuals_list = self.selection_function(population=population_of_last_generation, number_of_individuals_to_return=2)
+
+		self.parent_structures_list = [copy.deepcopy(individual.final_structure) for individual in individuals_list]
+		self.parent_paths_list = [individual.calculation_set.path for individual in individuals_list]
+
+		return self.structure_mating_function(self.parent_structures_list[0], self.parent_structures_list[1])
 
 		#########need to add min atomic distance check!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

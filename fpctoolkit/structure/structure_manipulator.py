@@ -55,7 +55,8 @@ class StructureManipulator(object):
 	@staticmethod	
 	def displace_site_positions_with_minimum_distance_constraints(structure, displacement_vector_distribution_function_dictionary_by_type=None, minimum_atomic_distances_nested_dictionary_by_type=None):
 		"""
-		Displace the atoms of structure using the specified probability distribution functions for each atom type (modifies in place).
+		Displaces the atoms of structure using the specified probability distribution functions for each atom type (modifies in place) while ensuring
+		the site positions obey provided minimum atommic distance constraints.
 
 		Algorithm:
 		1. Randomly displace sites according to the given distribution funcitons for each type.
@@ -91,7 +92,7 @@ class StructureManipulator(object):
 		original_sites_list = copy.deepcopy(structure.sites.get_sorted_list())
 		new_sites_list = structure.sites.get_sorted_list()
 
-		sites_to_check_indices_list = range(len(new_sites_list))
+		sites_to_check_indices_list = range(len(new_sites_list)) #start with checking every index (looks like [0, 1, 2, ..., num_atoms-1])
 
 		StructureManipulator.displace_site_positions(structure, displacement_vector_distribution_function_dictionary_by_type)
 
@@ -137,7 +138,9 @@ class StructureManipulator(object):
 	@staticmethod
 	def displace_site_positions(structure, displacement_vector_distribution_function_dictionary_by_type=None):
 		"""
-		Inner loop helper function for displace_site_positions_with_minimum_distance_constraint
+		Displaces the sites of structure using the displacement vector dist func provided for each type.
+
+		If a dist func is not provided for a given site type, a zero function is used.
 		"""
 
 		Structure.validate(structure)
@@ -149,10 +152,13 @@ class StructureManipulator(object):
 			if not species_type in structure.sites.keys():
 				raise Exception("Strucuture does not have a site of type " + str(species_type))
 
+
+
 		#If a distribution function is not provided for a given type, set that type's function to the zero vector function
 		for species_type in structure.sites.keys():
 			if not species_type in displacement_vector_distribution_function_dictionary_by_type:
 				displacement_vector_distribution_function_dictionary_by_type[species_type] = lambda: [0.0, 0.0, 0.0]
+
 
 
 		for site in structure.sites:
