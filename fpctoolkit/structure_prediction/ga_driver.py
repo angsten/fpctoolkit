@@ -1,3 +1,5 @@
+#from fpctoolkit.structure_prediction.ga_driver import GADriver
+
 import random
 import copy
 
@@ -74,7 +76,7 @@ class GADriver(object):
 		"""
 		Returns the number of individuals to be created in generation generation_number.
 		"""
-		
+
 		return self.individuals_per_generation[generation_number-1]
 
 	def get_max_number_of_generations(self):
