@@ -99,14 +99,24 @@ class Site(object):
 		for i in range(3):
 			self._properties['position'][i] += vector[i]
 
-	def randomly_displace(self, displacement_vector_distribution_function_dictionary_by_type, lattice):
+	def randomly_displace(self, displacement_vector_distribution_function, lattice, displacement_vector_coordinate_mode='Cartesian'):
+		"""
+		Randomly displaces the position of this site using the vector distribution function given. This function should return a 3D vector when called.
+		lattice should be the lattice used when converting from cartesian to direct or vice-versa.
+		displacement_vector_coordinate_mode should be the coordinate mode of the vector returned by the distribution function ('Direct' or 'Cartesian').
+		"""
 
-		displacement_vector = displacement_vector_distribution_function_dictionary_by_type[self['type']]()
+		if displacement_vector_coordinate_mode not in ['Direct', 'Cartesian']:
+			raise Exception("Coordinate mode for displacement vector not properly specified:", displacement_vector_coordinate_mode)
 
-		if self['coordinate_mode'] == 'Direct':
+		displacement_vector = displacement_vector_distribution_function()
+
+		if self['coordinate_mode'] == 'Direct' and displacement_vector_coordinate_mode == 'Cartesian':
 			displacement_vector = Vector.get_in_direct_coordinates(displacement_vector, lattice)
+		elif self['coordinate_mode'] == 'Cartesian' and displacement_vector_coordinate_mode == 'Direct':
+			displacement_vector = Vector.get_in_cartesian_coordinates(displacement_vector, lattice)
 
-			self.displace(displacement_vector)
+		self.displace(displacement_vector)
 
 	@staticmethod
 	def get_coordinate_mode_string(coord_sys_line):

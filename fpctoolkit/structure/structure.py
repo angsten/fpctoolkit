@@ -51,6 +51,18 @@ class Structure(object):
 		else:
 			SiteCollection.validate_sites(sites)
 
+	@staticmethod
+	def validate(structure):
+		"""
+		Verifies that structure is of type Structure and has a valid lattice and set of sites.
+		"""
+
+		if not isinstance(structure, Structure):
+			raise Exception("structure is not of type Structure. Type is", type(structure))
+
+		Lattice.validate_lattice_representation(structure.lattice)
+		SiteCollection.validate_sites(structure.sites)
+
 
 	def __str__(self):
 		return str(self.lattice) + "\n".join(str(site) for site in self.sites) + "\n"

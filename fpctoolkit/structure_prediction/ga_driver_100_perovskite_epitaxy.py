@@ -7,6 +7,7 @@ from fpctoolkit.structure.lattice import Lattice
 from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
 from fpctoolkit.structure_prediction.individual import Individual
 from fpctoolkit.structure.structure import Structure
+from fpctoolkit.structure.structure_manipulator import StructureManipulator
 from fpctoolkit.structure.site_collection import SiteCollection
 from fpctoolkit.structure.site import Site
 from fpctoolkit.structure.site_mapping import SiteMapping
@@ -195,7 +196,7 @@ class GADriver100PerovskiteEpitaxy(GADriver):
 
 		structure.lattice.randomly_strain(distribution_function_array=distribution_function_array)
 
-		structure.displace_site_positions_with_minimum_distance_constraints(displacement_vector_distribution_function_dictionary_by_type, minimum_atomic_distances_nested_dictionary_by_type)
+		StructureManipulator.displace_site_positions_with_minimum_distance_constraints(structure, displacement_vector_distribution_function_dictionary_by_type, minimum_atomic_distances_nested_dictionary_by_type)
 	
 
 
