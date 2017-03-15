@@ -31,6 +31,25 @@ class Site(object):
 			for key, value in properties.items():
 				self[key] = value
 
+
+	@staticmethod
+	def validate_site(site):
+		"""
+		Raises an exception if site is not a valid representaiton of a site and does not at least contain a position, coordinate_mode, and a type property.
+		"""
+
+		if not isinstance(site, Site):
+			raise Exception("Site is not of type Site. Type is ", type(site))
+
+		if site.has_key('position') and site.has_key('coordinate_mode'):
+			Vector.validate_3D_vector_representation(site['position'])
+		else:
+			raise Exception("A valid site must define a position and coordinate mode. Site is:", site)
+
+
+		if not (site.has_key('type') and isinstance(site['type'], basestring)):
+			raise Exception("A valid site must define a type, and this must be a string. Site is:", site)
+
 	def __nonzero__(self):
 		return bool(self._properties)
 
@@ -135,21 +154,3 @@ class Site(object):
 		for component in range(3):
 			if (site_1['position'][component] - site_2['position'][component]) > 0.0000000001:
 				return False
-
-	@staticmethod
-	def validate_site(site):
-		"""
-		Raises an exception if site is not a valid representaiton of a site and does not at least contain a position, coordinate_mode, and a type property.
-		"""
-
-		if not isinstance(site, Site):
-			raise Exception("Site is not of type Site. Type is ", type(site))
-
-		if site.has_key('position') and site.has_key('coordinate_mode'):
-			Vector.validate_3D_vector_representation(site['position'])
-		else:
-			raise Exception("A valid site must define a position and coordinate mode. Site is:", site)
-
-
-		if not (site.has_key('type') and isinstance(site['type'], basestring)):
-			raise Exception("A valid site must define a type, and this must be a string. Site is:", site)

@@ -1,3 +1,5 @@
+#from fpctoolkit.structure.site_collection import SiteCollection
+
 from collections import OrderedDict
 import copy
 

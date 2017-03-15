@@ -3,7 +3,9 @@
 
 
 from fpctoolkit.structure.structure import Structure
-
+from fpctoolkit.structure.structure_analyzer import StructureAnalyzer
+from fpctoolkit.structure.site_collection import SiteCollection
+from fpctoolkit.util.vector import Vector
 
 
 class StructureManipulator(object):
@@ -95,7 +97,7 @@ class StructureManipulator(object):
 
 		for try_count in range(200):
 
-			indices_of_site_pairs_that_are_too_close_list = structure.get_indices_of_site_pairs_that_are_too_close_to_sites_list(sites_to_check_indices_list, minimum_atomic_distances_nested_dictionary_by_type)
+			indices_of_site_pairs_that_are_too_close_list = StructureAnalyzer.get_indices_of_site_pairs_that_are_too_close_to_sites_list(structure, sites_to_check_indices_list, minimum_atomic_distances_nested_dictionary_by_type)
 			sites_to_check_indices_list = []
 			indices_to_displace_list = []
 
@@ -150,9 +152,8 @@ class StructureManipulator(object):
 		#If a distribution function is not provided for a given type, set that type's function to the zero vector function
 		for species_type in structure.sites.keys():
 			if not species_type in displacement_vector_distribution_function_dictionary_by_type:
-				displacement_vector_distribution_function_dictionary_by_type[species_type] = lambda: [0, 0, 0]
+				displacement_vector_distribution_function_dictionary_by_type[species_type] = lambda: [0.0, 0.0, 0.0]
 
 
-		for species_type in structure.sites.keys():
-			for site in structure.sites[species_type]:
-				site.randomly_displace(displacement_vector_distribution_function_dictionary_by_type[site['type']], structure.lattice)
+		for site in structure.sites:
+			site.randomly_displace(displacement_vector_distribution_function_dictionary_by_type[site['type']], structure.lattice)
