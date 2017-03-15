@@ -1,35 +1,41 @@
-#from fpctoolkit.structure.random_structure_function_creators import 
+#from fpctoolkit.structure.structure_generator import StructureGenerator
 
 from fpctoolkit.structure.perovskite import Perovskite
 
-"""
-These functions should return functions that, when called, return a randomly generated structure.
-"""
 
 
-
-def get_random_perovskite_structure_generator(species_list, supercell_dimensions_list):
+class StructureGenerator
 	"""
-	Returns a function that, when called, produces a random perovskite with species_list as its atoms and supercell_dimensions as
-	its supercell dimensions.
+	Defines static methods useful for generating random structures. These functions fall into two categories:
+
+	1. Methods that return functions that, when called with no arguments, return a randomly generated structure.
+	2. Helper methods for creating the functions of the first type.
+	"""
+
+
+def get_random_perovskite_structure(species_list=None, primitive_cell_lattice_constant=None, supercell_dimensions_list=None):
+	"""
+	Returns a random perovskite structure with species_list as its atom types and supercell_dimensions as
+	its supercell dimensions. 
+
+	primitive_cell_lattice_constant is length (in Angstroms) of the perovskite cubic lattice vector
 	"""
 
 	A_type = species_list[0]
 	B_type = species_list[1]
 	X_type = species_list[2]
 
-	Nx = self.ga_input_dictionary['supercell_dimensions_list'][0]
-	Ny = self.ga_input_dictionary['supercell_dimensions_list'][1]
-	Nz = self.ga_input_dictionary['supercell_dimensions_list'][2]
+	Nx = supercell_dimensions_list[0]
+	Ny = supercell_dimensions_list[1]
+	Nz = supercell_dimensions_list[2]
 
-	a = self.ga_input_dictionary['epitaxial_lattice_constant']
-	unit_cell_a = a/Nx
+	a = primitive_cell_lattice_constant*Nx
 
-	c = ( unit_cell_a * Nz ) ##############################eventually base c off of a good volume
+	c = ( primitive_cell_lattice_constant * Nz ) ##############################eventually base c off of a good volume
 
 	lattice = [[a, 0.0, 0.0], [0.0, a, 0.0], [0.0, 0.0, c]]
 
-	structure = Perovskite(supercell_dimensions=self.ga_input_dictionary['supercell_dimensions_list'], lattice=lattice, species_list=species_list)
+	structure = Perovskite(supercell_dimensions=supercell_dimensions_list, lattice=lattice, species_list=species_list)
 
 
 	def envelope_function(curvature_parameter, max_displacement_distance, bell=True):
@@ -76,15 +82,15 @@ def get_random_perovskite_structure_generator(species_list, supercell_dimensions
 	"""
 
 	A_site_curvature_parameter = 1.4
-	A_site_max_displacement = 0.35*unit_cell_a
+	A_site_max_displacement = 0.35*primitive_cell_lattice_constant
 	A_bell = True
 
 	B_site_curvature_parameter = 2.5
-	B_site_max_displacement = 0.6*unit_cell_a
+	B_site_max_displacement = 0.6*primitive_cell_lattice_constant
 	B_bell = True
 
 	X_site_curvature_parameter = 3.0
-	X_site_max_displacement = 0.75*unit_cell_a
+	X_site_max_displacement = 0.75*primitive_cell_lattice_constant
 	X_bell = True
 
 	AA_minimum_distance = 1.2
@@ -154,10 +160,18 @@ def get_random_perovskite_structure_generator(species_list, supercell_dimensions
 
 	StructureManipulator.displace_site_positions_with_minimum_distance_constraints(structure, displacement_vector_distribution_function_dictionary_by_type, minimum_atomic_distances_nested_dictionary_by_type)
 
-
-
-	self.structure_creation_id_string = 'random'
-	self.parent_structures_list = None
-	self.parent_paths_list = None
-
 	return structure
+
+
+def get_random_perovskite_structure_generator(species_list=None, primitive_cell_lattice_constant=None, supercell_dimensions_list=None):
+	"""
+	Returns a function that, when called, produces a random perovskite with species_list as its atoms and supercell_dimensions as
+	its supercell dimensions. 
+
+	primitive_cell_lattice_constant is length (in Angstroms) of the perovskite cubic lattice vector
+	"""
+
+	def structure_generator():
+		return StructureGenerator.get_random_perovskite_structure(species_list, primitive_cell_lattice_constant, supercell_dimensions_list)
+
+	return structure_generator
