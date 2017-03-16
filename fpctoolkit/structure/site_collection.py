@@ -39,6 +39,9 @@ class SiteCollection(object):
 		Only shallow copies are made of the input sites.
 		"""
 
+		if sites == None:
+			sites = []
+
 		SiteCollection.validate_constuctor_arguments(sites)
 
 		self.sites = OrderedDict()

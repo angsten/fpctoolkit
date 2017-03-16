@@ -37,6 +37,8 @@ class GADriver(object):
 
 		self.ga_input_dictionary = ga_input_dictionary
 		self.selection_function = selection_function
+		self.random_structure_creation_function = random_structure_creation_function
+		self.structure_mating_function = structure_mating_function
 		self.calculation_set_input_dictionary = calculation_set_input_dictionary
 
 		self.individuals_per_generation = ParameterList(self.ga_input_dictionary['individuals_per_generation'])

@@ -30,7 +30,7 @@ from fpctoolkit.structure.structure_generator import StructureGenerator
 
 species_list = ['K', 'V', 'O']
 primitive_cell_lattice_constant = 3.79
-supercell_dimensions_list = [2, 2, 2]
+supercell_dimensions_list = [4, 4, 1]
 
 calculation_set_input_dictionary = {
 	'external_relaxation_count': 1,
@@ -61,14 +61,14 @@ structure_mating_function = StructureBreeder.get_perovskite_mating_function(supe
 ga_driver = GADriver(ga_input_dictionary, calculation_set_input_dictionary, selection_function, random_structure_creation_function, structure_mating_function)
 
 
-for i in range(1):
+for i in range(0):
 	struct = ga_driver.get_random_structure(None)
-	#struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\disp_"+str(i)+".vasp")
+	struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\disp_"+str(i)+".vasp")
 
 
 
-
-
+struct = ga_driver.structure_mating_function(Structure("C:\Users\Tom\Desktop\Vesta_Inputs\disp_0.vasp"), Structure("C:\Users\Tom\Desktop\Vesta_Inputs\disp_1.vasp"))
+struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\mated.vasp")
 
 
 

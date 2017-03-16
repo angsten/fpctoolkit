@@ -1,6 +1,11 @@
 #from fpctoolkit.structure.structure_breeder import StructureBreeder
 
+import random
+
 from fpctoolkit.structure.perovskite import Perovskite
+from fpctoolkit.structure.site_mapping_collection import SiteMappingCollection
+from fpctoolkit.structure.lattice import Lattice
+from fpctoolkit.structure.structure import Structure
 
 
 

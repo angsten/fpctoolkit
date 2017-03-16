@@ -1,6 +1,11 @@
 #from fpctoolkit.structure.structure_generator import StructureGenerator
 
 from fpctoolkit.structure.perovskite import Perovskite
+from fpctoolkit.util.random_selector import RandomSelector
+from fpctoolkit.util.distribution import Distribution
+from fpctoolkit.util.vector_distribution import VectorDistribution
+from fpctoolkit.util.vector import Vector
+from fpctoolkit.structure.structure_manipulator import StructureManipulator
 
 
 

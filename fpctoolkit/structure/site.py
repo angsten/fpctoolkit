@@ -84,6 +84,9 @@ class Site(object):
 	def __contains__(self, key):
 		return key in self._properties
 
+	def has_key(self, key):
+		return key in self._properties
+
 
 	def get_properties_dictionary(self):
 		return self._properties

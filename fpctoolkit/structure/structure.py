@@ -23,8 +23,8 @@ class Structure(object):
 	def __init__(self, file_path=None, lattice=None, sites=None):
 		"""
 		file_path must be either a valid (relative or absolute) path to a poscar file or None
-		lattice must be either a 2D array of floats or ints or a Lattice class instance
-		sites must be either a list of sites or a SiteColleciton instance
+		lattice must be either a 2D array of floats or ints, a Lattice class instance, or None if file_path is specified
+		sites must be either a list of sites, a SiteColleciton instance, or None if file_path is specified
 		"""
 
 		Structure.validate_constructor_arguments(file_path, lattice, sites)
@@ -41,15 +41,16 @@ class Structure(object):
 
 		Path.validate(path=file_path, allow_none=True)
 
-		if not lattice:
-			raise Exception("A lattice must be specified.")
-		else:
-			Lattice.validate_lattice_representation(lattice)
+		if file_path == None:
+			if lattice == None:
+				raise Exception("A lattice must be specified.")
+			else:
+				Lattice.validate_lattice_representation(lattice)
 
-		if not sites:
-			raise Exception("A sites list or SiteColleciton instance must be specified.")
-		else:
-			SiteCollection.validate_sites(sites)
+			if not sites:
+				raise Exception("A sites list or SiteColleciton instance must be specified.")
+			else:
+				SiteCollection.validate_sites(sites)
 
 	@staticmethod
 	def validate(structure):

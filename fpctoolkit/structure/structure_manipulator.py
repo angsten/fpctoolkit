@@ -1,11 +1,12 @@
 #from fpctoolkit.structure.structure_manipulator import StructureManipulator
 
-
+import copy
 
 from fpctoolkit.structure.structure import Structure
 from fpctoolkit.structure.structure_analyzer import StructureAnalyzer
 from fpctoolkit.structure.site_collection import SiteCollection
 from fpctoolkit.util.vector import Vector
+from fpctoolkit.util.random_selector import RandomSelector
 
 
 class StructureManipulator(object):
@@ -124,7 +125,7 @@ class StructureManipulator(object):
 					new_sites_list[index_to_displace]['coordinate_mode'] = original_sites_list[index_to_displace]['coordinate_mode']
 					new_sites_list[index_to_displace]['position'] = copy.deepcopy(original_sites_list[index_to_displace]['position'])
 
-					new_sites_list[index_to_displace].randomly_displace(displacement_vector_distribution_function_dictionary_by_type, structure.lattice)
+					new_sites_list[index_to_displace].randomly_displace(displacement_vector_distribution_function_dictionary_by_type[new_sites_list[index_to_displace]['type']], structure.lattice)
 					sites_to_check_indices_list.append(index_to_displace)
 					indices_to_displace_list.append(index_to_displace)
 
