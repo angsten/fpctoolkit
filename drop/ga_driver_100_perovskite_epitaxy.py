@@ -13,9 +13,9 @@ from fpctoolkit.structure.site import Site
 from fpctoolkit.structure.site_mapping import SiteMapping
 from fpctoolkit.structure.site_mapping_collection import SiteMappingCollection
 from fpctoolkit.util.random_selector import RandomSelector
-from fpctoolkit.util.vector import Vector
-from fpctoolkit.util.distribution import Distribution
-from fpctoolkit.util.vector_distribution import VectorDistribution
+from fpctoolkit.util.math.vector import Vector
+from fpctoolkit.util.math.distribution import Distribution
+from fpctoolkit.util.math.vector_distribution import VectorDistribution
 from fpctoolkit.structure_prediction.selector import Selector
 
 class GADriver100PerovskiteEpitaxy(GADriver):

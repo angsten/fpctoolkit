@@ -1,4 +1,4 @@
-#from fpctoolkit.util.distribution import Distribution
+#from fpctoolkit.util.math.distribution import Distribution
 
 import numpy as np
 

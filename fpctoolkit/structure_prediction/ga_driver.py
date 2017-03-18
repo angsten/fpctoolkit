@@ -5,7 +5,7 @@ import copy
 
 from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
 from fpctoolkit.structure_prediction.individual import Individual
-from fpctoolkit.workflow.parameter_list import ParameterList
+from fpctoolkit.data_structures.parameter_list import ParameterList
 from fpctoolkit.util.random_selector import RandomSelector
 
 class GADriver(object):

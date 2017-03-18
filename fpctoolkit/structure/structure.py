@@ -7,7 +7,7 @@ from fpctoolkit.io.vasp.poscar import Poscar
 from fpctoolkit.structure.site import Site
 from fpctoolkit.structure.lattice import Lattice
 from fpctoolkit.structure.site_collection import SiteCollection
-from fpctoolkit.util.vector import Vector
+from fpctoolkit.util.math.vector import Vector
 from fpctoolkit.util.random_selector import RandomSelector
 from fpctoolkit.util.path import Path
 

@@ -2,10 +2,11 @@
 
 from fpctoolkit.structure.perovskite import Perovskite
 from fpctoolkit.util.random_selector import RandomSelector
-from fpctoolkit.util.distribution import Distribution
-from fpctoolkit.util.vector_distribution import VectorDistribution
-from fpctoolkit.util.vector import Vector
+from fpctoolkit.util.math.distribution import Distribution
+from fpctoolkit.util.math.vector_distribution import VectorDistribution
+from fpctoolkit.util.math.vector import Vector
 from fpctoolkit.structure.structure_manipulator import StructureManipulator
+from fpctoolkit.structure.lattice import Lattice
 
 
 
@@ -20,7 +21,7 @@ class StructureGenerator(object):
 	@staticmethod
 	def get_random_perovskite_structure_generator(species_list=None, primitive_cell_lattice_constant=None, supercell_dimensions_list=None):
 		"""
-		Returns a function that, when called, produces a random perovskite with species_list as its atoms and supercell_dimensions as
+		Returns a function that, when called with no arguments, produces a random perovskite with species_list as its atoms and supercell_dimensions as
 		its supercell dimensions. 
 
 		primitive_cell_lattice_constant is length (in Angstroms) of the perovskite cubic lattice vector
@@ -29,7 +30,7 @@ class StructureGenerator(object):
 		def structure_generator():
 			return StructureGenerator.get_random_perovskite_structure(species_list, primitive_cell_lattice_constant, supercell_dimensions_list)
 
-		return structure_generator
+		return structure_generator #####???????????????!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!this whole func should be some util call that takes in a function and args list and returns an argument-less function
 
 	@staticmethod
 	def get_random_perovskite_structure(species_list=None, primitive_cell_lattice_constant=None, supercell_dimensions_list=None):
@@ -40,22 +41,63 @@ class StructureGenerator(object):
 		primitive_cell_lattice_constant is length (in Angstroms) of the perovskite cubic lattice vector
 		"""
 
-		A_type = species_list[0]
-		B_type = species_list[1]
-		X_type = species_list[2]
-
 		Nx = supercell_dimensions_list[0]
 		Ny = supercell_dimensions_list[1]
 		Nz = supercell_dimensions_list[2]
 
 		a = primitive_cell_lattice_constant*Nx
+		b = primitive_cell_lattice_constant*Ny
+		c = primitive_cell_lattice_constant*Nz ##############################eventually base c off of a good volume
 
-		c = ( primitive_cell_lattice_constant * Nz ) ##############################eventually base c off of a good volume
+		lattice = Lattice([[a, 0.0, 0.0], [0.0, b, 0.0], [0.0, 0.0, c]])
+		
 
-		lattice = [[a, 0.0, 0.0], [0.0, a, 0.0], [0.0, 0.0, c]]
+
+		##############Move this chunk somewhere else - this func should just take in the distribution function array#####################################
+
+		e33_average = 1.0
+		e33_spread = 0.2
+		min_e33 = e33_average - e33_spread
+		max_e33 = e33_average + e33_spread
+		e33_distribution_function = lambda x: (e33_spread - (abs(e33_average-x)))**0.4 #very broad bell shape max at 1.0, 0.0 at edges
+		e33_distribution = Distribution(e33_distribution_function, min_e33, max_e33)
+
+
+		e13_average = 0.0
+		e13_spread = 0.2
+		min_e13 = e13_average - e13_spread
+		max_e13 = e13_average + e13_spread
+		e13_distribution_function = lambda x: (e13_spread - (abs(e13_average-x)))**0.8 #somewhat broad bell shape max at 0.0, 0.0 at edges
+		e13_distribution = Distribution(e13_distribution_function, min_e13, max_e13)
+
+
+		e23_average = 0.0
+		e23_spread = 0.2
+		min_e23 = e23_average - e23_spread
+		max_e23 = e23_average + e23_spread
+		e23_distribution_function = lambda x: (e23_spread - (abs(e23_average-x)))**0.8 #somewhat broad bell shape max at 0.0, 0.0 at edges
+		e23_distribution = Distribution(e23_distribution_function, min_e23, max_e23)
+
+		zero_function = lambda : 0.0
+		unity_function = lambda : 1.0
+
+		distribution_function_array = [
+			[unity_function, zero_function, e13_distribution.get_random_value], 
+			[zero_function, unity_function, e23_distribution.get_random_value], 
+			[zero_function, zero_function, e33_distribution.get_random_value]
+			]
+
+		lattice.randomly_strain(distribution_function_array=distribution_function_array)
+
+		###################################################################################################################################################
+
+
 
 		structure = Perovskite(supercell_dimensions=supercell_dimensions_list, lattice=lattice, species_list=species_list)
 
+
+		##############################################################this stuff as well should be factored out - also take in 
+		#displacement_vector_distribution_function_dictionary_by_type and minimum_atomic_distances_nested_dictionary_by_type
 
 		def envelope_function(curvature_parameter, max_displacement_distance, bell=True):
 			"""
@@ -79,26 +121,12 @@ class StructureGenerator(object):
 				return lambda x: 1.0
 			else:
 				return lambda x: offset + sign*((x**curvature_parameter)/(max_displacement_distance**curvature_parameter))
-		
-
-		strain_probabilities_list = [0.5, 0.3, 0.2]
-		random_selector = RandomSelector(strain_probabilities_list)
-		event_index = random_selector.get_event_index()
-
-		if event_index == 0:
-			shear_factor = 0.1
-			strain_stdev = 0.1
-		elif event_index == 1:
-			shear_factor = 0.25
-			strain_stdev = 0.12
-		elif event_index == 2:
-			shear_factor = 0.6
-			strain_stdev = 0.16
 
 
-		"""
-		Basic random
-		"""
+		A_type = species_list[0]
+		B_type = species_list[1]
+		X_type = species_list[2]
+
 
 		A_site_curvature_parameter = 1.4
 		A_site_max_displacement = 0.35*primitive_cell_lattice_constant
@@ -141,41 +169,8 @@ class StructureGenerator(object):
 		}
 
 
+		##########################################################################################################################
 
-
-		e33_average = 1.0
-		e33_spread = 0.2
-		min_e33 = e33_average - e33_spread
-		max_e33 = e33_average + e33_spread
-		e33_distribution_function = lambda x: (e33_spread - (abs(e33_average-x)))**0.4 #very broad bell shape max at 1.0, 0.0 at edges
-		e33_distribution = Distribution(e33_distribution_function, min_e33, max_e33)
-
-
-		e13_average = 0.0
-		e13_spread = 0.2
-		min_e13 = e13_average - e13_spread
-		max_e13 = e13_average + e13_spread
-		e13_distribution_function = lambda x: (e13_spread - (abs(e13_average-x)))**0.8 #somewhat broad bell shape max at 0.0, 0.0 at edges
-		e13_distribution = Distribution(e13_distribution_function, min_e13, max_e13)
-
-
-		e23_average = 0.0
-		e23_spread = 0.2
-		min_e23 = e23_average - e23_spread
-		max_e23 = e23_average + e23_spread
-		e23_distribution_function = lambda x: (e23_spread - (abs(e23_average-x)))**0.8 #somewhat broad bell shape max at 0.0, 0.0 at edges
-		e23_distribution = Distribution(e23_distribution_function, min_e23, max_e23)
-
-		zero_function = lambda : 0.0
-		unity_function = lambda : 1.0
-
-		distribution_function_array = [
-			[unity_function, zero_function, e13_distribution.get_random_value], 
-			[zero_function, unity_function, e23_distribution.get_random_value], 
-			[zero_function, zero_function, e33_distribution.get_random_value]
-			]
-
-		structure.lattice.randomly_strain(distribution_function_array=distribution_function_array)
 
 		StructureManipulator.displace_site_positions_with_minimum_distance_constraints(structure, displacement_vector_distribution_function_dictionary_by_type, minimum_atomic_distances_nested_dictionary_by_type)
 

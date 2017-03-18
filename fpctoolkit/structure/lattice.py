@@ -3,8 +3,8 @@
 import copy
 import numpy as np
 
-from fpctoolkit.util.tensor import Tensor
-from fpctoolkit.util.vector import Vector
+from fpctoolkit.util.math.tensor import Tensor
+from fpctoolkit.util.math.vector import Vector
 
 class Lattice(object):
 	"""

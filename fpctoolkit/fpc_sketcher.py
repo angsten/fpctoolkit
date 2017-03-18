@@ -17,15 +17,16 @@ from fpctoolkit.workflow.vasp_run import VaspRun
 from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
 from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 from fpctoolkit.io.vasp.incar_maker import IncarMaker
-from fpctoolkit.util.vector import Vector
+from fpctoolkit.util.math.vector import Vector
 from fpctoolkit.structure_prediction.ga_structure_predictor import GAStructurePredictor
 from fpctoolkit.structure_prediction.ga_driver import GADriver
 from fpctoolkit.structure_prediction.population import Population
-from fpctoolkit.util.distribution import Distribution
-from fpctoolkit.util.vector_distribution import VectorDistribution
+from fpctoolkit.util.math.distribution import Distribution
+from fpctoolkit.util.math.vector_distribution import VectorDistribution
 from fpctoolkit.structure_prediction.selector import Selector
 from fpctoolkit.structure.structure_breeder import StructureBreeder
 from fpctoolkit.structure.structure_generator import StructureGenerator
+from fpctoolkit.structure.site_mapping_collection import SiteMappingCollection
 
 
 species_list = ['K', 'V', 'O']
@@ -61,19 +62,28 @@ structure_mating_function = StructureBreeder.get_perovskite_mating_function(supe
 ga_driver = GADriver(ga_input_dictionary, calculation_set_input_dictionary, selection_function, random_structure_creation_function, structure_mating_function)
 
 
-for i in range(0):
+for i in range(1):
 	struct = ga_driver.get_random_structure(None)
 	struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\disp_"+str(i)+".vasp")
 
 
 
-struct = ga_driver.structure_mating_function(Structure("C:\Users\Tom\Desktop\Vesta_Inputs\disp_0.vasp"), Structure("C:\Users\Tom\Desktop\Vesta_Inputs\disp_1.vasp"))
-struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\mated.vasp")
+# struct = ga_driver.structure_mating_function(Structure("C:\Users\Tom\Desktop\Vesta_Inputs\disp_0.vasp"), Structure("C:\Users\Tom\Desktop\Vesta_Inputs\disp_1.vasp"))
+# struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\mated.vasp")
 
+# a = 4
+# b = 4
+# c = 1
+# struct_1 = Perovskite(supercell_dimensions = [a, b, c], lattice=[[4.0*a, 0.0, 0.0], [0.0, 4.0*b, 0.0], [0.0, 0.0, 5.0*c]], species_list=['K', 'V', 'O'])
 
+# struct_2 = Structure("C:\Users\Tom\Desktop\Vesta_Inputs\disp_1.vasp")
 
+# sm = SiteMappingCollection(struct_1.sites, struct_2.sites, struct_1.lattice)
 
+# slist = sm.get_interpolated_structure_list(0.1)
 
+# for i,s in enumerate(slist):
+# 	s.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/"+str(i)+".vasp")
 
 
 

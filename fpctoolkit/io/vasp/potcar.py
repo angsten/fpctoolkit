@@ -3,7 +3,6 @@ import json
 
 from fpctoolkit.io.file import File
 from fpctoolkit.util.path import Path
-import fpctoolkit.util.file_util as fu
 
 class Potcar(File):
 	"""

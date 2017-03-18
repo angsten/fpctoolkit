@@ -4,7 +4,7 @@ from collections import OrderedDict
 import copy
 
 from fpctoolkit.structure.site import Site
-from fpctoolkit.util.vector import Vector
+from fpctoolkit.util.math.vector import Vector
 
 class SiteCollection(object):
 	"""

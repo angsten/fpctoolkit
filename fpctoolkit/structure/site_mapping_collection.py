@@ -1,10 +1,12 @@
+#from fpctoolkit.structure.site_mapping_collection import SiteMappingCollection
+
 import copy
 from collections import OrderedDict
 from munkres import Munkres
 
 from fpctoolkit.structure.site_collection import SiteCollection
 from fpctoolkit.structure.site_mapping import SiteMapping
-from fpctoolkit.util.vector import Vector
+from fpctoolkit.util.math.vector import Vector
 from fpctoolkit.structure.structure import Structure
 
 class SiteMappingCollection(object):

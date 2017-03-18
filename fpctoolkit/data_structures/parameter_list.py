@@ -1,13 +1,19 @@
-
+#from fpctoolkit.data_structures.parameter_list import ParameterList
 
 
 
 class ParameterList(object):
 	"""
-	A list with special access features tailored to run parameter lists.
+	A list with special access features tailored to unknown length parameter lists.
 
-	Useful for using with vasp run sets as the internal parameter
-	change list.
+	Basic feature: Same as lists but if an element beyond len(list) is accessed, the len(list)-1 item is returned.
+
+
+	a = [2, 3, 5]
+
+	a[1] returns 3
+	a[3] returns 5
+	a[199] returns 5
 	"""
 
 	def __init__(self, parameter_list):

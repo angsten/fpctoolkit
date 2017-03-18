@@ -1,4 +1,4 @@
-#from fpctoolkit.util.tensor import Tensor
+#from fpctoolkit.util.math.tensor import Tensor
 
 import numpy as np
 

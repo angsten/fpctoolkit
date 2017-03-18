@@ -2,7 +2,7 @@
 
 import numpy as np
 
-from fpctoolkit.util.vector import Vector
+from fpctoolkit.util.math.vector import Vector
 
 
 class Site(object):

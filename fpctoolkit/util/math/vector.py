@@ -1,4 +1,4 @@
-#from fpctoolkit.util.vector import Vector
+#from fpctoolkit.util.math.vector import Vector
 
 import numpy as np
 

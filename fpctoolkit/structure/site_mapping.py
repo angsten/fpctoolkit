@@ -1,6 +1,6 @@
 import copy
 
-from fpctoolkit.util.vector import Vector
+from fpctoolkit.util.math.vector import Vector
 
 class SiteMapping(object):
 	"""

@@ -3,7 +3,7 @@
 import copy
 
 import fpctoolkit.util.misc as misc
-from fpctoolkit.util.distribution import Distribution
+from fpctoolkit.util.math.distribution import Distribution
 
 class Selector(object):
 	"""

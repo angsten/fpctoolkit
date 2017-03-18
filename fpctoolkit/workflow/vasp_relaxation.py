@@ -4,7 +4,7 @@ import collections
 
 from fpctoolkit.workflow.vasp_run import VaspRun
 from fpctoolkit.workflow.vasp_run_set import VaspRunSet
-from fpctoolkit.workflow.parameter_list import ParameterList
+from fpctoolkit.data_structures.parameter_list import ParameterList
 from fpctoolkit.io.vasp.kpoints import Kpoints
 from fpctoolkit.io.vasp.incar_maker import IncarMaker
 from fpctoolkit.structure.structure import Structure

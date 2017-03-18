@@ -2,7 +2,7 @@
 
 
 from fpctoolkit.structure.structure import Structure
-from fpctoolkit.util.vector import Vector
+from fpctoolkit.util.math.vector import Vector
 
 
 class StructureAnalyzer(object):
