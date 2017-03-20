@@ -2,16 +2,21 @@
 
 import numpy as np
 
+import fpctoolkit.util.basic_validators as basic_validators
 
 
 class Distribution(object):
 	"""
-	Custom defined distribution
+	Custom defined probability distribution. A distribution can have any shape but is normalized (integral over all possible values is one).
 
 	Inputs:
-	distribution_function: any function f(x) that returns a float - does not have to be normalized in any way - it just describes the relative shape of the distribution.
+	shape_function: any function f(x) that returns a float. The shape function does not have to be normalized in any way - it just describes the relative shape of the distribution.
 	min_x: the minimum x value in the domain of the input distribution function f(x)
-	max_x: the maximum x vaue in the domain of the input distribution function f(x)
+	max_x: the maximum x vaue in the domain of the input distribution function f(x). Can be equal to min_x (in which case min_x is always returned in dist.get_random_value())
+
+
+	To get output from the Distribution class, call dist.get_random_value(). The values thus produced will have the relative frequency given by shape_function and will be within
+	the values of min_x and max_x.
 
 	This class works by approximating the inverse cumulative distribution function with a list of length point_count.
 	The main function, get_random_value, returns a value in range [min_x, max_x) with relative frequencies determined by the 
@@ -20,11 +25,11 @@ class Distribution(object):
 
 	point_count = 50000
 
-	def __init__(self, distribution_function, min_x, max_x):
+	def __init__(self, shape_function, min_x, max_x):
 		
+		basic_validators.validate_first_real_number_is_strictly_less_than_or_equal_to_second(min_x, max_x)
 
-
-		self.distribution_function = distribution_function
+		self.shape_function = shape_function
 		self.min_x = min_x
 		self.max_x = max_x
 
@@ -44,7 +49,7 @@ class Distribution(object):
 
 			x_value = self.get_x_value_from_index(i)
 
-			probability = self.distribution_function(x_value)
+			probability = self.shape_function(x_value)
 
 			if probability < 0.0:
 				raise Exception("Cannot have a negative probability")
@@ -69,14 +74,8 @@ class Distribution(object):
 				cumulative_probability_counter += (1.0/Distribution.point_count)
 
 
-
 	def get_x_value_from_index(self, index):
 		return self.min_x + index*self.tick_width
-
-	def get_index_from_x_value(self, x_value):
-		x_difference = x_value - self.min_x
-
-		return x_difference/self.tick_width
 
 	def get_index_from_cumulative_probability(self, cumulative_probability):
 		return int(cumulative_probability*Distribution.point_count)

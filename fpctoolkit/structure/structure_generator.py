@@ -32,13 +32,14 @@ class StructureGenerator(object):
 
 		return structure_generator #####???????????????!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!this whole func should be some util call that takes in a function and args list and returns an argument-less function
 
+
 	@staticmethod
-	def get_random_perovskite_structure(species_list=None, primitive_cell_lattice_constant=None, supercell_dimensions_list=None):
+	def get_random_perovskite_structure(species_list=None, primitive_cell_lattice_constant=None, supercell_dimensions_list=None, strain_distribution_function_array=None):
 		"""
 		Returns a random perovskite structure with species_list as its atom types and supercell_dimensions as
 		its supercell dimensions. 
 
-		primitive_cell_lattice_constant is length (in Angstroms) of the perovskite cubic lattice vector
+		primitive_cell_lattice_constant is length (in Angstroms) of the perovskite cubic lattice vector in a 5-atom unit cell
 		"""
 
 		Nx = supercell_dimensions_list[0]
@@ -47,13 +48,12 @@ class StructureGenerator(object):
 
 		a = primitive_cell_lattice_constant*Nx
 		b = primitive_cell_lattice_constant*Ny
-		c = primitive_cell_lattice_constant*Nz ##############################eventually base c off of a good volume
+		c = primitive_cell_lattice_constant*Nz 
 
-		lattice = Lattice([[a, 0.0, 0.0], [0.0, b, 0.0], [0.0, 0.0, c]])
 		
 
 
-		##############Move this chunk somewhere else - this func should just take in the distribution function array#####################################
+		##############Move this chunk somewhere else - this func should just take in the strain distribution function array#####################################
 
 		e33_average = 1.0
 		e33_spread = 0.2
@@ -81,20 +81,18 @@ class StructureGenerator(object):
 		zero_function = lambda : 0.0
 		unity_function = lambda : 1.0
 
-		distribution_function_array = [
+		strain_distribution_function_array = [
 			[unity_function, zero_function, e13_distribution.get_random_value], 
 			[zero_function, unity_function, e23_distribution.get_random_value], 
 			[zero_function, zero_function, e33_distribution.get_random_value]
 			]
 
-		lattice.randomly_strain(distribution_function_array=distribution_function_array)
-
 		###################################################################################################################################################
 
 
-
+		lattice = Lattice([[a, 0.0, 0.0], [0.0, b, 0.0], [0.0, 0.0, c]])
 		structure = Perovskite(supercell_dimensions=supercell_dimensions_list, lattice=lattice, species_list=species_list)
-
+		structure.lattice.randomly_strain(distribution_function_array=strain_distribution_function_array)
 
 		##############################################################this stuff as well should be factored out - also take in 
 		#displacement_vector_distribution_function_dictionary_by_type and minimum_atomic_distances_nested_dictionary_by_type

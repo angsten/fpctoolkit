@@ -65,26 +65,27 @@ class VaspRun(object):
 			else:
 				Path.make(self.path)
 
-				self.log("Directory at run path did not exist or was empty. Created directory.")
+				#self.log("Directory at run path did not exist or was empty. Created directory.")
 
 				self.write_input_files_to_path(structure, incar, kpoints, potcar, submission_script_file, wavecar_path) 
 		else:
 			if self.job_id_string:
-				self.log("Non-empty directory has a job id associated with it.")
+				pass
+				#self.log("Non-empty directory has a job id associated with it.")
 			else:
-				self.log("Non-empty directory does not have a job id associated with it.")
+				#self.log("Non-empty directory does not have a job id associated with it.")
 				if self.all_input_files_are_present(): #all input files are written to directory
 					if all_essential_input_parameters_exist: #overwrite what's there
-						self.log("Overwriting existing complete input run files with new given input parameter files")
+						#self.log("Overwriting existing complete input run files with new given input parameter files")
 						self.write_input_files_to_path(structure, incar, kpoints, potcar, submission_script_file, wavecar_path)
 					else:
-						self.log("Using existing run files at path")
+						#self.log("Using existing run files at path")
 						pass #do nothing - don't have the necessary inputs to start a run
 				else: #not all input files currently exist - must have necessary input params to overwrite
 					if not all_essential_input_parameters_exist:
 						self.log("All five vasp input files must be input for run with incomplete inputs at path to be initialized.", raise_exception=True)
 					else:
-						self.log("Overwriting existing partially-present run files with input parameter files")
+						#self.log("Overwriting existing partially-present run files with input parameter files")
 						self.write_input_files_to_path(structure, incar, kpoints, potcar, submission_script_file, wavecar_path)
 			
 		
@@ -211,7 +212,7 @@ class VaspRun(object):
 
 		#only if there is not job_id_string associated with this run should we start the run
 		if not self.job_id_string:
-			self.log("No job id stored in this run.")
+			#self.log("No job id stored in this run.")
 			self.start()
 			return False
 
@@ -249,7 +250,7 @@ class VaspRun(object):
 	def start(self):
 		"""Submit the calculation at self.path"""
 
-		self.log("Submitting a new job to queue.")
+		#self.log("Submitting a new job to queue.")
 
 		#Remove all output files here!!! Maybe store in hidden archived folder?####################
 		self.archive_file('OUTCAR')
