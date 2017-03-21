@@ -4,6 +4,62 @@
 		"selected_items":
 		[
 			[
+				"Dist",
+				"DistributionArray"
+			],
+			[
+				"validate",
+				"validate_distribution_array"
+			],
+			[
+				"shou",
+				"should_be_a_distribution"
+			],
+			[
+				"random_va",
+				"random_value_array"
+			],
+			[
+				"rand",
+				"random_values"
+			],
+			[
+				"val",
+				"validate_distribution"
+			],
+			[
+				"index",
+				"index_tuple"
+			],
+			[
+				"array",
+				"array_shape"
+			],
+			[
+				"validate_tup",
+				"validate_tuple_of_integers"
+			],
+			[
+				"sh",
+				"should_be_tuple_of_integers"
+			],
+			[
+				"ex",
+				"Exception"
+			],
+			[
+				"inver",
+				"inverse_cumulative_function"
+			],
+			[
+				"dist",
+				"distribution"
+			],
+			[
+				"fla",
+				"flattened_distribution_array"
+			],
+			[
 				"tot",
 				"total_accumulation_value"
 			],
@@ -20,10 +76,6 @@
 				"should_be_a_boolean"
 			],
 			[
-				"val",
-				"validate_real_number"
-			],
-			[
 				"real",
 				"real_number_that_should_be_in_range"
 			],
@@ -36,24 +88,12 @@
 				"sequence_index_integer"
 			],
 			[
-				"sh",
-				"should_be_positive"
-			],
-			[
-				"shou",
-				"should_be_positive"
-			],
-			[
 				"sho",
 				"should_be_positive"
 			],
 			[
 				"shap",
 				"shape_function_output"
-			],
-			[
-				"ex",
-				"exception_instance"
 			],
 			[
 				"shape",
@@ -212,10 +252,6 @@
 				"individual_to_remove"
 			],
 			[
-				"rand",
-				"random_integers_list"
-			],
-			[
 				"rando",
 				"random_integer"
 			],
@@ -364,10 +400,6 @@
 				"original_sites_list"
 			],
 			[
-				"index",
-				"index_to_displace"
-			],
-			[
 				"site_",
 				"site_1_index"
 			],
@@ -440,10 +472,6 @@
 				"point_count"
 			],
 			[
-				"dist",
-				"distribution_function"
-			],
-			[
 				"try",
 				"try_count"
 			],
@@ -486,34 +514,6 @@
 			[
 				"dis",
 				"displacement_vector_function_dictionary_by_type"
-			],
-			[
-				"pos",
-				"position_2"
-			],
-			[
-				"get_structure_creation_id",
-				"get_structure_creation_id_file_path"
-			],
-			[
-				"parent_p",
-				"parent_paths_list"
-			],
-			[
-				"par",
-				"parent_structures_list"
-			],
-			[
-				"ind",
-				"Individual"
-			],
-			[
-				"ran",
-				"random_number_list"
-			],
-			[
-				"conv",
-				"converged"
 			]
 		]
 	},
@@ -523,16 +523,17 @@
 			"file": "fpctoolkit/fpc_sketcher.py",
 			"settings":
 			{
-				"buffer_size": 13659,
+				"buffer_size": 15324,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/structure/structure_breeder.py",
+			"file": "fpctoolkit/util/math/distribution_array.py",
 			"settings":
 			{
-				"buffer_size": 4911,
+				"buffer_size": 2460,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
@@ -540,33 +541,7 @@
 			"file": "fpctoolkit/structure/structure_generator.py",
 			"settings":
 			{
-				"buffer_size": 7834,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/structure/structure_manipulator.py",
-			"settings":
-			{
-				"buffer_size": 7387,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/util/math/distribution.py",
-			"settings":
-			{
-				"buffer_size": 5483,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/util/basic_validators.py",
-			"settings":
-			{
-				"buffer_size": 3898,
+				"buffer_size": 7769,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -575,7 +550,43 @@
 			"file": "fpctoolkit/structure/lattice.py",
 			"settings":
 			{
-				"buffer_size": 7292,
+				"buffer_size": 7351,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/util/basic_validators.py",
+			"settings":
+			{
+				"buffer_size": 5901,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/util/math/tensor.py",
+			"settings":
+			{
+				"buffer_size": 988,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/util/math/distribution.py",
+			"settings":
+			{
+				"buffer_size": 6697,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/util/math/distribution_generator.py",
+			"settings":
+			{
+				"buffer_size": 1043,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		}
@@ -769,22 +780,24 @@
 	],
 	"file_history":
 	[
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_collection.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/basic_validators.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/lattice.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_manipulator.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_generator.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_breeder.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/1D_function.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/misc.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop/constrained_lattice.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_generator.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/tensor.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/fpc_sketcher.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/lattice.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_manipulator.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_analyzer.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_mapping_collection.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_mapping.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_collection.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop/ga_driver_100_perovskite_epitaxy.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/vector.py",
@@ -801,7 +814,6 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/perovskite.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/random_selector.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/ga_driver_100_perovskite_epitaxy.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_breeder.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/vector.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/individual.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/path.py",
@@ -895,8 +907,7 @@
 		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/linear_boundary.js",
 		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/linear_spring.js",
 		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/vertex.js",
-		"/C/Users/Tom/Documents/Berkeley/research/my_papers/Epitaxial Phase Validation Paper/backups/phase_validation/posc_show_2.py",
-		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/index.html"
+		"/C/Users/Tom/Documents/Berkeley/research/my_papers/Epitaxial Phase Validation Paper/backups/phase_validation/posc_show_2.py"
 	],
 	"find":
 	{
@@ -915,6 +926,19 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"Distribution.point_count",
+			"point_count",
+			"ticks",
+			"should_be_a_positive_or_zero_integer",
+			"should_be_tuple_of_positive_or_zero_integers",
+			"validate_real_number_is_positive",
+			"should_be_a_positive_integer",
+			"should_be_positive_or_zero",
+			"should_be_an_integer",
+			"should_be_tuple_of_integers",
+			"validate_tuple_of_positive_integers",
+			"validate_tuple_of_integers",
+			"original_lattice_matrix",
 			"isintance",
 			"index",
 			"should_be_positive",
@@ -1029,20 +1053,7 @@
 			"GAStructurePredictor",
 			"sites_to_check_list",
 			"get_indices_of_site_pairs_that_are_too_close_to_sites_list",
-			"sites_to_displace_list",
-			"get_indices_of_site_pairs_that_are_too_close_to_sites_list",
-			"get_indices_of_site_pairs_that_are_too_close",
-			"{\n",
-			"site_pairs_that_are_too_close_list",
-			"get_site_pair_indices_that_are_too_close",
-			"for species_type in self.sites",
-			"O_site_vector_magnitude_distribution_function",
-			"self.ga_input_dictionary['species_list'][2]",
-			"self.ga_input_dictionary['species_list'][1]",
-			"self.ga_input_dictionary['species_list'][0]",
-			"uniform_dist",
-			"x_point_count",
-			"y_point_count"
+			"sites_to_displace_list"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1076,7 +1087,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -1085,15 +1096,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 13659,
+						"buffer_size": 15324,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1583,
-								1583
+								2919,
+								2919
 							]
 						],
 						"settings":
@@ -1102,20 +1113,143 @@
 							"syntax": "Packages/Python/Python.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": -0.0,
-						"translation.y": 168.0,
+						"translation.x": 0.0,
+						"translation.y": 306.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "fpctoolkit/util/math/distribution_array.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2460,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1083,
+								1083
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "fpctoolkit/structure/structure_breeder.py",
+					"buffer": 2,
+					"file": "fpctoolkit/structure/structure_generator.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4911,
+						"buffer_size": 7769,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2414,
+								3710
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 505.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "fpctoolkit/structure/lattice.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7351,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5447,
+								5470
+							],
+							[
+								5673,
+								5696
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 26.0,
+						"translation.y": 2078.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "fpctoolkit/util/basic_validators.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5901,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								60,
+								1
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 504.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "fpctoolkit/util/math/tensor.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 988,
 						"regions":
 						{
 						},
@@ -1136,24 +1270,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "fpctoolkit/structure/structure_generator.py",
+					"buffer": 6,
+					"file": "fpctoolkit/util/math/distribution.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7834,
+						"buffer_size": 6697,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4134,
-								4149
+								1835,
+								1835
 							]
 						],
 						"settings":
@@ -1163,87 +1297,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1680.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "fpctoolkit/structure/structure_manipulator.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7387,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": -0.0,
-						"translation.y": 1092.0,
+						"translation.y": 126.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "fpctoolkit/util/math/distribution.py",
+					"buffer": 7,
+					"file": "fpctoolkit/util/math/distribution_generator.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5483,
+						"buffer_size": 1043,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								910,
-								910
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 966.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "fpctoolkit/util/basic_validators.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3898,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1937,
-								1937
+								704,
+								704
 							]
 						],
 						"settings":
@@ -1252,37 +1326,7 @@
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 336.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "fpctoolkit/structure/lattice.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7292,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4403,
-								4403
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2166.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
@@ -1328,7 +1372,7 @@
 	},
 	"output.exec":
 	{
-		"height": 130.0
+		"height": 140.0
 	},
 	"output.find_results":
 	{
@@ -1388,7 +1432,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 262.0,
+	"side_bar_width": 285.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
