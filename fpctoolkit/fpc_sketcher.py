@@ -29,48 +29,58 @@ from fpctoolkit.structure.structure_generator import StructureGenerator
 from fpctoolkit.structure.site_mapping_collection import SiteMappingCollection
 
 
-species_list = ['K', 'V', 'O']
-primitive_cell_lattice_constant = 3.79
-supercell_dimensions_list = [4, 4, 1]
-
-calculation_set_input_dictionary = {
-	'external_relaxation_count': 1,
-	'kpoint_schemes_list': ['Monkhorst'],
-	'kpoint_subdivisions_lists': [[2, 2, 2]],
-	'submission_script_modification_keys_list': ['100'],
-	'submission_node_count_list': [1],
-	'ediff': [0.001],
-	'encut': [400]
-}
-
-ga_input_dictionary = {
-	'species_list': species_list,
-	'epitaxial_lattice_constant': primitive_cell_lattice_constant*supercell_dimensions_list[0],
-	'supercell_dimensions_list': supercell_dimensions_list,
-	'max_number_of_generations': 1,
-	'individuals_per_generation': [3],
-	'random_fractions_list': [1.0, 0.3, 0.2],
-	'mate_fractions_list': [0.0, 0.7, 0.8]
-}
-
-distribution_function = Distribution(lambda x: 1.0, 0.0, 1.0).get_random_value #uniform
-selection_function = Selector.get_selection_function_for_selecting_N_unique_individuals_by_ranking_using_custom_probability_distribution(distribution_function)
-
-random_structure_creation_function = StructureGenerator.get_random_perovskite_structure_generator(species_list, primitive_cell_lattice_constant, supercell_dimensions_list)
-structure_mating_function = StructureBreeder.get_perovskite_mating_function(supercell_dimensions_list)
-
-ga_driver = GADriver(ga_input_dictionary, calculation_set_input_dictionary, selection_function, random_structure_creation_function, structure_mating_function)
 
 
-for i in range(0):
-	struct = ga_driver.get_random_structure(None)
-	struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\disp_"+str(i)+".vasp")
+dist = Distribution(shape_function=lambda x: x + x**2 + 2.0*x**3.0, min_x=1.0, max_x=10)
+
+for i in range(10):
+	print dist.get_random_value()
+
+print len(dist.cumulative_function)
+print len(dist.inverse_cumulative_function)
+
+# species_list = ['K', 'V', 'O']
+# primitive_cell_lattice_constant = 3.79
+# supercell_dimensions_list = [4, 4, 1]
+
+# calculation_set_input_dictionary = {
+# 	'external_relaxation_count': 1,
+# 	'kpoint_schemes_list': ['Monkhorst'],
+# 	'kpoint_subdivisions_lists': [[2, 2, 2]],
+# 	'submission_script_modification_keys_list': ['100'],
+# 	'submission_node_count_list': [1],
+# 	'ediff': [0.001],
+# 	'encut': [400]
+# }
+
+# ga_input_dictionary = {
+# 	'species_list': species_list,
+# 	'epitaxial_lattice_constant': primitive_cell_lattice_constant*supercell_dimensions_list[0],
+# 	'supercell_dimensions_list': supercell_dimensions_list,
+# 	'max_number_of_generations': 1,
+# 	'individuals_per_generation': [3],
+# 	'random_fractions_list': [1.0, 0.3, 0.2],
+# 	'mate_fractions_list': [0.0, 0.7, 0.8]
+# }
+
+# distribution_function = Distribution(lambda x: 1.0, 0.0, 1.0).get_random_value #uniform
+# selection_function = Selector.get_selection_function_for_selecting_N_unique_individuals_by_ranking_using_custom_probability_distribution(distribution_function)
+
+# random_structure_creation_function = StructureGenerator.get_random_perovskite_structure_generator(species_list, primitive_cell_lattice_constant, supercell_dimensions_list)
+# structure_mating_function = StructureBreeder.get_perovskite_mating_function(supercell_dimensions_list)
+
+# ga_driver = GADriver(ga_input_dictionary, calculation_set_input_dictionary, selection_function, random_structure_creation_function, structure_mating_function)
+
+
+# for i in range(0):
+# 	struct = ga_driver.get_random_structure(None)
+# 	struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\disp_"+str(i)+".vasp")
 
 
 
 
-struct = ga_driver.structure_mating_function(Structure("C:\Users\Tom\Desktop\Vesta_Inputs\parent_22.vasp"), Structure("C:\Users\Tom\Desktop\Vesta_Inputs\parent_27__.vasp"))
-struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\mated_3.vasp")
+# struct = ga_driver.structure_mating_function(Structure("C:\Users\Tom\Desktop\Vesta_Inputs\parent_22.vasp"), Structure("C:\Users\Tom\Desktop\Vesta_Inputs\parent_27__.vasp"))
+# struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\mated_3.vasp")
 
 # a = 4
 # b = 4

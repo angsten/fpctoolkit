@@ -179,17 +179,19 @@ class Lattice(object):
 		self.from_2D_array(strained_lattice)
 
 
-	def randomly_strain(self, distribution_function_array):
+	def randomly_strain(self, distribution_array):
 		"""
 		Randomly strains self (in place) using the given distribution_function_array.
 
-		distribution_function_array should be a 3x3 array of functions that, when called, supply the corresponding randomly produced strain components.
+		distribution_array should be a 3x3 DistributionArray instance that supplies the strain tensor upon calling get_random_array()
 		"""
 
-		strain_tensor = []
-		strain_tensor.append([distribution_function_array[0][0](), distribution_function_array[0][1](), distribution_function_array[0][2]()])
-		strain_tensor.append([distribution_function_array[1][0](), distribution_function_array[1][1](), distribution_function_array[1][2]()])
-		strain_tensor.append([distribution_function_array[2][0](), distribution_function_array[2][1](), distribution_function_array[2][2]()])
+		strain_tensor = distribution_array.get_random_array()
+		#strain_tensor.append([distribution_function_array[0][0](), distribution_function_array[0][1](), distribution_function_array[0][2]()])
+		#strain_tensor.append([distribution_function_array[1][0](), distribution_function_array[1][1](), distribution_function_array[1][2]()])
+		#strain_tensor.append([distribution_function_array[2][0](), distribution_function_array[2][1](), distribution_function_array[2][2]()])
+
+		#validate strain_tensor has proper 3x3 shape
 
 		self.strain(strain_tensor)
 

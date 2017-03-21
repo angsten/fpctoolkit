@@ -42,13 +42,9 @@ class StructureGenerator(object):
 		primitive_cell_lattice_constant is length (in Angstroms) of the perovskite cubic lattice vector in a 5-atom unit cell
 		"""
 
-		Nx = supercell_dimensions_list[0]
-		Ny = supercell_dimensions_list[1]
-		Nz = supercell_dimensions_list[2]
+		(Nx, Ny, Nz) = supercell_dimensions_list
 
-		a = primitive_cell_lattice_constant*Nx
-		b = primitive_cell_lattice_constant*Ny
-		c = primitive_cell_lattice_constant*Nz 
+		(a, b, c) = (primitive_cell_lattice_constant*Nx, primitive_cell_lattice_constant*Ny, primitive_cell_lattice_constant*Nz)
 
 		
 
@@ -93,6 +89,7 @@ class StructureGenerator(object):
 		lattice = Lattice([[a, 0.0, 0.0], [0.0, b, 0.0], [0.0, 0.0, c]])
 		structure = Perovskite(supercell_dimensions=supercell_dimensions_list, lattice=lattice, species_list=species_list)
 		structure.lattice.randomly_strain(distribution_function_array=strain_distribution_function_array)
+
 
 		##############################################################this stuff as well should be factored out - also take in 
 		#displacement_vector_distribution_function_dictionary_by_type and minimum_atomic_distances_nested_dictionary_by_type
