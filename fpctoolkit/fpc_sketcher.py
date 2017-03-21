@@ -27,17 +27,56 @@ from fpctoolkit.structure_prediction.selector import Selector
 from fpctoolkit.structure.structure_breeder import StructureBreeder
 from fpctoolkit.structure.structure_generator import StructureGenerator
 from fpctoolkit.structure.site_mapping_collection import SiteMappingCollection
+from fpctoolkit.util.math.distribution_array import DistributionArray
+from fpctoolkit.util.math.distribution_generator import DistributionGenerator
 
 
+e33_average = 1.0
+e33_spread = 0.2
+min_e33 = e33_average - e33_spread
+max_e33 = e33_average + e33_spread
+e33_distribution_function = lambda x: (e33_spread - (abs(e33_average-x)))**0.4 #very broad bell shape max at 1.0, 0.0 at edges
+e33_distribution = Distribution(e33_distribution_function, min_e33, max_e33)
 
 
-dist = Distribution(shape_function=lambda x: x + x**2 + 2.0*x**3.0, min_x=1.0, max_x=10)
+e13_average = 0.0
+e13_spread = 0.2
+min_e13 = e13_average - e13_spread
+max_e13 = e13_average + e13_spread
+e13_distribution_function = lambda x: (e13_spread - (abs(e13_average-x)))**0.8 #somewhat broad bell shape max at 0.0, 0.0 at edges
+e13_distribution = Distribution(e13_distribution_function, min_e13, max_e13)
 
-for i in range(10):
-	print dist.get_random_value()
 
-print len(dist.cumulative_function)
-print len(dist.inverse_cumulative_function)
+e23_average = 0.0
+e23_spread = 0.2
+min_e23 = e23_average - e23_spread
+max_e23 = e23_average + e23_spread
+e23_distribution_function = lambda x: (e23_spread - (abs(e23_average-x)))**0.8 #somewhat broad bell shape max at 0.0, 0.0 at edges
+e23_distribution = Distribution(e23_distribution_function, min_e23, max_e23)
+
+zero_function = lambda : 0.0
+unity_function = lambda : 1.0
+
+strain_distribution_function_array = [
+	[unity_function, zero_function, e13_distribution.get_random_value], 
+	[zero_function, unity_function, e23_distribution.get_random_value], 
+	[zero_function, zero_function, e33_distribution.get_random_value]
+	]
+
+
+da = DistributionArray(shape=(3,3))
+da.set((0, 0), DistributionGenerator.get_unity_distribution())
+da.set((0, 2), e13_distribution)
+
+print da.get_random_array()
+
+# dist = Distribution(shape_function=lambda x: x + x**2 + 2.0*x**3.0, min_x=1.0, max_x=10)
+
+# for i in range(10):
+# 	print dist.get_random_value()
+
+# print len(dist.cumulative_function)
+# print len(dist.inverse_cumulative_function)
 
 # species_list = ['K', 'V', 'O']
 # primitive_cell_lattice_constant = 3.79

@@ -16,14 +16,12 @@ class Distribution(object):
 	dist = Distribution(shape_function=lambda x: x**2, min_x=10, max_x=20)
 	magnitude = dist.get_random_value() #output will be from 10 to 20, with 20 having a 40X chance compared to 10
 
-	This class works by approximating the inverse cumulative distribution function with a list of length point_count.
+	This class works by approximating the inverse cumulative distribution function with a list of length tick_count.
 	The main function, get_random_value, returns a value in range [min_x, max_x) with relative frequencies determined by the 
 	probability distribution function, f(x).
 	"""
 
-	point_count = 10000
-
-	def __init__(self, shape_function, min_x, max_x):
+	def __init__(self, shape_function, min_x, max_x, tick_count=10000):
 		"""
 		shape_function: any function f(x) that returns a real number for x in [min_x, max_x]. The shape function does not have to be normalized in any way - it just describes the relative shape of the distribution.
 		f(x) only has to be a valid real-number-returning function from min_x to max_x inclusive.
@@ -31,10 +29,13 @@ class Distribution(object):
 		min_x: the minimum x value in the domain of the input shape function f(x).
 
 		max_x: the maximum x vaue in the domain of the input shape function f(x). Can be equal to min_x (in which case min_x is always returned in dist.get_random_value())
+
+		tick_count: how many elements in the approximation arrays. Higher number means slower performance but higher accuracy.
 		"""
 		
 		basic_validators.validate_first_real_number_is_strictly_less_than_or_equal_to_second(min_x, max_x)
 		Distribution.validate_shape_function(shape_function, min_x, max_x)
+		basic_validators.validate_positive_nonzero_integer(tick_count)
 
 		min_x = float(min_x)
 		max_x = float(max_x)
@@ -42,8 +43,9 @@ class Distribution(object):
 		self.shape_function = shape_function
 		self.min_x = min_x
 		self.max_x = max_x
+		self.tick_count = tick_count
 
-		self.tick_width = (max_x - min_x)/Distribution.point_count
+		self.tick_width = (max_x - min_x)/tick_count
 
 		self.cumulative_function = []
 		self.calculate_cumulative_function()
@@ -95,7 +97,7 @@ class Distribution(object):
 		"""
 
 		total = 0.0
-		for i in range(0, Distribution.point_count):
+		for i in range(0, self.tick_count):
 
 			x_value = self.get_x_value_from_index(i)
 
@@ -112,7 +114,7 @@ class Distribution(object):
 		Returns the x value input to the distribution function that corresponds to the given array index of the approximation lists.
 		"""
 
-		basic_validators.validate_sequence_index(index, Distribution.point_count)
+		basic_validators.validate_sequence_index(index, self.tick_count)
 
 		x_value = self.min_x + index*self.tick_width
 
@@ -146,10 +148,10 @@ class Distribution(object):
 			while cumulative_probability_counter < current_cumulative_probability:
 				self.inverse_cumulative_function.append(self.get_x_value_from_index(i))
 
-				cumulative_probability_counter += (1.0/Distribution.point_count)
+				cumulative_probability_counter += (1.0/self.tick_count)
 
 	def get_index_from_cumulative_probability(self, cumulative_probability):
-		return int(cumulative_probability*Distribution.point_count)
+		return int(cumulative_probability*self.tick_count)
 
 
 
@@ -172,5 +174,3 @@ class Distribution(object):
 		basic_validators.validate_real_number_is_in_range(x_value, self.min_x, self.max_x)
 
 		return x_value
-
-		

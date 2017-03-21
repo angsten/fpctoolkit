@@ -4,6 +4,7 @@ import numpy as np
 
 import fpctoolkit.util.basic_validators as basic_validators
 from fpctoolkit.util.math.distribution import Distribution
+from fpctoolkit.util.math.distribution_generator import DistributionGenerator
 
 
 
@@ -13,14 +14,22 @@ class DistributionArray(object):
 	random variables, each with potentially distinct distributions.
 	"""
 
-	def __init__(self, shape=None):
+	def __init__(self, shape=None, distribution_array=None):
 		"""
-		Shape controls the dimensions of the distribution array (rows, cols). One can have arbitrary numbers of dimensions (1, 4, 3, ...).
+		shape controls the dimensions of the distribution array (rows, cols). One can have arbitrary numbers of dimensions (1, 4, 3, ...).
 		To make a 3D vector, shape should be (3). For a 3x3 tensor, set shape to (3, 3).
 		"""
 
-		self.shape = shape
-		self._distribution_array = np.empty(shape, dtype=object)
+		basic_validators.validate_tuple_of_positive_nonzero_integers(shape)
+
+		if not distribution_array:
+			self.shape = shape
+			self._distribution_array = np.full(shape, DistributionGenerator.get_zero_distribution(), dtype=object)
+		else:
+			#load in shape and dists here
+			pass
+
+
 
 
 	def __len__(self):
@@ -53,9 +62,9 @@ class DistributionArray(object):
 
 		self.validate_distribution_array()
 
-		random_values = [distribution.get_random_value() for distribution in self.get_flattened_distribution_array()]
+		random_values_list = [distribution.get_random_value() for distribution in self.get_flattened_distribution_array()]
 
-		random_value_array = np.reshape(random_values, self.shape)
+		random_value_array = np.reshape(random_values_list, self.shape)
 
 		return random_value_array.tolist()
 

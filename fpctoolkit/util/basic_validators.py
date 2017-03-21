@@ -3,13 +3,24 @@
 def validate_index_tuple(index_tuple, array_shape):
 
 	validate_tuple_of_positive_or_zero_integers(index_tuple)
-	validate_tuple_of_positive_or_zero_integers(array_shape)
+	validate_tuple_of_positive_nonzero_integers(array_shape)
 
 	if not len(index_tuple) == len(array_shape):
 		raise Exception("Index tuple is not valid for the given array shape. The dimension of the array", len(array_shape), "and the number of indicies in the tuple", len(index_tuple), "do not match.")
 
 	for i, index in enumerate(index_tuple):
 		validate_sequence_index(index, array_shape[i])
+
+
+def validate_tuple_of_positive_nonzero_integers(should_be_tuple_of_positive_nonzero_integers):
+	"""
+	Empty tuple is okay.
+	"""
+
+	validate_tuple(should_be_tuple_of_positive_nonzero_integers)
+
+	for should_be_a_positive_nonzero_integer in should_be_tuple_of_positive_nonzero_integers:
+		validate_positive_nonzero_integer(should_be_a_positive_nonzero_integer)
 
 
 def validate_tuple_of_positive_or_zero_integers(should_be_tuple_of_positive_or_zero_integers):
@@ -24,7 +35,7 @@ def validate_tuple_of_positive_or_zero_integers(should_be_tuple_of_positive_or_z
 
 
 def validate_tuple(should_be_a_tuple):
-	if not isinstance(should_be_tuple, tuple):
+	if not isinstance(should_be_a_tuple, tuple):
 		raise Exception("Input argument is not a tuple")
 
 
@@ -93,14 +104,32 @@ def validate_real_number_is_positive_or_zero(should_be_positive_or_zero):
 	if not (should_be_positive_or_zero >= 0):
 		raise Exception("Input argument should be positive or zero. Value is", should_be_positive_or_zero)
 
-
-def validate_positive_or_zero_integer(should_be_a_positive_integer):
+def validate_real_number_is_positive_nonzero(should_be_positive):
 	"""
-	Raises an exception if should_be_a_positive_integer is not a positive integer or 0.
+	Raises an exception if should_be_positive is <= 0.
+	"""
+	validate_real_number(should_be_positive)
+
+	if not (should_be_positive > 0):
+		raise Exception("Input argument should be positive. Value is", should_be_positive)
+
+
+def validate_positive_nonzero_integer(should_be_a_positive_nonzero_integer):
+	"""
+	Raises an exception if should_be_a_positive_nonzero_integer is not a positive nonzero integer.
 	"""
 
-	validate_integer(should_be_a_positive_integer)
-	validate_real_number_is_positive_or_zero(should_be_a_positive_integer)
+	validate_integer(should_be_a_positive_nonzero_integer)
+	validate_real_number_is_positive_nonzero(should_be_a_positive_nonzero_integer)
+
+
+def validate_positive_or_zero_integer(should_be_a_positive_or_zero_integer):
+	"""
+	Raises an exception if should_be_a_positive_or_zero_integer is not a positive integer or 0.
+	"""
+
+	validate_integer(should_be_a_positive_or_zero_integer)
+	validate_real_number_is_positive_or_zero(should_be_a_positive_or_zero_integer)
 
 
 
