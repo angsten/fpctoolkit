@@ -8,6 +8,7 @@ import numpy as np
 
 from fpctoolkit.util.path import Path
 from fpctoolkit.workflow.vasp_run_set import VaspRunSet
+from fpctoolkit.io.vasp.incar_maker import IncarMaker
 
 class VaspPhononRun(VaspRunSet):
 
@@ -35,8 +36,39 @@ class VaspPhononRun(VaspRunSet):
 		phonon.generate_displacements(distance=displacement_distance)
 		supercells = phonon.get_supercells_with_displacements()
 
+
+
+		distorted_structures_list = []
 		for i in range(len(supercells)):
-			write_vasp(self.get_extended_path('./distorted_structure_'+str(i)), supercells[i])
+			distorted_structure_path = self.get_extended_path('./distorted_structure_'+str(i))
+
+			write_vasp(distorted_structure_path, supercells[i])
+
+			distorted_structures_list.append(Structure(distorted_structure_path))
+
+
+
+		kpoint_scheme = 'Monkhorst'
+		kpoint_subdivisions_list = [4, 4, 4]
+
+		for i, distorted_structure in enumerate(distorted_structures_list):
+			run_path = self.get_extended_path(str(i))
+
+			if not Path.exists(run_path):
+				structure = self.get_next_structure()
+				kpoints = Kpoints(scheme_string=kpoint_scheme, subdivisions_list=kpoint_subdivisions_list)
+				incar = IncarMaker.get_phonon_incar()
+
+				input_set = VaspInputSet(structure, kpoints, incar, submission_script_file=submission_script_file)
+
+				vasp_run = VaspRun(path=run_path, input_set=input_set)
+
+			vasp_run.update()
+
+
+
+
+
 
 
 		#born = parse_BORN(phonon.get_primitive())

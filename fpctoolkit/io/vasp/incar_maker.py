@@ -1,4 +1,4 @@
-
+#from fpctoolkit.io.vasp.incar_maker import IncarMaker
 
 from fpctoolkit.io.vasp.incar import Incar
 
@@ -12,8 +12,9 @@ class IncarMaker(object):
 
 
 
+
 	@staticmethod
-	def get_static_incar(custom_parameters=None):
+	def get_static_incar(custom_parameters_dictionary=None):
 		incar = Incar()
 
 		#optional parameters that can be overwritten by the user
@@ -30,10 +31,7 @@ class IncarMaker(object):
 		incar['lwave'] = False
 		incar['lcharg'] = False
 
-		#load in user custom parameters
-		if custom_parameters:
-			for key, value in custom_parameters.items():
-				incar[key] = value
+		incar.modify_from_dictionary(custom_parameters_dictionary)
 
 
 		incar['ibrion'] = -1
@@ -49,7 +47,7 @@ class IncarMaker(object):
 		return incar
 
 	@staticmethod
-	def get_external_relaxation_incar(custom_parameters=None):
+	def get_external_relaxation_incar(custom_parameters_dictionary=None):
 		incar = Incar()
 
 		#optional parameters that can be overwritten by the user
@@ -66,11 +64,7 @@ class IncarMaker(object):
 		incar['lwave'] = True
 		incar['lcharg'] = False
 
-		#load in user custom parameters
-		if custom_parameters:
-			for key, value in custom_parameters.items():
-				incar[key] = value
-
+		incar.modify_from_dictionary(custom_parameters_dictionary)
 
 		if incar['ibrion'] not in [1, 2, 3]:
 			raise Exception("IBRION must be 1, 2, or 3 in an external relaxation")
@@ -82,3 +76,22 @@ class IncarMaker(object):
 			raise Exception("ISIF must be 3 in an external relaxation")
 
 		return incar
+
+
+
+	@staticmethod
+	def get_phonon_incar(custom_parameters_dictionary=None):
+		"""
+		Used for a static phonon forces calculation on a single distorted structure. Forces must be very accurate for this.
+		"""
+
+		incar = IncarMaker.get_static_incar()
+
+		incar['ediff'] = 0.000000001
+		incar['addgrid'] = True
+
+
+		incar.modify_from_dictionary(custom_parameters_dictionary)
+
+		return incar
+

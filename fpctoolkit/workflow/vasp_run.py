@@ -1,3 +1,5 @@
+#from fpctoolkit.workflow.vasp_run import VaspRun
+
 import cPickle
 
 from fpctoolkit.io.file import File

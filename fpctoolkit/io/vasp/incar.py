@@ -142,6 +142,21 @@ class Incar(File):
 			return indices[0]
 
 
+	def modify_from_dictionary(dictionary_of_modifications):
+		"""
+		if incar.modify_from_dictionary({'isif': 3, 'ediff': 0.0001}) is called, it's equivalent to incar['isif'] = 3, incar['ediff'] = 0.0001
+
+		dictionary_of_modifications can be none, in which case nothing is added
+		"""
+
+		if not isinstance(dictionary_of_modifications, dict):
+			raise Exception("Input argument type must be dicitonary when modifying an incar this way. Instead, type is", type(dictionary_of_modifications))
+
+		if dictionary_of_modifications:
+			for key, value in dictionary_of_modifications.items():
+				self[key] = value
+
+
 
 	@staticmethod
 	def get_key_value_pair_from_file_line(line_string):
