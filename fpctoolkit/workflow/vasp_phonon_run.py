@@ -35,7 +35,8 @@ class VaspPhononRun(VaspRunSet):
 		phonon.generate_displacements(distance=displacement_distance)
 		supercells = phonon.get_supercells_with_displacements()
 
-		write_vasp('./first_distorted', supercells[0])
+		for i in range(len(supercells)):
+			write_vasp(self.get_extended_path('./distorted_structure_'+str(i)), supercells[i])
 
 
 		#born = parse_BORN(phonon.get_primitive())
