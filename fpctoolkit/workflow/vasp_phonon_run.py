@@ -2,6 +2,7 @@
 
 from phonopy import Phonopy
 from phonopy.interface.vasp import read_vasp
+from phonopy.interface.vasp import parse_set_of_forces
 from phonopy.file_IO import parse_FORCE_SETS, parse_BORN
 import numpy as np
 
@@ -35,5 +36,7 @@ class VaspPhononRun(VaspRunSet):
 		supercells = phonon.get_supercells_with_displacements()
 
 
+		num_atoms = 40
+		forces_filenames = [self.get_extended_path('vasprun_001.xml'), self.get_extended_path('vasprun_002.xml')]
 
-
+		force_sets = parse_set_of_forces(num_atoms=40, forces_filenames=forces_filenames)
