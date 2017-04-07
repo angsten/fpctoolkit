@@ -79,6 +79,9 @@ class Distribution(object):
 
 	@staticmethod
 	def validate_distribution(distribution):
+		"""
+		Raises an exception if distribution is either not an instance of Distribution, or if the get_random_value() function does not work as expected.
+		"""
 
 		if not isinstance(distribution, Distribution):
 			raise Exception("Type must be Distribution. Type is", type(distribution))

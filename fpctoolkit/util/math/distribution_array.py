@@ -1,8 +1,10 @@
 #from fpctoolkit.util.math.distribution_array import DistributionArray
 
 import numpy as np
+import copy
 
 import fpctoolkit.util.basic_validators as basic_validators
+import fpctoolkit.util.basic_checks as basic_checks
 from fpctoolkit.util.math.distribution import Distribution
 from fpctoolkit.util.math.distribution_generator import DistributionGenerator
 
@@ -20,14 +22,72 @@ class DistributionArray(object):
 		To make a 3D vector, shape should be (3). For a 3x3 tensor, set shape to (3, 3).
 		"""
 
-		basic_validators.validate_tuple_of_positive_nonzero_integers(shape)
+		DistributionArray.validate_constructor_arguments(shape, distribution_array)
 
-		if not distribution_array:
+		if distribution_array:
+
+			distribution_array = DistributionArray.convert_real_numbers_of_array_to_distributions(distribution_array)
+
+			self.shape = copy.deepcopy(distribution_array.shape)
+			self._distribution_array = copy.deepcopy(distribution_array)
+
+		else:
 			self.shape = shape
 			self._distribution_array = np.full(shape, DistributionGenerator.get_zero_distribution(), dtype=object)
+
+
+
+
+	@staticmethod
+	def validate_constructor_arguments(shape, distribution_array):
+		"""
+		Raises an exception if one of the following is true:
+		->both shape and distribution_array are defined 
+		->if distribution_array contains anything other than real numbers or distribution instances
+		->shape is not a valid tuple of positive non-zero integers
+		"""
+
+		if bool(shape == None) == bool(distribution_array == None): #exclusive or - cannot define both arguments but also must have at least one
+			raise Exception("One and only one of shape and distribution_array must be defined. Inputted shape is:", shape, "inputted distribution_array is", distribution_array)
+
+		if distribution_array:
+			for distribution_or_real_number in np.ndarray.flatten(np.array(distribution_array)):
+				DistributionArray.validate_real_number_or_distribution(distribution_or_real_number)
 		else:
-			#load in shape and dists here
-			pass
+			basic_validators.validate_tuple_of_positive_nonzero_integers(shape)
+
+
+	@staticmethod
+	def validate_real_number_or_distribution(distribution_or_real_number):
+		"""
+		Raises an exception if distribution_or_real_number is neither a distribution nor a real number.
+		"""
+
+		try:
+			basic_validators.validate_real_number(distribution_or_real_number)
+		except:
+			Distribution.validate_distribution(distribution_or_real_number)
+
+	@staticmethod
+	def convert_real_numbers_of_array_to_distributions(array_of_distributions_and_real_numbers):
+		"""
+		Takes an arbitrary array (can be numpy or python sequence) filled with a mix of distribution instances and real numbers and returns a new numpy array with the real
+		numbers converted to distributions that give that number with certainty.
+		"""
+
+		numpy_array_of_distributions_and_real_numbers = np.array(array_of_distributions_and_real_numbers)
+
+		flattened_numpy_array_of_distributions_and_real_numbers = np.ndarray.flatten(numpy_array_of_distributions_and_real_numbers)
+
+		for i in range(len(flattened_numpy_array_of_distributions_and_real_numbers)):
+			real_number_or_distribution = flattened_numpy_array_of_distributions_and_real_numbers[i]
+
+			if basic_checks.is_a_real_number(real_number_or_distribution):
+				real_number = real_number_or_distribution
+
+				flattened_numpy_array_of_distributions_and_real_numbers[i] = DistributionGenerator.get_certainly_one_value_distribution(real_number)
+
+		return np.reshape(flattened_numpy_array_of_distributions_and_real_numbers, numpy_array_of_distributions_and_real_numbers.shape)
 
 
 

@@ -4,8 +4,84 @@
 		"selected_items":
 		[
 			[
+				"st",
+				"structure_path"
+			],
+			[
+				"change",
+				"change_set_value"
+			],
+			[
+				"conver",
+				"convergence_path"
+			],
+			[
+				"rela",
+				"relaxation_set_path"
+			],
+			[
+				"chang",
+				"change_values_list"
+			],
+			[
+				"chan",
+				"change_set"
+			],
+			[
+				"en",
+				"encuts_list"
+			],
+			[
+				"str",
+				"structures_list"
+			],
+			[
+				"strain",
+				"strain_distribution_function_array"
+			],
+			[
 				"Dist",
+				"DistributionGenerator"
+			],
+			[
+				"real",
+				"real_number_or_distribution"
+			],
+			[
+				"sho",
+				"should_be_a_real_number"
+			],
+			[
+				"flat",
+				"flattened_numpy_array_of_distributions_and_real_numbers"
+			],
+			[
+				"numpy",
+				"numpy_array_of_distributions_and_real_numbers"
+			],
+			[
+				"array",
+				"array_of_distributions_and_real_numbers"
+			],
+			[
+				"distri",
+				"distribution_array"
+			],
+			[
+				"Dis",
 				"DistributionArray"
+			],
+			[
+				"dist",
+				"distribution_or_number"
+			],
+			[
+				"validate_re",
+				"validate_real_number_or_distribution_instance"
+			],
+			[
+				"dis",
+				"distribution_or_number"
 			],
 			[
 				"validate",
@@ -32,10 +108,6 @@
 				"index_tuple"
 			],
 			[
-				"array",
-				"array_shape"
-			],
-			[
 				"validate_tup",
 				"validate_tuple_of_integers"
 			],
@@ -50,10 +122,6 @@
 			[
 				"inver",
 				"inverse_cumulative_function"
-			],
-			[
-				"dist",
-				"distribution"
 			],
 			[
 				"fla",
@@ -76,20 +144,12 @@
 				"should_be_a_boolean"
 			],
 			[
-				"real",
-				"real_number_that_should_be_in_range"
-			],
-			[
 				"seq",
 				"sequence_length"
 			],
 			[
 				"sequence",
 				"sequence_index_integer"
-			],
-			[
-				"sho",
-				"should_be_positive"
 			],
 			[
 				"shap",
@@ -102,10 +162,6 @@
 			[
 				"shp",
 				"shape_function"
-			],
-			[
-				"str",
-				"structure_mating_function"
 			],
 			[
 				"random",
@@ -182,10 +238,6 @@
 			[
 				"uni",
 				"unity_function"
-			],
-			[
-				"distri",
-				"distribution_function_array"
 			],
 			[
 				"get_r",
@@ -440,10 +492,6 @@
 				"uniform_dist"
 			],
 			[
-				"Dis",
-				"Distribution"
-			],
-			[
 				"cum",
 				"cumulative_probability_counter"
 			],
@@ -466,54 +514,6 @@
 			[
 				"nor",
 				"normalize_cumulative_function"
-			],
-			[
-				"point",
-				"point_count"
-			],
-			[
-				"try",
-				"try_count"
-			],
-			[
-				"ori",
-				"original_structure"
-			],
-			[
-				"min",
-				"minimum_atomic_distances_nested_dictionary_by_type"
-			],
-			[
-				"ne",
-				"nearest_neighbors_max"
-			],
-			[
-				"minimu",
-				"minimum_atomic_distance"
-			],
-			[
-				"fr",
-				"fractional_coordinates"
-			],
-			[
-				"near",
-				"nearest_neighbors_max"
-			],
-			[
-				"si",
-				"site_1"
-			],
-			[
-				"speci",
-				"species_type"
-			],
-			[
-				"spe",
-				"species_type"
-			],
-			[
-				"dis",
-				"displacement_vector_function_dictionary_by_type"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "fpctoolkit/fpc_sketcher.py",
 			"settings":
 			{
-				"buffer_size": 15324,
+				"buffer_size": 15503,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -532,8 +532,16 @@
 			"file": "fpctoolkit/util/math/distribution_array.py",
 			"settings":
 			{
-				"buffer_size": 2460,
+				"buffer_size": 5164,
 				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/util/misc.py",
+			"settings":
+			{
+				"buffer_size": 886,
 				"line_ending": "Windows"
 			}
 		},
@@ -556,10 +564,19 @@
 			}
 		},
 		{
+			"file": "fpctoolkit/util/basic_checks.py",
+			"settings":
+			{
+				"buffer_size": 479,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "fpctoolkit/util/basic_validators.py",
 			"settings":
 			{
-				"buffer_size": 5901,
+				"buffer_size": 5921,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -576,17 +593,25 @@
 			"file": "fpctoolkit/util/math/distribution.py",
 			"settings":
 			{
-				"buffer_size": 6697,
+				"buffer_size": 6855,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/util/math/distribution_generator.py",
+			"file": "fpctoolkit/workflow/vasp_relaxation.py",
 			"settings":
 			{
-				"buffer_size": 1043,
+				"buffer_size": 12894,
 				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/structure/structure_manipulator.py",
+			"settings":
+			{
+				"buffer_size": 7387,
 				"line_ending": "Windows"
 			}
 		}
@@ -772,14 +797,15 @@
 	"expanded_folders":
 	[
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math"
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow"
 	],
 	"file_history":
 	[
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/converger.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/distribution_generator.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/string_util.py",
+		"/C/Users/Tom/Documents/Coding/Web Development/Udemy Bootcamp/selectors.css",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_collection.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/basic_validators.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/lattice.py",
@@ -844,7 +870,6 @@
 		"/C/Users/Tom/.bashrc",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar/poscar_small",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/kpoints.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/string_util.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Outcar/outcar",
 		"/C/Users/Tom/Documents/Coding/python_work/workflow_test/INCAR",
 		"/C/Users/Tom/Documents/Coding/python_work/workflow_test/POSCAR",
@@ -904,10 +929,7 @@
 		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/game.js",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/temps/epitaxy_data_getter.py",
 		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/body.js",
-		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/linear_boundary.js",
-		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/linear_spring.js",
-		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/vertex.js",
-		"/C/Users/Tom/Documents/Berkeley/research/my_papers/Epitaxial Phase Validation Paper/backups/phase_validation/posc_show_2.py"
+		"/C/Users/Tom/Documents/Coding/Web Development/RallyRacer/lib/linear_boundary.js"
 	],
 	"find":
 	{
@@ -926,6 +948,9 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"should_be_an_integer",
+			"distribution_or_number",
+			"should_be_a_real_number",
 			"Distribution.point_count",
 			"point_count",
 			"ticks",
@@ -1050,10 +1075,7 @@
 			"how_structure_was_made",
 			"kpoint_schemes",
 			"randomly_displace",
-			"GAStructurePredictor",
-			"sites_to_check_list",
-			"get_indices_of_site_pairs_that_are_too_close_to_sites_list",
-			"sites_to_displace_list"
+			"GAStructurePredictor"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1087,7 +1109,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 10,
 			"sheets":
 			[
 				{
@@ -1096,15 +1118,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15324,
+						"buffer_size": 15503,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2919,
-								2919
+								309,
+								272
 							]
 						],
 						"settings":
@@ -1114,10 +1136,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 306.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -1126,31 +1148,62 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2460,
+						"buffer_size": 5164,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1083,
-								1083
+								1838,
+								1838
 							]
 						],
 						"settings":
 						{
 							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 732.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "fpctoolkit/util/misc.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 886,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								86,
+								86
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 3,
 					"file": "fpctoolkit/structure/structure_generator.py",
 					"semi_transient": false,
 					"settings":
@@ -1176,11 +1229,11 @@
 						"translation.y": 505.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 4,
 					"file": "fpctoolkit/structure/lattice.py",
 					"semi_transient": false,
 					"settings":
@@ -1210,24 +1263,53 @@
 						"translation.y": 2078.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "fpctoolkit/util/basic_validators.py",
+					"buffer": 5,
+					"file": "fpctoolkit/util/basic_checks.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5901,
+						"buffer_size": 479,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								60,
-								1
+								479,
+								479
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "fpctoolkit/util/basic_validators.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5921,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3645,
+								3645
 							]
 						],
 						"settings":
@@ -1237,14 +1319,14 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 504.0,
+						"translation.y": 942.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 7,
 					"file": "fpctoolkit/util/math/tensor.py",
 					"semi_transient": false,
 					"settings":
@@ -1270,24 +1352,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 8,
 					"file": "fpctoolkit/util/math/distribution.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6697,
+						"buffer_size": 6855,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1835,
-								1835
+								3540,
+								3540
 							]
 						],
 						"settings":
@@ -1297,39 +1379,70 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 126.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "fpctoolkit/util/math/distribution_generator.py",
+					"buffer": 9,
+					"file": "fpctoolkit/workflow/vasp_relaxation.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1043,
+						"buffer_size": 12894,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								704,
-								704
+								63,
+								1
 							]
 						],
 						"settings":
 						{
 							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "fpctoolkit/structure/structure_manipulator.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7387,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7387,
+								7387
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 1722.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1372,7 +1485,7 @@
 	},
 	"output.exec":
 	{
-		"height": 140.0
+		"height": 206.0
 	},
 	"output.find_results":
 	{
@@ -1432,7 +1545,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 285.0,
+	"side_bar_width": 267.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

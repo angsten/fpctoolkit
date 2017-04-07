@@ -256,7 +256,7 @@ class VaspRelaxation(VaspRunSet):
 
 	def get_data_dictionary(self):
 		"""
-		Dictionary looks like:
+		Returned dictionary looks like:
 		{
 			'run_final_energy_list': [-24.2, -25.4, -27.1],
 			'run_final_energy_per_atom_list': [-4.2, -4.6, -5.7],

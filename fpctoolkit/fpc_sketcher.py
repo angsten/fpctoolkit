@@ -63,8 +63,14 @@ strain_distribution_function_array = [
 	[zero_function, zero_function, e33_distribution.get_random_value]
 	]
 
+strain_distribution_function_array = [
+	[1.0, 0.0, e13_distribution], 
+	[0.0, 1.0, e23_distribution], 
+	[0.0, 0.0, e33_distribution]
+	]
 
-da = DistributionArray(shape=(3,3))
+
+da = DistributionArray(distribution_array=strain_distribution_function_array)
 da.set((0, 0), DistributionGenerator.get_unity_distribution())
 da.set((0, 2), e13_distribution)
 

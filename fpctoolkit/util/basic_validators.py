@@ -1,5 +1,8 @@
 #import fpctoolkit.util.basic_validators as basic_validators
 
+import fpctoolkit.util.basic_checks as basic_checks
+
+
 def validate_index_tuple(index_tuple, array_shape):
 
 	validate_tuple_of_positive_or_zero_integers(index_tuple)
@@ -89,10 +92,10 @@ def validate_boolean(should_be_a_boolean):
 
 def validate_integer(should_be_an_integer):
 	"""
-	Raises an exception if should_be_an_integer is not an integer.
+	Raises an exception if should_be_an_integer is not a non-boolean representation of an integer (int or long).
 	"""
 
-	if isinstance(should_be_an_integer, bool) or (not isinstance(should_be_an_integer, int)):
+	if not basic_checks.is_an_integer(should_be_an_integer):
 		raise Exception("Input argument is not an integer. Type is", type(should_be_an_integer), "value is ", should_be_an_integer)
 
 def validate_real_number_is_positive_or_zero(should_be_positive_or_zero):
@@ -138,7 +141,7 @@ def validate_real_number(should_be_a_real_number):
 	Raises an exception if should_be_a_real_number represents anything other than a real number.
 	"""
 
-	if isinstance(should_be_a_real_number, bool) or (not isinstance(should_be_a_real_number, (int, long, float))):
+	if not basic_checks.is_a_real_number(should_be_a_real_number):
 		raise Exception("Input argument is not a real number. Type is", type(should_be_a_real_number), "value is ", should_be_a_real_number)
 
 def validate_first_real_number_is_strictly_less_than_or_equal_to_second(real_number_1, real_number_2):

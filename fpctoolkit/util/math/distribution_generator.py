@@ -27,6 +27,15 @@ class DistributionGenerator(object):
 
 		return Distribution(shape_function=lambda x: 1.0, min_x=1.0, max_x=1.0, tick_count=1)
 
+	@staticmethod
+	def get_certainly_one_value_distribution(value):
+		"""
+		Returns a distribution that always returns value. Value must be a real number.
+		"""
+
+		basic_validators.validate_real_number(value)
+
+		return Distribution(shape_function=lambda x: 1.0, min_x=value, max_x=value, tick_count=1)
 
 	@staticmethod
 	def get_uniform_distribution(min_x, max_x):
