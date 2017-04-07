@@ -39,12 +39,12 @@ class VaspPhononRun(VaspRunSet):
 		num_atoms = 40
 		vasprun_xml_paths= [self.get_extended_path('vasprun_001.xml'), self.get_extended_path('vasprun_002.xml')]
 
-		#force_sets = parse_set_of_forces(num_atoms=num_atoms, forces_filenames=forces_filenames)
+		force_sets = parse_set_of_forces(num_atoms=num_atoms, forces_filenames=vasprun_xml_paths)
 
 
-		force_constants = get_force_constants_from_vasprun_xmls(vasprun_xml_paths)
+		#force_constants = get_force_constants_from_vasprun_xmls(vasprun_xml_paths)
 
-		print force_constants
+		print force_sets
 
 # def write_supercells_with_displacements(supercell,
 #                                         cells_with_displacements):
