@@ -2,7 +2,7 @@
 
 from phonopy import Phonopy
 from phonopy.interface.vasp import read_vasp
-from phonopy.interface.vasp import parse_set_of_forces, get_force_constants_from_vasprun_xmls
+from phonopy.interface.vasp import parse_set_of_forces
 from phonopy.file_IO import parse_FORCE_SETS, parse_BORN
 import numpy as np
 
