@@ -23,10 +23,8 @@ class VaspPhononRun(VaspRunSet):
 		supercell_dimensions_matrix = np.diag([2, 2, 2])
 
 		# Initialize phonon. Supercell matrix has to have the shape of (3, 3)
-		phonon = Phonopy(primitive_structure, supercell_dimensions_matrix)
+		phonon = Phonopy(unit_cell=primitive_structure, supercell_matrix=supercell_dimensions_matrix, symprec=0.01)
 
-
-		phonon.symprec = 0.01
 		symmetry = phonon.get_symmetry() #symprec=1e-5, angle_tolerance=-1.0
 		print "Space group:", symmetry.get_international_table()
 
