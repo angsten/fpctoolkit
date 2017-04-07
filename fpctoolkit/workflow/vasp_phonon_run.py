@@ -1,7 +1,7 @@
 #from fpctoolkit.workflow.vasp_phonon_run import VaspPhononRun
 
 from phonopy import Phonopy
-from phonopy.interface.vasp import read_vasp
+from phonopy.interface.vasp import read_vasp, write_vasp
 from phonopy.interface.vasp import parse_set_of_forces
 from phonopy.file_IO import parse_FORCE_SETS, parse_BORN
 import numpy as np
@@ -35,16 +35,22 @@ class VaspPhononRun(VaspRunSet):
 		phonon.generate_displacements(distance=displacement_distance)
 		supercells = phonon.get_supercells_with_displacements()
 
+		write_vasp('./first_distorted', supercells[0])
 
+
+		#born = parse_BORN(phonon.get_primitive())
+		#phonon.set_nac_params(born)
+
+
+	def set_force_constants(self):
 		num_atoms = 40
 		vasprun_xml_paths= [self.get_extended_path('vasprun_001.xml'), self.get_extended_path('vasprun_002.xml')]
 
-		force_sets = parse_set_of_forces(num_atoms=num_atoms, forces_filenames=vasprun_xml_paths)
+		sets_of_forces = parse_set_of_forces(num_atoms=num_atoms, forces_filenames=vasprun_xml_paths)
+		phonon.set_forces(sets_of_forces)
 
+		phonon.produce_force_constants()
 
-		#force_constants = get_force_constants_from_vasprun_xmls(vasprun_xml_paths)
-
-		print force_sets
 
 # def write_supercells_with_displacements(supercell,
 #                                         cells_with_displacements):
