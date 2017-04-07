@@ -21,11 +21,19 @@ class VaspPhononRun(VaspRunSet):
 
 		primitive_structure = read_vasp(initial_poscar_path)
 		supercell_dimensions_matrix = np.diag([2, 2, 2])
+		symprec = 0.001
+
+		displacement_distance = 0.01
 
 		# Initialize phonon. Supercell matrix has to have the shape of (3, 3)
-		phonon = Phonopy(unitcell=primitive_structure, supercell_matrix=supercell_dimensions_matrix, symprec=0.01)
+		phonon = Phonopy(unitcell=primitive_structure, supercell_matrix=supercell_dimensions_matrix, symprec=symprec)
 
 		symmetry = phonon.get_symmetry() #symprec=1e-5, angle_tolerance=-1.0
 		print "Space group:", symmetry.get_international_table()
+
+		phonon.generate_displacements(distance=displacement_distance)
+		supercells = phonon.get_supercells_with_displacements()
+
+
 
 
