@@ -11,6 +11,8 @@ from fpctoolkit.workflow.vasp_run_set import VaspRunSet
 class VaspPhononRun(VaspRunSet):
 
 	def __init__(self, path, initial_structure):
+		self.path = path
+
 		Path.make(path)
 
 		initial_poscar_path = self.get_extended_path("initial_phonon_structure_POSCAR")
