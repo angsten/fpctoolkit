@@ -2,7 +2,7 @@
 
 from phonopy import Phonopy
 from phonopy.interface.vasp import read_vasp
-from phonopy.interface.vasp import parse_set_of_forces
+from phonopy.interface.vasp import parse_set_of_forces, get_force_constants_from_vasprun_xmls
 from phonopy.file_IO import parse_FORCE_SETS, parse_BORN
 import numpy as np
 
@@ -37,6 +37,19 @@ class VaspPhononRun(VaspRunSet):
 
 
 		num_atoms = 40
-		forces_filenames = [self.get_extended_path('vasprun_001.xml'), self.get_extended_path('vasprun_002.xml')]
+		vasprun_xml_paths= [self.get_extended_path('vasprun_001.xml'), self.get_extended_path('vasprun_002.xml')]
 
-		force_sets = parse_set_of_forces(num_atoms=40, forces_filenames=forces_filenames)
+		#force_sets = parse_set_of_forces(num_atoms=num_atoms, forces_filenames=forces_filenames)
+
+
+		force_constants = get_force_constants_from_vasprun_xmls(vasprun_xml_paths)
+
+		print force_constants
+
+# def write_supercells_with_displacements(supercell,
+#                                         cells_with_displacements):
+#     write_vasp("SPOSCAR", supercell, direct=True)
+#     for i, cell in enumerate(cells_with_displacements):
+#         write_vasp('POSCAR-%03d' % (i + 1), cell, direct=True)
+
+#     _write_magnetic_moments(supercell)
