@@ -170,6 +170,7 @@ class Path(object):
 		path_components_list = Path.split_into_components(path)
 
 		print "Components are", path_components_list
+		print "splatted is", *path_components_list[:-1]
 
 		containing_directory = Path.join(*path_components_list[:-1])
 
