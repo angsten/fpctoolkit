@@ -106,7 +106,7 @@ class VaspPhononRun(VaspRunSet):
 
 		input_set = VaspInputSet(structure, kpoints, incar)
 
-		vasp_run = VaspRun(path=run_path, input_set=input_set)
+		vasp_run = VaspRun(path=path, input_set=input_set)
 
 
 	def update(self):
