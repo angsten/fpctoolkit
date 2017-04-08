@@ -142,7 +142,7 @@ class Incar(File):
 			return indices[0]
 
 
-	def modify_from_dictionary(dictionary_of_modifications):
+	def modify_from_dictionary(self, dictionary_of_modifications):
 		"""
 		if incar.modify_from_dictionary({'isif': 3, 'ediff': 0.0001}) is called, it's equivalent to incar['isif'] = 3, incar['ediff'] = 0.0001
 
