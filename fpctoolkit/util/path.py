@@ -15,7 +15,7 @@ class Path(object):
 
 	@staticmethod
 	def join(*args):
-		return Path.clean(*args)
+		return Path.clean(*args) #* is splat - takes from list and makes into comma separated args for a function
 
 	@staticmethod
 	def clean(*paths):
@@ -170,7 +170,7 @@ class Path(object):
 		path_components_list = Path.split_into_components(path)
 
 		print "Components are", path_components_list
-		print "splatted is", *path_components_list[:-1]
+		print "splatted is", path_components_list[:-1]
 
 		containing_directory = Path.join(*path_components_list[:-1])
 
