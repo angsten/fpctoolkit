@@ -4,6 +4,7 @@ from phonopy.interface.vasp import read_vasp, write_vasp
 from phonopy.interface.vasp import parse_set_of_forces
 
 from fpctoolkit.structure.structure import Structure
+from fpctoolkit.util.path import Path
 
 def convert_structure_to_phonopy_atoms(structure, temporary_write_path):
 	"""
@@ -45,7 +46,7 @@ def convert_phonopy_atoms_to_structure(phonopy_atoms_structure, temporary_write_
 	structure_poscar_file.write_to_path()
 
 	final_structure = Structure(temporary_write_path)
-	
+
 	Path.remove(temporary_write_path)
 
 	Structure.validate(final_structure)
