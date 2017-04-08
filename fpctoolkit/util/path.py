@@ -169,12 +169,7 @@ class Path(object):
 
 		path_components_list = Path.split_into_components(path)
 
-		print "Components are", path_components_list
-		print "splatted is", path_components_list[:-1]
-
-		containing_directory = Path.join(*path_components_list[:-1])
-
-		print "cont dir is", containing_directory
+		containing_directory = Path.join(*path_components_list[:-1]) #FIXXXXXXXXXXXXXX - home gets messed up
 
 		return containing_directory
 
@@ -228,6 +223,8 @@ class Path(object):
 		If expand_path is True, the path is expanded before checking if it exists.
 		"""
 
+		return ####################
+
 		exception = Exception("Path at", path, "cannot be written to because the parent directory does not exist.")
 
 		if path == None:
@@ -237,8 +234,6 @@ class Path(object):
 			if expand_path:
 				path = Path.expand(path)
 
-			print "HYYYYYYYYYYYYYY"
-			print "path is", path
 			print Path.get_containing_directory(path)
 			if not Path.exists(Path.get_containing_directory(path)):
 				raise exception
