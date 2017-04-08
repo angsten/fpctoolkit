@@ -9,6 +9,7 @@ import numpy as np
 from fpctoolkit.util.path import Path
 from fpctoolkit.workflow.vasp_run_set import VaspRunSet
 from fpctoolkit.io.vasp.incar_maker import IncarMaker
+from fpctoolkit.structure.structure import Structure
 
 class VaspPhononRun(VaspRunSet):
 
