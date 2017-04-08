@@ -61,7 +61,7 @@ class VaspPhononRun(VaspRunSet):
 			run_path = self.get_extended_path(str(i))
 
 			if not Path.exists(run_path):
-				structure = self.get_next_structure()
+				structure = distorted_structure
 				kpoints = Kpoints(scheme_string=kpoint_scheme, subdivisions_list=kpoint_subdivisions_list)
 				incar = IncarMaker.get_phonon_incar()
 
