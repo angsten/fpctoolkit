@@ -5,6 +5,7 @@ from phonopy.interface.vasp import parse_set_of_forces
 
 from fpctoolkit.structure.structure import Structure
 from fpctoolkit.util.path import Path
+from fpctoolkit.io.file import File
 
 def convert_structure_to_phonopy_atoms(structure, temporary_write_path):
 	"""
