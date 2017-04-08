@@ -29,15 +29,15 @@ class VaspPhononRun(VaspRunSet):
 		phonopy_inputs_dictionary = {
 			supercell_dimensions: [2, 2, 2],
 			symprec: 0.001,
-			displacement_distance: 0.01,
+			displacement_distance: 0.01
 			...
 		}
 
 		vasp_run_inputs_dictionary should be a dictionary that looks like:
 
 		vasp_run_inputs_dictionary = {
-			kpoint_scheme = 'Monkhorst'
-			kpoint_subdivisions_list = [4, 4, 4]
+			kpoint_scheme: 'Monkhorst',
+			kpoint_subdivisions_list: [4, 4, 4]
 		}
 		"""
 
@@ -94,7 +94,7 @@ class VaspPhononRun(VaspRunSet):
 
 		distorted_structures_list = []
 		for i in range(len(supercells)):
-			distorted_structure = convert_phonopy_atoms_to_structure(supercells[i], self.get_extended_path('./tmp_distorted_structure')):
+			distorted_structure = convert_phonopy_atoms_to_structure(supercells[i], self.get_extended_path('./tmp_distorted_structure'))
 			distorted_structures_list.append(distorted_structure)
 
 		return distorted_structures_list
