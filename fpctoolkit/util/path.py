@@ -169,7 +169,11 @@ class Path(object):
 
 		path_components_list = Path.split_into_components(path)
 
+		print "Components are", path_components_list
+
 		containing_directory = Path.join(*path_components_list[:-1])
+
+		print "cont dir is", containing_directory
 
 		return containing_directory
 
@@ -233,6 +237,7 @@ class Path(object):
 				path = Path.expand(path)
 
 			print "HYYYYYYYYYYYYYY"
+			print "path is", path
 			print Path.get_containing_directory(path)
 			if not Path.exists(Path.get_containing_directory(path)):
 				raise exception
