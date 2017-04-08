@@ -10,6 +10,7 @@ from fpctoolkit.util.path import Path
 from fpctoolkit.workflow.vasp_run_set import VaspRunSet
 from fpctoolkit.io.vasp.incar_maker import IncarMaker
 from fpctoolkit.structure.structure import Structure
+from fpctoolkit.io.file import File
 
 class VaspPhononRun(VaspRunSet):
 
@@ -44,6 +45,10 @@ class VaspPhononRun(VaspRunSet):
 			distorted_structure_path = self.get_extended_path('./distorted_structure_'+str(i))
 
 			write_vasp(distorted_structure_path, supercells[i])
+
+			distorted_structure_poscar_file = File(distorted_structure_path)
+			distorted_structure_poscar_file.insert(5, " ".join(initial_structure.get_species_list())) #phonopy uses bad poscar format
+
 
 			distorted_structures_list.append(Structure(distorted_structure_path))
 
