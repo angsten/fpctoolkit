@@ -14,75 +14,128 @@ from fpctoolkit.io.vasp.kpoints import Kpoints
 from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 from fpctoolkit.structure.structure import Structure
 from fpctoolkit.io.file import File
+import fpctoolkit.util.phonopy_interface.phonopy_utility as phonopy_utility
 
 class VaspPhononRun(VaspRunSet):
 
-	def __init__(self, path, initial_structure):
+	def __init__(self, path, initial_structure, phonopy_inputs_dictionary, vasp_run_inputs_dictionary):
+		"""
+		path holds the main path of the calculation sets
+
+		initial_structure should be some small Structure instance for which one wishes to calculate phonons
+
+		phonopy_inputs should be a dictionary that looks like:
+
+		phonopy_inputs_dictionary = {
+			supercell_dimensions: [2, 2, 2],
+			symprec: 0.001,
+			displacement_distance: 0.01,
+			...
+		}
+
+		vasp_run_inputs_dictionary should be a dictionary that looks like:
+
+		vasp_run_inputs_dictionary = {
+			kpoint_scheme = 'Monkhorst'
+			kpoint_subdivisions_list = [4, 4, 4]
+		}
+		"""
+
 		self.path = path
+		self.initial_structure = initial_structure
+		self.phonopy_inputs = phonopy_inputs
+		self.vasp_run_inputs = vasp_run_inputs_dictionary
+		self.phonon = None #holds the phonopy Phonopy class instance once initialized
+
 
 		Path.make(path)
 
-		initial_poscar_path = self.get_extended_path("initial_phonon_structure_POSCAR")
 
-		initial_structure.to_poscar_file_path(initial_poscar_path)
-
-		primitive_structure = read_vasp(initial_poscar_path)
-		supercell_dimensions_matrix = np.diag([2, 2, 2])
-		symprec = 0.001
-
-		displacement_distance = 0.01
-
-		# Initialize phonon. Supercell matrix has to have the shape of (3, 3)
-		phonon = Phonopy(unitcell=primitive_structure, supercell_matrix=supercell_dimensions_matrix, symprec=symprec)
-
-		symmetry = phonon.get_symmetry() #symprec=1e-5, angle_tolerance=-1.0
-		print "Space group:", symmetry.get_international_table()
-
-		phonon.generate_displacements(distance=displacement_distance)
-		supercells = phonon.get_supercells_with_displacements()
+		self.initialize_phonon()
 
 
-
-		distorted_structures_list = []
-		for i in range(len(supercells)):
-			distorted_structure_path = self.get_extended_path('./distorted_structure_'+str(i))
-
-			write_vasp(distorted_structure_path, supercells[i])
-
-			distorted_structure_poscar_file = File(distorted_structure_path)
-			distorted_structure_poscar_file.insert(5, " ".join(initial_structure.get_species_list())) #phonopy uses bad poscar format
-			distorted_structure_poscar_file.write_to_path()
-
-			distorted_structures_list.append(Structure(distorted_structure_path))
+		####temp code#####
+		symmetry = self.phonon.get_symmetry()
+		print "Space group of initial primitive structure:", symmetry.get_international_table()
+		####
 
 
+		self.initialize_vasp_runs()
 
-		kpoint_scheme = 'Monkhorst'
-		kpoint_subdivisions_list = [4, 4, 4]
+		self.update()
+
+	def initialize_phonon(self):
+		"""
+		Initialize self.phonon so that it has a valid Phonopy instance and has displacements generated
+		"""
+
+		unit_cell_phonopy_structure = phonopy_utility.convert_structure_to_phonopy_atoms(self.initial_structure, self.get_extended_path("tmp_initial_phonon_structure_POSCAR"))
+		supercell_dimensions_matrix = np.diag(self.phonopy_inputs['supercell_dimensions'])
+
+		self.phonon = Phonopy(unitcell=unit_cell_phonopy_structure, supercell_matrix=supercell_dimensions_matrix, symprec=self.phonopy_inputs['symprec'])
+		self.phonon.generate_displacements(distance=self.phonopy_inputs['displacement_distance'])
+
+		#born = parse_BORN(phonon.get_primitive())
+		#phonon.set_nac_params(born)
+
+
+	def initialize_vasp_runs(self):
+		distorted_structures_list = self.get_distorted_structures_list()
 
 		for i, distorted_structure in enumerate(distorted_structures_list):
 			run_path = self.get_extended_path(str(i))
 
 			if not Path.exists(run_path):
-				structure = distorted_structure
-				kpoints = Kpoints(scheme_string=kpoint_scheme, subdivisions_list=kpoint_subdivisions_list)
-				incar = IncarMaker.get_phonon_incar()
-
-				input_set = VaspInputSet(structure, kpoints, incar)
-
-				vasp_run = VaspRun(path=run_path, input_set=input_set)
-
-			vasp_run.update()
+				self.create_new_vasp_run(run_path, distorted_structure)
 
 
+	def get_distorted_structures_list(self):
+		supercells = phonon.get_supercells_with_displacements()
+
+		distorted_structures_list = []
+		for i in range(len(supercells)):
+			distorted_structure = convert_phonopy_atoms_to_structure(supercells[i], self.get_extended_path('./tmp_distorted_structure')):
+			distorted_structures_list.append(distorted_structure)
+
+		return distorted_structures_list
 
 
+	def create_new_vasp_run(path, structure):
+		kpoints = Kpoints(scheme_string=self.vasp_run_inputs['kpoint_scheme'], subdivisions_list=self.vasp_run_inputs['kpoint_subdivisions_list'])
+		incar = IncarMaker.get_phonon_incar()
+
+		input_set = VaspInputSet(structure, kpoints, incar)
+
+		vasp_run = VaspRun(path=run_path, input_set=input_set)
 
 
+	def update(self):
+		if not self.complete:
+			for vasp_run in self.vasp_run_list:
+				vasp_run.update()
+		else:
+			self.set_force_constants()
 
-		#born = parse_BORN(phonon.get_primitive())
-		#phonon.set_nac_params(born)
 
+	@property
+	def vasp_run_list(self):
+		vasp_run_list = []
+
+		i = 0
+		while Path.exists(self.get_extended_path(i)):
+			run_path = self.get_extended_path(i)
+
+			vasp_run_list.append(VaspRun(path=run_path))
+
+		return vasp_run_list
+
+	@property
+	def complete(self):
+		for vasp_run in self.vasp_run_list:
+			if not vasp_run.complete:
+				return False
+
+		return True
 
 	def set_force_constants(self):
 		num_atoms = 40

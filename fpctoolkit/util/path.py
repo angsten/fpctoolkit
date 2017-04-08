@@ -160,16 +160,31 @@ class Path(object):
 		return [directory_basename for directory_basename in directory_basenames if directory_basename.find(sub_string) != -1]
 
 
+	@staticmethod
+	def get_containing_directory(path):
+		"""
+		If /home/angsten/bla is input, return value is /home/angsten
+		If / is input, '' is returned
+		"""
+
+		path_components_list = Path.split_into_components(path)
+
+		print path_components_list
+
+		containing_directory = Path.join(*path_components_list[:-1])
+
+		return containing_directory
+
 
 	@staticmethod
 	def validate(path, allow_none=False, expand_path=True):
 		"""
-		Raises an exception if the expanded path does not exist. 
+		Raises an exception if the path does not exist. 
 		If allow_none is True, path can be None without raising an exception.
 		If expand_path is True, the path is expanded before checking if it exists.
 		"""
 
-		exception = Exception("Path at ", path, "does not exist.")
+		exception = Exception("Path at", path, "does not exist.")
 
 		if path == None:
 			if not allow_none:
@@ -179,4 +194,45 @@ class Path(object):
 				path = Path.expand(path)
 
 			if not Path.exists(path):
+				raise exception
+
+
+	@staticmethod
+	def validate_does_not_exist(path, allow_none=False, expand_path=True):
+		"""
+		Raises an exception if the path exists. 
+		If allow_none is True, path can be None without raising an exception.
+		If expand_path is True, the path is expanded before checking if it exists.
+		"""
+
+		exception = Exception("Path at", path, "already exists.")
+
+		if path == None:
+			if not allow_none:
+				raise Exception("Path cannot be None")
+		else:
+			if expand_path:
+				path = Path.expand(path)
+
+			if Path.exists(path):
+				raise exception
+
+	@staticmethod
+	def validate_writeable(path, allow_none=False, expand_path=True):
+		"""
+		Raises an exception if the path cannot be written to because the containing directory is not defined. 
+		If allow_none is True, path can be None without raising an exception.
+		If expand_path is True, the path is expanded before checking if it exists.
+		"""
+
+		exception = Exception("Path at", path, "cannot be written to because the parent directory does not exist.")
+
+		if path == None:
+			if not allow_none:
+				raise Exception("Path cannot be None")
+		else:
+			if expand_path:
+				path = Path.expand(path)
+
+			if not Path.exists(Path.get_containing_directory(path)):
 				raise exception

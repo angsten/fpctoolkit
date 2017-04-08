@@ -1,0 +1,7 @@
+
+
+
+
+
+
+class PhonopyInputs(dict):
