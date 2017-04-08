@@ -68,7 +68,7 @@ class VaspPhononRun(VaspRunSet):
 				kpoints = Kpoints(scheme_string=kpoint_scheme, subdivisions_list=kpoint_subdivisions_list)
 				incar = IncarMaker.get_phonon_incar()
 
-				input_set = VaspInputSet(structure, kpoints, incar, submission_script_file=submission_script_file)
+				input_set = VaspInputSet(structure, kpoints, incar)
 
 				vasp_run = VaspRun(path=run_path, input_set=input_set)
 
