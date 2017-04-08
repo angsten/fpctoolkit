@@ -27,23 +27,23 @@ class VaspPhononRun(VaspRunSet):
 		phonopy_inputs should be a dictionary that looks like:
 
 		phonopy_inputs_dictionary = {
-			supercell_dimensions: [2, 2, 2],
-			symprec: 0.001,
-			displacement_distance: 0.01
+			'supercell_dimensions': [2, 2, 2],
+			'symprec': 0.001,
+			'displacement_distance': 0.01
 			...
 		}
 
 		vasp_run_inputs_dictionary should be a dictionary that looks like:
 
 		vasp_run_inputs_dictionary = {
-			kpoint_scheme: 'Monkhorst',
-			kpoint_subdivisions_list: [4, 4, 4]
+			'kpoint_scheme': 'Monkhorst',
+			'kpoint_subdivisions_list': [4, 4, 4]
 		}
 		"""
 
 		self.path = path
 		self.initial_structure = initial_structure
-		self.phonopy_inputs = phonopy_inputs
+		self.phonopy_inputs = phonopy_inputs_dictionary
 		self.vasp_run_inputs = vasp_run_inputs_dictionary
 		self.phonon = None #holds the phonopy Phonopy class instance once initialized
 
