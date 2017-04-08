@@ -100,7 +100,7 @@ class VaspPhononRun(VaspRunSet):
 		return distorted_structures_list
 
 
-	def create_new_vasp_run(path, structure):
+	def create_new_vasp_run(self, path, structure):
 		kpoints = Kpoints(scheme_string=self.vasp_run_inputs['kpoint_scheme'], subdivisions_list=self.vasp_run_inputs['kpoint_subdivisions_list'])
 		incar = IncarMaker.get_phonon_incar()
 
