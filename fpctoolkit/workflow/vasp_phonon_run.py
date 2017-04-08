@@ -122,10 +122,12 @@ class VaspPhononRun(VaspRunSet):
 		vasp_run_list = []
 
 		i = 0
-		while Path.exists(self.get_extended_path(i)):
-			run_path = self.get_extended_path(i)
+		while Path.exists(self.get_extended_path(str(i))):
+			run_path = self.get_extended_path(str(i))
 
 			vasp_run_list.append(VaspRun(path=run_path))
+
+			i += 1
 
 		return vasp_run_list
 
