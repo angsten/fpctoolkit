@@ -234,5 +234,6 @@ class Path(object):
 			if expand_path:
 				path = Path.expand(path)
 
+			print Path.get_containing_directory(path)
 			if not Path.exists(Path.get_containing_directory(path)):
 				raise exception
