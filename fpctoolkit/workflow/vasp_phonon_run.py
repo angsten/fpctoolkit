@@ -90,7 +90,7 @@ class VaspPhononRun(VaspRunSet):
 
 
 	def get_distorted_structures_list(self):
-		supercells = phonon.get_supercells_with_displacements()
+		supercells = self.phonon.get_supercells_with_displacements()
 
 		distorted_structures_list = []
 		for i in range(len(supercells)):
