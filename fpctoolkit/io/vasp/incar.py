@@ -149,7 +149,7 @@ class Incar(File):
 		dictionary_of_modifications can be none, in which case nothing is added
 		"""
 
-		if not isinstance(dictionary_of_modifications, dict):
+		if dictionary_of_modifications != None and (not isinstance(dictionary_of_modifications, dict)):
 			raise Exception("Input argument type must be dicitonary when modifying an incar this way. Instead, type is", type(dictionary_of_modifications))
 
 		if dictionary_of_modifications:
