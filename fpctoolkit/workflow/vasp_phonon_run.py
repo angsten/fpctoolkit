@@ -7,8 +7,11 @@ from phonopy.file_IO import parse_FORCE_SETS, parse_BORN
 import numpy as np
 
 from fpctoolkit.util.path import Path
+from fpctoolkit.workflow.vasp_run import VaspRun
 from fpctoolkit.workflow.vasp_run_set import VaspRunSet
 from fpctoolkit.io.vasp.incar_maker import IncarMaker
+from fpctoolkit.io.vasp.kpoints import Kpoints
+from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 from fpctoolkit.structure.structure import Structure
 from fpctoolkit.io.file import File
 
