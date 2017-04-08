@@ -29,7 +29,7 @@ def convert_structure_to_phonopy_atoms(structure, temporary_write_path):
 
 
 
-def convert_phonopy_atoms_to_structure(phonopy_atoms_structure, temporary_write_path):
+def convert_phonopy_atoms_to_structure(phonopy_atoms_structure, species_list, temporary_write_path):
 	"""
 	Converts phonopy's representation of a structure to an instance of Structure.
 
@@ -43,7 +43,7 @@ def convert_phonopy_atoms_to_structure(phonopy_atoms_structure, temporary_write_
 	write_vasp(temporary_write_path, phonopy_atoms_structure)
 
 	structure_poscar_file = File(temporary_write_path)
-	structure_poscar_file.insert(5, " ".join(initial_structure.get_species_list())) #phonopy uses bad poscar format
+	structure_poscar_file.insert(5, " ".join(species_list)) #phonopy uses bad poscar format
 	structure_poscar_file.write_to_path()
 
 	final_structure = Structure(temporary_write_path)

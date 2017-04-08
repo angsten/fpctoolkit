@@ -94,7 +94,7 @@ class VaspPhononRun(VaspRunSet):
 
 		distorted_structures_list = []
 		for i in range(len(supercells)):
-			distorted_structure = phonopy_utility.convert_phonopy_atoms_to_structure(supercells[i], self.get_extended_path('./tmp_distorted_structure'))
+			distorted_structure = phonopy_utility.convert_phonopy_atoms_to_structure(supercells[i], self.initial_structure.get_species_list(), self.get_extended_path('./tmp_distorted_structure'))
 			distorted_structures_list.append(distorted_structure)
 
 		return distorted_structures_list
