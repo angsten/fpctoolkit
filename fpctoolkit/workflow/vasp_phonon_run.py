@@ -48,7 +48,7 @@ class VaspPhononRun(VaspRunSet):
 
 			distorted_structure_poscar_file = File(distorted_structure_path)
 			distorted_structure_poscar_file.insert(5, " ".join(initial_structure.get_species_list())) #phonopy uses bad poscar format
-
+			distorted_structure_poscar_file.write_to_path()
 
 			distorted_structures_list.append(Structure(distorted_structure_path))
 
