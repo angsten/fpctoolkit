@@ -245,7 +245,7 @@ class VaspPhononRun(VaspRunSet):
 			phonopy_utility.write_born_file(born_file_path=born_path, dielectric_tensor=dielectric_tensor, 
 				born_effective_charge_tensor=born_effective_charge_tensor, independent_atom_indices_list=independent_atom_indices_list)
 
-			nac_params = parse_BORN(phonon.get_primitive(), filename=born_path)
-			phonon.set_nac_params(nac_params)
+			nac_params = parse_BORN(self.phonon.get_primitive(), filename=born_path)
+			self.phonon.set_nac_params(nac_params)
 
 		print self.phonon.get_frequencies_with_eigenvectors([0.5, 0.5, 0.5])
