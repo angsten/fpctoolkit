@@ -167,7 +167,7 @@ class VaspPhononRun(VaspRunSet):
 
 
 			if self.has_nac():
-				self.lepsilon_calculation.update()
+				self.lepsilon_run.update()
 
 		else:
 			self.set_force_constants()
