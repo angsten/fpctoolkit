@@ -226,7 +226,10 @@ class VaspPhononRun(VaspRunSet):
 
 		return reduce(lambda x, y: x*y, self.phonopy_inputs['supercell_dimensions'], self.initial_structure.site_count)
 
+	
 
+	def has_nac(self):
+		return self.phonopy_inputs.has_key('nac') and self.phonopy_inputs['nac']
 
 	def set_force_constants(self):
 		sets_of_forces = parse_set_of_forces(num_atoms=self.get_supercell_atom_count(), forces_filenames=self.get_xml_file_paths_list())
@@ -236,6 +239,5 @@ class VaspPhononRun(VaspRunSet):
 
 		print self.phonon.get_frequencies_with_eigenvectors([0.5, 0.5, 0.5])
 
-
-	def has_nac(self):
-		return self.phonopy_inputs.has_key('nac') and self.phonopy_inputs['nac']
+		if self.has_nac():
+			print self.lepsilon_calculation.outcar.get_dielectric_tensor()

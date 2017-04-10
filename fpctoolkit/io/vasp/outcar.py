@@ -8,6 +8,7 @@ class Outcar(File):
 	run_complete_string = "Total CPU time used (sec):"
 	ionic_step_complete_string = "aborting loop because EDIFF is reached"
 	total_energy_string = "energy(sigma->0)"
+	Outcar.dielectric_tensor_string = "MACROSCOPIC STATIC DIELECTRIC TENSOR (including local field effects in DFT)"
 
 	def __init__(self, file_path=None):
 		super(Outcar, self).__init__(file_path)
@@ -35,6 +36,7 @@ class Outcar(File):
 
 		total_energy_line = self.get_first_line_containing_string_from_bottom(Outcar.total_energy_string)
 		return float(total_energy_line.split('=')[-1].strip())
+
 
 	@property
 	def energy_per_atom(self):
@@ -116,4 +118,20 @@ class Outcar(File):
 
 
 
+	def get_dielectric_tensor(self):
+		if not self.complete:
+			raise Exception("Run does not yet have a dielectric tensor - not completed")
 
+		tensor_start_indices = self.get_line_indices_containing_string(Outcar.dielectric_tensor_string)
+
+		if len(tensor_start_indices == 0):
+			raise Exception("No dielectric tensor found in completed outcar file")
+
+		tensor_start_index = tensor_start_indices[-1] + 2
+
+		dielectric_tensor = []
+
+		for line in self.lines[tensor_start_index:tensor_start_index+3]:
+			dielectric_tensor.append(su.get_number_list_from_string(line))
+
+		return dielectric_tensor

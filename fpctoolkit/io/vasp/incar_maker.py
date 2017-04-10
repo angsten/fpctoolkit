@@ -100,11 +100,11 @@ class IncarMaker(object):
 	@staticmethod
 	def get_lepsilon_incar(custom_parameters_dictionary=None):
 		"""
-		Generates an incar to be used with an lepsilon run that generate things like the born effective charge and dielectric tensors.
+		Generates an incar to be used with an lepsilon run that generate things like the born effective charge, piezoelectric, and dielectric tensors.
 		"""
 
 		incar = IncarMaker.get_static_incar()
-		incar['ediff'] = 0.00000001
+		incar['ediff'] = 0.0000001
 		incar['lepsilon'] = True
 		incar['npar'] = 1 #lepsilon runs are not parallelizable
 
