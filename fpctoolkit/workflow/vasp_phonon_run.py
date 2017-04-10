@@ -92,13 +92,6 @@ class VaspPhononRun(VaspRunSet):
 		self.phonon = Phonopy(unitcell=unit_cell_phonopy_structure, supercell_matrix=supercell_dimensions_matrix, symprec=self.phonopy_inputs['symprec'])
 		self.phonon.generate_displacements(distance=self.phonopy_inputs['displacement_distance'])
 
-		#born = parse_BORN(phonon.get_primitive())
-		#phonon.set_nac_params(born)
-
-		# primitive = phonon.get_primitive()
-		# nac_params = parse_BORN(primitive, filename="BORN")
-		# phonon.set_nac_params(nac_params)
-
 	def initialize_vasp_runs(self):
 		"""
 		Creates any force calculation vasp runs (static force calculations at .../0, .../1, ...) that do not already exist.
@@ -241,11 +234,18 @@ class VaspPhononRun(VaspRunSet):
 		print self.phonon.get_frequencies_with_eigenvectors([0.5, 0.5, 0.5])
 
 		if self.has_nac():
+			born_path = self.get_extended_path('BORN')
+
 			dielectric_tensor = self.lepsilon_calculation.outcar.get_dielectric_tensor()
 			born_effective_charge_tensor = self.lepsilon_calculation.outcar.get_born_effective_charge_tensor()
 
 			symm = Symmetry(cell=self.phonon.get_primitive(), symprec=self.phonopy_inputs['symprec'])
 			independent_atom_indices_list = symm.get_independent_atoms()
 
-			phonopy_utility.write_born_file(born_file_path=self.get_extended_path('BORN'), dielectric_tensor=dielectric_tensor, 
+			phonopy_utility.write_born_file(born_file_path=born_path, dielectric_tensor=dielectric_tensor, 
 				born_effective_charge_tensor=born_effective_charge_tensor, independent_atom_indices_list=independent_atom_indices_list)
+
+			nac_params = parse_BORN(phonon.get_primitive(), filename=born_path)
+			phonon.set_nac_params(nac_params)
+
+		print self.phonon.get_frequencies_with_eigenvectors([0.5, 0.5, 0.5])
