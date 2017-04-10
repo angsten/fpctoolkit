@@ -244,4 +244,4 @@ class VaspPhononRun(VaspRunSet):
 
 			print
 
-			print self.lepsilon_calculation.get_born_effective_charge_tensor()
+			print self.lepsilon_calculation.outcar.get_born_effective_charge_tensor()
