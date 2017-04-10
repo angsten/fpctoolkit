@@ -57,7 +57,7 @@ class VaspPhononRun(VaspRunSet):
 		self.vasp_run_inputs = vasp_run_inputs_dictionary
 		self.wavecar_path = wavecar_path
 		self.phonon = None #holds the phonopy Phonopy class instance once initialized
-		self.lepsilon_run = None #calculates dielectric tensor and born effective charge if nac is needed
+		self.lepsilon_calculation = None #calculates dielectric tensor and born effective charge if nac is needed
 
 
 		Path.make(path)
@@ -75,7 +75,7 @@ class VaspPhononRun(VaspRunSet):
 		self.initialize_vasp_runs()
 
 		if self.has_nac():
-			self.initialize_vasp_lepsilon_run()
+			self.initialize_vasp_lepsilon_calculation()
 
 		self.update()
 
@@ -140,7 +140,7 @@ class VaspPhononRun(VaspRunSet):
 		vasp_run = VaspRun(path=path, input_set=input_set, wavecar_path=self.wavecar_path)
 
 
-	def initialize_vasp_lepsilon_run(self):
+	def initialize_vasp_lepsilon_calculation(self):
 		"""
 		Sets up a run for the calculation of dielectric and born effective charge tensors. This is necessary if the Non-Analytical correction is used (for polar materials).
 		"""
@@ -150,7 +150,7 @@ class VaspPhononRun(VaspRunSet):
 
 		input_set = VaspInputSet(self.initial_structure, kpoints, incar, auto_change_npar=False)
 
-		self.lepsilon_run = VaspRun(path=self.get_lepsion_calculation_path(), input_set=input_set)
+		self.lepsilon_calculation = VaspRun(path=self.get_lepsion_calculation_path(), input_set=input_set)
 
 
 
@@ -167,7 +167,7 @@ class VaspPhononRun(VaspRunSet):
 
 
 			if self.has_nac():
-				self.lepsilon_run.update()
+				self.lepsilon_calculation.update()
 
 		else:
 			self.set_force_constants()
@@ -184,7 +184,7 @@ class VaspPhononRun(VaspRunSet):
 				return False
 
 
-		if self.has_nac() and not self.lepsilon_run.complete:
+		if self.has_nac() and not self.lepsilon_calculation.complete:
 			return False
 
 		return True
@@ -226,7 +226,7 @@ class VaspPhononRun(VaspRunSet):
 
 		return reduce(lambda x, y: x*y, self.phonopy_inputs['supercell_dimensions'], self.initial_structure.site_count)
 
-	
+
 
 	def has_nac(self):
 		return self.phonopy_inputs.has_key('nac') and self.phonopy_inputs['nac']
