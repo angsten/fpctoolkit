@@ -196,6 +196,6 @@ class VaspPhononRun(VaspRunSet):
 
 		self.phonon.produce_force_constants(sets_of_forces)
 
-		print self.phonon.get_frequencies_with_eigenvectors([0.5, 0.5 0.5])
+		print self.phonon.get_frequencies_with_eigenvectors([0.5, 0.5, 0.5])
 
 		print self.phonon.get_thermal_properties()
