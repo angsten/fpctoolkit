@@ -72,6 +72,6 @@ def write_born_file(born_file_path, dielectric_tensor, born_effective_charge_ten
 	for atomic_bec in born_effective_charge_tensor:
 		flat_atomic_bec = misc.flatten_multi_dimensional_list(atomic_bec)
 
-		born_file += " ".join(str(component) for component in flat_dielectric_list)
+		born_file += " ".join(str(component) for component in flat_atomic_bec)
 
 	born_file.write_to_path(born_file_path)		
