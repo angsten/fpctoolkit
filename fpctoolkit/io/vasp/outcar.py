@@ -124,7 +124,7 @@ class Outcar(File):
 
 		tensor_start_indices = self.get_line_indices_containing_string(Outcar.dielectric_tensor_string)
 
-		if len(tensor_start_indices == 0):
+		if len(tensor_start_indices) == 0:
 			raise Exception("No dielectric tensor found in completed outcar file")
 
 		tensor_start_index = tensor_start_indices[-1] + 2
