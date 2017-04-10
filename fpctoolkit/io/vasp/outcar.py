@@ -180,14 +180,14 @@ class Outcar(File):
 		if len(tensor_start_indices) == 0:
 			raise Exception("No born effective charge tensor found in completed outcar file")
 
-		tensor_start_index = tensor_start_indices[-1] + 2
+		tensor_start_index = tensor_start_indices[-1] -1
 
 		born_effective_charge_tensor = []
 
 		for N in range(self.get_number_of_atoms()):
 			atomic_tensor = []
 
-			tensor_start_index += 1
+			tensor_start_index += 4
 
 			for line in self.lines[tensor_start_index:tensor_start_index+3]:
 				row_number_list = su.get_number_list_from_string(line)[1:]
