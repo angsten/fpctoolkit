@@ -8,7 +8,7 @@ class Outcar(File):
 	run_complete_string = "Total CPU time used (sec):"
 	ionic_step_complete_string = "aborting loop because EDIFF is reached"
 	total_energy_string = "energy(sigma->0)"
-	Outcar.dielectric_tensor_string = "MACROSCOPIC STATIC DIELECTRIC TENSOR (including local field effects in DFT)"
+	dielectric_tensor_string = "MACROSCOPIC STATIC DIELECTRIC TENSOR (including local field effects in DFT)"
 
 	def __init__(self, file_path=None):
 		super(Outcar, self).__init__(file_path)
