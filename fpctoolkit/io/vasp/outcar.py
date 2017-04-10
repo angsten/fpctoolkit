@@ -190,7 +190,7 @@ class Outcar(File):
 			tensor_start_index += 1
 
 			for line in self.lines[tensor_start_index:tensor_start_index+3]:
-				row_number_list = su.get_number_list_from_string(line)
+				row_number_list = su.get_number_list_from_string(line)[1:]
 
 				if not len(row_number_list) == 3:
 					raise Exception("Error reading row from born effect charge tensor. Length should be 3 but is not. Row number list looks like", row_number_list)
