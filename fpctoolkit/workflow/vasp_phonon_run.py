@@ -17,8 +17,15 @@ from fpctoolkit.io.file import File
 import fpctoolkit.util.phonopy_interface.phonopy_utility as phonopy_utility
 
 class VaspPhononRun(VaspRunSet):
+	"""
+	Represents a phonon run in vasp built on the phonopy finite differences framework. 
+	This class takes as input an already relaxed structure and parameters for the static 
+	runs and phonopy parameters.
 
-	def __init__(self, path, initial_structure, phonopy_inputs_dictionary, vasp_run_inputs_dictionary):
+	add wavecar linking
+	"""
+
+	def __init__(self, path, initial_structure, phonopy_inputs_dictionary, vasp_run_inputs_dictionary, wavecar_path=None):
 		"""
 		path holds the main path of the calculation sets
 
@@ -45,6 +52,7 @@ class VaspPhononRun(VaspRunSet):
 		self.initial_structure = initial_structure
 		self.phonopy_inputs = phonopy_inputs_dictionary
 		self.vasp_run_inputs = vasp_run_inputs_dictionary
+		self.wavecar_path = wavecar_path
 		self.phonon = None #holds the phonopy Phonopy class instance once initialized
 
 
@@ -80,6 +88,10 @@ class VaspPhononRun(VaspRunSet):
 
 
 	def initialize_vasp_runs(self):
+		"""
+		Creates any force calculation vasp runs (static force calculations at .../0, .../1, ...) that do not already exist.
+		"""
+
 		distorted_structures_list = self.get_distorted_structures_list()
 
 		for i, distorted_structure in enumerate(distorted_structures_list):
@@ -90,6 +102,10 @@ class VaspPhononRun(VaspRunSet):
 
 
 	def get_distorted_structures_list(self):
+		"""
+		Returns list of Structure instances containing the distorted structures determined as necessary to calculate the forces of by phonopy.
+		"""
+
 		supercells = self.phonon.get_supercells_with_displacements()
 
 		distorted_structures_list = []
@@ -101,15 +117,25 @@ class VaspPhononRun(VaspRunSet):
 
 
 	def create_new_vasp_run(self, path, structure):
+		"""
+		Creates a static force calculation at path using structure as the initial structure and self.vasp_run_inputs as the run inputs.
+		"""
+
 		kpoints = Kpoints(scheme_string=self.vasp_run_inputs['kpoint_scheme'], subdivisions_list=self.vasp_run_inputs['kpoint_subdivisions_list'])
 		incar = IncarMaker.get_phonon_incar()
 
 		input_set = VaspInputSet(structure, kpoints, incar)
 
-		vasp_run = VaspRun(path=path, input_set=input_set)
+		vasp_run = VaspRun(path=path, input_set=input_set, wavecar_path=self.wavecar_path)
 
 
 	def update(self):
+		"""
+		Runs update on all force calculations until they are all complete. 
+		Once they are all complete, the force constants are generated and 
+		written to file, completing the phonon calculation.
+		"""
+
 		if not self.complete:
 			for vasp_run in self.vasp_run_list:
 				vasp_run.update()
@@ -119,17 +145,7 @@ class VaspPhononRun(VaspRunSet):
 
 	@property
 	def vasp_run_list(self):
-		vasp_run_list = []
-
-		i = 0
-		while Path.exists(self.get_extended_path(str(i))):
-			run_path = self.get_extended_path(str(i))
-
-			vasp_run_list.append(VaspRun(path=run_path))
-
-			i += 1
-
-		return vasp_run_list
+		return [VaspRun(path=force_calculation_run_path) for force_calculation_run_path in self.get_force_calculation_run_paths_list()]
 
 	@property
 	def complete(self):
@@ -139,20 +155,43 @@ class VaspPhononRun(VaspRunSet):
 
 		return True
 
-	def set_force_constants(self):
-		num_atoms = 40
-		vasprun_xml_paths= [self.get_extended_path('vasprun_001.xml'), self.get_extended_path('vasprun_002.xml')]
+	def get_force_calculation_run_paths_list(self):
+		"""
+		Returns the a list of paths containing the vasp (static) force calculation run paths, i.e. [.../0, .../1, ...]
+		"""
 
-		sets_of_forces = parse_set_of_forces(num_atoms=num_atoms, forces_filenames=vasprun_xml_paths)
+		force_calculation_run_paths_list = []
+
+		i = 0
+		while Path.exists(self.get_extended_path(str(i))):
+			force_calculation_run_path = self.get_extended_path(str(i))
+
+			force_calculation_run_paths_list.append(force_calculation_run_path)
+
+			i += 1
+
+
+		return force_calculation_run_paths_list
+
+	def get_xml_file_paths_list(self):
+		"""
+		Returns list of paths to all completed xml files. If any force run is not complete, None is returned instead.
+		"""
+
+		return [Path.join(force_calculation_run_path, 'vasprun.xml') for force_calculation_run_path in self.get_force_calculation_run_paths_list()] if self.complete else None
+
+
+	def get_supercell_atom_count(self):
+		"""
+		Returns the number of atoms in the supercell representation of the initial structure. This is also the number of atoms in each of the static force calculations.
+		"""
+
+		return reduce(lambda x, y: x*y, self.phonopy_inputs['supercell_dimensions'], self.initial_structure.site_count())
+
+
+
+	def set_force_constants(self):
+		sets_of_forces = parse_set_of_forces(num_atoms=self.get_supercell_atom_count(), forces_filenames=self.get_xml_file_paths_list())
 		phonon.set_forces(sets_of_forces)
 
 		phonon.produce_force_constants()
-
-
-# def write_supercells_with_displacements(supercell,
-#                                         cells_with_displacements):
-#     write_vasp("SPOSCAR", supercell, direct=True)
-#     for i, cell in enumerate(cells_with_displacements):
-#         write_vasp('POSCAR-%03d' % (i + 1), cell, direct=True)
-
-#     _write_magnetic_moments(supercell)

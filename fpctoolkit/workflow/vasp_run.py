@@ -59,8 +59,6 @@ class VaspRun(object):
 
 		all_essential_input_parameters_exist = not bool(filter(lambda x: x == None, [structure, incar, kpoints, potcar, submission_script_file]))
 
-		wavecar_path = wavecar_path
-
 		if not Path.exists(self.path) or Path.is_empty(self.path):
 			if not all_essential_input_parameters_exist:
 				raise Exception("All five vasp input files must be input for run to be initialized.")
