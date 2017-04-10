@@ -192,6 +192,10 @@ class VaspPhononRun(VaspRunSet):
 
 	def set_force_constants(self):
 		sets_of_forces = parse_set_of_forces(num_atoms=self.get_supercell_atom_count(), forces_filenames=self.get_xml_file_paths_list())
-		self.phonon.set_forces(sets_of_forces)
+		#self.phonon.set_forces(sets_of_forces)
 
-		self.phonon.produce_force_constants()
+		self.phonon.produce_force_constants(sets_of_forces)
+
+		print self.phonon.get_frequencies_with_eigenvectors([0.5, 0.5 0.5])
+
+		print self.phonon.get_thermal_properties()
