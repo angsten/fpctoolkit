@@ -60,7 +60,7 @@ def write_born_file(born_file_path, dielectric_tensor, born_effective_charge_ten
 	Creates the born file that phonopy needs for the non-analytical correction to be applied.
 	"""
 
-	born_file = File(born_file_path)
+	born_file = File()
 
 	born_file += "14.400"
 
