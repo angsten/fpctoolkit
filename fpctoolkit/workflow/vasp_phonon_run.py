@@ -145,7 +145,7 @@ class VaspPhononRun(VaspRunSet):
 		Sets up a run for the calculation of dielectric and born effective charge tensors. This is necessary if the Non-Analytical correction is used (for polar materials).
 		"""
 
-		kpoints = Kpoints(scheme_string=self.vasp_run_inputs['kpoint_scheme'], subdivisions_list=[self.vasp_run_inputs['kpoint_subdivisions_list'][i]*self.vasp_run_inputs['supercell_dimensions'][i] for i in range(3)])
+		kpoints = Kpoints(scheme_string=self.vasp_run_inputs['kpoint_scheme'], subdivisions_list=[self.vasp_run_inputs['kpoint_subdivisions_list'][i]*self.phonopy_inputs['supercell_dimensions'][i] for i in range(3)])
 		incar = IncarMaker.get_lepsilon_incar()
 
 		input_set = VaspInputSet(self.initial_structure, kpoints, incar, auto_change_npar=False)
