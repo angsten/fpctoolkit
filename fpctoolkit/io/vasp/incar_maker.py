@@ -89,9 +89,25 @@ class IncarMaker(object):
 
 		incar['ediff'] = 0.000000001
 		incar['addgrid'] = True
+		incar['lreal'] = False #must be false for any sized supercell
 
 
 		incar.modify_from_dictionary(custom_parameters_dictionary)
 
 		return incar
 
+
+	@staticmethod
+	def get_lepsilon_incar(custom_parameters_dictionary=None):
+		"""
+		Generates an incar to be used with an lepsilon run that generate things like the born effective charge and dielectric tensors.
+		"""
+
+		incar = IncarMaker.get_static_incar()
+		incar['ediff'] = 0.00000001
+		incar['lepsilon'] = True
+		incar['npar'] = 1 #lepsilon runs are not parallelizable
+
+		incar.modify_from_dictionary(custom_parameters_dictionary)
+
+		return incar

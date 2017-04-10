@@ -36,7 +36,8 @@ class VaspPhononRun(VaspRunSet):
 		phonopy_inputs_dictionary = {
 			'supercell_dimensions': [2, 2, 2],
 			'symprec': 0.001,
-			'displacement_distance': 0.01
+			'displacement_distance': 0.01,
+			'nac': True
 			...
 		}
 
@@ -44,8 +45,10 @@ class VaspPhononRun(VaspRunSet):
 
 		vasp_run_inputs_dictionary = {
 			'kpoint_scheme': 'Monkhorst',
-			'kpoint_subdivisions_list': [4, 4, 4]
+			'kpoint_subdivisions_list': [4, 4, 4] #***This is the kpoints of the supercell, not the primitive cell!!!***
 		}
+
+		wavecar_path should be the wavecar of a similar supercell structure, not primitive.
 		"""
 
 		self.path = path
@@ -54,6 +57,7 @@ class VaspPhononRun(VaspRunSet):
 		self.vasp_run_inputs = vasp_run_inputs_dictionary
 		self.wavecar_path = wavecar_path
 		self.phonon = None #holds the phonopy Phonopy class instance once initialized
+		self.lepsilon_run = None #calculates dielectric tensor and born effective charge if nac is needed
 
 
 		Path.make(path)
@@ -70,7 +74,11 @@ class VaspPhononRun(VaspRunSet):
 
 		self.initialize_vasp_runs()
 
+		if self.has_nac():
+			self.initialize_vasp_lepsilon_run()
+
 		self.update()
+
 
 	def initialize_phonon(self):
 		"""
@@ -86,6 +94,9 @@ class VaspPhononRun(VaspRunSet):
 		#born = parse_BORN(phonon.get_primitive())
 		#phonon.set_nac_params(born)
 
+		# primitive = phonon.get_primitive()
+		# nac_params = parse_BORN(primitive, filename="BORN")
+		# phonon.set_nac_params(nac_params)
 
 	def initialize_vasp_runs(self):
 		"""
@@ -124,9 +135,23 @@ class VaspPhononRun(VaspRunSet):
 		kpoints = Kpoints(scheme_string=self.vasp_run_inputs['kpoint_scheme'], subdivisions_list=self.vasp_run_inputs['kpoint_subdivisions_list'])
 		incar = IncarMaker.get_phonon_incar()
 
-		input_set = VaspInputSet(structure, kpoints, incar)
+		input_set = VaspInputSet(structure, kpoints, incar, auto_change_lreal=False)
 
 		vasp_run = VaspRun(path=path, input_set=input_set, wavecar_path=self.wavecar_path)
+
+
+	def initialize_vasp_lepsilon_run(self):
+		"""
+		Sets up a run for the calculation of dielectric and born effective charge tensors. This is necessary if the Non-Analytical correction is used (for polar materials).
+		"""
+
+		kpoints = Kpoints(scheme_string=self.vasp_run_inputs['kpoint_scheme'], subdivisions_list=[self.vasp_run_inputs['kpoint_subdivisions_list'][i]*self.vasp_run_inputs['supercell_dimensions'][i] for i in range(3)])
+		incar = IncarMaker.get_lepsilon_incar()
+
+		input_set = VaspInputSet(self.initial_structure, kpoints, incar, auto_change_npar=False)
+
+		self.lepsilon_run = VaspRun(path=self.get_lepsion_calculation_path(), input_set=input_set)
+
 
 
 	def update(self):
@@ -139,6 +164,11 @@ class VaspPhononRun(VaspRunSet):
 		if not self.complete:
 			for vasp_run in self.vasp_run_list:
 				vasp_run.update()
+
+
+			if self.has_nac():
+				self.lepsilon_calculation.update()
+
 		else:
 			self.set_force_constants()
 
@@ -152,6 +182,10 @@ class VaspPhononRun(VaspRunSet):
 		for vasp_run in self.vasp_run_list:
 			if not vasp_run.complete:
 				return False
+
+
+		if self.has_nac() and not self.lepsilon_run.complete:
+			return False
 
 		return True
 
@@ -181,6 +215,10 @@ class VaspPhononRun(VaspRunSet):
 		return [Path.join(force_calculation_run_path, 'vasprun.xml') for force_calculation_run_path in self.get_force_calculation_run_paths_list()] if self.complete else None
 
 
+	def get_lepsion_calculation_path(self):
+		return self.get_extended_path('lepsilon_calculation')
+
+
 	def get_supercell_atom_count(self):
 		"""
 		Returns the number of atoms in the supercell representation of the initial structure. This is also the number of atoms in each of the static force calculations.
@@ -198,4 +236,6 @@ class VaspPhononRun(VaspRunSet):
 
 		print self.phonon.get_frequencies_with_eigenvectors([0.5, 0.5, 0.5])
 
-		print self.phonon.get_thermal_properties()
+
+	def has_nac(self):
+		return self.phonopy_inputs.has_key('nac') and self.phonopy_inputs['nac']

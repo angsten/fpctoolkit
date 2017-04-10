@@ -14,7 +14,7 @@ class VaspInputSet(object):
 
 	"""
 
-	def __init__(self, structure=None, kpoints=None, incar=None, potcar=None, submission_script_file=None):
+	def __init__(self, structure=None, kpoints=None, incar=None, potcar=None, submission_script_file=None, auto_change_lreal=True, auto_change_npar=True):
 		self.structure = structure
 		self.incar = incar
 		self.kpoints = kpoints
@@ -32,8 +32,13 @@ class VaspInputSet(object):
 			self.set_number_of_cores_from_structure_size()
 
 			if self.incar:
-				self.set_lreal_from_structure_size()
-				self.set_npar_from_number_of_cores()
+
+				if auto_change_lreal:
+					self.set_lreal_from_structure_size()
+
+				if auto_change_npar:
+					self.set_npar_from_number_of_cores()
+					
 				self.check_incar_kpoints_consistent()
 
 	def auto_generate_potcar(self):
