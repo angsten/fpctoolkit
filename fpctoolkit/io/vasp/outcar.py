@@ -184,7 +184,7 @@ class Outcar(File):
 
 		born_effective_charge_tensor = []
 
-		for N in self.get_number_of_atoms():
+		for N in range(self.get_number_of_atoms()):
 			atomic_tensor = []
 
 			tensor_start_index += 1
