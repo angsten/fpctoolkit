@@ -241,16 +241,10 @@ class VaspPhononRun(VaspRunSet):
 		print self.phonon.get_frequencies_with_eigenvectors([0.5, 0.5, 0.5])
 
 		if self.has_nac():
-			print self.lepsilon_calculation.outcar.get_dielectric_tensor()
-
-			print
-
-			print self.lepsilon_calculation.outcar.get_born_effective_charge_tensor()
-
+			dielectric_tensor = self.lepsilon_calculation.outcar.get_dielectric_tensor()
+			born_effective_charge_tensor = self.lepsilon_calculation.outcar.get_born_effective_charge_tensor()
 
 			symm = Symmetry(cell=self.phonon.get_primitive(), symprec=self.phonopy_inputs['symprec'])
+			independent_atom_indices_list = symm.get_independent_atoms()
 
-			independent_atom_indices = symm.get_independent_atoms()
-
-			print independent_atom_indices
-			print independent_atom_indices[0]
+			phonopy_utility.write_born_file(born_file_path=self.get_extended_path('BORN'), dielectric_tensor, born_effective_charge_tensor, independent_atom_indices_list)

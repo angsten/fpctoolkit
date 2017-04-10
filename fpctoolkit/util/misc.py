@@ -33,3 +33,12 @@ def get_list_of_unique_random_integers(length, min_integer, max_integer):
 
 	return random_integers_list
 
+def flatten_multi_dimensional_list(multi_dimensional_list):
+	"""
+	Returns a flattened version of any dimensional list of lists of lists...
+
+	[[2, 3, 4], [5, 6, 7]] -> [2, 3, 4, 5, 6, 7]
+	"""
+
+	return [item for sublist in multi_dimensional_list for item in sublist]
+

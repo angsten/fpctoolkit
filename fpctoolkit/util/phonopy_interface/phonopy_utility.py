@@ -6,6 +6,7 @@ from phonopy.interface.vasp import parse_set_of_forces
 from fpctoolkit.structure.structure import Structure
 from fpctoolkit.util.path import Path
 from fpctoolkit.io.file import File
+import fpctoolkit.util.misc as misc
 
 def convert_structure_to_phonopy_atoms(structure, temporary_write_path):
 	"""
@@ -53,3 +54,24 @@ def convert_phonopy_atoms_to_structure(phonopy_atoms_structure, species_list, te
 	Structure.validate(final_structure)
 
 	return final_structure
+
+def write_born_file(born_file_path, dielectric_tensor, born_effective_charge_tensor, independent_atom_indices_list):
+	"""
+	Creates the born file that phonopy needs for the non-analytical correction to be applied.
+	"""
+
+	born_file = File(born_file_path)
+
+	born_file += "14.400"
+
+	flat_dielectric_list = misc.flatten_multi_dimensional_list(dielectric_tensor)
+
+	born_file += " ".join(str(component) for component in flat_dielectric_list)
+
+
+	for atomic_bec in born_effective_charge_tensor:
+		flat_atomic_bec = misc.flatten_multi_dimensional_list(atomic_bec)
+
+		born_file += " ".join(str(component) for component in flat_dielectric_list)
+
+	born_file.write_to_path(born_file_path)		
