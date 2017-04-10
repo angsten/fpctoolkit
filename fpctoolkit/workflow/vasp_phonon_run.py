@@ -186,7 +186,7 @@ class VaspPhononRun(VaspRunSet):
 		Returns the number of atoms in the supercell representation of the initial structure. This is also the number of atoms in each of the static force calculations.
 		"""
 
-		return reduce(lambda x, y: x*y, self.phonopy_inputs['supercell_dimensions'], self.initial_structure.site_count())
+		return reduce(lambda x, y: x*y, self.phonopy_inputs['supercell_dimensions'], self.initial_structure.site_count)
 
 
 
