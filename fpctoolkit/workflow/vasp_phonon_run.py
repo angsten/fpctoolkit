@@ -241,3 +241,7 @@ class VaspPhononRun(VaspRunSet):
 
 		if self.has_nac():
 			print self.lepsilon_calculation.outcar.get_dielectric_tensor()
+
+			print
+
+			print self.lepsilon_calculation.get_born_effective_charge_tensor()

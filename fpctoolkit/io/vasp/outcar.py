@@ -9,6 +9,7 @@ class Outcar(File):
 	ionic_step_complete_string = "aborting loop because EDIFF is reached"
 	total_energy_string = "energy(sigma->0)"
 	dielectric_tensor_string = "MACROSCOPIC STATIC DIELECTRIC TENSOR (including local field effects in DFT)"
+	born_effective_charge_tensor_string = "BORN EFFECTIVE CHARGES (in e, cummulative output)"
 
 	def __init__(self, file_path=None):
 		super(Outcar, self).__init__(file_path)
@@ -119,6 +120,10 @@ class Outcar(File):
 
 
 	def get_dielectric_tensor(self):
+		"""
+		Returns a 3x3 dielectric tensor with component (0, 0) as eps_xx and so forth.
+		"""
+
 		if not self.complete:
 			raise Exception("Run does not yet have a dielectric tensor - not completed")
 
@@ -132,6 +137,68 @@ class Outcar(File):
 		dielectric_tensor = []
 
 		for line in self.lines[tensor_start_index:tensor_start_index+3]:
-			dielectric_tensor.append(su.get_number_list_from_string(line))
+			row_number_list = su.get_number_list_from_string(line)
+
+			if not len(row_number_list) == 3:
+				raise Exception("Error reading row from dielectric tensor. Length should be 3 but is not. Row number list looks like", row_number_list)
+
+			dielectric_tensor.append(row_number_list)
 
 		return dielectric_tensor
+
+
+	def get_born_effective_charge_tensor(self):
+		"""
+		Returns an Nx3x3 tensor, where N is the number of atoms in the POSCAR of the calculation. The Born Effective Charge Tensor looks like:
+
+		BORN EFFECTIVE CHARGES (in e, cummulative output)
+		 -------------------------------------------------
+		 ion    1
+		    1     2.55248     0.00000     0.00001
+		    2     0.00000     2.55247     0.00000
+		    3     0.00001     0.00000     2.59358   <---- this last component is indexed by [0][2][2] and represents the change in the z-component of polarization with z-displacement of atom 1
+		 ion    2
+		    1     7.24494     0.00000     0.00009
+		    2     0.00000     7.24494     0.00001
+		    3     0.00010     0.00001     6.01323
+		 ion    3
+		    1    -5.77788     0.00000    -0.00004
+		    2     0.00000    -2.00260     0.00000
+		    3    -0.00009     0.00000    -1.89826
+		    				.
+		    				.
+		    				.
+		ion     N
+
+		"""
+
+		if not self.complete:
+			raise Exception("Run does not yet have a born effective charge tensor - not completed")
+
+		tensor_start_indices = self.get_line_indices_containing_string(Outcar.born_effective_charge_tensor_string)
+
+		if len(tensor_start_indices) == 0:
+			raise Exception("No born effective charge tensor found in completed outcar file")
+
+		tensor_start_index = tensor_start_indices[-1] + 2
+
+		born_effective_charge_tensor = []
+
+		for N in self.get_number_of_atoms():
+			atomic_tensor = []
+
+			tensor_start_index += 1
+
+			for line in self.lines[tensor_start_index:tensor_start_index+3]:
+				row_number_list = su.get_number_list_from_string(line)
+
+				if not len(row_number_list) == 3:
+					raise Exception("Error reading row from born effect charge tensor. Length should be 3 but is not. Row number list looks like", row_number_list)
+					
+				atomic_tensor.append(row_number_list)
+
+			born_effective_charge_tensor.append(atomic_tensor)			
+
+		return born_effective_charge_tensor
+
+		
