@@ -4,6 +4,7 @@ from phonopy import Phonopy
 from phonopy.interface.vasp import read_vasp, write_vasp
 from phonopy.interface.vasp import parse_set_of_forces
 from phonopy.file_IO import parse_FORCE_SETS, parse_BORN
+from phonopy.structure.symmetry import Symmetry
 import numpy as np
 
 from fpctoolkit.util.path import Path
@@ -245,3 +246,8 @@ class VaspPhononRun(VaspRunSet):
 			print
 
 			print self.lepsilon_calculation.outcar.get_born_effective_charge_tensor()
+
+
+			symm = Symmetry(cell=self.phonon.get_primitive(), symprec=self.phonopy_inputs['symprec'])
+
+			print symm.get_independent_atoms()
