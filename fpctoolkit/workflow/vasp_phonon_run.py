@@ -192,6 +192,6 @@ class VaspPhononRun(VaspRunSet):
 
 	def set_force_constants(self):
 		sets_of_forces = parse_set_of_forces(num_atoms=self.get_supercell_atom_count(), forces_filenames=self.get_xml_file_paths_list())
-		phonon.set_forces(sets_of_forces)
+		self.phonon.set_forces(sets_of_forces)
 
-		phonon.produce_force_constants()
+		self.phonon.produce_force_constants()
