@@ -250,4 +250,7 @@ class VaspPhononRun(VaspRunSet):
 
 			symm = Symmetry(cell=self.phonon.get_primitive(), symprec=self.phonopy_inputs['symprec'])
 
-			print symm.get_independent_atoms()
+			independent_atom_indices = symm.get_independent_atoms()
+
+			print independent_atom_indices
+			print independent_atom_indices[0]
