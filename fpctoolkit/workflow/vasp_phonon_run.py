@@ -247,4 +247,5 @@ class VaspPhononRun(VaspRunSet):
 			symm = Symmetry(cell=self.phonon.get_primitive(), symprec=self.phonopy_inputs['symprec'])
 			independent_atom_indices_list = symm.get_independent_atoms()
 
-			phonopy_utility.write_born_file(born_file_path=self.get_extended_path('BORN'), dielectric_tensor, born_effective_charge_tensor, independent_atom_indices_list)
+			phonopy_utility.write_born_file(born_file_path=self.get_extended_path('BORN'), dielectric_tensor=dielectric_tensor, 
+				born_effective_charge_tensor=born_effective_charge_tensor, independent_atom_indices_list=independent_atom_indices_list)
