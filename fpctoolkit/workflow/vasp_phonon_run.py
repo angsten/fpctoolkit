@@ -231,7 +231,7 @@ class VaspPhononRun(VaspRunSet):
 
 		self.phonon.produce_force_constants(sets_of_forces)
 
-		print self.phonon.get_frequencies_with_eigenvectors([0.5, 0.5, 0.5])
+		print self.phonon.get_frequencies_with_eigenvectors([0.0, 0.0, 0.0])
 
 		if self.has_nac():
 			born_path = self.get_extended_path('BORN')
@@ -248,4 +248,4 @@ class VaspPhononRun(VaspRunSet):
 			nac_params = parse_BORN(self.phonon.get_primitive(), filename=born_path)
 			self.phonon.set_nac_params(nac_params)
 
-		print self.phonon.get_frequencies_with_eigenvectors([0.5, 0.5, 0.5])
+		print self.phonon.get_frequencies_with_eigenvectors([0.0, 0.0, 0.0])
