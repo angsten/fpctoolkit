@@ -80,9 +80,9 @@ class IncarMaker(object):
 
 
 	@staticmethod
-	def get_phonon_incar(custom_parameters_dictionary=None):
+	def get_accurate_forces_incar(custom_parameters_dictionary=None):
 		"""
-		Used for a static phonon forces calculation on a single distorted structure. Forces must be very accurate for this.
+		Used for a very accurate static forces calculation (such as for phonons) on a single structure.
 		"""
 
 		incar = IncarMaker.get_static_incar()
