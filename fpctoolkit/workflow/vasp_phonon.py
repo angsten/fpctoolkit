@@ -164,7 +164,7 @@ class VaspPhonon(VaspRunSet):
 		"""
 
 		phonopy_utility.write_force_constants_to_file_path(initial_structure=self.initial_structure, phonopy_intputs=self.phonopy_inputs, 
-			temporary_directory_path=temporary_directory_path, vasp_xml_file_paths_list=self.forces_run_set.get_xml_file_paths_list(), file_path=self.get_force_constants_path())
+			temporary_directory_path=self.path, vasp_xml_file_paths_list=self.forces_run_set.get_xml_file_paths_list(), file_path=self.get_force_constants_path())
 
 
 	def write_born_file(self):
