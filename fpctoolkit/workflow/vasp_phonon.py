@@ -1,10 +1,5 @@
 #from fpctoolkit.workflow.vasp_phonon import VaspPhonon
 
-from phonopy import Phonopy
-from phonopy.interface.vasp import read_vasp, write_vasp
-from phonopy.interface.vasp import parse_set_of_forces
-from phonopy.file_IO import parse_FORCE_SETS, write_FORCE_CONSTANTS, parse_BORN
-from phonopy.structure.symmetry import Symmetry
 import numpy as np
 
 from fpctoolkit.util.path import Path
