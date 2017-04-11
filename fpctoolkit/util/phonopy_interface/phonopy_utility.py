@@ -143,6 +143,8 @@ def write_born_file(initial_structure, phonopy_inputs, temporary_directory_path,
 	born_file += " ".join(str(component) for component in flat_dielectric_list)
 
 
+	print independent_atom_indices_list 
+
 	for atomic_bec_index in independent_atom_indices_list:
 		atomic_bec = born_effective_charge_tensor[atomic_bec_index]
 
