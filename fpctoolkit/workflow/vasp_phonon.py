@@ -3,7 +3,7 @@
 from phonopy import Phonopy
 from phonopy.interface.vasp import read_vasp, write_vasp
 from phonopy.interface.vasp import parse_set_of_forces
-from phonopy.file_IO import parse_FORCE_SETS, parse_BORN
+from phonopy.file_IO import parse_FORCE_SETS, write_FORCE_CONSTANTS, parse_BORN
 from phonopy.structure.symmetry import Symmetry
 import numpy as np
 
@@ -25,7 +25,7 @@ class VaspPhonon(VaspRunSet):
 	as well as phonopy parameters.
 	"""
 
-	def __init__(self, path, initial_structure, phonopy_inputs_dictionary, vasp_run_inputs_dictionary):
+	def __init__(self, path, initial_structure, phonopy_inputs_dictionary, vasp_run_inputs_dictionary, re_optimize_initial_structure=False):
 		"""
 		path holds the main path of the calculation sets
 
@@ -50,25 +50,14 @@ class VaspPhonon(VaspRunSet):
 		"""
 
 		self.path = path
-		self.initial_structure = initial_structure
+		self.initial_structure = initial_structure if (not re_optimize_initial_structure) else None
 		self.phonopy_inputs = phonopy_inputs_dictionary
 		self.vasp_run_inputs = vasp_run_inputs_dictionary
-		self.phonon = None #holds the phonopy Phonopy class instance once initialized
 		self.forces_run_set = None #holds set of force calculations on distorted structures
 		self.lepsilon_calculation = None #calculates dielectric tensor and born effective charge if nac is needed
 
 
 		Path.make(path)
-
-
-		self.initialize_phonon()
-
-
-		####temp code#####
-		symmetry = self.phonon.get_symmetry()
-		print "Space group of initial primitive structure:", symmetry.get_international_table()
-		####
-
 
 		self.initialize_forces_run_set()
 
@@ -77,17 +66,6 @@ class VaspPhonon(VaspRunSet):
 
 		self.update()
 
-
-	def initialize_phonon(self):
-		"""
-		Initialize self.phonon so that it has a valid Phonopy instance and has displacements generated
-		"""
-
-		unit_cell_phonopy_structure = phonopy_utility.convert_structure_to_phonopy_atoms(self.initial_structure, self.get_extended_path("tmp_initial_phonon_structure_POSCAR"))
-		supercell_dimensions_matrix = np.diag(self.phonopy_inputs['supercell_dimensions'])
-
-		self.phonon = Phonopy(unitcell=unit_cell_phonopy_structure, supercell_matrix=supercell_dimensions_matrix, symprec=self.phonopy_inputs['symprec'])
-		self.phonon.generate_displacements(distance=self.phonopy_inputs['displacement_distance'])
 
 	def initialize_forces_run_set(self):
 		"""
@@ -103,14 +81,10 @@ class VaspPhonon(VaspRunSet):
 		Returns list of Structure instances containing the distorted structures determined as necessary to calculate the forces of by phonopy.
 		"""
 
-		supercells = self.phonon.get_supercells_with_displacements()
+		#########make sure we're using proper initial structure if there was reoptimization#####################################################################################
 
-		distorted_structures_list = []
-		for i in range(len(supercells)):
-			distorted_structure = phonopy_utility.convert_phonopy_atoms_to_structure(supercells[i], self.initial_structure.get_species_list(), self.get_extended_path('./tmp_distorted_structure'))
-			distorted_structures_list.append(distorted_structure)
+		return phonopy_util.get_distorted_structures_list(initial_structure=self.initial_structure, phonopy_inputs=self.phonopy_inputs, temporary_directory_path=self.path)
 
-		return distorted_structures_list
 
 	def initialize_vasp_lepsilon_calculation(self):
 		"""
@@ -141,6 +115,7 @@ class VaspPhonon(VaspRunSet):
 		else:
 			self.set_force_constants()
 
+
 	@property
 	def complete(self):
 		if not self.forces_run_set.complete:
@@ -152,9 +127,20 @@ class VaspPhonon(VaspRunSet):
 		return True
 
 
+
 	def has_nac(self):
 		return self.phonopy_inputs.has_key('nac') and self.phonopy_inputs['nac']
 
+
+
+	def get_initial_structure_path(self):
+		return self.get_extended_path('initial_structure')
+
+	def get_force_constants_path(self):
+		return self.get_extended_path('FORCE_CONSTANTS')
+
+	def get_born_path(self):
+		return self.get_extended_path('BORN')
 
 	def get_lepsion_calculation_path(self):
 		return self.get_extended_path('lepsilon_calculation')
@@ -164,34 +150,58 @@ class VaspPhonon(VaspRunSet):
 
 
 
-	def get_supercell_atom_count(self):
+	def write_initial_structure(self):
 		"""
-		Returns the number of atoms in the supercell representation of the initial structure. This is also the number of atoms in each of the static force calculations.
+		Writes the initial structure used to generate displacements to a poscar file.
 		"""
 
-		return reduce(lambda x, y: x*y, self.phonopy_inputs['supercell_dimensions'], self.initial_structure.site_count)
+		#######make sure this is reoptimized structure
+		self.initial_structure.to_poscar_file_path(self.get_initial_structure_path())
+
+	def write_force_constants(self):
+		"""
+		Writes the calculated force constants to file.
+		"""
+
+		phonopy_util.write_force_constants_to_file_path(initial_structure=self.initial_structure, phonopy_intputs=self.phonopy_inputs, 
+			temporary_directory_path=temporary_directory_path, vasp_xml_file_paths_list=self.forces_run_set.get_xml_file_paths_list(), file_path=self.get_force_constants_path())
 
 
-	def set_force_constants(self):
-		sets_of_forces = parse_set_of_forces(num_atoms=self.get_supercell_atom_count(), forces_filenames=self.forces_run_set.get_xml_file_paths_list())
-
-		self.phonon.produce_force_constants(sets_of_forces)
-
-		#print self.phonon.get_frequencies_with_eigenvectors([0.0, 0.0, 0.05])
+	def write_born_file(self):
+		"""
+		Writes born file necessary for NAC to file.
+		"""
 
 		if self.has_nac():
-			born_path = self.get_extended_path('BORN')
-
 			dielectric_tensor = self.lepsilon_calculation.outcar.get_dielectric_tensor()
 			born_effective_charge_tensor = self.lepsilon_calculation.outcar.get_born_effective_charge_tensor()
 
-			symm = Symmetry(cell=self.phonon.get_primitive(), symprec=self.phonopy_inputs['symprec'])
-			independent_atom_indices_list = symm.get_independent_atoms()
+			write_born_file(initial_structure=self.initial_structure, phonopy_inputs=self.phonopy_inputs, temporary_directory_path=self.path, 
+				dielectric_tensor=dielectric_tensor, born_effective_charge_tensor=born_effective_charge_tensor, file_path=self.get_born_path())
 
-			phonopy_utility.write_born_file(born_file_path=born_path, dielectric_tensor=dielectric_tensor, 
-				born_effective_charge_tensor=born_effective_charge_tensor, independent_atom_indices_list=independent_atom_indices_list)
 
-			nac_params = parse_BORN(self.phonon.get_primitive(), filename=born_path)
-			self.phonon.set_nac_params(nac_params)
 
-		#print self.phonon.get_frequencies_with_eigenvectors([0.0, 0.0, 0.05])
+
+	# def set_force_constants(self):
+	# 	sets_of_forces = parse_set_of_forces(num_atoms=self.get_supercell_atom_count(), forces_filenames=self.forces_run_set.get_xml_file_paths_list())
+
+	# 	self.phonon.produce_force_constants(sets_of_forces)
+
+	# 	#print self.phonon.get_frequencies_with_eigenvectors([0.0, 0.0, 0.05])
+
+	# 	if self.has_nac():
+	# 		born_path = self.get_extended_path('BORN')
+
+	# 		dielectric_tensor = self.lepsilon_calculation.outcar.get_dielectric_tensor()
+	# 		born_effective_charge_tensor = self.lepsilon_calculation.outcar.get_born_effective_charge_tensor()
+
+	# 		symm = Symmetry(cell=self.phonon.get_primitive(), symprec=self.phonopy_inputs['symprec'])
+	# 		independent_atom_indices_list = symm.get_independent_atoms()
+
+	# 		phonopy_utility.write_born_file(born_file_path=born_path, dielectric_tensor=dielectric_tensor, 
+	# 			born_effective_charge_tensor=born_effective_charge_tensor, independent_atom_indices_list=independent_atom_indices_list)
+
+	# 		nac_params = parse_BORN(self.phonon.get_primitive(), filename=born_path)
+	# 		self.phonon.set_nac_params(nac_params)
+
+	# 	#print self.phonon.get_frequencies_with_eigenvectors([0.0, 0.0, 0.05])
