@@ -40,7 +40,8 @@ class VaspPhonon(VaspRunSet):
 
 		vasp_run_inputs_dictionary = {
 			'kpoint_scheme': 'Monkhorst',
-			'kpoint_subdivisions_list': [4, 4, 4] #***This is the kpoints of the supercell, not the primitive cell!!!***
+			'kpoint_subdivisions_list': [4, 4, 4], #***This is the kpoints of the supercell, not the primitive cell!!!***
+			'encut': 800
 		}
 		"""
 
@@ -88,6 +89,7 @@ class VaspPhonon(VaspRunSet):
 
 		kpoints = Kpoints(scheme_string=self.vasp_run_inputs['kpoint_scheme'], subdivisions_list=[self.vasp_run_inputs['kpoint_subdivisions_list'][i]*self.phonopy_inputs['supercell_dimensions'][i] for i in range(3)])
 		incar = IncarMaker.get_lepsilon_incar()
+		incar['encut'] = self.vasp_run_inputs_dictionary['encut']
 
 		input_set = VaspInputSet(self.initial_structure, kpoints, incar, auto_change_npar=False)
 
@@ -108,6 +110,7 @@ class VaspPhonon(VaspRunSet):
 				self.lepsilon_calculation.update()
 
 		else:
+			#write the final results to file so that they can be used to initialize a phonopy instance
 			self.write_initial_structure()
 			self.write_force_constants()
 
