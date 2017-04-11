@@ -163,7 +163,7 @@ class VaspPhonon(VaspRunSet):
 		Writes the calculated force constants to file.
 		"""
 
-		phonopy_utility.write_force_constants_to_file_path(initial_structure=self.initial_structure, phonopy_intputs=self.phonopy_inputs, 
+		phonopy_utility.write_force_constants_to_file_path(initial_structure=self.initial_structure, phonopy_inputs=self.phonopy_inputs, 
 			temporary_directory_path=self.path, vasp_xml_file_paths_list=self.forces_run_set.get_xml_file_paths_list(), file_path=self.get_force_constants_path())
 
 
