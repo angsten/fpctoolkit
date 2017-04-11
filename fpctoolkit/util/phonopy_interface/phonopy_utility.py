@@ -39,7 +39,7 @@ def get_initialized_phononopy_instance(initial_structure, phonopy_inputs, tempor
 	Initializes and returns a valid Phonopy instance and with displacements internally generated
 	"""
 
-	unit_cell_phonopy_structure = phonopy_utility.convert_structure_to_phonopy_atoms(initial_structure, Path.join(temporary_directory_path, "tmp_initial_phonon_structure_POSCAR"))
+	unit_cell_phonopy_structure = convert_structure_to_phonopy_atoms(initial_structure, Path.join(temporary_directory_path, "tmp_initial_phonon_structure_POSCAR"))
 	supercell_dimensions_matrix = np.diag(phonopy_inputs['supercell_dimensions'])
 
 	phonon = Phonopy(unitcell=unit_cell_phonopy_structure, supercell_matrix=supercell_dimensions_matrix, symprec=phonopy_inputs['symprec'])
@@ -99,7 +99,7 @@ def get_distorted_structures_list(initial_structure, phonopy_inputs, temporary_d
 
 	distorted_structures_list = []
 	for i in range(len(supercells)):
-		distorted_structure = phonopy_utility.convert_phonopy_atoms_to_structure(supercells[i], initial_structure.get_species_list(), Path.join(temporary_directory_path, 'tmp_distorted_structure'))
+		distorted_structure = convert_phonopy_atoms_to_structure(supercells[i], initial_structure.get_species_list(), Path.join(temporary_directory_path, 'tmp_distorted_structure'))
 		distorted_structures_list.append(distorted_structure)
 
 	return distorted_structures_list
