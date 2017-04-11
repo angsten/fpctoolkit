@@ -176,7 +176,7 @@ class VaspPhonon(VaspRunSet):
 			dielectric_tensor = self.lepsilon_calculation.outcar.get_dielectric_tensor()
 			born_effective_charge_tensor = self.lepsilon_calculation.outcar.get_born_effective_charge_tensor()
 
-			write_born_file(initial_structure=self.initial_structure, phonopy_inputs=self.phonopy_inputs, temporary_directory_path=self.path, 
+			phonopy_utility.write_born_file(initial_structure=self.initial_structure, phonopy_inputs=self.phonopy_inputs, temporary_directory_path=self.path, 
 				dielectric_tensor=dielectric_tensor, born_effective_charge_tensor=born_effective_charge_tensor, file_path=self.get_born_path())
 
 
