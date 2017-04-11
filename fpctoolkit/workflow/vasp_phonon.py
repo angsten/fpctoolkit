@@ -108,7 +108,12 @@ class VaspPhonon(VaspRunSet):
 				self.lepsilon_calculation.update()
 
 		else:
-			self.set_force_constants()
+			self.write_initial_structure()
+			self.write_force_constants()
+
+			if self.has_nac()
+				self.write_born_file()
+
 
 
 	@property
