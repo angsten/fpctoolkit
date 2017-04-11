@@ -95,7 +95,7 @@ class VaspPhonon(VaspRunSet):
 		"""
 
 		self.forces_run_set = VaspForcesRunSet(path=self.get_forces_run_set_path(), structures_list=self.get_distorted_structures_list(), 
-			vasp_run_inputs_dictionary=self.vasp_run_inputs_dictionary, wavecar_path=None)
+			vasp_run_inputs_dictionary=self.vasp_run_inputs, wavecar_path=None)
 
 
 	def get_distorted_structures_list(self):
@@ -174,7 +174,7 @@ class VaspPhonon(VaspRunSet):
 
 	def set_force_constants(self):
 		sets_of_forces = parse_set_of_forces(num_atoms=self.get_supercell_atom_count(), forces_filenames=self.forces_run_set.get_xml_file_paths_list())
-		
+
 		self.phonon.produce_force_constants(sets_of_forces)
 
 		#print self.phonon.get_frequencies_with_eigenvectors([0.0, 0.0, 0.05])
