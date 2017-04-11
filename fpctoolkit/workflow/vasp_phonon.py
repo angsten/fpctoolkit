@@ -78,7 +78,7 @@ class VaspPhonon(VaspRunSet):
 
 		#########make sure we're using proper initial structure if there was reoptimization#####################################################################################
 
-		return phonopy_util.get_distorted_structures_list(initial_structure=self.initial_structure, phonopy_inputs=self.phonopy_inputs, temporary_directory_path=self.path)
+		return phonopy_utility.get_distorted_structures_list(initial_structure=self.initial_structure, phonopy_inputs=self.phonopy_inputs, temporary_directory_path=self.path)
 
 
 	def initialize_vasp_lepsilon_calculation(self):
@@ -163,7 +163,7 @@ class VaspPhonon(VaspRunSet):
 		Writes the calculated force constants to file.
 		"""
 
-		phonopy_util.write_force_constants_to_file_path(initial_structure=self.initial_structure, phonopy_intputs=self.phonopy_inputs, 
+		phonopy_utility.write_force_constants_to_file_path(initial_structure=self.initial_structure, phonopy_intputs=self.phonopy_inputs, 
 			temporary_directory_path=temporary_directory_path, vasp_xml_file_paths_list=self.forces_run_set.get_xml_file_paths_list(), file_path=self.get_force_constants_path())
 
 
