@@ -178,3 +178,51 @@ def get_supercell_atom_count(initial_structure, phonopy_inputs):
 	"""
 
 	return reduce(lambda x, y: x*y, phonopy_inputs['supercell_dimensions'], initial_structure.site_count)
+
+
+
+
+
+
+
+
+
+def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list):
+	"""
+	phonopy_instance is an initialized instance of the Phonopy class
+	q_points list is list of q_points in reduced coordinates, like [[0.5, 0.0, 0.0], [0.25, 0.25, 0.3], ...]
+	"""
+
+	primitive_cell = phonopy_instance.get_primitive()
+
+	for q_point in q_points_list:
+		data = phonopy_instance.get_frequencies_with_eigenvectors(q_point)
+
+		eigen_values = data[0]
+		eigen_vectors = data[1]
+
+
+		print "-"*200
+
+		print "Q-point: " + str(q_point) + '\n'*3
+
+
+
+		for band in range(len(eigen_values)):
+			eigen_value = eigen_values[band]
+			eigen_vector = eigen_vectors[band]
+
+			print "-"*100
+
+			print "Band index: " + str(band+1) + '\n'*2
+
+			print "Frequency: " + str(eigen_value) + '\n'
+
+			for i in range(len(eigen_vector)/3):
+				print "Atom " + str(i) + "   x    " + "   y   " + "     z    "
+				print eigen_vector[i], eigen_vector[i+1], eigen_vector[i+2]
+
+			print "-"*100 + '\n'*1
+
+
+		print "-"*200 + '\n'*2
