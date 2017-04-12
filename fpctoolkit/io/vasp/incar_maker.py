@@ -106,7 +106,7 @@ class IncarMaker(object):
 		incar = IncarMaker.get_static_incar()
 		incar['ediff'] = 0.0000001
 		incar['lepsilon'] = True
-		incar['npar'] = 1 #lepsilon runs are not parallelizable
+		del incar['npar'] #lepsilon runs are not parallelizable
 
 		incar.modify_from_dictionary(custom_parameters_dictionary)
 

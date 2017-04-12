@@ -79,7 +79,7 @@ class VaspPhonon(VaspRunSet):
 
 		#########make sure we're using proper initial structure if there was reoptimization#####################################################################################
 
-		return phonopy_utility.get_distorted_structures_list(initial_structure=self.initial_structure, phonopy_inputs=self.phonopy_inputs, temporary_directory_path=self.path)
+		return phonopy_utility.get_distorted_structures_list(initial_structure=self.initial_structure, phonopy_inputs=self.phonopy_inputs)
 
 
 	def initialize_vasp_lepsilon_calculation(self):
@@ -167,7 +167,7 @@ class VaspPhonon(VaspRunSet):
 		"""
 
 		phonopy_utility.write_force_constants_to_file_path(initial_structure=self.initial_structure, phonopy_inputs=self.phonopy_inputs, 
-			temporary_directory_path=self.path, vasp_xml_file_paths_list=self.forces_run_set.get_xml_file_paths_list(), file_path=self.get_force_constants_path())
+			vasp_xml_file_paths_list=self.forces_run_set.get_xml_file_paths_list(), file_path=self.get_force_constants_path())
 
 
 	def write_born_file(self):
@@ -179,8 +179,8 @@ class VaspPhonon(VaspRunSet):
 			dielectric_tensor = self.lepsilon_calculation.outcar.get_dielectric_tensor()
 			born_effective_charge_tensor = self.lepsilon_calculation.outcar.get_born_effective_charge_tensor()
 
-			phonopy_utility.write_born_file(initial_structure=self.initial_structure, phonopy_inputs=self.phonopy_inputs, temporary_directory_path=self.path, 
-				dielectric_tensor=dielectric_tensor, born_effective_charge_tensor=born_effective_charge_tensor, file_path=self.get_born_path())
+			phonopy_utility.write_born_file(initial_structure=self.initial_structure, phonopy_inputs=self.phonopy_inputs, dielectric_tensor=dielectric_tensor, 
+				born_effective_charge_tensor=born_effective_charge_tensor, file_path=self.get_born_path())
 
 
 

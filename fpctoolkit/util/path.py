@@ -2,6 +2,7 @@
 
 import os
 import shutil
+import random
 
 import fpctoolkit.util.string_util as su
 
@@ -172,6 +173,22 @@ class Path(object):
 		containing_directory = Path.join(*path_components_list[:-1]) #FIXXXXXXXXXXXXXX - home gets messed up
 
 		return containing_directory
+
+	@staticmethod
+	def get_temporary_path():
+		"""
+		Returns a path that is guaranteed to not yet exist and be writable. These paths are in ~/.tmp_path_generator and are random digit strings.
+		"""
+
+		temp_directory_path = Path.expand(Path.join('~', '.tmp_path_generator'))
+
+		if not Path.exists(temp_directory_path):
+			Path.make(temp_directory_path)
+
+		random_digit_string = "." + str(random.randint(0, 10000000000000000000000000000000000000000))
+
+		return Path.expand(Path.join(temp_directory_path, random_digit_string))
+
 
 
 	@staticmethod
