@@ -201,7 +201,7 @@ def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list):
 		eigen_values = data[0]
 		eigen_vectors = data[1]
 
-		qstr = "Q-point: " + str(q_point)
+		qstr = "Q-point: " + str(q_point).rstrip()
 		
 		print "-"*90 + " " + qstr + " " + "-"*90
 
