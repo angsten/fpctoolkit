@@ -1,3 +1,5 @@
+#import fpctoolkit.util.string_util as su
+
 from datetime import datetime
 
 """
@@ -33,6 +35,24 @@ def get_time_stamp_string():
 	"""Safe for file usage"""
 	
 	return str(datetime.now()).replace('.', '_').replace(':', '_').replace('-', '_')
+
+def pad_decimal_number_to_fixed_character_length(number, rnd, padding_length):
+	"""
+	Rounds number to rnd and then guarantees it has length of padding_length (good for arranging decimal numbers)
+	"""
+
+	str_rep = str(round(number, rnd))
+
+	if not str_rep[0] == '-':
+		str_rep = ' ' + str_rep
+
+	if not '.' in str_rep:
+		str_rep += '.'
+
+	while len(str_rep) < padding_length:
+		str_rep += '0'
+
+	return str_rep
 
 
 def get_number_list_from_string(string_of_numbers):

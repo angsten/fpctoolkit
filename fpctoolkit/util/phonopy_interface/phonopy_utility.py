@@ -12,7 +12,7 @@ from fpctoolkit.structure.structure import Structure
 from fpctoolkit.util.path import Path
 from fpctoolkit.io.file import File
 import fpctoolkit.util.misc as misc
-
+import fpctoolkit.util.string_util as su
 
 
 
@@ -219,10 +219,13 @@ def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list):
 			print "Frequency: " + str(eigen_value) + '\n'
 
 			for i in range(len(eigen_vector)/3):
+
+				f = su.pad_decimal_number_to_fixed_character_length
 				rnd = 4
+				padding_length = 10
 				sep = "   "
-				string = "Atom " + str(i) + sep + str(round(eigen_vector[3*i].real, rnd)) + sep + str(round(eigen_vector[3*i+1].real, rnd)) + sep + str(round(eigen_vector[3*i+2].real, rnd)) 
-				string += sep + str(round(eigen_vector[3*i].imag, rnd)) + sep + str(round(eigen_vector[3*i+1].imag, rnd)) + sep + str(round(eigen_vector[3*i+2].imag, rnd))
+				string = "Atom " + str(i) + sep + str(f(eigen_vector[3*i].real, rnd, padding_length)) + sep + str(f(eigen_vector[3*i+1].real, rnd, padding_length)) + sep + str(f(eigen_vector[3*i+2].real, rnd, padding_length)) 
+				string += sep + str(f(eigen_vector[3*i].imag, rnd)), padding_length + sep + str(f(eigen_vector[3*i+1].imag, rnd, padding_length)) + sep + str(f(eigen_vector[3*i+2].imag, rnd, padding_length))
 
 				print string
 
