@@ -225,7 +225,7 @@ def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list):
 				padding_length = 10
 				sep = "   "
 				string = "Atom " + str(i) + sep + str(f(eigen_vector[3*i].real, rnd, padding_length)) + sep + str(f(eigen_vector[3*i+1].real, rnd, padding_length)) + sep + str(f(eigen_vector[3*i+2].real, rnd, padding_length)) 
-				string += sep + str(f(eigen_vector[3*i].imag, rnd)), padding_length + sep + str(f(eigen_vector[3*i+1].imag, rnd, padding_length)) + sep + str(f(eigen_vector[3*i+2].imag, rnd, padding_length))
+				string += sep + str(f(eigen_vector[3*i].imag, rnd, padding_length)), padding_length + sep + str(f(eigen_vector[3*i+1].imag, rnd, padding_length)) + sep + str(f(eigen_vector[3*i+2].imag, rnd, padding_length))
 
 				print string
 
