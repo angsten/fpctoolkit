@@ -219,8 +219,9 @@ def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list):
 			print "Frequency: " + str(eigen_value) + '\n'
 
 			for i in range(len(eigen_vector)/3):
-				print "Atom " + str(i) + "   x    " + "   y   " + "     z    "
-				print eigen_vector[i], eigen_vector[i+1], eigen_vector[i+2]
+				sep = "   "
+				string = "Atom " + str(i) + sep + str(eigen_vector[3*i].real) + sep + str(eigen_vector[3*i+1].real) + sep + str(eigen_vector[3*i+2].real) 
+				string += sep + str(eigen_vector[3*i].imag) + sep + str(eigen_vector[3*i+1].imag) + sep + str(eigen_vector[3*i+2].imag)
 
 			print "-"*100 + '\n'*1
 
