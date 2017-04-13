@@ -214,6 +214,8 @@ def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list):
 			eigen_vector = eigen_vectors[band]
 
 			bnd_str = "-"*40 + "Band index: " + str(band+1) + "-"*40
+			
+			print bnd_str
 
 			print "Frequency: " + str(round(eigen_value, 5)) + '\n'
 
