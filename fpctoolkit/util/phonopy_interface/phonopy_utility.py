@@ -223,6 +223,8 @@ def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list):
 				string = "Atom " + str(i) + sep + str(eigen_vector[3*i].real) + sep + str(eigen_vector[3*i+1].real) + sep + str(eigen_vector[3*i+2].real) 
 				string += sep + str(eigen_vector[3*i].imag) + sep + str(eigen_vector[3*i+1].imag) + sep + str(eigen_vector[3*i+2].imag)
 
+				print string
+
 			print "-"*100 + '\n'*1
 
 
