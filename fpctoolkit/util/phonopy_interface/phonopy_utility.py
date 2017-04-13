@@ -203,7 +203,7 @@ def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list):
 
 		qstr = "Q-point: " + str(q_point).rstrip()
 		
-		print "-"*90 + " " + qstr + " " + "-"*90
+		print "-"*90 + " " + qstr + " " + "-"*90 + '\n'
 
 		
 
@@ -214,7 +214,7 @@ def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list):
 			eigen_vector = eigen_vectors[band]
 
 			bnd_str = "-"*40 + "Band index: " + str(band+1) + "-"*40
-			
+
 			print bnd_str
 
 			print "Frequency: " + str(round(eigen_value, 5)) + '\n'
@@ -223,7 +223,7 @@ def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list):
 
 				f = su.pad_decimal_number_to_fixed_character_length
 				rnd = 4
-				padding_length = 10
+				padding_length = 8
 				sep = "   "
 				string = "Atom " + str(i) + sep + str(f(eigen_vector[3*i].real, rnd, padding_length)) + sep + str(f(eigen_vector[3*i+1].real, rnd, padding_length)) + sep + str(f(eigen_vector[3*i+2].real, rnd, padding_length)) 
 				string += sep*2 + str(f(eigen_vector[3*i].imag, rnd, padding_length)) + sep + str(f(eigen_vector[3*i+1].imag, rnd, padding_length)) + sep + str(f(eigen_vector[3*i+2].imag, rnd, padding_length))
