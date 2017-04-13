@@ -203,7 +203,7 @@ def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list):
 
 		qstr = "Q-point: " + str(q_point) + '\n'*3
 		
-		print "-"*170 + " " + qstr
+		print "-"*90 + " " + qstr + " " + "-"*90
 
 		
 
@@ -213,7 +213,7 @@ def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list):
 			eigen_value = eigen_values[band]
 			eigen_vector = eigen_vectors[band]
 
-			print "-"*40 + "Band index: " + str(band+1) + "-"*40
+			bnd_str = "-"*40 + "Band index: " + str(band+1) + "-"*40
 
 			print "Frequency: " + str(round(eigen_value, 5)) + '\n'
 
@@ -228,7 +228,7 @@ def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list):
 
 				print string
 
-			print "-"*100 + '\n'*1
+			print "-"*len(bnd_str) + '\n'*1
 
 
 		print "-"*200 + '\n'*2
