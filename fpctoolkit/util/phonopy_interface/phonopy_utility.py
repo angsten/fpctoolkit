@@ -228,7 +228,7 @@ def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list):
 
 				atom_str = primitive_cell.symbols[i]
 				if len(atom_str) == 1:
-					atom_str += " "
+					atom_str += "I"*(i-2)
 
 				string = atom_str + sep + str(f(eigen_vector[3*i].real, rnd, padding_length)) + sep + str(f(eigen_vector[3*i+1].real, rnd, padding_length)) + sep + str(f(eigen_vector[3*i+2].real, rnd, padding_length)) 
 				string += sep*2 + str(f(eigen_vector[3*i].imag, rnd, padding_length)) + sep + str(f(eigen_vector[3*i+1].imag, rnd, padding_length)) + sep + str(f(eigen_vector[3*i+2].imag, rnd, padding_length))
