@@ -41,7 +41,14 @@ def pad_decimal_number_to_fixed_character_length(number, rnd, padding_length):
 	Rounds number to rnd and then guarantees it has length of padding_length (good for arranging decimal numbers)
 	"""
 
-	str_rep = str(round(number, rnd))
+	rounded_number = round(number, rnd)
+
+	str_rep = str(rounded_number)
+
+	if rounded_number == 0.0:
+		str_rep = str_rep.replace('-', '')
+
+
 
 	if not str_rep[0] == '-':
 		str_rep = ' ' + str_rep
