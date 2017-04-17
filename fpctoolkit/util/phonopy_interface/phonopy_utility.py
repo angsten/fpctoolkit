@@ -1,12 +1,15 @@
 #import fpctoolkit.util.phonopy_interface.phonopy_utility as phonopy_utility
 
 import numpy as np
+from collections import OrderedDict
+import math
 
 from phonopy import Phonopy
 from phonopy.interface.vasp import read_vasp, write_vasp
 from phonopy.interface.vasp import parse_set_of_forces
 from phonopy.file_IO import parse_FORCE_SETS, parse_FORCE_CONSTANTS, write_FORCE_CONSTANTS, parse_BORN
 from phonopy.structure.symmetry import Symmetry
+from phonopy.phonon.modulation import Modulation
 
 from fpctoolkit.structure.structure import Structure
 from fpctoolkit.util.path import Path
@@ -74,7 +77,7 @@ def convert_structure_to_phonopy_atoms(structure):
 	return phonopy_structure
 
 
-def convert_phonopy_atoms_to_structure(phonopy_atoms_structure, species_list):
+def convert_phonopy_atoms_to_structure(phonopy_atoms_structure):
 	"""
 	Converts phonopy's representation of a structure to an instance of Structure.
 	"""
@@ -85,6 +88,8 @@ def convert_phonopy_atoms_to_structure(phonopy_atoms_structure, species_list):
 	Path.validate_writeable(temporary_write_path)
 
 	write_vasp(temporary_write_path, phonopy_atoms_structure)
+
+	species_list = convert_phonopy_symbols_to_unique_species_list(phonopy_atoms_structure.symbols)
 
 	structure_poscar_file = File(temporary_write_path)
 	structure_poscar_file.insert(5, " ".join(species_list)) #phonopy uses bad poscar format
@@ -115,7 +120,7 @@ def get_distorted_structures_list(initial_structure, phonopy_inputs):
 
 	distorted_structures_list = []
 	for i in range(len(supercells)):
-		distorted_structure = convert_phonopy_atoms_to_structure(supercells[i], initial_structure.get_species_list())
+		distorted_structure = convert_phonopy_atoms_to_structure(supercells[i])
 		distorted_structures_list.append(distorted_structure)
 
 	return distorted_structures_list
@@ -179,24 +184,74 @@ def get_supercell_atom_count(initial_structure, phonopy_inputs):
 
 	return reduce(lambda x, y: x*y, phonopy_inputs['supercell_dimensions'], initial_structure.site_count)
 
+def convert_phonopy_symbols_to_unique_species_list(symbols):
+	"""
+	Takes in phonon.symbols instance like ['Sr', 'Ti', 'O', 'O', 'O'] and returns ['Sr', 'Ti', 'O']
+	"""
+
+	dictionary = OrderedDict()
+
+	for key in symbols:
+		dictionary[key] = True
+
+	return dictionary.keys()
+
+
+def get_modulated_structure(phonopy_instance, phonopy_inputs, phonon_modes):
+
+	dynamical_matrix = phonopy_instance.get_dynamical_matrix()
+	dimension = phonopy_inputs['supercell_dimensions']
+
+	modulation = Modulation(dynamical_matrix, dimension, phonon_modes)
+
+	modulation.run()
+
+	cells = modulation.get_modulated_supercells()
+
+	return convert_phonopy_atoms_to_structure(cells[0])
+
+def convert_dynamical_matrix_eigenvector_to_normalized_displacement_pattern(eigen_vector, atomic_masses_list):
+	"""
+	Input argument eigen_vector is a complex-valued eigenvector of the dynamical matrix with dimension equal to the 
+	number of atoms in the primitive cell.
+
+	This Method controls whether or not the eigenvectors have the 1/sqrt(ion_mass) term or not. Calling this function on an eigenvector
+	removes this factor and the resulting eigenvectors represent (normalized) displacement patterns in Angstroms.
+
+	Eigenvector should look like [atom_1_complex_x_component, atom_1_y..., ..., atom_2_x, ...]
+	atomic_masses_list should look like [atomic_1_mass, atomic_2_mass, ...]
+	"""
+
+	for i in range(len(eigen_vector)):
+		eigen_vector[i] *= (1/math.sqrt(atomic_masses_list[(int(i/3))]))
+
+
+	#now normalize vector
+	vector_magnitude = np.linalg.norm(eigen_vector)
+
+	for i in range(len(eigen_vector)):
+		eigen_vector[i] *= 1/vector_magnitude
 
 
 
 
 
 
-
-
-def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list):
+def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list, displacement_eigenvectors=True):
 	"""
 	phonopy_instance is an initialized instance of the Phonopy class
 	q_points list is list of q_points in reduced coordinates, like [[0.5, 0.0, 0.0], [0.25, 0.25, 0.3], ...]
+	displacement_eigenvectors controls whether or not the eigenvectors have the 1/sqrt(ion_mass) term. Setting
+	to True removes this factor and the resulting eigenvectors represent (normalized) displacement patterns in Angstroms.
 	"""
 
 	primitive_cell = phonopy_instance.get_primitive()
+	mass_list = primitive_cell.get_masses()
 
 	for q_point in q_points_list:
+
 		data = phonopy_instance.get_frequencies_with_eigenvectors(q_point)
+
 
 		eigen_values = data[0]
 		eigen_vectors = data[1]
@@ -205,13 +260,15 @@ def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list):
 		
 		print "-"*90 + " " + qstr + " " + "-"*90 + '\n'
 
-		
-
-
+	
 
 		for band in range(len(eigen_values)):
 			eigen_value = eigen_values[band]
-			eigen_vector = eigen_vectors[band]
+
+			eigen_vector = eigen_vectors[:, band]
+
+			if displacement_eigenvectors:
+				convert_dynamical_matrix_eigenvector_to_normalized_displacement_pattern(eigen_vector, mass_list)
 
 			bnd_str = "-"*40 + "Band index: " + str(band+1) + "-"*40
 

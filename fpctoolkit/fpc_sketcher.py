@@ -1,4 +1,6 @@
 import random
+import numpy as np
+import sys
 
 import fpctoolkit.util.string_util as su
 from fpctoolkit.io.file import File
@@ -29,52 +31,115 @@ from fpctoolkit.structure.structure_generator import StructureGenerator
 from fpctoolkit.structure.site_mapping_collection import SiteMappingCollection
 from fpctoolkit.util.math.distribution_array import DistributionArray
 from fpctoolkit.util.math.distribution_generator import DistributionGenerator
+import fpctoolkit.util.phonopy_interface.phonopy_utility as phonopy_utility
 
 
-e33_average = 1.0
-e33_spread = 0.2
-min_e33 = e33_average - e33_spread
-max_e33 = e33_average + e33_spread
-e33_distribution_function = lambda x: (e33_spread - (abs(e33_average-x)))**0.4 #very broad bell shape max at 1.0, 0.0 at edges
-e33_distribution = Distribution(e33_distribution_function, min_e33, max_e33)
+
+# coeff_matrix = [[1+1j, 1j], [2+2j, 3j]]
+# ordinate_matrix = [1, 2]
+
+# sol = np.linalg.solve(coeff_matrix, ordinate_matrix)
+
+# print sol
+
+# print np.dot(coeff_matrix, sol)
+
+# sys.exit()
 
 
-e13_average = 0.0
-e13_spread = 0.2
-min_e13 = e13_average - e13_spread
-max_e13 = e13_average + e13_spread
-e13_distribution_function = lambda x: (e13_spread - (abs(e13_average-x)))**0.8 #somewhat broad bell shape max at 0.0, 0.0 at edges
-e13_distribution = Distribution(e13_distribution_function, min_e13, max_e13)
 
 
-e23_average = 0.0
-e23_spread = 0.2
-min_e23 = e23_average - e23_spread
-max_e23 = e23_average + e23_spread
-e23_distribution_function = lambda x: (e23_spread - (abs(e23_average-x)))**0.8 #somewhat broad bell shape max at 0.0, 0.0 at edges
-e23_distribution = Distribution(e23_distribution_function, min_e23, max_e23)
+phonopy_inputs_dictionary = {
+	'supercell_dimensions': [2, 2, 2],
+	'symprec': 0.0001,
+	'displacement_distance': 0.01,
+	'nac': True
+	}
 
-zero_function = lambda : 0.0
-unity_function = lambda : 1.0
-
-strain_distribution_function_array = [
-	[unity_function, zero_function, e13_distribution.get_random_value], 
-	[zero_function, unity_function, e23_distribution.get_random_value], 
-	[zero_function, zero_function, e33_distribution.get_random_value]
-	]
-
-strain_distribution_function_array = [
-	[1.0, 0.0, e13_distribution], 
-	[0.0, 1.0, e23_distribution], 
-	[0.0, 0.0, e33_distribution]
-	]
+base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
 
 
-da = DistributionArray(distribution_array=strain_distribution_function_array)
-da.set((0, 0), DistributionGenerator.get_unity_distribution())
-da.set((0, 2), e13_distribution)
 
-print da.get_random_array()
+init_struct_path = Path.join(base_path, 'initial_structure')
+mod_struct_path = Path.join("C:\Users\Tom\Desktop\Vesta_Inputs\mod.vasp")
+force_constants_path = Path.join(base_path, 'FORCE_CONSTANTS')
+born_path = Path.join(base_path, 'BORN')
+
+initial_structure = Structure(init_struct_path)
+
+
+phonon = phonopy_utility.get_initialized_phononopy_instance(initial_structure, phonopy_inputs_dictionary, force_constants_path, born_path)
+
+
+q_points_list = [[0.0, 0.0, 0.0]]
+
+eig_vecs = phonon.get_frequencies_with_eigenvectors(q_points_list[0])[1]
+
+phonopy_utility.view_eigen_values_and_eigen_vectors(phonopy_instance=phonon, q_points_list=q_points_list)
+
+
+qpoint = q_points_list[0]
+
+band_index = 1 #1 through 15
+amplitude = 30.0
+phase = 0.0
+
+band_index -= 1
+
+phonon_modes = [[qpoint, band_index, amplitude, phase]]
+
+mod_struct = phonopy_utility.get_modulated_structure(phonon, phonopy_inputs_dictionary, phonon_modes)
+
+
+
+mod_struct.to_poscar_file_path(mod_struct_path)
+
+
+
+# e33_average = 1.0
+# e33_spread = 0.2
+# min_e33 = e33_average - e33_spread
+# max_e33 = e33_average + e33_spread
+# e33_distribution_function = lambda x: (e33_spread - (abs(e33_average-x)))**0.4 #very broad bell shape max at 1.0, 0.0 at edges
+# e33_distribution = Distribution(e33_distribution_function, min_e33, max_e33)
+
+
+# e13_average = 0.0
+# e13_spread = 0.2
+# min_e13 = e13_average - e13_spread
+# max_e13 = e13_average + e13_spread
+# e13_distribution_function = lambda x: (e13_spread - (abs(e13_average-x)))**0.8 #somewhat broad bell shape max at 0.0, 0.0 at edges
+# e13_distribution = Distribution(e13_distribution_function, min_e13, max_e13)
+
+
+# e23_average = 0.0
+# e23_spread = 0.2
+# min_e23 = e23_average - e23_spread
+# max_e23 = e23_average + e23_spread
+# e23_distribution_function = lambda x: (e23_spread - (abs(e23_average-x)))**0.8 #somewhat broad bell shape max at 0.0, 0.0 at edges
+# e23_distribution = Distribution(e23_distribution_function, min_e23, max_e23)
+
+# zero_function = lambda : 0.0
+# unity_function = lambda : 1.0
+
+# strain_distribution_function_array = [
+# 	[unity_function, zero_function, e13_distribution.get_random_value], 
+# 	[zero_function, unity_function, e23_distribution.get_random_value], 
+# 	[zero_function, zero_function, e33_distribution.get_random_value]
+# 	]
+
+# strain_distribution_function_array = [
+# 	[1.0, 0.0, e13_distribution], 
+# 	[0.0, 1.0, e23_distribution], 
+# 	[0.0, 0.0, e33_distribution]
+# 	]
+
+
+# da = DistributionArray(distribution_array=strain_distribution_function_array)
+# da.set((0, 0), DistributionGenerator.get_unity_distribution())
+# da.set((0, 2), e13_distribution)
+
+# print da.get_random_array()
 
 # dist = Distribution(shape_function=lambda x: x + x**2 + 2.0*x**3.0, min_x=1.0, max_x=10)
 
