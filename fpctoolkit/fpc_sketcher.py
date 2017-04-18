@@ -73,7 +73,7 @@ initial_structure = Structure(init_struct_path)
 phonon = phonopy_utility.get_initialized_phononopy_instance(initial_structure, phonopy_inputs_dictionary, force_constants_path, born_path)
 
 
-q_points_list = [[0.5, 0.5, 0.5]]
+q_points_list = [(0.5, 0.5, 0.0)]
 
 eig_vecs = phonon.get_frequencies_with_eigenvectors(q_points_list[0])[1]
 
@@ -97,6 +97,29 @@ mod_struct = phonopy_utility.get_modulated_structure(phonon, phonopy_inputs_dict
 mod_struct.to_poscar_file_path(mod_struct_path)
 
 
+for i in range(15):
+	for j in range(i, 15):
+		vec_1 = eig_vecs[:, i]
+		vec_2 = eig_vecs[:, j]
+
+		#phonopy_utility.convert_dynamical_matrix_eigenvector_to_normalized_displacement_pattern(vec_1, phonon.get_primitive().get_masses())
+		#phonopy_utility.convert_dynamical_matrix_eigenvector_to_normalized_displacement_pattern(vec_2, phonon.get_primitive().get_masses())
+
+
+		#print
+		#print np.linalg.norm(np.dot(vec_1, vec_2))
+		#print
+
+print
+print
+
+for i in range(15):
+	vec_1 = eig_vecs[:, i]
+	#print np.linalg.norm(vec_1)
+
+
+
+pbs = phonopy_utility.get_phonon_band_structure_instance(phonopy_instance=phonon, q_points_list=q_points_list)
 
 # e33_average = 1.0
 # e33_spread = 0.2

@@ -16,7 +16,9 @@ class NormalMode(object):
 		normalized_eigen_displacements should be a list that looks like [atom_1_x_component_of_displacement_complex_number, atom_1_y..., ..., atom_2_x, ...] 
 		and should be of length Nat, where Nat is the number of atoms in the primitive cell used to generate the phonon band structure.
 
-		The q_point input argument should be a list of three real numbers in reduced coordinates with no factor of 2Pi, e.g. (0.5, 0.5, 0.0).
+		The q_point input argument should be a tuple of three real numbers in reduced coordinates with no factor of 2Pi, e.g. (0.5, 0.5, 0.0).
+
+		band_index should start at zero and go to Nat*3-1
 		"""
 
 		complex_vector_magnitude = np.linalg.norm(normalized_eigen_displacements)
@@ -25,10 +27,10 @@ class NormalMode(object):
 
 		basic_validators.validate_real_number(frequency)
 
-		Structure.validate(primitive_cell_structure)
-
 		if not len(q_point_fractional_coordinates) == 3:
 			raise Exception("Qpoint argument must have three compononents. Argument is", q_point_fractional_coordinates)
+
+		Structure.validate(primitive_cell_structure)
 
 
 		self.eigen_displacements_list = normalized_eigen_displacements

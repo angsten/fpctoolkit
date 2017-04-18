@@ -3,6 +3,7 @@
 import numpy as np
 from collections import OrderedDict
 import math
+import cmath
 
 from phonopy import Phonopy
 from phonopy.interface.vasp import read_vasp, write_vasp
@@ -16,6 +17,9 @@ from fpctoolkit.util.path import Path
 from fpctoolkit.io.file import File
 import fpctoolkit.util.misc as misc
 import fpctoolkit.util.string_util as su
+from fpctoolkit.phonon.phonon_band_structure import PhononBandStructure
+from fpctoolkit.phonon.q_point import QPoint
+from fpctoolkit.phonon.normal_mode import NormalMode
 
 
 
@@ -232,6 +236,44 @@ def convert_dynamical_matrix_eigenvector_to_normalized_displacement_pattern(eige
 	for i in range(len(eigen_vector)):
 		eigen_vector[i] *= 1/vector_magnitude
 
+def get_phonon_band_structure_instance(phonopy_instance, q_points_list):
+	"""
+	Populates a PhononBandStructure instance with normal modes from phonopy calculation for the given list of q_points (should be list of tuples in fractional coordinates).
+	"""
+
+	primitive_cell = phonopy_instance.get_primitive()
+	mass_list = primitive_cell.get_masses()
+	primitive_structure = convert_phonopy_atoms_to_structure(primitive_cell)
+
+	q_points_instances_list = []
+
+	for q_point in q_points_list:
+		data = phonopy_instance.get_frequencies_with_eigenvectors(q_point)
+		eigen_values = data[0]
+		eigen_vectors = data[1]
+
+		normal_modes_list = []
+
+		for band in range(len(eigen_values)):
+			eigen_value = eigen_values[band]
+
+			frequency = cmath.sqrt(eigen_value)
+
+			eigen_vector = eigen_vectors[:, band]
+			convert_dynamical_matrix_eigenvector_to_normalized_displacement_pattern(eigen_vector, mass_list)
+
+			normal_mode = NormalMode(normalized_eigen_displacements=eigen_vector, frequency=frequency, q_point_fractional_coordinates=q_point, band_index=band, primitive_cell_structure=primitive_structure)
+
+			normal_modes_list.append(normal_mode)
+
+		q_point_instance = QPoint(q_point_fractional_coordinates=q_point, normal_modes_list=normal_modes_list, primitive_cell_structure=primitive_structure)
+
+		q_points_instances_list.append(q_point_instance)
+
+	return PhononBandStructure(q_points_list=q_points_instances_list, primitive_cell_structure=primitive_structure)
+
+
+
 
 
 
@@ -274,7 +316,7 @@ def view_eigen_values_and_eigen_vectors(phonopy_instance, q_points_list, displac
 
 			print bnd_str
 
-			print "Frequency: " + str(round(eigen_value, 5)) + '\n'
+			print "Frequency: " + str(cmath.sqrt(eigen_value)) + '\n'
 
 			for i in range(len(eigen_vector)/3):
 
