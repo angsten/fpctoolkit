@@ -153,3 +153,15 @@ def validate_first_real_number_is_strictly_less_than_or_equal_to_second(real_num
 
 	if real_number_1 > real_number_2:
 		raise Exception("First value should be less than or equal to second. First value is", real_number_1, "and second value is", real_number_2)
+
+def validate_approximately_equal(number_1, number_2, tolerance=0.000001):
+	"""
+	Throws exception if number_1 is not within tolerance of number_2
+	"""
+
+	validate_real_number(number_1)
+	validate_real_number(number_2)
+	validate_real_number(tolerance)
+
+	if abs(number_1-number_2) > tolerance:
+		raise Exception("Two numbers are not approximately equal. Values are:,", number_1, number_2)

@@ -33,6 +33,8 @@ from fpctoolkit.util.math.distribution_array import DistributionArray
 from fpctoolkit.util.math.distribution_generator import DistributionGenerator
 import fpctoolkit.util.phonopy_interface.phonopy_utility as phonopy_utility
 
+from fpctoolkit.phonon.normal_mode import NormalMode
+
 
 
 # coeff_matrix = [[1+1j, 1j], [2+2j, 3j]]
@@ -71,7 +73,7 @@ initial_structure = Structure(init_struct_path)
 phonon = phonopy_utility.get_initialized_phononopy_instance(initial_structure, phonopy_inputs_dictionary, force_constants_path, born_path)
 
 
-q_points_list = [[0.0, 0.0, 0.0]]
+q_points_list = [[0.5, 0.5, 0.5]]
 
 eig_vecs = phonon.get_frequencies_with_eigenvectors(q_points_list[0])[1]
 
@@ -81,7 +83,7 @@ phonopy_utility.view_eigen_values_and_eigen_vectors(phonopy_instance=phonon, q_p
 qpoint = q_points_list[0]
 
 band_index = 1 #1 through 15
-amplitude = 30.0
+amplitude = 10.0
 phase = 0.0
 
 band_index -= 1
