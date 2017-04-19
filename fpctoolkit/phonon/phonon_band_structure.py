@@ -55,6 +55,12 @@ class PhononBandStructure(object):
 
 		pass
 
+	def get_list_of_normal_modes(self):
+		"""
+		Returns list of normal mode instances ordered by both the order of QPoint additions to this class, and within that, the order in which the normal modes appear within the qpoint normal modes list.
+		"""
+
+		return [normal_mode for q_vector, q_point_instance in self.q_points.items() for normal_mode in q_point_instance.normal_modes_list]
 
 
 	def __getitem__(self, key):
@@ -63,6 +69,11 @@ class PhononBandStructure(object):
 
 		return self.q_points[key]
 
+	def __contains__(self, key):
+		return key in self.q_points
+
+	def __iter__(self):
+		return iter(self.q_points)
 
 	def __str__(self):
 
