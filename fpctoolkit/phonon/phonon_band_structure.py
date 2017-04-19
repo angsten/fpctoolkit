@@ -30,6 +30,8 @@ class PhononBandStructure(object):
 		
 		self.initialize_q_points(q_points_list)
 
+		self.validate_data()
+
 
 
 
@@ -38,6 +40,22 @@ class PhononBandStructure(object):
 
 		for q_point_instance in q_points_list:
 			self.q_points[q_point_instance.q_point_fractional_coordinates] = q_point_instance
+
+
+	def validate_data(self):
+		"""
+		Validate that the eigenvalues and eigenvectors are valid based on properties of phonons.
+		"""
+
+		#check that eig_vec(q) = eig_vec*(-q) <- complex conjugate for all possible q other than (0 0 0)
+		#check that three translational modes exist and that their frequencies are sufficiently close to zero
+		#check that zone-centered eigenvectors are entirely real with no imaginary components
+		#check that the direct orthonormal relations are satisfied within a tolerance (left realtion of 38.25 in Born and Huang, page 298)
+
+
+		pass
+
+
 
 	def __getitem__(self, key):
 		if not isinstance(key, tuple) or len(key) != 3:
