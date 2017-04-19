@@ -4,6 +4,94 @@
 		"selected_items":
 		[
 			[
+				"superce",
+				"supercell_dimensions_list"
+			],
+			[
+				"phon",
+				"phonon_band_structure"
+			],
+			[
+				"eig",
+				"eigenvector"
+			],
+			[
+				"disp",
+				"displacements_eigen_vector"
+			],
+			[
+				"norm",
+				"normalized_eigen_displacements"
+			],
+			[
+				"ei",
+				"eigen_displacements_list"
+			],
+			[
+				"return",
+				"return_string"
+			],
+			[
+				"band",
+				"band_index"
+			],
+			[
+				"q_p",
+				"q_point_fractional_coordinates"
+			],
+			[
+				"q_",
+				"q_point_instance"
+			],
+			[
+				"pri",
+				"primitive_structure"
+			],
+			[
+				"phonopy",
+				"phonopy_instance"
+			],
+			[
+				"q_poin",
+				"q_point_instance"
+			],
+			[
+				"q_po",
+				"q_points_list"
+			],
+			[
+				"val",
+				"validate_normal_modes_list"
+			],
+			[
+				"normal",
+				"normal_modes_list"
+			],
+			[
+				"prim",
+				"primitive_cell_structure"
+			],
+			[
+				"prii",
+				"primitive_cell_structure"
+			],
+			[
+				"vector",
+				"vector_magnitude"
+			],
+			[
+				"eigen",
+				"eigenvector"
+			],
+			[
+				"atomic",
+				"atomic_masses_list"
+			],
+			[
+				"eign",
+				"eigen_vector"
+			],
+			[
 				"phonon",
 				"phonon_path"
 			],
@@ -46,18 +134,6 @@
 			[
 				"str",
 				"str_rep"
-			],
-			[
-				"eig",
-				"eigen_vector"
-			],
-			[
-				"ei",
-				"eigen_vector"
-			],
-			[
-				"eign",
-				"eigen_vectors"
 			],
 			[
 				"phoo",
@@ -348,10 +424,6 @@
 				"random_values"
 			],
 			[
-				"val",
-				"validate_distribution"
-			],
-			[
 				"index",
 				"index_tuple"
 			],
@@ -442,78 +514,6 @@
 			[
 				"displacem",
 				"displacement_vector"
-			],
-			[
-				"disp",
-				"displacement_vector_coordinate_mode"
-			],
-			[
-				"fir",
-				"first_coordinate_mode"
-			],
-			[
-				"coo",
-				"poscar_coordinate_mode"
-			],
-			[
-				"vecto",
-				"vector_representation"
-			],
-			[
-				"is",
-				"isinstance"
-			],
-			[
-				"vali",
-				"validate_constuctor_arguments"
-			],
-			[
-				"Site",
-				"SiteCollection"
-			],
-			[
-				"lattice",
-				"lattice_representation"
-			],
-			[
-				"latt",
-				"lattice_representation"
-			],
-			[
-				"uni",
-				"unity_function"
-			],
-			[
-				"get_r",
-				"get_random_value"
-			],
-			[
-				"e33_",
-				"e33_average"
-			],
-			[
-				"e33",
-				"e33_spread"
-			],
-			[
-				"voi",
-				"voigt_tensor"
-			],
-			[
-				"sup",
-				"supercell_dimensions_list"
-			],
-			[
-				"latti",
-				"lattice_list"
-			],
-			[
-				"path",
-				"path_components_list"
-			],
-			[
-				"pa",
-				"path_components_list"
 			]
 		]
 	},
@@ -523,33 +523,8 @@
 			"file": "fpctoolkit/fpc_sketcher.py",
 			"settings":
 			{
-				"buffer_size": 17396,
+				"buffer_size": 17919,
 				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "examples/relax_then_phonon.py",
-			"settings":
-			{
-				"buffer_size": 1963,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "examples/converger.py",
-			"settings":
-			{
-				"buffer_size": 2832,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/structure/perovskite.py",
-			"settings":
-			{
-				"buffer_size": 2580,
 				"line_ending": "Windows"
 			}
 		},
@@ -557,8 +532,86 @@
 			"file": "fpctoolkit/util/phonopy_interface/phonopy_utility.py",
 			"settings":
 			{
-				"buffer_size": 8312,
+				"buffer_size": 11355,
 				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/phonon/phonon_structure.py",
+			"settings":
+			{
+				"buffer_size": 2740,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/structure/structure.py",
+			"settings":
+			{
+				"buffer_size": 4365,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/structure/structure_manipulator.py",
+			"settings":
+			{
+				"buffer_size": 7387,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/phonon/phonon_band_structure.py",
+			"settings":
+			{
+				"buffer_size": 2318,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/phonon/q_point.py",
+			"settings":
+			{
+				"buffer_size": 2007,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/phonon/normal_mode.py",
+			"settings":
+			{
+				"buffer_size": 5596,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/util/basic_validators.py",
+			"settings":
+			{
+				"buffer_size": 6688,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/util/basic_checks.py",
+			"settings":
+			{
+				"buffer_size": 670,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/structure/site.py",
+			"settings":
+			{
+				"buffer_size": 5468,
 				"line_ending": "Windows"
 			}
 		},
@@ -568,14 +621,6 @@
 			{
 				"buffer_size": 6707,
 				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/io/vasp/incar.py",
-			"settings":
-			{
-				"buffer_size": 7808,
 				"line_ending": "Windows"
 			}
 		}
@@ -761,18 +806,27 @@
 	"expanded_folders":
 	[
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/data_structures",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/phonopy_interface",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow"
 	],
 	"file_history":
 	[
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/phonon/q_point.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/phonon/normal_mode.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/basic_checks.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/phonon/__init__.py",
+		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/cubic_2_2_2/settings.conf",
+		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/cubic_3_3_3/settings.conf",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/perovskite.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/converger.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/relax_then_phonon.py",
+		"/C/Users/Tom/.bashrc",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relax_phonon.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_generator.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/lattice.py",
@@ -789,17 +843,14 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/misc.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/phonopy_interface/phonopy_inputs.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/data_structures/input_dictionary.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/data_structures/parameter_list.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/phonopy_interface/__init__.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_manipulator.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/distribution.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/tensor.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/basic_validators.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/basic_checks.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/fpc_sketcher.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/distribution_array.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/converger.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/distribution_generator.py",
 		"/C/Users/Tom/Documents/Coding/Web Development/Udemy Bootcamp/selectors.css",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_collection.py",
@@ -821,7 +872,6 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/__init__.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/parameter_list.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/data_structures/__init__.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/perovskite.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/random_selector.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/ga_driver_100_perovskite_epitaxy.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/vector.py",
@@ -844,7 +894,6 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/encut_kpoints_converger.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/__init__.py",
 		"/C/Users/Tom/Documents/Berkeley/courses/ME C237 (Stat Mech for Engineers)/hw1_simulation.py",
-		"/C/Users/Tom/.bashrc",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar/poscar_small",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/kpoints.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Outcar/outcar",
@@ -893,13 +942,7 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/.gitignore",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/test_file.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/__init__.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit.egg-info/SOURCES.txt",
-		"/C/Users/Tom/Documents/Berkeley/research/my_papers/Epitaxial Phase Validation Paper/backups/phase_validation/util.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar_element_mapping2.json",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/__init__.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/setup.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/test.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/__init__.py"
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit.egg-info/SOURCES.txt"
 	],
 	"find":
 	{
@@ -918,6 +961,16 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"eigen_vector",
+			"normalized_eigen_displacements",
+			"eigen_displacements_list",
+			"freq_str",
+			"\"-\"*dash_spread",
+			"10",
+			"real",
+			"should_be_a_real_number",
+			"q_point",
+			"eig_vecs",
 			"convert_phonopy_atoms_to_structure",
 			"round",
 			"round_to_fixed_character_length",
@@ -1035,17 +1088,7 @@
 			"],",
 			"/2.0",
 			"np.random.normal(0.0, stdev)",
-			"distribution_function_tensor",
-			"from_2D_array",
-			"returns",
-			"lattice_vec",
-			"lattice_list",
-			"list_is_compatible",
-			"lattice_matrix",
-			"np_array",
-			")\n",
-			"split",
-			"\n\t\t"
+			"distribution_function_tensor"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1079,7 +1122,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -1088,15 +1131,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 17396,
+						"buffer_size": 17919,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								309,
-								272
+								5584,
+								5585
 							]
 						],
 						"settings":
@@ -1106,117 +1149,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 930.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "examples/relax_then_phonon.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1963,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1853,
-								1853
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 168.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "examples/converger.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2832,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1204,
-								1378
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 210.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "fpctoolkit/structure/perovskite.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2580,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								945,
-								1004
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
 					"file": "fpctoolkit/util/phonopy_interface/phonopy_utility.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8312,
+						"buffer_size": 11355,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7442,
-								7442
+								8828,
+								8828
 							]
 						],
 						"settings":
@@ -1225,14 +1178,283 @@
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 3109.0,
+						"translation.y": 3864.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "fpctoolkit/phonon/phonon_structure.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2740,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1928,
+								1928
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 136.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "fpctoolkit/structure/structure.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4365,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1176.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "fpctoolkit/structure/structure_manipulator.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7387,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								76,
+								1
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 5,
+					"file": "fpctoolkit/phonon/phonon_band_structure.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2318,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1008,
+								1112
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 84.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "fpctoolkit/phonon/q_point.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2007,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1941,
+								1941
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 126.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "fpctoolkit/phonon/normal_mode.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5596,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2039,
+								2039
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 588.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "fpctoolkit/util/basic_validators.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6688,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5465,
+								5488
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1764.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "fpctoolkit/util/basic_checks.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 670,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								669,
+								669
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "fpctoolkit/structure/site.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5468,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
 					"file": "fpctoolkit/workflow/vasp_phonon.py",
 					"semi_transient": false,
 					"settings":
@@ -1258,37 +1480,7 @@
 						"translation.y": 882.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "fpctoolkit/io/vasp/incar.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7808,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								35,
-								0
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
+					"stack_index": 11,
 					"type": "text"
 				}
 			]
@@ -1331,7 +1523,7 @@
 	},
 	"output.exec":
 	{
-		"height": 40.0
+		"height": 24.0
 	},
 	"output.find_results":
 	{
@@ -1391,7 +1583,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 300.0,
+	"side_bar_width": 269.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

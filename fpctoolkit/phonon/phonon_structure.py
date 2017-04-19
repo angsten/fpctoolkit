@@ -40,8 +40,6 @@ class PhononStructure(object):
 
 
 
-
-
 		self.Q_coordinates_list = [0+0j]*self.reference_supercell_structure.site_count*3
 
 
@@ -50,11 +48,45 @@ class PhononStructure(object):
 		Validates that (at minimum) all permitted wavevectors for the given supercell_dimensions are in phonon_band_structure.
 		"""
 
-		for l_1 in range(1, supercell_dimensions_list[0]+1):
+		pass
 
 
 
 
+
+	def get_permitted_wave_vectors_list(self):
+		"""
+		Using equation 38.10 from B+H, determine all permitted wave vectors for the given supercell dimensions (resulting q's are in
+		fractional coordinates)
+		"""
+
+		permitted_q_vectors_list = []
+		L_x = self.supercell_dimensions_list[0]
+		L_y = self.supercell_dimensions_list[1]
+		L_z = self.supercell_dimensions_list[2]
+
+		for l_x in range(-L_x, L_x):
+			for l_y in range(-L_y, L_y):
+				for l_z in range(-L_z, L_z):
+					q_point_x = float(l_x)/float(L_x)
+					q_point_y = float(l_y)/float(L_y)
+					q_point_z = float(l_z)/float(L_z)
+
+					q_point = (q_point_x, q_point_y, q_point_z)
+
+					q_point_permitted = True
+
+					for q_component in q_point:
+						if (q_component < (-0.5)) or (q_component >= (0.5)):
+							q_point_permitted = False
+
+					if q_point_permitted:
+						permitted_q_vectors_list.append(q_point)
+
+		if len(permitted_q_vectors_list) != L_x*L_y*L_z:
+			raise Exception("Number of permitted wave-vectors must equal the number of cells in the supercell.")
+
+		return permitted_q_vectors_list
 
 
 

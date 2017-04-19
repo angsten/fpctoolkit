@@ -32,6 +32,7 @@ from fpctoolkit.structure.site_mapping_collection import SiteMappingCollection
 from fpctoolkit.util.math.distribution_array import DistributionArray
 from fpctoolkit.util.math.distribution_generator import DistributionGenerator
 import fpctoolkit.util.phonopy_interface.phonopy_utility as phonopy_utility
+from fpctoolkit.phonon.phonon_structure import PhononStructure
 
 from fpctoolkit.phonon.normal_mode import NormalMode
 
@@ -73,11 +74,11 @@ initial_structure = Structure(init_struct_path)
 phonon = phonopy_utility.get_initialized_phononopy_instance(initial_structure, phonopy_inputs_dictionary, force_constants_path, born_path)
 
 
-q_points_list = [(0.0, 0.0, 0.0), (0.5, 0.0, 0.0), (0.0, 0.5, 0.0), (0.0, 0.0, 0.5), (0.5, 0.5, 0.0), (0.5, 0.0, 0.5), (0.0, 0.5, 0.5), (0.5, 0.5, 0.5), (-0.5, -0.5, -0.5)]
+q_points_list = [(0.0, 0.0, 0.0), (-0.5, 0.0, 0.0), (0.0, -0.5, 0.0), (0.0, 0.0, -0.5), (-0.5, -0.5, 0.0), (-0.5, 0.0, -0.5), (0.0, -0.5, -0.5), (-0.5, -0.5, -0.5), (-0.5, -0.5, -0.5)]
 
 eig_vecs = phonon.get_frequencies_with_eigenvectors(q_points_list[0])[1]
 
-phonopy_utility.view_eigen_values_and_eigen_vectors(phonopy_instance=phonon, q_points_list=q_points_list)
+#phonopy_utility.view_eigen_values_and_eigen_vectors(phonopy_instance=phonon, q_points_list=q_points_list)
 
 
 qpoint = q_points_list[0]
@@ -121,7 +122,13 @@ for i in range(15):
 
 pbs = phonopy_utility.get_phonon_band_structure_instance(phonopy_instance=phonon, q_points_list=q_points_list)
 
-print pbs
+#print pbs
+
+
+ps = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=[2, 2, 4])
+
+
+print ps.get_permitted_wave_vectors_list()
 
 # e33_average = 1.0
 # e33_spread = 0.2
