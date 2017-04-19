@@ -260,9 +260,10 @@ def get_phonon_band_structure_instance(phonopy_instance, q_points_list):
 			frequency = cmath.sqrt(eigen_value)
 
 			eigen_vector = eigen_vectors[:, band]
-			convert_dynamical_matrix_eigenvector_to_normalized_displacement_pattern(eigen_vector, mass_list)
+			#convert_dynamical_matrix_eigenvector_to_normalized_displacement_pattern(eigen_vector, mass_list)
 
-			normal_mode = NormalMode(normalized_eigen_displacements=eigen_vector, frequency=frequency, q_point_fractional_coordinates=q_point, band_index=band, primitive_cell_structure=primitive_structure)
+			normal_mode = NormalMode(eigenvector=eigen_vector, frequency=frequency, q_point_fractional_coordinates=q_point, band_index=band, 
+				primitive_cell_structure=primitive_structure, atomic_masses_list=mass_list)
 
 			normal_modes_list.append(normal_mode)
 

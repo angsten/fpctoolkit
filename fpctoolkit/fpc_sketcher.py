@@ -73,7 +73,7 @@ initial_structure = Structure(init_struct_path)
 phonon = phonopy_utility.get_initialized_phononopy_instance(initial_structure, phonopy_inputs_dictionary, force_constants_path, born_path)
 
 
-q_points_list = [(0.5, 0.5, 0.0)]
+q_points_list = [(0.0, 0.0, 0.0), (0.5, 0.0, 0.0), (0.0, 0.5, 0.0), (0.0, 0.0, 0.5), (0.5, 0.5, 0.0), (0.5, 0.0, 0.5), (0.0, 0.5, 0.5), (0.5, 0.5, 0.5), (-0.5, -0.5, -0.5)]
 
 eig_vecs = phonon.get_frequencies_with_eigenvectors(q_points_list[0])[1]
 
@@ -120,6 +120,8 @@ for i in range(15):
 
 
 pbs = phonopy_utility.get_phonon_band_structure_instance(phonopy_instance=phonon, q_points_list=q_points_list)
+
+print pbs
 
 # e33_average = 1.0
 # e33_spread = 0.2

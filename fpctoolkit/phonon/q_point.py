@@ -23,7 +23,7 @@ class QPoint(object):
 
 		Structure.validate(primitive_cell_structure)
 
-		if not len(primitive_cell_structure)*3 == len(normal_modes_list):
+		if primitive_cell_structure.site_count*3 != len(normal_modes_list):
 			raise Exception("Number of normal mode instances should be equal to the number of atoms in the primitive cell times three. Normal_modes_list is", 
 				normal_modes_list, "primitive structure is", primitive_cell_structure)
 
@@ -36,7 +36,7 @@ class QPoint(object):
 
 	def validate_normal_modes_list(self):
 
-		for band_index, normal_mode in enumerate(normal_modes_list):
+		for band_index, normal_mode in enumerate(self.normal_modes_list):
 			if not normal_mode.q_point_fractional_coordinates == self.q_point_fractional_coordinates:
 				raise Exception("Normal mode instance qpoints list", normal_mode.q_point_fractional_coordinates, "and QPoint instance qpoints", self.q_point_fractional_coordinates, "are not equivalent.")
 
@@ -48,4 +48,4 @@ class QPoint(object):
 	def __str__(self):
 
 		#print here
-		return "under work"
+		return "\n".join(str(normal_mode) for normal_mode in self.normal_modes_list)

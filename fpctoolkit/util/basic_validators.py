@@ -144,6 +144,14 @@ def validate_real_number(should_be_a_real_number):
 	if not basic_checks.is_a_real_number(should_be_a_real_number):
 		raise Exception("Input argument is not a real number. Type is", type(should_be_a_real_number), "value is ", should_be_a_real_number)
 
+def validate_complex_number(should_be_a_complex_number):
+	"""
+	Raises an exception if should_be_a_complex_number represents anything other than a complex number.
+	"""
+
+	if not basic_checks.is_a_complex_number(should_be_a_complex_number):
+		raise Exception("Input argument is not a complex number. Type is", type(should_be_a_complex_number), "value is ", should_be_a_complex_number)
+
 def validate_first_real_number_is_strictly_less_than_or_equal_to_second(real_number_1, real_number_2):
 	"""
 	Raises an exception if either values are not real numbers or if real_number_1 > real_number_2.

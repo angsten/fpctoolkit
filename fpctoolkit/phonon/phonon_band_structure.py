@@ -25,13 +25,12 @@ class PhononBandStructure(object):
 
 		Structure.validate(primitive_cell_structure)
 
+		self.primitive_cell_structure = primitive_cell_structure
 
 		
 		self.initialize_q_points(q_points_list)
 
-		self.primitive_cell_structure = primitive_cell_structure
 
-		self.validate_normal_modes_list()
 
 
 	def initialize_q_points(self, q_points_list):
@@ -43,11 +42,11 @@ class PhononBandStructure(object):
 	def __getitem__(self, key):
 		if not isinstance(key, tuple) or len(key) != 3:
 			raise Exception("Phonon band structure key must be a tuple of three real numbers. Key used is", key)
-			
+
 		return self.q_points[key]
 
 
 	def __str__(self):
 
-		#print here
-		return "under work"
+		join_string = "\n"*3 + 140*"*" + "\n"*4
+		return join_string.join(str(value) for qpoint, value in self.q_points.items())
