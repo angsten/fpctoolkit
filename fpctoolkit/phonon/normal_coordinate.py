@@ -24,3 +24,7 @@ class NormalCoordinate(object):
 		self.complex_coefficient = complex_coefficient
 
 		self.normal_mode = normal_mode_instance
+
+
+	def __str__(self):
+		return str(self.complex_coefficient) + " q=" + str(self.normal_mode.q_point_fractional_coordinates) + ", band=" + str(self.normal_mode.band_index+1)

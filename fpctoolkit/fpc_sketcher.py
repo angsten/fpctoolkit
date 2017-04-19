@@ -128,7 +128,7 @@ pbs = phonopy_utility.get_phonon_band_structure_instance(phonopy_instance=phonon
 ps = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'])
 
 
-print ps.get_permitted_wave_vectors_listt()
+print ps
 
 # e33_average = 1.0
 # e33_spread = 0.2

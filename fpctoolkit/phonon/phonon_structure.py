@@ -3,6 +3,8 @@
 import numpy as np
 import copy
 from collections import OrderedDict
+import math
+import cmath
 
 import fpctoolkit.util.basic_validators as basic_validators
 from fpctoolkit.structure.structure import Structure
@@ -52,6 +54,9 @@ class PhononStructure(object):
 		else:
 			self.initialize_normal_coordinates_list()
 
+	def __str__(self):
+		return "[\n" + "\n".join(str(normal_coordinate) for normal_coordinate in self.normal_coordinates_list) + "\n]"
+
 
 	def initialize_normal_coordinates_list(self):
 
@@ -88,8 +93,34 @@ class PhononStructure(object):
 
 	def get_distorted_structure(self):
 		"""
-		Returns a supercell self.primitive_cell_structure with dimensions self.supercell_dimensions_list with the phonon eigen_displacements applied, as
-		controlled by self.Q_coordinates_list
+		Returns a supercell of self.primitive_cell_structure with dimensions self.supercell_dimensions_list with the phonon eigen_displacements applied, as
+		controlled by self.normal_coordinates_list
+		"""
+
+		distorted_structure = copy.deepcopy(self.reference_supercell_structure)
+
+		for site_count, site in enumerate(distorted_structure.sites):
+
+			#index to cite number in the primitive cell - can range from 1 to Nat, where there are Nat in the primitive cell
+			atom_index = 1 + int(site_count/(self.supercell_dimensions_list[0]*self.supercell_dimensions_list[1]*self.supercell_dimensions_list[2]))
+
+			#this marks the cell the site is in - for instance, 1, 1, 1 in a 2x2x2 supercell means I'm in the center of the supercell
+			site_supercell_position = [site['position'][i]*self.supercell_dimensions_list[i] for i in range(3)] 
+
+			cartesian_displacement = [0.0, 0.0, 0.0]
+
+			for normal_coordinate in self.normal_coordinates_list:
+				q_vector = normal_coordinate.normal_mode.q_point_fractional_coordinates
+				eigen_displacements_vector = normal_coordinate.normal_mode.eigen_displacements_list[0*atom_index:3*atom_index]
+
+				cartesian_displacement += normal_coordinate.complex_coefficient*eigen_displacements_vector*cmath.exp(2.0*math.pi*(1.0j)*np.dot(q_vector, site_supercell_position))
+
+		pass
+
+
+	def set_translational_coordinates_to_zero(self):
+		"""
+		Sets all components of self.Q_coordinates_list that correspond to a translational normal mode that doesn't affect the structure's energy.
 		"""
 
 		pass
@@ -99,13 +130,6 @@ class PhononStructure(object):
 		"""
 		Returns a list of complex normal coordinates (Q) based on the current phonon band structure and the displacements in supercell_structure.
 		Supercell_structure must be consistent in dimensions with self.supercell_dimensions.
-		"""
-
-		pass
-
-	def set_translational_coordinates_to_zero(self):
-		"""
-		Sets all components of self.Q_coordinates_list that correspond to a translational normal mode that doesn't affect the structure's energy.
 		"""
 
 		pass
