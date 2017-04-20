@@ -57,7 +57,7 @@ coordinate_path = Path.join(base_path, "coordinate_index_" + str(coordinate_inde
 Path.make(coordinate_path)
 
 for i in range(4):
-	relaxatoin_path = Path.join(coordinate_path, str(i))
+	relaxation_path = Path.join(coordinate_path, str(i))
 	ps = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'])
 
 	ps.normal_coordinates_list[coordinate_index].coefficient = i*0.1
