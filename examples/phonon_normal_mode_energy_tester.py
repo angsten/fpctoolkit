@@ -56,6 +56,8 @@ coordinate_path = Path.join(base_path, "coordinate_index_" + str(coordinate_inde
 	
 Path.make(coordinate_path)
 
+print "Coordinate index is " + str(coordinate_index) + ", Frequency squared is " + str(ps.normal_coordinates_list[coordinate_index].frequency**2)
+
 for i in range(4):
 	relaxation_path = Path.join(coordinate_path, str(i))
 	ps = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'])
@@ -73,5 +75,4 @@ for i in range(4):
 	if relax.complete:
 		relaxed_structure = relax.final_structure
 
-		print "Frequency squared is" + ps.normal_coordinates_list[coordinate_index].frequency**2
 		print str(i), relax.get_final_energy()
