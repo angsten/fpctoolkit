@@ -91,9 +91,6 @@ class DisplacementVector(object):
 		Adds displacement_vector to the positions of the input reference structure and returns a new structure. 
 		"""
 
-		print "Disp vec used"
-		print displacement_vector
-
 		if len(displacement_vector) != 3*reference_structure.site_count:
 			raise Exception("Displacement vector size is not equal to the reference structures site count times three. Lengths are", 
 				len(displacement_vector), 3*reference_structure.site_count)

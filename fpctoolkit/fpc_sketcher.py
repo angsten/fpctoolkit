@@ -106,7 +106,7 @@ pbs = phonopy_utility.get_phonon_band_structure_instance(phonopy_instance=phonon
 ps = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'])
 
 
-coordinate_index = 0
+coordinate_index = 180
 ps.normal_coordinates_list[coordinate_index].coefficient = 1.0
 
 print ps
@@ -127,7 +127,7 @@ qpoint = ps.normal_coordinates_list[coordinate_index].normal_mode.q_point_fracti
 
 
 band_index = ps.normal_coordinates_list[coordinate_index].normal_mode.band_index #1 through 15
-amplitude = ps.normal_coordinates_list[coordinate_index].coefficient*(15.12/0.3)
+amplitude = ps.normal_coordinates_list[coordinate_index].coefficient*(10.0)
 phase = 0.0
 
 # band_index -= 1

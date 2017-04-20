@@ -43,6 +43,8 @@ class PhononSuperDisplacementVector(object):
 		Displacements are use a Cartesian mode with Angstroms as the units (or whatever units the eigen_displacements_vector uses).
 		"""
 
+		# print "\nIn set_displacements of phonon super disp vector"
+
 		q_vector = self.normal_mode.q_point_fractional_coordinates
 		eigen_displacements_vector = self.normal_mode.eigen_displacements_list
 		cell_count = self.supercell_dimensions_list[0]*self.supercell_dimensions_list[1]*self.supercell_dimensions_list[2]
@@ -55,14 +57,20 @@ class PhononSuperDisplacementVector(object):
 			#index to site number in the primitive cell - can range from 0 to Nat-1, where there are Nat in the primitive cell
 			#this serves as an index to the eigen_displacements_vector
 			atom_index = int(i/(cell_count))
+			# print atom_index
 
 			#this marks the cell the site is in - for instance, 1, 1, 1 in a 2x2x2 supercell means the atom is in the center of the supercell
 			#this is x(l/k) in the formula
-			site_supercell_position = [site['position'][i]*self.supercell_dimensions_list[i] for i in range(3)] 
+			site_supercell_position = [site['position'][x]*self.supercell_dimensions_list[x] for x in range(3)] 
 
 
 			#e(k|y/j)*exp(2*pi*i*ydotx(l/k)) --> defaults to Angstroms in Cartesian system
 			atomic_displacement = eigen_displacements_vector[3*atom_index:3*atom_index+3]*cmath.exp(2.0*cmath.pi*1.0j*np.dot(q_vector, site_supercell_position))
+
+			# print "atomic_displacement:" + str(atomic_displacement)
+
+			# print "before disp"
+			# print self.displacement_vector
 
 			for j in range(3):
 				if self.lambda_index == 1:
@@ -70,6 +78,8 @@ class PhononSuperDisplacementVector(object):
 				elif self.lambda_index == 2:
 					self.displacement_vector[i*3+j] = -1.0*atomic_displacement[j].imag
 
+			# print "after disp"
+			# print self.displacement_vector
 
 
 

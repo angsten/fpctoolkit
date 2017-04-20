@@ -53,6 +53,11 @@ class NormalCoordinate(object):
 
 		return self.normal_mode.band_index
 
+	@property
+	def frequency(self):
+
+		return self.normal_mode.frequency
+
 
 	def get_displacement_vector(self):
 		"""
@@ -64,11 +69,6 @@ class NormalCoordinate(object):
 
 		for i in range(len(displacement_vector)):
 			displacement_vector[i] *= self.coefficient
-
-		if self.coefficient > 0.0:
-			print "norm coord disp"
-			print displacement_vector
-			print
 
 		return displacement_vector
 

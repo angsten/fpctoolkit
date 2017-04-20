@@ -69,9 +69,6 @@ class PhononStructure(object):
 				normal_mode_displacement_vector = PhononSuperDisplacementVector(normal_mode_instance=normal_mode, lambda_index=lambda_index, 
 					reference_supercell=self.reference_supercell_structure, supercell_dimensions_list=self.supercell_dimensions_list)
 
-				print "in init. disp vec is:"
-				print normal_mode_displacement_vector
-
 				normal_coordinate = NormalCoordinate(normal_mode_instance=normal_mode, lambda_index=lambda_index, coefficient=0.0, 
 					phonon_super_displacement_vector_instance=normal_mode_displacement_vector)
 
@@ -115,9 +112,7 @@ class PhononStructure(object):
 
 		for normal_coordinate in self.normal_coordinates_list:
 			total_supercell_displacment_vector += normal_coordinate.get_displacement_vector()
-
-		print "Total Displacement:"
-		print total_supercell_displacment_vector
+			
 
 		return total_supercell_displacment_vector.get_displaced_structure(self.reference_supercell_structure)
 
