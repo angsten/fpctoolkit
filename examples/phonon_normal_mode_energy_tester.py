@@ -39,7 +39,7 @@ phonon = phonopy_utility.get_initialized_phononopy_instance(initial_structure, p
 relax_input_dictionary = {
 	'external_relaxation_count': 0,
 	'kpoint_schemes_list': [vasp_run_inputs_dictionary['kpoint_scheme']],
-	'kpoint_subdivisions_lists': [vasp_run_inputs_dictionary['kpoints_subdivisions_list']],
+	'kpoint_subdivisions_lists': [vasp_run_inputs_dictionary['kpoint_subdivisions_list']],
 	'submission_node_count_list': [1],
 	'ediff': [0.00001],
 	'encut': [vasp_run_inputs_dictionary['encut']]
