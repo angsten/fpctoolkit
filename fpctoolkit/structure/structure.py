@@ -121,6 +121,14 @@ class Structure(object):
 	def site_count(self):
 		return len(self.sites)
 
+	def convert_sites_to_coordinate_mode(self, coordinate_mode):
+		if coordinate_mode == 'Direct':
+			self.convert_sites_to_direct_coordinates()
+		elif coordinate_mode == 'Cartesian':
+			self.convert_to_cartesian_coordinates()
+		else:
+			raise Exception("Given coordinate mode is not valid:", coordinate_mode)
+
 	def convert_sites_to_cartesian_coordinates(self):
 		"""
 		Takes any site in sites that is in direct coordinates and changes

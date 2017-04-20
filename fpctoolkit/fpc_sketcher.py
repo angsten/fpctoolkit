@@ -59,8 +59,8 @@ phonopy_inputs_dictionary = {
 	'nac': True
 	}
 
-base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
-
+#base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
+base_path = "C:\Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/cubic_2_2_2/"
 
 
 init_struct_path = Path.join(base_path, 'initial_structure')
@@ -81,35 +81,33 @@ eig_vecs = phonon.get_frequencies_with_eigenvectors(q_points_list[0])[1]
 #phonopy_utility.view_eigen_values_and_eigen_vectors(phonopy_instance=phonon, q_points_list=q_points_list)
 
 
-qpoint = q_points_list[4]
+# qpoint = q_points_list[4]
 
-band_index = 2 #1 through 15
-amplitude = 14.0
-phase = 0.0
+# band_index = 2 #1 through 15
+# amplitude = 14.0
+# phase = 0.0
 
-band_index -= 1
+# band_index -= 1
 
-phonon_modes = [[qpoint, band_index, amplitude, phase]]
+# phonon_modes = [[qpoint, band_index, amplitude, phase]]
 
-mod_struct = phonopy_utility.get_modulated_structure(phonon, phonopy_inputs_dictionary, phonon_modes)
+# mod_struct = phonopy_utility.get_modulated_structure(phonon, phonopy_inputs_dictionary, phonon_modes)
 
-
-
-mod_struct.to_poscar_file_path(mod_struct_path)
+# mod_struct.to_poscar_file_path(mod_struct_path)
 
 
 
 
 pbs = phonopy_utility.get_phonon_band_structure_instance(phonopy_instance=phonon, q_points_list=q_points_list)
 
-#print pbs
+print pbs
 
 
 ps = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'])
 
 
-coordinate_index = 61
-ps.normal_coordinates_list[coordinate_index].complex_coefficient = 0.3
+coordinate_index = 81
+ps.normal_coordinates_list[coordinate_index].complex_coefficient = 0.0+200.2j
 print ps.normal_coordinates_list[coordinate_index].normal_mode
 
 
@@ -123,6 +121,26 @@ dist_struct = ps.get_distorted_supercell_structure()
 
 ref_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/reference_supercell.vasp")
 dist_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\distorted.vasp")
+
+
+
+
+
+qpoint = ps.normal_coordinates_list[coordinate_index].normal_mode.q_point_fractional_coordinates
+
+band_index = ps.normal_coordinates_list[coordinate_index].normal_mode.band_index #1 through 15
+amplitude = ps.normal_coordinates_list[coordinate_index].complex_coefficient.real*(15.12/0.3)
+phase = 0.0
+
+# band_index -= 1
+
+
+phonon_modes = [[qpoint, band_index, amplitude, phase]]
+
+mod_struct = phonopy_utility.get_modulated_structure(phonon, phonopy_inputs_dictionary, phonon_modes)
+
+mod_struct.to_poscar_file_path(mod_struct_path)
+
 
 
 # e33_average = 1.0

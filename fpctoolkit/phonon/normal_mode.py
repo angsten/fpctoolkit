@@ -51,7 +51,7 @@ class NormalMode(object):
 		self.eigenvector = eigenvector
 		self.frequency = frequency
 		self.q_point_fractional_coordinates = q_point_fractional_coordinates
-		self.band_index = band_index
+		self.band_index = band_index #0 through Nat
 		self.primitive_cell_structure = primitive_cell_structure
 		self.atomic_masses_list = atomic_masses_list
 

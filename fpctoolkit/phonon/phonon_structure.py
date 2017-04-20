@@ -103,31 +103,47 @@ class PhononStructure(object):
 		distorted_structure.convert_sites_to_direct_coordinates()
 
 		for site_count, site in enumerate(distorted_structure.sites):
-			print site_count, site
+			#print site_count, site
 			#index to cite number in the primitive cell - can range from 0 to Nat-1, where there are Nat in the primitive cell
 			atom_index = int(site_count/(self.supercell_dimensions_list[0]*self.supercell_dimensions_list[1]*self.supercell_dimensions_list[2]))
 
-			print 'atom_index is ', atom_index
+			#print 'atom_index is ', atom_index
 
 			#this marks the cell the site is in - for instance, 1, 1, 1 in a 2x2x2 supercell means I'm in the center of the supercell
 			site_supercell_position = [site['position'][i]*self.supercell_dimensions_list[i] for i in range(3)] 
 
 			cartesian_displacement = [0.0, 0.0, 0.0]
 
+
+			# # print site_supercell_position
+			# if site_supercell_position == [0.5, 0.5, 0.5]:###################remove
+			# 	b = True
+			# else:
+			# 	b = False
+
 			for normal_coordinate in self.normal_coordinates_list:
-				q_vector = normal_coordinate.normal_mode.q_point_fractional_coordinates
-				eigen_displacements_vector = normal_coordinate.normal_mode.eigen_displacements_list[3*atom_index:3*atom_index+3]
 
-				#print "eigen_displacements_vector", eigen_displacements_vector
+				for i in range(2): #once for both -q and +q
 
-				#print "exp term is ", cmath.exp(2.0*math.pi*(1.0j)*np.dot(q_vector, site_supercell_position))
+					if i == 1 and normal_coordinate.normal_mode.q_point_fractional_coordinates == (0.0, 0.0, 0.0):
+						continue
 
-				#print "disp term is", eigen_displacements_vector
+					if i == 0:
+						q_vector = normal_coordinate.normal_mode.q_point_fractional_coordinates
+						eigen_displacements_vector = normal_coordinate.normal_mode.eigen_displacements_list[3*atom_index:3*atom_index+3]
+						normal_coordinate_complex_coefficient = normal_coordinate.complex_coefficient
+					else:
+						q_vector = [-component for component in normal_coordinate.normal_mode.q_point_fractional_coordinates]
+						eigen_displacements_vector = np.conj(normal_coordinate.normal_mode.eigen_displacements_list[3*atom_index:3*atom_index+3])
+						normal_coordinate_complex_coefficient = np.conj(normal_coordinate.complex_coefficient)
 
-				displacement_vector = normal_coordinate.complex_coefficient*eigen_displacements_vector*cmath.exp(2.0*math.pi*(1.0j)*np.dot(q_vector, site_supercell_position))
+					displacement_vector = normal_coordinate_complex_coefficient*eigen_displacements_vector*cmath.exp(2.0*math.pi*(1.0j)*np.dot(q_vector, site_supercell_position))
 
-				for i in range(3):
-					cartesian_displacement[i] += displacement_vector[i]
+					if b:
+						print displacement_vector
+
+					for i in range(3):
+						cartesian_displacement[i] += displacement_vector[i]
 
 			for cartesian_component in cartesian_displacement:
 				if abs(cartesian_component.imag) > 1e-6:
@@ -138,7 +154,7 @@ class PhononStructure(object):
 
 			direct_coordinates_displacement = Vector.get_in_direct_coordinates(real_cartesian_displacement_vector, distorted_structure.lattice).to_list()
 
-			print "Displacement: ", direct_coordinates_displacement
+			#print "Displacement: ", direct_coordinates_displacement
 
 			site.displace(direct_coordinates_displacement)
 		
