@@ -79,4 +79,4 @@ for coordinate_index in coordinate_indices:
 		if relax.complete:
 			relaxed_structure = relax.final_structure
 
-			print str(i), relax.get_final_energy()
+			print str(ps.normal_coordinates_list[coordinate_index].coefficient), relax.get_final_energy()
