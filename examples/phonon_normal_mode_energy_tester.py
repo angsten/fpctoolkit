@@ -52,28 +52,31 @@ pbs = phonopy_utility.get_phonon_band_structure_instance(phonopy_instance=phonon
 
 ps = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'])
 
-coordinate_index = 180
-
-coordinate_path = Path.join(base_path, "coordinate_index_" + str(coordinate_index))
-	
-Path.make(coordinate_path)
-
-print "Coordinate index is " + str(coordinate_index) + ", Frequency squared is " + str(ps.normal_coordinates_list[coordinate_index].frequency**2)
-
-for i in range(4):
-	relaxation_path = Path.join(coordinate_path, str(i))
-	
-	ps.normal_coordinates_list[coordinate_index].coefficient = i*0.1
-
-	dist_struct = ps.get_distorted_supercell_structure()
+coordinate_indices = [180, 0, 211, 23, 8, 122, 11]
 
 
-	relax = vasp_relaxation = VaspRelaxation(path=relaxation_path, initial_structure=dist_struct, input_dictionary=relax_input_dictionary)
+for coordinate_index in coordinate_indices:
 
-	relax.update()
+	coordinate_path = Path.join(base_path, "coordinate_index_" + str(coordinate_index))
+		
+	Path.make(coordinate_path)
+
+	print "Coordinate index is " + str(coordinate_index) + ", Frequency squared is " + str(ps.normal_coordinates_list[coordinate_index].frequency**2)
+
+	for i in range(4):
+		relaxation_path = Path.join(coordinate_path, str(i))
+		
+		ps.normal_coordinates_list[coordinate_index].coefficient = i*0.1
+
+		dist_struct = ps.get_distorted_supercell_structure()
 
 
-	if relax.complete:
-		relaxed_structure = relax.final_structure
+		relax = vasp_relaxation = VaspRelaxation(path=relaxation_path, initial_structure=dist_struct, input_dictionary=relax_input_dictionary)
 
-		print str(i), relax.get_final_energy()
+		relax.update()
+
+
+		if relax.complete:
+			relaxed_structure = relax.final_structure
+
+			print str(i), relax.get_final_energy()
