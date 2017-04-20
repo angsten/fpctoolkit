@@ -110,23 +110,6 @@ class NormalMode(object):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	def __str__(self):
 
 		return_string = ""

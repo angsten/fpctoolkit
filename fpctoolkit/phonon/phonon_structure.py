@@ -11,7 +11,8 @@ from fpctoolkit.structure.structure import Structure
 from fpctoolkit.structure.structure_manipulator import StructureManipulator
 from fpctoolkit.phonon.normal_coordinate import NormalCoordinate
 from fpctoolkit.util.math.vector import Vector
-
+from fpctoolkit.structure.displacement_vector import DisplacementVector
+from fpctoolkit.phonon.phonon_super_displacement_vector import PhononSuperDisplacementVector
 
 class PhononStructure(object):
 	"""
@@ -22,8 +23,8 @@ class PhononStructure(object):
 		"""
 		primitive_cell_structure should be the primitive cell Structure class instance that was used to generate the phonon band structure.
 
-		phonon_band_structure should be a PhononBandStructure instance with, at minimim, normal modes for the 'permitted wave vectors' (38.10, pg 295 Born and Huang)
-		-->For example, if a 2x1x1 supercell is expected, the following q points must be provided: (-1/2, 0, 0), (0, 0, 0)
+		phonon_band_structure should be a PhononBandStructure instance with, at minimim, normal modes for the necessary wave vectors, loosely (38.10, pg 295 Born and Huang)
+		-->For example, if a 2x1x1 supercell is expected, the following q points must be provided: (+1/2, 0, 0), (0, 0, 0)
 
 		supercell_dimensions
 
@@ -41,17 +42,17 @@ class PhononStructure(object):
 
 
 
-		self.validate_permitted_wave_vectors_exist()
+		self.validate_necessary_wave_vectors_exist()
 
 
-		self.number_of_normal_coordinates = self.primitive_cell_structure.site_count*3*supercell_dimensions_list[0]*supercell_dimensions_list[1]*supercell_dimensions_list[2]
+		#FIX::self.number_of_normal_coordinates = 2*self.primitive_cell_structure.site_count*3*supercell_dimensions_list[0]*supercell_dimensions_list[1]*supercell_dimensions_list[2]
 
 
 		if normal_coordinate_instances_list != None:
-			if len(normal_coordinate_instances_list) != self.number_of_normal_coordinates:
-				raise Exception("The number of given normal coordinates is not equal to the number needed to describe the structural distortions. Normal coordinates list given is", normal_coordinate_instances_list)
-			else:
-				self.normal_coordinates_list = copy.deepcopy(normal_coordinate_instances_list)
+			# if len(normal_coordinate_instances_list) != self.number_of_normal_coordinates:
+			# 	raise Exception("The number of given normal coordinates is not equal to the number needed to describe the structural distortions. Normal coordinates list given is", normal_coordinate_instances_list)
+			# else:
+			self.normal_coordinates_list = copy.deepcopy(normal_coordinate_instances_list)
 		else:
 			self.initialize_normal_coordinates_list()
 
@@ -64,31 +65,41 @@ class PhononStructure(object):
 		self.normal_coordinates_list = []
 
 		for normal_mode in self.phonon_band_structure.get_list_of_normal_modes():
-			self.normal_coordinates_list.append(NormalCoordinate(normal_mode_instance=normal_mode, complex_coefficient=0.0+0.0j))
+			for lambda_index in [1, 2]:
+				normal_mode_displacement_vector = PhononSuperDisplacementVector(normal_mode_instance=normal_mode, lambda_index=lambda_index, 
+					reference_supercell=self.reference_supercell_structure, supercell_dimensions_list=self.supercell_dimensions_list)
+
+				print "in init. disp vec is:"
+				print normal_mode_displacement_vector
+
+				normal_coordinate = NormalCoordinate(normal_mode_instance=normal_mode, lambda_index=lambda_index, coefficient=0.0, 
+					phonon_super_displacement_vector_instance=normal_mode_displacement_vector)
+
+				self.normal_coordinates_list.append(normal_coordinate)
 
 
-	def validate_permitted_wave_vectors_exist(self):
+	def validate_necessary_wave_vectors_exist(self):
 		"""
-		Validates that (at minimum) all permitted wavevectors for the given supercell_dimensions are in phonon_band_structure.
+		Validates that (at minimum) all necessary wavevectors for the given supercell_dimensions are in phonon_band_structure.
 		"""
 
-		permitted_q_vectors_list = self.get_permitted_wave_vectors_listt()
+		necessary_q_vectors_list = self.get_necessary_wave_vectors_listt()
 
-		for q_vector in permitted_q_vectors_list:
+		for q_vector in necessary_q_vectors_list:
 			if q_vector not in self.phonon_band_structure:
-				raise Exception("Phonon band structure does not contain all permitted q_vectors. Missing ", q_vector)
+				raise Exception("Phonon band structure does not contain all necessary q_vectors. Missing ", q_vector)
 
 
 
 
 
-	def get_permitted_wave_vectors_listt(self):
+	def get_necessary_wave_vectors_listt(self):
 		"""
-		Using equation 38.10 from B+H, determine all permitted wave vectors for the given supercell dimensions (resulting q's are in
+		Using equation 38.10 from B+H, determine all necessary wave vectors for the given supercell dimensions (resulting q's are in
 		fractional coordinates)
 		"""
 
-		return PhononStructure.get_permitted_wave_vectors_list(self.supercell_dimensions_list)
+		return PhononStructure.get_necessary_wave_vectors_list(self.supercell_dimensions_list)
 
 
 
@@ -100,65 +111,16 @@ class PhononStructure(object):
 
 		distorted_structure = copy.deepcopy(self.reference_supercell_structure)
 
-		distorted_structure.convert_sites_to_direct_coordinates()
+		total_supercell_displacment_vector = DisplacementVector(reference_structure=self.reference_supercell_structure, coordinate_mode='Cartesian')
 
-		for site_count, site in enumerate(distorted_structure.sites):
-			#print site_count, site
-			#index to cite number in the primitive cell - can range from 0 to Nat-1, where there are Nat in the primitive cell
-			atom_index = int(site_count/(self.supercell_dimensions_list[0]*self.supercell_dimensions_list[1]*self.supercell_dimensions_list[2]))
+		for normal_coordinate in self.normal_coordinates_list:
+			total_supercell_displacment_vector += normal_coordinate.get_displacement_vector()
 
-			#print 'atom_index is ', atom_index
+		print "Total Displacement:"
+		print total_supercell_displacment_vector
 
-			#this marks the cell the site is in - for instance, 1, 1, 1 in a 2x2x2 supercell means I'm in the center of the supercell
-			site_supercell_position = [site['position'][i]*self.supercell_dimensions_list[i] for i in range(3)] 
+		return total_supercell_displacment_vector.get_displaced_structure(self.reference_supercell_structure)
 
-			cartesian_displacement = [0.0, 0.0, 0.0]
-
-
-			# # print site_supercell_position
-			# if site_supercell_position == [0.5, 0.5, 0.5]:###################remove
-			# 	b = True
-			# else:
-			# 	b = False
-
-			for normal_coordinate in self.normal_coordinates_list:
-
-				for i in range(2): #once for both -q and +q
-
-					if i == 1 and normal_coordinate.normal_mode.q_point_fractional_coordinates == (0.0, 0.0, 0.0):
-						continue
-
-					if i == 0:
-						q_vector = normal_coordinate.normal_mode.q_point_fractional_coordinates
-						eigen_displacements_vector = normal_coordinate.normal_mode.eigen_displacements_list[3*atom_index:3*atom_index+3]
-						normal_coordinate_complex_coefficient = normal_coordinate.complex_coefficient
-					else:
-						q_vector = [-component for component in normal_coordinate.normal_mode.q_point_fractional_coordinates]
-						eigen_displacements_vector = np.conj(normal_coordinate.normal_mode.eigen_displacements_list[3*atom_index:3*atom_index+3])
-						normal_coordinate_complex_coefficient = np.conj(normal_coordinate.complex_coefficient)
-
-					displacement_vector = normal_coordinate_complex_coefficient*eigen_displacements_vector*cmath.exp(2.0*math.pi*(1.0j)*np.dot(q_vector, site_supercell_position))
-
-					if b:
-						print displacement_vector
-
-					for i in range(3):
-						cartesian_displacement[i] += displacement_vector[i]
-
-			for cartesian_component in cartesian_displacement:
-				if abs(cartesian_component.imag) > 1e-6:
-					raise Exception("Distortion displacement vector has imaginary component. Vector in Cartesian coordinates is", cartesian_displacement)
-
-
-			real_cartesian_displacement_vector = [component.real for component in cartesian_displacement]
-
-			direct_coordinates_displacement = Vector.get_in_direct_coordinates(real_cartesian_displacement_vector, distorted_structure.lattice).to_list()
-
-			#print "Displacement: ", direct_coordinates_displacement
-
-			site.displace(direct_coordinates_displacement)
-		
-		return distorted_structure
 
 
 	def set_translational_coordinates_to_zero(self):
@@ -179,38 +141,38 @@ class PhononStructure(object):
 
 
 	@staticmethod
-	def get_permitted_wave_vectors_list(supercell_dimensions_list):
+	def get_necessary_wave_vectors_list(supercell_dimensions_list):
 		"""
-		Using equation 38.10 from B+H, determine all permitted wave vectors for the given supercell dimensions (resulting q's are in
-		fractional coordinates)
+		Using equation 38.10 from B+H, determine all necessary wave vectors for the given supercell dimensions (resulting q's are in
+		fractional coordinates). In this version, don't every use -q and q - just positive q's are sufficient.
 
-		For example, for a 2x1x1 supercell, returned q points will be [(-0.5, 0, 0), (0, 0, 0)]
+		For example, for a 2x1x1 supercell, returned q points will be [(0.5, 0, 0), (0, 0, 0)]
 		"""
 
-		permitted_q_vectors_list = []
+		necessary_q_vectors_list = []
 		L_x = supercell_dimensions_list[0]
 		L_y = supercell_dimensions_list[1]
 		L_z = supercell_dimensions_list[2]
 
-		for l_x in range(-L_x, L_x):
-			for l_y in range(-L_y, L_y):
-				for l_z in range(-L_z, L_z):
+		for l_x in range(0, L_x):
+			for l_y in range(0, L_y):
+				for l_z in range(0, L_z):
 					q_point_x = float(l_x)/float(L_x)
 					q_point_y = float(l_y)/float(L_y)
 					q_point_z = float(l_z)/float(L_z)
 
 					q_point = (q_point_x, q_point_y, q_point_z)
 
-					q_point_permitted = True
+					q_point_necessary = True
 
 					for q_component in q_point:
-						if (q_component < (-0.5)) or (q_component >= (0.5)):
-							q_point_permitted = False
+						if (q_component > (0.5)):
+							q_point_necessary = False
 
-					if q_point_permitted:
-						permitted_q_vectors_list.append(q_point)
+					if q_point_necessary:
+						necessary_q_vectors_list.append(q_point)
 
-		if len(permitted_q_vectors_list) != L_x*L_y*L_z:
-			raise Exception("Number of permitted wave-vectors must equal the number of cells in the supercell.")
+		# if len(necessary_q_vectors_list) != L_x*L_y*L_z:
+		# 	raise Exception("Number of necessary wave-vectors must equal the number of cells in the supercell.")
 
-		return permitted_q_vectors_list
+		return necessary_q_vectors_list

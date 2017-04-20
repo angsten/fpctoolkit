@@ -187,7 +187,16 @@ class SiteCollection(object):
 
 		return [site['position'] for site in self.get_sorted_list()]
 
+	def get_coordinate_mode(self):
 
+		sites_list = self.get_sorted_list()
+
+		SiteCollection.validate_sites_all_have_same_coordinate_mode(self.get_sorted_list())
+
+		if len(sites_list) == 0:
+			raise Exception("There are no sites in this site collection. Cannot determine the coordinate mode")
+		else:
+			return sites_list[0]['coordinate_mode']
 
 
 	###################################################################################################################

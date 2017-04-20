@@ -125,7 +125,7 @@ class Structure(object):
 		if coordinate_mode == 'Direct':
 			self.convert_sites_to_direct_coordinates()
 		elif coordinate_mode == 'Cartesian':
-			self.convert_to_cartesian_coordinates()
+			self.convert_sites_to_cartesian_coordinates()
 		else:
 			raise Exception("Given coordinate mode is not valid:", coordinate_mode)
 

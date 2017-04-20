@@ -25,9 +25,12 @@ class DisplacementVector(object):
 
 		self.reference_structure = reference_structure
 
-		self.displacement_vector = [0.0]*3.0*reference_structure.site_count
+		self.displacement_vector = [0.0]*3*reference_structure.site_count
 
 		self.coordinate_mode = coordinate_mode
+
+	def __str__(self):
+		return "[" + ", ".join(str(component) for component in self.displacement_vector) + "]"
 
 	def __len__(self):
 		return len(self.displacement_vector)
@@ -45,6 +48,29 @@ class DisplacementVector(object):
 		self.displacement_vector[index] = value
 
 
+	def __iadd__(self, displacement_vector):
+		if len(displacement_vector) != len(self.displacement_vector):
+			raise Exception("To add two displacement vectors, their lengths must be equal.", displacement_vector, self.displacement_vector)
+
+		added_displacement_vector = copy.deepcopy(displacement_vector)
+
+		for i in range(len(added_displacement_vector)):
+			added_displacement_vector[i] += self.displacement_vector[i]
+
+		return added_displacement_vector
+
+	def __radd__(self, displacement_vector):
+		if len(displacement_vector) != len(self.displacement_vector):
+			raise Exception("To add two displacement vectors, their lengths must be equal.", displacement_vector, self.displacement_vector)
+
+		added_displacement_vector = copy.deepcopy(displacement_vector)
+
+		for i in range(len(added_displacement_vector)):
+			added_displacement_vector[i] += self.displacement_vector[i]
+
+		return added_displacement_vector
+
+
 
 	def get_displaced_structure(self, input_reference_structure=None):
 		"""
@@ -60,10 +86,13 @@ class DisplacementVector(object):
 
 
 	@staticmethod
-	def displace_structure(self, reference_structure, displacement_vector, displacement_coordinate_mode):
+	def displace_structure(reference_structure, displacement_vector, displacement_coordinate_mode):
 		"""
 		Adds displacement_vector to the positions of the input reference structure and returns a new structure. 
 		"""
+
+		print "Disp vec used"
+		print displacement_vector
 
 		if len(displacement_vector) != 3*reference_structure.site_count:
 			raise Exception("Displacement vector size is not equal to the reference structures site count times three. Lengths are", 
@@ -73,11 +102,22 @@ class DisplacementVector(object):
 		if not displacement_coordinate_mode in ['Cartesian', 'Direct']:
 			raise Exception("Invalid coordinate mode given:", displacement_coordinate_mode)
 
+
 		displaced_structure = copy.deepcopy(reference_structure)
 
+		original_reference_coordinate_mode = reference_structure.sites.get_coordinate_mode()
+		original_displaced_coordinate_mode = displaced_structure.sites.get_coordinate_mode()
+
+		reference_structure.convert_sites_to_coordinate_mode(displacement_coordinate_mode)
 		displaced_structure.convert_sites_to_coordinate_mode(displacement_coordinate_mode)
 
 
-		for i, site in enumerate(reference_structure):
+		for i, reference_site in enumerate(reference_structure.sites):
 			for j in range(3):
-				site['position'][j] += self.displacement_vector[j + i*3]
+				displaced_structure.sites[i]['position'][j] = reference_site['position'][j] + displacement_vector[j + i*3]
+
+
+		displaced_structure.convert_sites_to_coordinate_mode(original_displaced_coordinate_mode)
+		reference_structure.convert_sites_to_coordinate_mode(original_reference_coordinate_mode)
+
+		return displaced_structure

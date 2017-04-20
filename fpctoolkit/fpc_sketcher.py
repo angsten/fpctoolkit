@@ -59,8 +59,8 @@ phonopy_inputs_dictionary = {
 	'nac': True
 	}
 
-#base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
-base_path = "C:\Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/cubic_2_2_2/"
+base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
+#base_path = "C:\Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/cubic_2_2_2/"
 
 
 init_struct_path = Path.join(base_path, 'initial_structure')
@@ -74,7 +74,7 @@ initial_structure = Structure(init_struct_path)
 phonon = phonopy_utility.get_initialized_phononopy_instance(initial_structure, phonopy_inputs_dictionary, force_constants_path, born_path)
 
 
-q_points_list = [(0.0, 0.0, 0.0), (-0.5, 0.0, 0.0), (0.0, -0.5, 0.0), (0.0, 0.0, -0.5), (-0.5, -0.5, 0.0), (-0.5, 0.0, -0.5), (0.0, -0.5, -0.5), (-0.5, -0.5, -0.5), (-0.5, -0.5, -0.5)]
+q_points_list = [(0.0, 0.0, 0.0), (0.5, 0.0, 0.0), (0.0, 0.5, 0.0), (0.0, 0.0, 0.5), (0.5, 0.5, 0.0), (0.5, 0.0, 0.5), (0.0, 0.5, 0.5), (0.5, 0.5, 0.5), (0.5, 0.5, 0.5)]
 
 eig_vecs = phonon.get_frequencies_with_eigenvectors(q_points_list[0])[1]
 
@@ -100,17 +100,14 @@ eig_vecs = phonon.get_frequencies_with_eigenvectors(q_points_list[0])[1]
 
 pbs = phonopy_utility.get_phonon_band_structure_instance(phonopy_instance=phonon, q_points_list=q_points_list)
 
-print pbs
+#print pbs
 
 
 ps = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'])
 
 
-coordinate_index = 81
-ps.normal_coordinates_list[coordinate_index].complex_coefficient = 0.0+200.2j
-print ps.normal_coordinates_list[coordinate_index].normal_mode
-
-
+coordinate_index = 0
+ps.normal_coordinates_list[coordinate_index].coefficient = 1.0
 
 print ps
 
@@ -128,11 +125,14 @@ dist_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\distorted.vas
 
 qpoint = ps.normal_coordinates_list[coordinate_index].normal_mode.q_point_fractional_coordinates
 
+
 band_index = ps.normal_coordinates_list[coordinate_index].normal_mode.band_index #1 through 15
-amplitude = ps.normal_coordinates_list[coordinate_index].complex_coefficient.real*(15.12/0.3)
+amplitude = ps.normal_coordinates_list[coordinate_index].coefficient*(15.12/0.3)
 phase = 0.0
 
 # band_index -= 1
+
+print ps.normal_coordinates_list[coordinate_index].normal_mode
 
 
 phonon_modes = [[qpoint, band_index, amplitude, phase]]
