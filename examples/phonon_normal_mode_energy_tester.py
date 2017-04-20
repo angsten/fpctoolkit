@@ -50,6 +50,8 @@ q_points_list = [(0.0, 0.0, 0.0), (0.5, 0.0, 0.0), (0.0, 0.5, 0.0), (0.0, 0.0, 0
 pbs = phonopy_utility.get_phonon_band_structure_instance(phonopy_instance=phonon, q_points_list=q_points_list)
 
 
+ps = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'])
+
 coordinate_index = 180
 
 coordinate_path = Path.join(base_path, "coordinate_index_" + str(coordinate_index))
@@ -60,8 +62,7 @@ print "Coordinate index is " + str(coordinate_index) + ", Frequency squared is "
 
 for i in range(4):
 	relaxation_path = Path.join(coordinate_path, str(i))
-	ps = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'])
-
+	
 	ps.normal_coordinates_list[coordinate_index].coefficient = i*0.1
 
 	dist_struct = ps.get_distorted_supercell_structure()
