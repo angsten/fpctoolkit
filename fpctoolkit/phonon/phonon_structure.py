@@ -10,6 +10,7 @@ import fpctoolkit.util.basic_validators as basic_validators
 from fpctoolkit.structure.structure import Structure
 from fpctoolkit.structure.structure_manipulator import StructureManipulator
 from fpctoolkit.phonon.normal_coordinate import NormalCoordinate
+from fpctoolkit.util.math.vector import Vector
 
 
 class PhononStructure(object):
@@ -91,7 +92,7 @@ class PhononStructure(object):
 
 
 
-	def get_distorted_structure(self):
+	def get_distorted_supercell_structure(self):
 		"""
 		Returns a supercell of self.primitive_cell_structure with dimensions self.supercell_dimensions_list with the phonon eigen_displacements applied, as
 		controlled by self.normal_coordinates_list
@@ -99,10 +100,14 @@ class PhononStructure(object):
 
 		distorted_structure = copy.deepcopy(self.reference_supercell_structure)
 
-		for site_count, site in enumerate(distorted_structure.sites):
+		distorted_structure.convert_sites_to_direct_coordinates()
 
-			#index to cite number in the primitive cell - can range from 1 to Nat, where there are Nat in the primitive cell
-			atom_index = 1 + int(site_count/(self.supercell_dimensions_list[0]*self.supercell_dimensions_list[1]*self.supercell_dimensions_list[2]))
+		for site_count, site in enumerate(distorted_structure.sites):
+			print site_count, site
+			#index to cite number in the primitive cell - can range from 0 to Nat-1, where there are Nat in the primitive cell
+			atom_index = int(site_count/(self.supercell_dimensions_list[0]*self.supercell_dimensions_list[1]*self.supercell_dimensions_list[2]))
+
+			print 'atom_index is ', atom_index
 
 			#this marks the cell the site is in - for instance, 1, 1, 1 in a 2x2x2 supercell means I'm in the center of the supercell
 			site_supercell_position = [site['position'][i]*self.supercell_dimensions_list[i] for i in range(3)] 
@@ -111,11 +116,33 @@ class PhononStructure(object):
 
 			for normal_coordinate in self.normal_coordinates_list:
 				q_vector = normal_coordinate.normal_mode.q_point_fractional_coordinates
-				eigen_displacements_vector = normal_coordinate.normal_mode.eigen_displacements_list[0*atom_index:3*atom_index]
+				eigen_displacements_vector = normal_coordinate.normal_mode.eigen_displacements_list[3*atom_index:3*atom_index+3]
 
-				cartesian_displacement += normal_coordinate.complex_coefficient*eigen_displacements_vector*cmath.exp(2.0*math.pi*(1.0j)*np.dot(q_vector, site_supercell_position))
+				#print "eigen_displacements_vector", eigen_displacements_vector
 
-		pass
+				#print "exp term is ", cmath.exp(2.0*math.pi*(1.0j)*np.dot(q_vector, site_supercell_position))
+
+				#print "disp term is", eigen_displacements_vector
+
+				displacement_vector = normal_coordinate.complex_coefficient*eigen_displacements_vector*cmath.exp(2.0*math.pi*(1.0j)*np.dot(q_vector, site_supercell_position))
+
+				for i in range(3):
+					cartesian_displacement[i] += displacement_vector[i]
+
+			for cartesian_component in cartesian_displacement:
+				if abs(cartesian_component.imag) > 1e-6:
+					raise Exception("Distortion displacement vector has imaginary component. Vector in Cartesian coordinates is", cartesian_displacement)
+
+
+			real_cartesian_displacement_vector = [component.real for component in cartesian_displacement]
+
+			direct_coordinates_displacement = Vector.get_in_direct_coordinates(real_cartesian_displacement_vector, distorted_structure.lattice).to_list()
+
+			print "Displacement: ", direct_coordinates_displacement
+
+			site.displace(direct_coordinates_displacement)
+		
+		return distorted_structure
 
 
 	def set_translational_coordinates_to_zero(self):

@@ -81,10 +81,10 @@ eig_vecs = phonon.get_frequencies_with_eigenvectors(q_points_list[0])[1]
 #phonopy_utility.view_eigen_values_and_eigen_vectors(phonopy_instance=phonon, q_points_list=q_points_list)
 
 
-qpoint = q_points_list[0]
+qpoint = q_points_list[4]
 
-band_index = 1 #1 through 15
-amplitude = 10.0
+band_index = 2 #1 through 15
+amplitude = 14.0
 phase = 0.0
 
 band_index -= 1
@@ -98,26 +98,6 @@ mod_struct = phonopy_utility.get_modulated_structure(phonon, phonopy_inputs_dict
 mod_struct.to_poscar_file_path(mod_struct_path)
 
 
-for i in range(15):
-	for j in range(i, 15):
-		vec_1 = eig_vecs[:, i]
-		vec_2 = eig_vecs[:, j]
-
-		#phonopy_utility.convert_dynamical_matrix_eigenvector_to_normalized_displacement_pattern(vec_1, phonon.get_primitive().get_masses())
-		#phonopy_utility.convert_dynamical_matrix_eigenvector_to_normalized_displacement_pattern(vec_2, phonon.get_primitive().get_masses())
-
-
-		#print
-		#print np.linalg.norm(np.dot(vec_1, vec_2))
-		#print
-
-print
-print
-
-for i in range(15):
-	vec_1 = eig_vecs[:, i]
-	#print np.linalg.norm(vec_1)
-
 
 
 pbs = phonopy_utility.get_phonon_band_structure_instance(phonopy_instance=phonon, q_points_list=q_points_list)
@@ -128,7 +108,22 @@ pbs = phonopy_utility.get_phonon_band_structure_instance(phonopy_instance=phonon
 ps = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'])
 
 
+coordinate_index = 61
+ps.normal_coordinates_list[coordinate_index].complex_coefficient = 0.3
+print ps.normal_coordinates_list[coordinate_index].normal_mode
+
+
+
 print ps
+
+
+ref_struct = ps.reference_supercell_structure
+
+dist_struct = ps.get_distorted_supercell_structure()
+
+ref_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/reference_supercell.vasp")
+dist_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\distorted.vasp")
+
 
 # e33_average = 1.0
 # e33_spread = 0.2
