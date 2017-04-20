@@ -1,6 +1,7 @@
 #from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
 
 import collections
+import copy
 
 from fpctoolkit.workflow.vasp_run import VaspRun
 from fpctoolkit.workflow.vasp_run_set import VaspRunSet
@@ -73,11 +74,13 @@ class VaspRelaxation(VaspRunSet):
 
 
 
-	def unpack_input_dictionary_into_self(self, input_dictionary):
+	def unpack_input_dictionary_into_self(self, initial_input_dictionary):
 		"""Takes items in input_dictionary and loads them into self."""
 
-		if not input_dictionary:
+		if not initial_input_dictionary:
 			raise Exception("No input dictionary supplied")
+
+		input_dictionary = copy.deepcopy(initial_input_dictionary)
 
 		self.external_relaxation_count = input_dictionary.pop('external_relaxation_count')
 		self.kpoint_schemes = ParameterList(input_dictionary.pop('kpoint_schemes_list'))
