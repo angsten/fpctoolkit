@@ -28,7 +28,8 @@ class VaspForcesRunSet(VaspRunSet):
 		vasp_run_inputs_dictionary = {
 			'kpoint_scheme': 'Monkhorst',
 			'kpoint_subdivisions_list': [4, 4, 4],
-			'encut': 800
+			'encut': 800,
+			'npar': 1 (optional)
 		}
 
 		wavecar_path should be the wavecar of a similar structure to the input structures of the structures_list.
@@ -71,7 +72,13 @@ class VaspForcesRunSet(VaspRunSet):
 		incar = IncarMaker.get_accurate_forces_incar()
 		incar['encut'] = self.vasp_run_inputs['encut']
 
-		input_set = VaspInputSet(structure, kpoints, incar, auto_change_lreal=False)
+		if 'npar' in self.vasp_run_inputs:
+			incar['npar'] = self.vasp_run_inputs['npar']
+			auto_change_npar = False
+		else:
+			auto_change_npar = True
+
+		input_set = VaspInputSet(structure, kpoints, incar, auto_change_lreal=False, auto_change_npar=auto_change_npar)
 
 		vasp_run = VaspRun(path=path, input_set=input_set, wavecar_path=self.wavecar_path)
 
