@@ -84,6 +84,9 @@ class DisplacementVector(object):
 
 		return multiplied_displacement_vector
 
+	__rmul__ = __imul__
+
+
 	def is_zero_vector(self, zero_tolerance=1e-12):
 		"""
 		Returns true is the stored displacement vector magnitude is zero - then all components must be zero.
@@ -118,8 +121,6 @@ class DisplacementVector(object):
 		"""
 
 		self.set_magnitude(1.0)
-
-		print self.magnitude, '*********'
 
 
 	def to_list(self):

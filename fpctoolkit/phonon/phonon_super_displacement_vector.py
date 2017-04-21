@@ -78,7 +78,6 @@ class PhononSuperDisplacementVector(DisplacementVector):
 				elif self.lambda_index == 2:
 					self.displacement_vector[i*3+j] = -1.0*atomic_displacement[j].imag
 
-
 		if self.magnitude > PhononSuperDisplacementVector.zero_vector_magnitude_tolerance:
 			self.normalize()
 		else:

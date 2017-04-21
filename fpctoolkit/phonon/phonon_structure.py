@@ -5,6 +5,7 @@ import copy
 from collections import OrderedDict
 import math
 import cmath
+import sys
 
 import fpctoolkit.util.basic_validators as basic_validators
 from fpctoolkit.structure.structure import Structure
@@ -37,6 +38,8 @@ class PhononStructure(object):
 		self.phonon_band_structure = phonon_band_structure
 		self.supercell_dimensions_list = supercell_dimensions_list
 
+		#the total number of degrees of freedom to describe the ionic displacments of the system
+		self.dof_count = 3*self.primitive_cell_structure.site_count*self.supercell_dimensions_list[0]*self.supercell_dimensions_list[1]*self.supercell_dimensions_list[2]
 
 		self.reference_supercell_structure = StructureManipulator.get_supercell(primitive_cell_structure, supercell_dimensions_list)
 
@@ -59,19 +62,78 @@ class PhononStructure(object):
 	def __str__(self):
 		return "[\n" + "\n".join(str(normal_coordinate) for normal_coordinate in self.normal_coordinates_list) + "\n]"
 
+
 	def initialize_displacement_basis_vectors(self):
 		"""
 		Determine the set of phonon super displacement vectors that form a normal basis without any redundant vectors (vectors sharing the hyperplane with other vectors).
+		The basis vectors are stored in self.basis, a list of PhononSuperDisplacementVector instances.
 
 		There should always be Ncell*Nat*3 vectors in this basis - one for each vector in the ionic displacement basis for the supercell
 		"""
 
+		self.basis = []
+		superfluous_basis = []
+
+		for normal_mode in self.phonon_band_structure.get_list_of_normal_modes():
+			for lambda_index in [1, 2]:
+				normal_mode_displacement_vector = PhononSuperDisplacementVector(normal_mode_instance=normal_mode, lambda_index=lambda_index, 
+					reference_supercell=self.reference_supercell_structure, supercell_dimensions_list=self.supercell_dimensions_list)
+
+				if normal_mode_displacement_vector.magnitude != 0.0:
+					superfluous_basis.append(normal_mode_displacement_vector)
+
+		#self.basis now has only the non-zero vectors. However, many of these may be redundant - i.e. we don't need all of them to span the 
+		#space of ionic displacements in the supercell.
+
+		print len(superfluous_basis)
+
+		for i in range(0, len(superfluous_basis)):
+			print "iteration count:", i
+			# print "basis array:", self.basis
+
+			possible_basis_vector = copy.deepcopy(superfluous_basis[i])
+			possible_basis_vector_displacement_array = np.array(possible_basis_vector.to_list())
+
+			# print "possible basis vector length:", len(possible_basis_vector)
+
+			if i == 0:
+				self.basis.append(superfluous_basis[i])
+				continue
+
+
+
+			basis_vector_matrix = []
+			vector_count = 0
+			for basis_vector in self.basis:
+				basis_vector_displacement_array = np.array(basis_vector.to_list())
+
+				basis_vector_matrix.append(basis_vector_displacement_array)
+				vector_count += 1
+
+
+			basis_vector_matrix.append(possible_basis_vector_displacement_array)
+			vector_count += 1
+
+			basis_vector_matrix = np.transpose(basis_vector_matrix)
+
+			rank = np.linalg.matrix_rank(basis_vector_matrix)
+
+			if rank == vector_count:
+				self.basis.append(superfluous_basis[i])
+
+		print "Length of basis is:", len(self.basis)
 		
+		if len(self.basis) != self.dof_count:
+			raise Exception("After pruning the basis set, the number of basis displacement vectors", len(self.basis), 
+				"does not equal the number of degrees of freedom needed to describe supercell displacements", self.dof_count)
+
 
 	def initialize_normal_coordinates_list(self):
 		"""
 		Create the list of normal coordinates (all initially zero) that describe the displacements by acting as coefficients on the phonon displacement vector basis.
 		"""
+
+		self.initialize_displacement_basis_vectors()
 
 		self.normal_coordinates_list = []
 
