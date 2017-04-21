@@ -50,12 +50,12 @@ q_points_list = [(0.0, 0.0, 0.0), (0.5, 0.0, 0.0), (0.0, 0.5, 0.0), (0.0, 0.0, 0
 pbs = phonopy_utility.get_phonon_band_structure_instance(phonopy_instance=phonon, q_points_list=q_points_list)
 
 
-ps = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'])
-
 coordinate_indices = [180, 0, 211, 23, 8, 122, 11]
 
 
 for coordinate_index in coordinate_indices:
+
+	ps = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'])
 
 	coordinate_path = Path.join(base_path, "coordinate_index_" + str(coordinate_index))
 		
