@@ -141,6 +141,10 @@ mod_struct = phonopy_utility.get_modulated_structure(phonon, phonopy_inputs_dict
 
 mod_struct.to_poscar_file_path(mod_struct_path)
 
+for normal_coordinate in ps.normal_coordinates_list:
+	print normal_coordinate.normal_mode_displacement_vector.magnitude
+	#print normal_coordinate.normal_mode_displacement_vector.to_list()
+
 
 
 # e33_average = 1.0

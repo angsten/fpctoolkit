@@ -59,8 +59,19 @@ class PhononStructure(object):
 	def __str__(self):
 		return "[\n" + "\n".join(str(normal_coordinate) for normal_coordinate in self.normal_coordinates_list) + "\n]"
 
+	def initialize_displacement_basis_vectors(self):
+		"""
+		Determine the set of phonon super displacement vectors that form a normal basis without any redundant vectors (vectors sharing the hyperplane with other vectors).
+
+		There should always be Ncell*Nat*3 vectors in this basis - one for each vector in the ionic displacement basis for the supercell
+		"""
+
+		
 
 	def initialize_normal_coordinates_list(self):
+		"""
+		Create the list of normal coordinates (all initially zero) that describe the displacements by acting as coefficients on the phonon displacement vector basis.
+		"""
 
 		self.normal_coordinates_list = []
 
@@ -112,7 +123,7 @@ class PhononStructure(object):
 
 		for normal_coordinate in self.normal_coordinates_list:
 			total_supercell_displacment_vector += normal_coordinate.get_displacement_vector()
-			
+
 
 		return total_supercell_displacment_vector.get_displaced_structure(self.reference_supercell_structure)
 

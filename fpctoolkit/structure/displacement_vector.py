@@ -70,7 +70,72 @@ class DisplacementVector(object):
 
 		return added_displacement_vector
 
+	def __imul__(self, scalar):
+		if isinstance(scalar, complex):
+			basic_validators.validate_complex_number(scalar)
+		else:
+			basic_validators.validate_real_number(scalar)
 
+		multiplied_displacement_vector = copy.deepcopy(self)
+
+
+		for i in range(len(multiplied_displacement_vector)):
+			multiplied_displacement_vector[i] *= scalar
+
+		return multiplied_displacement_vector
+
+	def is_zero_vector(self, zero_tolerance=1e-12):
+		"""
+		Returns true is the stored displacement vector magnitude is zero - then all components must be zero.
+		"""
+
+		return (self.magnitude < zero_tolerance)
+
+
+	def set_magnitude(self, new_magnitude):
+		"""
+		Modifies the L2 norm of this vector to be equal to new_magnitude by increase or decreasing the component magnitudes.
+		"""
+
+		if new_magnitude == 0.0:
+			factor = 0.0
+		else:
+
+			if self.is_zero_vector():
+				raise Exception("Cannot alter the magnitude of a zero vector")
+
+			factor = (new_magnitude/self.magnitude)
+
+
+		for i in range(len(self.displacement_vector)):
+			self.displacement_vector[i] *= factor
+
+		basic_validators.validate_approximately_equal(self.magnitude, new_magnitude, tolerance=1e-8)
+
+	def normalize(self):
+		"""
+		Alters the stored displacements such that the displacement vector magnitude is one.
+		"""
+
+		self.set_magnitude(1.0)
+
+		print self.magnitude, '*********'
+
+
+	def to_list(self):
+		"""
+		Returns the stored displacement vector as a list of values [0.2, 0.5, ...].
+		"""
+
+		return self.displacement_vector
+
+	@property
+	def magnitude(self):
+		"""
+		Returns L2 norm of the stored displacement vector.
+		"""
+
+		return np.linalg.norm(self.displacement_vector)
 
 	def get_displaced_structure(self, input_reference_structure=None):
 		"""

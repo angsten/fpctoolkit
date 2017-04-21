@@ -5,7 +5,6 @@ from collections import OrderedDict
 import copy
 
 import fpctoolkit.util.basic_validators as basic_validators
-from fpctoolkit.structure.displacement_vector import DisplacementVector
 
 
 class NormalCoordinate(object):
@@ -62,13 +61,12 @@ class NormalCoordinate(object):
 	def get_displacement_vector(self):
 		"""
 		Returns a DisplacementVector instance which is obtained by multiplying the normal mode displacement pattern in 
-		self.normal_mode_displacement_vector.displacement_vector by this instances self.coefficient value.
+		self.normal_mode_displacement_vector by this instances self.coefficient value.
 		"""
 
-		displacement_vector = copy.deepcopy(self.normal_mode_displacement_vector.displacement_vector)
+		phonon_displacement_vector_instance = copy.deepcopy(self.normal_mode_displacement_vector)
 
-		for i in range(len(displacement_vector)):
-			displacement_vector[i] *= self.coefficient
+		phonon_displacement_vector_instance *= self.coefficient
 
-		return displacement_vector
+		return phonon_displacement_vector_instance
 
