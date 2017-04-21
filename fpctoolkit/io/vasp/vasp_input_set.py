@@ -21,6 +21,9 @@ class VaspInputSet(object):
 		self.potcar = potcar
 		self.submission_script_file = submission_script_file
 
+		if 'lreal' in incar:
+			auto_change_lreal = False
+
 		if (not self.potcar) and self.structure:
 			self.auto_generate_potcar()
 

@@ -27,7 +27,7 @@ class IncarMaker(object):
 		incar['prec'] = 'Accurate'
 		incar['ediff'] = 0.000001
 		incar['encut'] = 600
-		incar['lreal'] = False
+		#incar['lreal'] = False
 		incar['lwave'] = False
 		incar['lcharg'] = False
 
@@ -60,7 +60,7 @@ class IncarMaker(object):
 		incar['prec'] = 'Accurate'
 		incar['ediff'] = 0.000001
 		incar['encut'] = 600
-		incar['lreal'] = False
+		#incar['lreal'] = False
 		incar['lwave'] = True
 		incar['lcharg'] = False
 
