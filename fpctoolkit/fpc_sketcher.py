@@ -106,7 +106,7 @@ pbs = phonopy_utility.get_phonon_band_structure_instance(phonopy_instance=phonon
 ps = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'])
 
 
-coordinate_index = 180
+coordinate_index = 119
 ps.normal_coordinates_list[coordinate_index].coefficient = 1.0
 
 print ps
@@ -141,9 +141,6 @@ mod_struct = phonopy_utility.get_modulated_structure(phonon, phonopy_inputs_dict
 
 mod_struct.to_poscar_file_path(mod_struct_path)
 
-for normal_coordinate in ps.normal_coordinates_list:
-	print normal_coordinate.normal_mode_displacement_vector.magnitude
-	#print normal_coordinate.normal_mode_displacement_vector.to_list()
 
 
 

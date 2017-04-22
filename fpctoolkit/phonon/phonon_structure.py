@@ -66,12 +66,12 @@ class PhononStructure(object):
 	def initialize_displacement_basis_vectors(self):
 		"""
 		Determine the set of phonon super displacement vectors that form a normal basis without any redundant vectors (vectors sharing the hyperplane with other vectors).
-		The basis vectors are stored in self.basis, a list of PhononSuperDisplacementVector instances.
+		The basis vectors are stored in self.basis_phonon_displacement_vector_list, a list of PhononSuperDisplacementVector instances.
 
 		There should always be Ncell*Nat*3 vectors in this basis - one for each vector in the ionic displacement basis for the supercell
 		"""
 
-		self.basis = []
+		self.basis_phonon_displacement_vector_list = []
 		superfluous_basis = []
 
 		for normal_mode in self.phonon_band_structure.get_list_of_normal_modes():
@@ -79,52 +79,34 @@ class PhononStructure(object):
 				normal_mode_displacement_vector = PhononSuperDisplacementVector(normal_mode_instance=normal_mode, lambda_index=lambda_index, 
 					reference_supercell=self.reference_supercell_structure, supercell_dimensions_list=self.supercell_dimensions_list)
 
-				if normal_mode_displacement_vector.magnitude != 0.0:
+				if normal_mode_displacement_vector.magnitude > PhononSuperDisplacementVector.zero_vector_magnitude_tolerance:
 					superfluous_basis.append(normal_mode_displacement_vector)
 
-		#self.basis now has only the non-zero vectors. However, many of these may be redundant - i.e. we don't need all of them to span the 
+		#self.basis_phonon_displacement_vector_list now has only the non-zero vectors. However, many of these may be redundant - i.e. we don't need all of them to span the 
 		#space of ionic displacements in the supercell.
 
-		print len(superfluous_basis)
 
-		for i in range(0, len(superfluous_basis)):
-			print "iteration count:", i
-			# print "basis array:", self.basis
+		#we should build up the basis from lowest frequency components to highest, because this will lead to a basis that most easily descends the energy landscape.
+		#By sorting the superfluous basis by normal mode frequency squared first, we increase the chances of the basis being composed of low energy phonon modes.
+		#This is because the algorithm below kicks out basis vectors later in the superfluous_basis list that can be described by those that come before.
 
-			possible_basis_vector = copy.deepcopy(superfluous_basis[i])
-			possible_basis_vector_displacement_array = np.array(possible_basis_vector.to_list())
-
-			# print "possible basis vector length:", len(possible_basis_vector)
-
-			if i == 0:
-				self.basis.append(superfluous_basis[i])
-				continue
+		sorted_superfluous_basis = sorted(superfluous_basis, key=lambda x: x.normal_mode.eigenvalue)
 
 
+		for i in range(0, len(sorted_superfluous_basis)):
 
-			basis_vector_matrix = []
-			vector_count = 0
-			for basis_vector in self.basis:
-				basis_vector_displacement_array = np.array(basis_vector.to_list())
+			if len(sorted_superfluous_basis[i]) != self.dof_count:
+				raise Exception("Basis vector does not have the correct number of degrees of freedom", len(sorted_superfluous_basis[i]), " should be", self.dof_count)
 
-				basis_vector_matrix.append(basis_vector_displacement_array)
-				vector_count += 1
+			total_displacement_vector_set = self.basis_phonon_displacement_vector_list + [sorted_superfluous_basis[i]]
 
+			if DisplacementVector.no_vector_in_set_is_in_span_of_others(total_displacement_vector_set):
+				self.basis_phonon_displacement_vector_list.append(sorted_superfluous_basis[i])
 
-			basis_vector_matrix.append(possible_basis_vector_displacement_array)
-			vector_count += 1
-
-			basis_vector_matrix = np.transpose(basis_vector_matrix)
-
-			rank = np.linalg.matrix_rank(basis_vector_matrix)
-
-			if rank == vector_count:
-				self.basis.append(superfluous_basis[i])
-
-		print "Length of basis is:", len(self.basis)
+		#print "Length of basis is:", len(self.basis_phonon_displacement_vector_list)
 		
-		if len(self.basis) != self.dof_count:
-			raise Exception("After pruning the basis set, the number of basis displacement vectors", len(self.basis), 
+		if len(self.basis_phonon_displacement_vector_list) != self.dof_count:
+			raise Exception("After pruning the basis set, the number of basis displacement vectors", len(self.basis_phonon_displacement_vector_list), 
 				"does not equal the number of degrees of freedom needed to describe supercell displacements", self.dof_count)
 
 
@@ -137,15 +119,11 @@ class PhononStructure(object):
 
 		self.normal_coordinates_list = []
 
-		for normal_mode in self.phonon_band_structure.get_list_of_normal_modes():
-			for lambda_index in [1, 2]:
-				normal_mode_displacement_vector = PhononSuperDisplacementVector(normal_mode_instance=normal_mode, lambda_index=lambda_index, 
-					reference_supercell=self.reference_supercell_structure, supercell_dimensions_list=self.supercell_dimensions_list)
+		for basis_phonon_displacment_vector in self.basis_phonon_displacement_vector_list:
+			normal_coordinate = NormalCoordinate(normal_mode_instance=basis_phonon_displacment_vector.normal_mode, lambda_index=basis_phonon_displacment_vector.lambda_index, 
+				coefficient=0.0, phonon_super_displacement_vector_instance=basis_phonon_displacment_vector)
 
-				normal_coordinate = NormalCoordinate(normal_mode_instance=normal_mode, lambda_index=lambda_index, coefficient=0.0, 
-					phonon_super_displacement_vector_instance=normal_mode_displacement_vector)
-
-				self.normal_coordinates_list.append(normal_coordinate)
+			self.normal_coordinates_list.append(normal_coordinate)
 
 
 	def validate_necessary_wave_vectors_exist(self):

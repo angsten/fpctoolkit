@@ -184,3 +184,28 @@ class DisplacementVector(object):
 		reference_structure.convert_sites_to_coordinate_mode(original_reference_coordinate_mode)
 
 		return displaced_structure
+
+
+	@staticmethod
+	def no_vector_in_set_is_in_span_of_others(displacement_vector_instances_list):
+		"""
+		Returns true if no vector in displacement_vector_instances_list can be described by any other set of vectors 
+		in displacement_vector_instances_list times coefficients.
+
+		displacement_vector_instances_list should look like [displacement_vector_instance_1, displacement_vector_instance_2
+		"""
+
+		if len(displacement_vector_instances_list) == 0:
+			raise Exception("There must be at least one veector in displacement_vector_instances_list", displacement_vector_instances_list)
+
+
+		vector_matrix = []
+
+		for displacement_vector_instance in displacement_vector_instances_list:
+			vector_matrix.append(np.array(displacement_vector_instance.to_list()))
+
+		np_vector_matrix = np.transpose(vector_matrix)
+
+		rank = np.linalg.matrix_rank(vector_matrix, tol=1e-12) #tol is important, but emperically set here - controls threshold below which values are considered zero in the SVD
+
+		return rank == len(displacement_vector_instances_list)

@@ -72,6 +72,18 @@ class NormalMode(object):
 
 		return False
 
+	@property
+	def eigenvalue(self):
+		"""
+		Returns the real number frequency squared
+		"""
+
+		eigenvalue = self.frequency**2
+
+		basic_validators.validate_approximately_equal(0.0, eigenvalue.imag, tolerance=1e-8)
+
+		return eigenvalue.real
+
 
 	def get_eigen_displacements_vector(self):
 		"""
