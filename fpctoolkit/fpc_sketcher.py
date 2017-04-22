@@ -106,10 +106,13 @@ pbs = phonopy_utility.get_phonon_band_structure_instance(phonopy_instance=phonon
 ps = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'])
 
 
-coordinate_index = 119
+coordinate_index = 3
 ps.normal_coordinates_list[coordinate_index].coefficient = 1.0
 
+ps.normal_coordinates_list[111].coefficient = 1.0
+
 print ps
+
 
 
 ref_struct = ps.reference_supercell_structure
@@ -120,26 +123,35 @@ ref_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/reference_supe
 dist_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\distorted.vasp")
 
 
+#do the reverse now - go from distorted structure back to normal coordinates.
+ps_new = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'], 
+	distorted_structure=dist_struct)
+
+print ps_new
 
 
 
-qpoint = ps.normal_coordinates_list[coordinate_index].normal_mode.q_point_fractional_coordinates
 
 
-band_index = ps.normal_coordinates_list[coordinate_index].normal_mode.band_index #1 through 15
-amplitude = ps.normal_coordinates_list[coordinate_index].coefficient*(10.0)
-phase = 0.0
-
-# band_index -= 1
-
-print ps.normal_coordinates_list[coordinate_index].normal_mode
 
 
-phonon_modes = [[qpoint, band_index, amplitude, phase]]
+# qpoint = ps.normal_coordinates_list[coordinate_index].normal_mode.q_point_fractional_coordinates
 
-mod_struct = phonopy_utility.get_modulated_structure(phonon, phonopy_inputs_dictionary, phonon_modes)
 
-mod_struct.to_poscar_file_path(mod_struct_path)
+# band_index = ps.normal_coordinates_list[coordinate_index].normal_mode.band_index #1 through 15
+# amplitude = ps.normal_coordinates_list[coordinate_index].coefficient*(10.0)
+# phase = 0.0
+
+# # band_index -= 1
+
+# print ps.normal_coordinates_list[coordinate_index].normal_mode
+
+
+# phonon_modes = [[qpoint, band_index, amplitude, phase]]
+
+# mod_struct = phonopy_utility.get_modulated_structure(phonon, phonopy_inputs_dictionary, phonon_modes)
+
+# mod_struct.to_poscar_file_path(mod_struct_path)
 
 
 

@@ -53,7 +53,10 @@ class PhononBandStructure(object):
 		#check that the direct orthonormal relations are satisfied within a tolerance (left realtion of 38.25 in Born and Huang, page 298)
 
 
-		pass
+		# translational_vectors_in_basis_list = filter(lambda x: x.normal_mode.translational, self.basis_phonon_displacement_vector_list)
+
+		# if len(translational_vectors_in_basis_list) != 3:
+		# 	raise Exception("Number of translational vectors is not equal to three. This may be a sign of an incomplete basis. Count is", len(translational_vectors_in_basis_list))
 
 	def get_list_of_normal_modes(self):
 		"""

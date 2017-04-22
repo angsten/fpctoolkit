@@ -34,7 +34,10 @@ class NormalCoordinate(object):
 
 
 	def __str__(self):
-		return str(self.coefficient) + " q=" + str(self.q_vector) + ", band=" + str(self.band_index+1) + ", lambda=" + str(self.lambda_index) + ", eigenvalue=" + str(round(self.normal_mode.eigenvalue, 3))
+		string = str(self.coefficient) + " q=" + str(self.q_vector) + ", band=" + str(self.band_index+1) + ", lambda=" + str(self.lambda_index)
+		string += ", eigenvalue=" + str(round(self.normal_mode.eigenvalue, 3)) + ' (translational)'*int(self.normal_mode.translational)
+
+		return string
 
 	@property
 	def q_vector(self):

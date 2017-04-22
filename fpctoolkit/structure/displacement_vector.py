@@ -150,6 +150,43 @@ class DisplacementVector(object):
 
 		return DisplacementVector.displace_structure(reference_structure, self.displacement_vector, self.coordinate_mode)
 
+	@staticmethod
+	def get_instance_from_distorted_structure_relative_to_reference_structure(reference_structure, distorted_structure, coordinate_mode='Cartesian'):
+		"""
+		Returns a DisplacementVector instance made by comparing each atom in distorted_structure with those of reference_structure.
+		The atoms are mapped to each other based on their positions in the site collection lists.
+
+		The coordinate_mode argument determines whether direct fractional coordinates (unitless) or Cartesian coordinates (in Angstroms) are used to describe the displacements.
+		"""
+
+		Structure.validate(reference_structure)
+		Structure.validate(distorted_structure)
+
+		if reference_structure.site_count != distorted_structure.site_count:
+			raise Exception("Site counts of two structures must be equal.", reference_structure.site_count, distorted_structure.site_count)
+
+		reference_structure = copy.deepcopy(reference_structure)
+		distorted_structure = copy.deepcopy(distorted_structure)
+
+		reference_structure.convert_sites_to_coordinate_mode(coordinate_mode)
+		distorted_structure.convert_sites_to_coordinate_mode(coordinate_mode)
+
+		displacement_vector = DisplacementVector(reference_structure=reference_structure, coordinate_mode=coordinate_mode)
+
+		for site_index in range(reference_structure.site_count):
+			reference_site = reference_structure.sites[site_index]
+			distorted_site = distorted_structure.sites[site_index]
+
+			if reference_site['type'] != distorted_site['type']:
+				raise Exception("Types of two structures do not align.", reference_site['type'], distorted_site['type'])
+
+			for i in range(3):
+				displacement_vector[site_index*3+i] = distorted_site['position'][i] - reference_site['position'][i]
+
+		return displacement_vector
+
+
+
 
 	@staticmethod
 	def displace_structure(reference_structure, displacement_vector, displacement_coordinate_mode):

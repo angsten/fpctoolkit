@@ -42,6 +42,9 @@ class NormalMode(object):
 		if not len(q_point_fractional_coordinates) == 3:
 			raise Exception("Qpoint argument must have three compononents. Argument is", q_point_fractional_coordinates)
 
+		if not isinstance(q_point_fractional_coordinates, tuple):
+			raise Exception("q_point_fractional_coordinates must be a tuple", q_point_fractional_coordinates)
+
 		if primitive_cell_structure.site_count != len(atomic_masses_list):
 			raise Exception("Length of atomic masses list and number of sites are not equal.")
 
@@ -67,10 +70,26 @@ class NormalMode(object):
 		Checks if this mode is a trivial translational mode which just shifts all atoms by equal amounts with no effect on the energy of the crystal.
 		"""
 
-		#####implement - check freq is suff close to zero and all atomic disp vecs are equal for each atom along a cartesian direction
-		###also check that the qpoint is 0 0 0
+		if self.q_point_fractional_coordinates != (0.0, 0.0, 0.0):
+			return False
 
-		return False
+		x = self.eigen_displacements_list[0]
+		y = self.eigen_displacements_list[1]
+		z = self.eigen_displacements_list[2]
+
+		reference_list = [x, y, z]
+
+		tolerance = 0.01
+
+		for i in range(1, len(self.eigen_displacements_list)/3):
+			for j in range(3):
+				if abs(self.eigen_displacements_list[i*3+j]-reference_list[j]) > tolerance:
+					return False
+
+		if abs(self.eigenvalue) > 0.05:
+			raise Exception("What has been determined as a translational mode has an eigenvalue far from zero:", str(self))
+
+		return True
 
 	@property
 	def eigenvalue(self):

@@ -20,7 +20,7 @@ class PhononStructure(object):
 	Represents a structure whose distortions are characterized by a set of 'complex normal coordinates', Q_q,j (see around page 298 of Born and Huang and pages preceding).
 	"""
 
-	def __init__(self, primitive_cell_structure, phonon_band_structure, supercell_dimensions_list, normal_coordinate_instances_list=None):
+	def __init__(self, primitive_cell_structure, phonon_band_structure, supercell_dimensions_list, distorted_structure=None):
 		"""
 		primitive_cell_structure should be the primitive cell Structure class instance that was used to generate the phonon band structure.
 
@@ -29,7 +29,7 @@ class PhononStructure(object):
 
 		supercell_dimensions
 
-		if normal_coordinate_instances_list, this list is used to set the normal coordinates, else, the normal coordinates are initialized to zero.
+		if distorted_structure is given, the dispalcements of this structure relative to the supercell reference structure are used to determine the normal coordinates list.
 		"""
 
 		Structure.validate(primitive_cell_structure)
@@ -50,14 +50,25 @@ class PhononStructure(object):
 
 		#FIX::self.number_of_normal_coordinates = 2*self.primitive_cell_structure.site_count*3*supercell_dimensions_list[0]*supercell_dimensions_list[1]*supercell_dimensions_list[2]
 
+		self.initialize_normal_coordinates_list()
 
-		if normal_coordinate_instances_list != None:
-			# if len(normal_coordinate_instances_list) != self.number_of_normal_coordinates:
-			# 	raise Exception("The number of given normal coordinates is not equal to the number needed to describe the structural distortions. Normal coordinates list given is", normal_coordinate_instances_list)
-			# else:
-			self.normal_coordinates_list = copy.deepcopy(normal_coordinate_instances_list)
-		else:
-			self.initialize_normal_coordinates_list()
+		if distorted_structure != None:
+			self.set_normal_coordinates_list_from_distorted_structure(distorted_structure)
+
+	def set_normal_coordinates_list_from_distorted_structure(self, distorted_structure):
+		"""
+		Determines the set of unique normal coordinates required to distort a reference structure to the distorted structure state. This function works by getting the displacement
+		vector instance, and then projecting this vector onto the normal mode basis.
+		"""
+
+		reference_structure = self.reference_supercell_structure
+
+		displacement_vector_instance = DisplacementVector.get_instance_from_distorted_structure_relative_to_reference_structure(reference_structure, distorted_structure, coordinate_mode='Cartesian')
+
+		
+
+
+
 
 	def __str__(self):
 		return "[\n" + "\n".join(str(normal_coordinate) for normal_coordinate in self.normal_coordinates_list) + "\n]"
@@ -108,6 +119,11 @@ class PhononStructure(object):
 		if len(self.basis_phonon_displacement_vector_list) != self.dof_count:
 			raise Exception("After pruning the basis set, the number of basis displacement vectors", len(self.basis_phonon_displacement_vector_list), 
 				"does not equal the number of degrees of freedom needed to describe supercell displacements", self.dof_count)
+
+		translational_vectors_in_basis_list = filter(lambda x: x.normal_mode.translational, self.basis_phonon_displacement_vector_list)
+
+		if len(translational_vectors_in_basis_list) != 3:
+			raise Exception("Number of translational vectors is not equal to three. This may be a sign of an incomplete basis. Count is", len(translational_vectors_in_basis_list))
 
 
 	def initialize_normal_coordinates_list(self):
