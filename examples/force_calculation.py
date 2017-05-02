@@ -32,10 +32,10 @@ force_calculation_path = './dfpt_force_calculation'
 kpoints = Kpoints(scheme_string=vasp_run_inputs['kpoint_scheme'], subdivisions_list=vasp_run_inputs['kpoint_subdivisions_list'])
 incar = IncarMaker.get_dfpt_hessian_incar(custom_incar_inputs)
 
-input_set = VaspInputSet(structure, kpoints, incar, auto_change_lreal=False, auto_change_npar=False)
+input_set = VaspInputSet(initial_structure, kpoints, incar, auto_change_lreal=False, auto_change_npar=False)
 
 
-dfpt_force_run = VaspRun(path=force_calculation_path, structure=initial_structure, input_set=input_set)
+dfpt_force_run = VaspRun(path=force_calculation_path, input_set=input_set)
 
 
 dfpt_force_run.update()
