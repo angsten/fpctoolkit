@@ -36,3 +36,6 @@ input_set = VaspInputSet(structure, kpoints, incar, auto_change_lreal=False, aut
 
 
 dfpt_force_run = VaspRun(path=force_calculation_path, structure=initial_structure, input_set=input_set)
+
+
+dfpt_force_run.update()
