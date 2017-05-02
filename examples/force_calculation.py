@@ -14,7 +14,7 @@ Nz = 2
 
 
 
-vasp_run_inputs_dictionary = {
+vasp_run_inputs = {
 	'kpoint_scheme': 'Monkhorst',
 	'kpoint_subdivisions_list': [2, 2, 2],
 	}
