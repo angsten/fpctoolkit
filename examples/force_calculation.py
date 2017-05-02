@@ -29,7 +29,7 @@ initial_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx, 
 
 force_calculation_path = './dfpt_force_calculation'
 
-kpoints = Kpoints(scheme_string=self.vasp_run_inputs['kpoint_scheme'], subdivisions_list=self.vasp_run_inputs['kpoint_subdivisions_list'])
+kpoints = Kpoints(scheme_string=vasp_run_inputs['kpoint_scheme'], subdivisions_list=vasp_run_inputs['kpoint_subdivisions_list'])
 incar = IncarMaker.get_dfpt_hessian_incar(custom_incar_inputs)
 
 input_set = VaspInputSet(structure, kpoints, incar, auto_change_lreal=False, auto_change_npar=False)
