@@ -25,7 +25,7 @@ class IncarMaker(object):
 		incar['ismear'] = 0
 		incar['sigma'] = 0.01
 		incar['prec'] = 'Accurate'
-		incar['ediff'] = 0.000001
+		incar['ediff'] = 1.0e-6
 		incar['encut'] = 600
 		#incar['lreal'] = False
 		incar['lwave'] = False
@@ -58,7 +58,7 @@ class IncarMaker(object):
 		incar['ismear'] = 0
 		incar['sigma'] = 0.01
 		incar['prec'] = 'Accurate'
-		incar['ediff'] = 0.000001
+		incar['ediff'] = 1.0e-6
 		incar['encut'] = 600
 		#incar['lreal'] = False
 		incar['lwave'] = True
@@ -87,7 +87,7 @@ class IncarMaker(object):
 
 		incar = IncarMaker.get_static_incar()
 
-		incar['ediff'] = 0.000000001
+		incar['ediff'] = 1.0e-9
 		incar['addgrid'] = True
 		incar['lreal'] = False #must be false for any sized supercell
 
@@ -104,9 +104,29 @@ class IncarMaker(object):
 		"""
 
 		incar = IncarMaker.get_static_incar()
-		incar['ediff'] = 0.0000001
+		incar['ediff'] = 1.0e-7
 		incar['lepsilon'] = True
 		del incar['npar'] #lepsilon runs are not parallelizable
+
+		incar.modify_from_dictionary(custom_parameters_dictionary)
+
+		return incar
+
+
+	@staticmethod
+	def get_dfpt_hessian_incar(custom_parameters_dictionary=None):
+		"""
+		Generates an incar to be used for getting the Hessian force constants matrix using dfpt. Ibrion = 8 uses symmetry to simplify the calculation, ibrion = 7 doesn't.
+		"""
+
+		incar = IncarMaker.get_static_incar()
+		incar['ibrion'] = 8
+		incar['ediff'] = 1.0e-8
+		incar['addgrid'] = True
+		incar['lreal'] = False #must be false for any sized supercell
+		incar['nsw'] = 1
+
+		del incar['npar'] #lepsilon runs are not parallelizable when symmetry is on
 
 		incar.modify_from_dictionary(custom_parameters_dictionary)
 

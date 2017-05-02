@@ -50,7 +50,7 @@ initial_structure=Perovskite(supercell_dimensions=[1, 1, 1], lattice=[[4.0, 0.0,
 
 
 
-relax = vasp_relaxation = VaspRelaxation(path=relaxation_path, initial_structure=initial_structure, input_dictionary=relax_input_dictionary)
+relax = VaspRelaxation(path=relaxation_path, initial_structure=initial_structure, input_dictionary=relax_input_dictionary)
 
 relax.update()
 

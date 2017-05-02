@@ -130,7 +130,9 @@ ps_new = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, 
 print ps_new
 
 
+dist_struct = ps_new.get_distorted_supercell_structure()
 
+dist_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\distorted_2.vasp")
 
 
 

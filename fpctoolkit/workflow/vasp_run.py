@@ -28,9 +28,7 @@ class VaspRun(object):
 
 	"""
 
-	log_path = ".log"
-
-	def __init__(self, path, structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None, input_set=None, custom_handler=None, wavecar_path=None, verbose=True):
+	def __init__(self, path, structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None, input_set=None, wavecar_path=None):
 		"""
 		Cases for __init__:
 		1. path does not exist or is empty => make the directory, enforce input file arguments all exists, write out input files to directory
@@ -43,12 +41,6 @@ class VaspRun(object):
 		"""
 
 		self.path = Path.clean(path)
-		self.verbose = verbose
-
-		if custom_handler:
-			self.handler = custom_handler
-		else:
-			pass #self.handler = VaspHandler()
 
 		if input_set:
 			structure = input_set.structure
@@ -65,27 +57,22 @@ class VaspRun(object):
 			else:
 				Path.make(self.path)
 
-				#self.log("Directory at run path did not exist or was empty. Created directory.")
-
 				self.write_input_files_to_path(structure, incar, kpoints, potcar, submission_script_file, wavecar_path) 
 		else:
 			if self.job_id_string:
 				pass
-				#self.log("Non-empty directory has a job id associated with it.")
 			else:
-				#self.log("Non-empty directory does not have a job id associated with it.")
+
 				if self.all_input_files_are_present(): #all input files are written to directory
 					if all_essential_input_parameters_exist: #overwrite what's there
-						#self.log("Overwriting existing complete input run files with new given input parameter files")
 						self.write_input_files_to_path(structure, incar, kpoints, potcar, submission_script_file, wavecar_path)
 					else:
-						#self.log("Using existing run files at path")
+
 						pass #do nothing - don't have the necessary inputs to start a run
 				else: #not all input files currently exist - must have necessary input params to overwrite
 					if not all_essential_input_parameters_exist:
-						self.log("All five vasp input files must be input for run with incomplete inputs at path to be initialized.", raise_exception=True)
+						raise Exception("All five vasp input files must be input for run with incomplete inputs at path to be initialized.")
 					else:
-						#self.log("Overwriting existing partially-present run files with input parameter files")
 						self.write_input_files_to_path(structure, incar, kpoints, potcar, submission_script_file, wavecar_path)
 			
 		
@@ -94,8 +81,6 @@ class VaspRun(object):
 		"""
 		Simply write files to path
 		"""
-
-		#self.log("Writing input files to path.")
 
 		structure.to_poscar_file_path(Path.clean(self.path, 'POSCAR'))
 		incar.write_to_path(Path.clean(self.path, 'INCAR'))
@@ -112,6 +97,63 @@ class VaspRun(object):
 		required_file_basenames_list = ['POSCAR', 'INCAR', 'KPOINTS', 'POTCAR', 'submit.sh']
 
 		return Path.all_files_are_present(self.path, required_file_basenames_list)
+
+
+
+	def update(self):
+		"""Returns True if run is completed"""
+
+		#only if there is not job_id_string associated with this run should we start the run
+		if not self.job_id_string:
+			self.start()
+			return False
+
+		#check if run is complete
+		if self.complete:
+			return True
+
+		#check status on queue:
+		#if running, check for runtime errors using handler
+		#if queued, return false
+		#if not on queue, run failed - check for errors using handler
+
+		queue_properties = self.queue_properties
+		if not queue_properties: #couldn't find job on queue
+			queue_status = None
+		else:
+			queue_status = queue_properties['status']
+
+		if queue_status == QueueStatus.queued:
+			pass
+
+		elif queue_status == QueueStatus.running:
+			pass
+
+			#use handler to check for run time errors here
+		else:
+			#Run is not active on queue ('C', 'E', or absent) but still isn't complete. An error must have occured. Use handler to check for errors here
+			pass
+
+		return False
+
+	def start(self):
+		"""Submit the calculation at self.path"""
+
+		#Remove all output files here!!! Maybe store in hidden archived folder?####################
+		self.archive_file('OUTCAR')
+
+		QueueAdapter.submit_job(self.path) #call auto saves id to .job_id in path
+
+		if not self.job_id_string:
+			raise Exception("Tried to start vasp run but an active job is already associated with its path.")
+
+	def stop(self):
+		"""If run has associated job on queue, delete this job"""
+		
+		QueueAdapter.terminate_job(self.job_id_string)
+
+
+
 
 	@property
 	def job_id_string(self):
@@ -207,63 +249,7 @@ class VaspRun(object):
 			return QueueAdapter.get_job_properties_from_id_string(self.job_id_string)
 
 
-	def update(self):
-		"""Returns True if run is completed"""
 
-		#only if there is not job_id_string associated with this run should we start the run
-		if not self.job_id_string:
-			#self.log("No job id stored in this run.")
-			self.start()
-			return False
-
-		#check if run is complete
-		if self.complete:
-			return True
-
-		#check status on queue:
-		#if running, check for runtime errors using handler
-		#if queued, return false
-		#if not on queue, run failed - check for errors using handler
-
-		queue_properties = self.queue_properties
-		if not queue_properties: #couldn't find job on queue
-			queue_status = None
-		else:
-			queue_status = queue_properties['status']
-
-		if queue_status == QueueStatus.queued:
-			pass
-			#self.log("Job is on queue waiting.")
-
-		elif queue_status == QueueStatus.running:
-			pass
-			#self.log("Job is on queue running. Queue properties: " + str(self.queue_properties))
-
-			#use handler to check for run time errors here
-		else:
-			#self.log("Run is not active on queue ('C', 'E', or absent) but still isn't complete. An error must have occured.")
-			pass
-			#use handler to check for errors here
-
-		return False
-
-	def start(self):
-		"""Submit the calculation at self.path"""
-
-		#self.log("Submitting a new job to queue.")
-
-		#Remove all output files here!!! Maybe store in hidden archived folder?####################
-		self.archive_file('OUTCAR')
-
-		QueueAdapter.submit_job(self.path) #call auto saves id to .job_id in path
-
-		if not self.job_id_string:
-			self.log("Tried to start vasp run but an active job is already associated with its path.", raise_exception=True)
-
-	def stop(self):
-		"""If run has associated job on queue, delete this job"""
-		
-		QueueAdapter.terminate_job(self.job_id_string)
 
 
 	def get_extended_path(self, relative_path):
@@ -291,25 +277,15 @@ class VaspRun(object):
 
 			Path.move(file_path, archive_file_path)
 
-	def log(self, log_string, raise_exception=False):
-		"""Tracks the output of the run, logging either to stdout or a local path file or both"""
 
-		log_string = log_string.rstrip('\n') + '\n'
 
-		if self.verbose:
-			print log_string,
 
-		log_string_with_time_stamp = su.get_time_stamp_string() + " || " + log_string
 
-		if not Path.exists(VaspRun.log_path):
-			File.touch(self.get_extended_path(VaspRun.log_path))
 
-		log_file = File(self.get_extended_path(VaspRun.log_path))
-		log_file.append(log_string_with_time_stamp)
-		log_file.write_to_path()
 
-		if raise_exception:
-			raise Exception(log_string)
+
+
+
 
 
 	def view(self, files_to_view=['Potcar', 'Kpoints', 'Incar', 'Poscar', 'Contcar', 'Submit.sh', '_JOB_OUTPUT.txt']):
@@ -349,16 +325,19 @@ class VaspRun(object):
 		print output_string,
 
 
-	# def __str__(self):
-	# 	head_string = "==> "
-	# 	file_separator = 30*"-"
-	# 	output_string = ""
+	# def log(self, log_string, raise_exception=False):
+	# 	"""Tracks the output of the run, logging either to stdout or a local path file or both"""
 
-	# 	output_string += "\n" + 10*"-" + "VaspRun: Job ID is " + str(self.job_id_string) + 10*"-" + "\n"
-	# 	output_string += head_string + "Path: " + self.path + "\n"
-	# 	output_string += head_string + "Potcar: " + " ".join(self.potcar.get_titles()) + "\n"
-	# 	output_string += head_string + "Kpoints:\n" + file_separator + "\n" + str(self.kpoints) + file_separator + "\n"
-	# 	output_string += head_string + "Incar:\n" + file_separator + "\n" + str(self.incar) + file_separator + "\n"
-	# 	output_string += head_string + "Structure:\n" + file_separator + "\n" + str(self.structure) + file_separator + "\n"
+	# 	log_string = log_string.rstrip('\n') + '\n'
 
-	# 	return output_string
+	# 	log_string_with_time_stamp = su.get_time_stamp_string() + " || " + log_string
+
+	# 	if not Path.exists(VaspRun.log_path):
+	# 		File.touch(self.get_extended_path(VaspRun.log_path))
+
+	# 	log_file = File(self.get_extended_path(VaspRun.log_path))
+	# 	log_file.append(log_string_with_time_stamp)
+	# 	log_file.write_to_path()
+
+	# 	if raise_exception:
+	# 		raise Exception(log_string)

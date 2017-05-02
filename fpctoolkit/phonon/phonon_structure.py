@@ -65,8 +65,22 @@ class PhononStructure(object):
 
 		displacement_vector_instance = DisplacementVector.get_instance_from_distorted_structure_relative_to_reference_structure(reference_structure, distorted_structure, coordinate_mode='Cartesian')
 
-		
+		displacement_vector_np_array = np.array(displacement_vector_instance.to_list())
 
+		self.normal_coordinates_list = []
+
+		while np.linalg.norm(displacement_vector_np_array) > 1e-3:
+			for basis_phonon_displacment_vector in self.basis_phonon_displacement_vector_list:
+				basis_vector_np_array = np.array(basis_phonon_displacment_vector.to_list())
+
+				projection_component = np.dot(displacement_vector_np_array, basis_vector_np_array)
+
+				displacement_vector_np_array += -1.0*projection_component*basis_vector_np_array
+
+				normal_coordinate = NormalCoordinate(normal_mode_instance=basis_phonon_displacment_vector.normal_mode, lambda_index=basis_phonon_displacment_vector.lambda_index, 
+					coefficient=projection_component, phonon_super_displacement_vector_instance=basis_phonon_displacment_vector)
+
+				self.normal_coordinates_list.append(normal_coordinate)
 
 
 

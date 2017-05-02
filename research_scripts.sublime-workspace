@@ -4,20 +4,196 @@
 		"selected_items":
 		[
 			[
+				"basis",
+				"basis_vector_np_array"
+			],
+			[
+				"disp",
+				"displacement_vector_np_array"
+			],
+			[
+				"displacement",
+				"displacement_vector"
+			],
+			[
+				"projecti",
+				"projection_component"
+			],
+			[
+				"displacem",
+				"displacement_vector"
+			],
+			[
+				"ref",
+				"reference_site"
+			],
+			[
+				"disto",
+				"distorted_site"
+			],
+			[
+				"refer",
+				"reference_site"
+			],
+			[
+				"site",
+				"site_index"
+			],
+			[
+				"val",
+				"validate"
+			],
+			[
+				"va",
+				"validate"
+			],
+			[
+				"translat",
+				"translational_vectors_in_basis_count"
+			],
+			[
+				"coo",
+				"coordinate_index"
+			],
+			[
+				"no",
+				"normal_coordinates_list"
+			],
+			[
+				"eig",
+				"eigenvalue"
+			],
+			[
+				"ei",
+				"eigen_displacements_list"
+			],
+			[
+				"eign",
+				"eigen_displacements_list"
+			],
+			[
+				"nor",
+				"normal_mode"
+			],
+			[
+				"q_",
+				"q_point_fractional_coordinates"
+			],
+			[
+				"q_p",
+				"q_point_fractional_coordinates"
+			],
+			[
+				"Phono",
+				"PhononSuperDisplacementVector"
+			],
+			[
+				"sorte",
+				"sorted_superfluous_basis"
+			],
+			[
+				"eigen",
+				"eigenvalue"
+			],
+			[
+				"superflu",
+				"superfluous_basis"
+			],
+			[
+				"bas",
+				"basis_phonon_displacment_vector"
+			],
+			[
+				"dis",
+				"displacement_vector_instance"
+			],
+			[
+				"tot",
+				"total_vector_set"
+			],
+			[
+				"poss",
+				"possible_basis_vector"
+			],
+			[
+				"vecto",
+				"vector_list"
+			],
+			[
+				"vec",
+				"vector_count"
+			],
+			[
+				"basis_v",
+				"basis_vector_matrix"
+			],
+			[
+				"ne",
+				"negative_projection_of_possible_basis_vector_onto_basis_vector"
+			],
+			[
+				"pro",
+				"projection_of_possible_basis_vector_onto_basis_vector"
+			],
+			[
+				"ini",
+				"initialize_displacement_basis_vectors"
+			],
+			[
+				"normal",
+				"normal_mode_displacement_vector"
+			],
+			[
+				"zer",
+				"zero_vector_magnitude_tolerance"
+			],
+			[
+				"new",
+				"new_magnitude"
+			],
+			[
+				"zero",
+				"zero_tolerance"
+			],
+			[
+				"magn",
+				"magnitude"
+			],
+			[
+				"phono",
+				"phonon_displacement_vector_instance"
+			],
+			[
+				"mu",
+				"multiplied_displacement_vector"
+			],
+			[
+				"vali",
+				"validate_real_number"
+			],
+			[
+				"norm",
+				"normal_coordinate"
+			],
+			[
+				"aut",
+				"auto_change_npar"
+			],
+			[
+				"spec",
+				"species_count_list"
+			],
+			[
+				"input",
+				"input_dictionary"
+			],
+			[
 				"atom",
 				"atomic_displacement"
 			],
 			[
-				"displacem",
-				"displacement_coordinate_mode"
-			],
-			[
 				"or",
 				"original_reference_coordinate_mode"
-			],
-			[
-				"disp",
-				"displaced_structure"
 			],
 			[
 				"refere",
@@ -28,20 +204,8 @@
 				"added_displacement_vector"
 			],
 			[
-				"normal",
-				"normal_coordinate"
-			],
-			[
-				"norm",
-				"normal_mode_displacement_vector"
-			],
-			[
 				"sit",
 				"sites_list"
-			],
-			[
-				"val",
-				"validate_sites_all_have_same_coordinate_mode"
 			],
 			[
 				"Sit",
@@ -64,16 +228,8 @@
 				"lambda_index"
 			],
 			[
-				"nor",
-				"normal_coordinate"
-			],
-			[
 				"ph",
 				"phonon_super_displacement_vector_instance"
-			],
-			[
-				"site",
-				"site_supercell_position"
 			],
 			[
 				"lamb",
@@ -120,10 +276,6 @@
 				"coordinate_index"
 			],
 			[
-				"dis",
-				"displacement_vector"
-			],
-			[
 				"real",
 				"real_cartesian_displacement_vector"
 			],
@@ -138,10 +290,6 @@
 			[
 				"norma",
 				"normal_coordinates_list"
-			],
-			[
-				"q_p",
-				"q_point_instance"
 			],
 			[
 				"primi",
@@ -180,24 +328,12 @@
 				"permitted_q_vectors_list"
 			],
 			[
-				"q_",
-				"q_point"
-			],
-			[
 				"superce",
 				"supercell_dimensions_list"
 			],
 			[
 				"phon",
 				"phonon_band_structure"
-			],
-			[
-				"eig",
-				"eigenvector"
-			],
-			[
-				"ei",
-				"eigen_displacements_list"
 			],
 			[
 				"return",
@@ -236,16 +372,8 @@
 				"vector_magnitude"
 			],
 			[
-				"eigen",
-				"eigenvector"
-			],
-			[
 				"atomic",
 				"atomic_masses_list"
-			],
-			[
-				"eign",
-				"eigen_vector"
 			],
 			[
 				"rel",
@@ -262,14 +390,6 @@
 			[
 				"mod",
 				"mod_struct_path"
-			],
-			[
-				"phono",
-				"phonopy_utility"
-			],
-			[
-				"ini",
-				"init_struct_path"
 			],
 			[
 				"pr",
@@ -394,126 +514,6 @@
 			[
 				"auto",
 				"auto_change_npar"
-			],
-			[
-				"sta",
-				"staticmethod"
-			],
-			[
-				"vasp",
-				"vasp_run_inputs"
-			],
-			[
-				"wavec",
-				"wavecar_path"
-			],
-			[
-				"initi",
-				"initialize_vasp_runs"
-			],
-			[
-				"dist",
-				"distorted_structures_list"
-			],
-			[
-				"distor",
-				"distorted_structure"
-			],
-			[
-				"vasp_run",
-				"vasp_run_inputs_dictionary"
-			],
-			[
-				"req",
-				"required_keys_list"
-			],
-			[
-				"re",
-				"required_keys_list"
-			],
-			[
-				"dic",
-				"dictionary_initializer"
-			],
-			[
-				"cont",
-				"containing_directory"
-			],
-			[
-				"exap",
-				"expand_path"
-			],
-			[
-				"tempo",
-				"temporary_write_path"
-			],
-			[
-				"initial",
-				"initial_structure"
-			],
-			[
-				"di",
-				"distorted_structure_poscar_file"
-			],
-			[
-				"kpoin",
-				"kpoint_subdivisions_list"
-			],
-			[
-				"kpoint",
-				"kpoint_subdivisions_lists"
-			],
-			[
-				"custom",
-				"custom_parameters"
-			],
-			[
-				"Incar",
-				"IncarMaker"
-			],
-			[
-				"get",
-				"get_extended_path"
-			],
-			[
-				"parse",
-				"parse_set_of_forces"
-			],
-			[
-				"st",
-				"structure_path"
-			],
-			[
-				"change",
-				"change_set_value"
-			],
-			[
-				"rela",
-				"relaxation_set_path"
-			],
-			[
-				"chang",
-				"change_values_list"
-			],
-			[
-				"chan",
-				"change_set"
-			],
-			[
-				"en",
-				"encuts_list"
-			],
-			[
-				"strain",
-				"strain_distribution_function_array"
-			],
-			[
-				"Dist",
-				"DistributionGenerator"
-			],
-			[
-				"sho",
-				"should_be_a_real_number"
 			]
 		]
 	},
@@ -523,16 +523,7 @@
 			"file": "fpctoolkit/fpc_sketcher.py",
 			"settings":
 			{
-				"buffer_size": 18757,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/phonon/phonon_super_displacement_vector.py",
-			"settings":
-			{
-				"buffer_size": 3656,
+				"buffer_size": 19281,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -541,7 +532,7 @@
 			"file": "fpctoolkit/phonon/phonon_structure.py",
 			"settings":
 			{
-				"buffer_size": 6882,
+				"buffer_size": 11374,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -550,16 +541,16 @@
 			"file": "fpctoolkit/phonon/normal_coordinate.py",
 			"settings":
 			{
-				"buffer_size": 2390,
+				"buffer_size": 2403,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/phonon/normal_mode.py",
+			"file": "fpctoolkit/phonon/phonon_super_displacement_vector.py",
 			"settings":
 			{
-				"buffer_size": 5594,
+				"buffer_size": 3755,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -568,77 +559,16 @@
 			"file": "fpctoolkit/structure/displacement_vector.py",
 			"settings":
 			{
-				"buffer_size": 4328,
+				"buffer_size": 8651,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/io/file.py",
+			"file": "fpctoolkit/phonon/normal_mode.py",
 			"settings":
 			{
-				"buffer_size": 5770,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/structure/structure.py",
-			"settings":
-			{
-				"buffer_size": 4679,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/structure/site_collection.py",
-			"settings":
-			{
-				"buffer_size": 7721,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/util/basic_validators.py",
-			"settings":
-			{
-				"buffer_size": 6688,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/phonon/q_point.py",
-			"settings":
-			{
-				"buffer_size": 2007,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/phonon/phonon_band_structure.py",
-			"settings":
-			{
-				"buffer_size": 2810,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/structure/structure_manipulator.py",
-			"settings":
-			{
-				"buffer_size": 7387,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/util/basic_checks.py",
-			"settings":
-			{
-				"buffer_size": 658,
+				"buffer_size": 6398,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -826,30 +756,44 @@
 	[
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow"
 	],
 	"file_history":
 	[
+		"/C/Users/Tom/Anaconda2/sip/__init__.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/phonon_band_structure.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/basic_checks.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/vasp_input_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop/dead_code_drop.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/basic_validators.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/file.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_forces_run_set.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar_maker.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/phonon_normal_mode_energy_tester.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/poscar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_manipulator.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/q_point.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_collection.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_phonon.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop/dead_code_drop.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/displacement_vector.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/phonopy_interface/phonopy_utility.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_phonon.py",
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/rhombohedral_2_2_2/settings.conf",
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/rhombohedral_2_2_2/BORN",
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/rhombohedral_2_2_2/FORCE_CONSTANTS",
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/rhombohedral_2_2_2/initial_structure",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/phonon/q_point.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/phonon/normal_mode.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/basic_checks.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/phonon/__init__.py",
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/cubic_2_2_2/settings.conf",
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/cubic_3_3_3/settings.conf",
@@ -861,29 +805,20 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_generator.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/lattice.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run_set.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar_maker.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/vasp_input_set.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_forces_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/path.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/string_util.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/outcar.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/file.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/misc.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/phonopy_interface/phonopy_inputs.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/data_structures/input_dictionary.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/data_structures/parameter_list.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/phonopy_interface/__init__.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_manipulator.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/distribution.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/tensor.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/basic_validators.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/fpc_sketcher.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/distribution_array.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/distribution_generator.py",
 		"/C/Users/Tom/Documents/Coding/Web Development/Udemy Bootcamp/selectors.css",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_collection.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_breeder.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/1D_function.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop/constrained_lattice.py",
@@ -906,7 +841,6 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/vector.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/individual.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/ga_structure_predictor.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/poscar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/population_collection.py",
 		"/C/Users/Tom/Documents/Coding/Web Development/Udemy Bootcamp/first.html",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/tensor.py",
@@ -959,11 +893,7 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/data_File/small_file_2.txt",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/data_File/file1.txt",
 		"/C/Users/Tom/Documents/Coding/python_work/ttttt.txt",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/data_File/ttttt.txt",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/data_File/empty.txt",
-		"/C/Users/Tom/Documents/Coding/python_work/empty.txt",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/kpoint.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/file_util.py"
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/data_File/ttttt.txt"
 	],
 	"find":
 	{
@@ -982,6 +912,22 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"basis_phonon_displacement_vector_list",
+			"translational_vectors_in_basis",
+			"superfluous_basis",
+			"self.basis",
+			"possible_basis_vector",
+			"total_vector_set",
+			"vector_list",
+			"basis_vector_matrix",
+			"a_new",
+			"self",
+			"***",
+			"magnitude",
+			"displacement_vector",
+			"DisplacementVector",
+			"reference_supercell",
+			"validate_lines",
 			"displacement_vector",
 			"original_coordinate_mode",
 			"site",
@@ -1093,23 +1039,7 @@
 			"Site",
 			"structure.site_pair_is_too_close(",
 			"self",
-			"displace_site_positions_with_minimum_distance_constraints",
-			"self",
-			"get_supercell",
-			"_coordinates",
-			"remove_site",
-			"add_site",
-			"species_type",
-			"site['type']",
-			"validate_3D_vector_representation",
-			"lattice_vector",
-			"sites_list",
-			"expand_path",
-			"_type_counts",
-			"j",
-			"lattice_representation",
-			"lattice",
-			"lattice_representation"
+			"displace_site_positions_with_minimum_distance_constraints"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1143,7 +1073,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -1152,15 +1082,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 18757,
+						"buffer_size": 19281,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4035,
-								4035
+								4771,
+								4771
 							]
 						],
 						"settings":
@@ -1170,27 +1100,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1419.0,
+						"translation.y": 1327.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "fpctoolkit/phonon/phonon_super_displacement_vector.py",
+					"file": "fpctoolkit/phonon/phonon_structure.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3656,
+						"buffer_size": 11374,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3652,
-								3652
+								3376,
+								3376
 							]
 						],
 						"settings":
@@ -1200,7 +1130,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 695.0,
+						"translation.y": 1092.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -1208,49 +1138,19 @@
 				},
 				{
 					"buffer": 2,
-					"file": "fpctoolkit/phonon/phonon_structure.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6882,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3210,
-								3210
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 734.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
 					"file": "fpctoolkit/phonon/normal_coordinate.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2390,
+						"buffer_size": 2403,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1406,
-								1508
+								1531,
+								1531
 							]
 						],
 						"settings":
@@ -1260,57 +1160,57 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 245.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "fpctoolkit/phonon/normal_mode.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5594,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4231,
-								4231
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 467.0,
+						"translation.y": 42.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 3,
+					"file": "fpctoolkit/phonon/phonon_super_displacement_vector.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3755,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1202,
+								1202
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 462.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
 					"file": "fpctoolkit/structure/displacement_vector.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4328,
+						"buffer_size": 8651,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3828,
-								3828
+								5816,
+								5816
 							]
 						],
 						"settings":
@@ -1320,249 +1220,40 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2016.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "fpctoolkit/phonon/normal_mode.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6398,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3162,
+								3162
+							]
+						],
+						"settings":
+						{
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 42.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "fpctoolkit/io/file.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5770,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1837,
-								1856
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 455.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "fpctoolkit/structure/structure.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4679,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4001,
-								4001
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1583.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "fpctoolkit/structure/site_collection.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7721,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5261,
-								5261
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2491.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "fpctoolkit/util/basic_validators.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6688,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4984,
-								5020
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1321.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "fpctoolkit/phonon/q_point.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2007,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1941,
-								1941
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 13,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "fpctoolkit/phonon/phonon_band_structure.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2810,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2338,
-								2338
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 378.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "fpctoolkit/structure/structure_manipulator.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7387,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								76,
-								1
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 13,
-					"file": "fpctoolkit/util/basic_checks.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 658,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								430,
-								430
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
 					"type": "text"
 				}
 			]
@@ -1605,7 +1296,7 @@
 	},
 	"output.exec":
 	{
-		"height": 362.0
+		"height": 360.0
 	},
 	"output.find_results":
 	{
@@ -1665,7 +1356,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 188.0,
+	"side_bar_width": 308.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
