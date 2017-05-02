@@ -10,6 +10,7 @@ class Outcar(File):
 	total_energy_string = "energy(sigma->0)"
 	dielectric_tensor_string = "MACROSCOPIC STATIC DIELECTRIC TENSOR (including local field effects in DFT)"
 	born_effective_charge_tensor_string = "BORN EFFECTIVE CHARGES (in e, cummulative output)"
+	hessian_string = "SECOND DERIVATIVES (NOT SYMMETRIZED)"
 
 	def __init__(self, file_path=None):
 		super(Outcar, self).__init__(file_path)
@@ -201,4 +202,58 @@ class Outcar(File):
 
 		return born_effective_charge_tensor
 
-		
+	
+	def get_hessian_matrix(self):
+		"""
+		Returns an NxN matrix of second derivatives w.r.t. atomic displacements (force constant units are eV/Angstrom^2 in matrix), where N is the number of atoms in the POSCAR of the calculation. 
+
+		The matrix of second derivatives is arranged as:
+			         atom_1_x     atom_1_y   atom_1_z  atom_2_x ... atom_N_z
+		atom_1_x      -8.4           0.0       0.0       3.2           6.5
+		atom_1_y      -1.02          ...
+		atom_1_z
+		atom_2_x
+		.
+		.
+		.
+		atom_N_z
+
+		The output is a list of lists, looking like [[dE/du_atom_1_x*du_atom_1_x, dE/du_atom_1_x*du_atom_1_y, ...], [dE/du_atom_1_y*du_atom_1_x, ...], ...]
+
+		Here, atom_n is the nth atom in the poscar file.
+		"""
+
+		hessian_matrix = []
+
+		hessian_matrix_indices = self.get_line_indices_containing_string(Outcar.hessian_string)
+
+		if len(hessian_matrix_indices) == 0:
+			raise Exception("No hessian matrix found in completed outcar file")
+
+
+		hessian_matrix_starting_index = hessian_matrix_indices[-1] + 3
+
+
+		number_of_degrees_of_freedom = 3*self.get_number_of_atoms()
+
+		for i in range(number_of_degrees_of_freedom):
+			row_string = self[hessian_matrix_starting_index+i]
+
+			cleaned_row_string = su.remove_extra_spaces(row_string.strip())
+
+			cleaned_row_components_list = cleaned_row_string.strip().split(' ')
+
+			numerical_strings_list = cleaned_row_components_list[1:]
+
+			row_values_list = [float(component_string) for component_string in numerical_strings_list]
+
+			if not len(row_values_list) == number_of_degrees_of_freedom:
+				raise Exception("Number of degrees of freedom and number of columns in hessian row do not match. Row is", row_values_list, "number of dofs is", number_of_degrees_of_freedom)
+
+
+			hessian_matrix.append(row_values_list)
+
+		if len(hessian_matrix) != number_of_degrees_of_freedom:
+			raise Exception("Number of degrees of freedom and number of rows in hessian matrix do not match. Matrix row count is", len(hessian_matrix), "number of dofs is", number_of_degrees_of_freedom)
+
+		return hessian_matrix

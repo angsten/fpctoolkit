@@ -35,6 +35,176 @@ import fpctoolkit.util.phonopy_interface.phonopy_utility as phonopy_utility
 from fpctoolkit.phonon.phonon_structure import PhononStructure
 
 from fpctoolkit.phonon.normal_mode import NormalMode
+from fpctoolkit.structure.displacement_vector import DisplacementVector
+
+
+
+
+a = 3.79
+Nx = 2
+Ny = 2
+Nz = 2
+
+
+initial_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx, 0.0, 0.0], [0.0, a*Ny, 0.0], [0.0, 0.0, a*Nz]], species_list=['Sr', 'Ti', 'O'])
+
+
+
+
+symmetrized = True
+
+def symmetrize(a):
+    return (a + a.T)/2.0
+
+def print_eigen_vector(eigen_vector):
+	f = su.pad_decimal_number_to_fixed_character_length
+	rnd = 5
+	pad = 8
+	for i in range(len(eigen_vector)/3):
+		print "Atom ", i, f(eigen_vector[3*i+0], rnd, pad),  f(eigen_vector[3*i+1], rnd, pad),  f(eigen_vector[3*i+2], rnd, pad)
+
+def print_hessian(hessian):
+	f = su.pad_decimal_number_to_fixed_character_length
+	rnd = 4
+	pad = 6
+
+	for i in range(len(hessian)):
+		for j in range(len(hessian)):
+			print f(hessian[i][j], rnd, pad),
+		print
+
+
+
+
+base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
+
+outcar = Outcar(Path.join(base_path, 'OUTCAR_large_refined'))
+
+np_hess_refined = np.asarray(outcar.get_hessian_matrix())
+
+
+if symmetrized:
+	np_hess_refined = symmetrize(np_hess_refined) #####################enforce symmetry across diagonal
+
+#print_hessian(np_hess_refined)
+
+
+
+
+
+if symmetrized:
+	eigen_values, eigen_vectors = np.linalg.eigh(np_hess_refined)
+else:
+	eigen_values, eigen_vectors = np.linalg.eig(np_hess_refined)
+
+
+
+
+eigen_value_vector_pairs = []
+
+for i in range(len(eigen_values)):
+	eigen_value_vector_pairs.append([eigen_values[i], eigen_vectors[:, i]])
+
+sorted_eigen_value_vector_pairs = sorted(eigen_value_vector_pairs, key=lambda pair: pair[0])
+
+
+
+eigen_values = []
+eigen_vectors = []
+
+for i in range(len(sorted_eigen_value_vector_pairs)):
+	eigen_values.append(sorted_eigen_value_vector_pairs[i][0])
+	eigen_vectors.append(sorted_eigen_value_vector_pairs[i][1])
+
+
+
+
+
+print eigen_values
+# for i in range(len(eigen_values)):
+# 	print '-'*100
+# 	print "Eigenvalue", i, ": ", round(eigen_values[i], 7)
+# 	print_eigen_vector(eigen_vectors[i])
+
+
+
+for i in range(len(eigen_values)):
+	for j in range(i+1, len(eigen_values)):
+		dot = np.dot(eigen_vectors[i], eigen_vectors[j])
+
+		if abs(dot) > 1e-12:
+			print dot, i, j
+
+
+
+
+
+# print np.linalg.det(np_hess_refined)
+
+# print reduce(lambda x, y: x*y, eigen_values)
+
+
+
+
+
+
+
+
+disp_vec = DisplacementVector(reference_structure=initial_structure, coordinate_mode='Cartesian')
+
+disp_vec.set(eigen_vectors[0])
+
+
+
+
+
+
+
+
+
+
+
+
+
+# for i in range(len(np_hess_refined)):
+# 	for j in range(len(np_hess_refined[0])):
+# 		print np_hess_refined[i][j] - np_hess_refined[j][i]
+
+
+
+# base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
+
+# outcar = Outcar(Path.join(base_path, 'OUTCAR'))
+# outcar_refined = Outcar(Path.join(base_path, 'OUTCAR_refined'))
+
+
+# np_hess = np.asarray(outcar.get_hessian_matrix())
+# np_hess_refined = np.asarray(outcar_refined.get_hessian_matrix())
+
+
+# difference_hessian = np.absolute(np_hess-np_hess_refined)
+
+# percent_change_hessian = 100.0*(difference_hessian/np.absolute(np_hess_refined))
+# percent_change_hessian = np.nan_to_num(percent_change_hessian)
+
+
+# print percent_change_hessian.mean()
+
+
+
+# for i in range(len(percent_change_hessian)):
+# 	for j in range(len(percent_change_hessian[0])):
+# 		print percent_change_hessian[i][j], "  ", np_hess[i][j], "  ", np_hess_refined[i][j]
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -52,87 +222,87 @@ from fpctoolkit.phonon.normal_mode import NormalMode
 
 
 
-phonopy_inputs_dictionary = {
-	'supercell_dimensions': [2, 2, 2],
-	'symprec': 0.0001,
-	'displacement_distance': 0.01,
-	'nac': True
-	}
+# phonopy_inputs_dictionary = {
+# 	'supercell_dimensions': [2, 2, 2],
+# 	'symprec': 0.0001,
+# 	'displacement_distance': 0.01,
+# 	'nac': True
+# 	}
 
-base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
-#base_path = "C:\Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/cubic_2_2_2/"
-
-
-init_struct_path = Path.join(base_path, 'initial_structure')
-mod_struct_path = Path.join("C:\Users\Tom\Desktop\Vesta_Inputs\mod.vasp")
-force_constants_path = Path.join(base_path, 'FORCE_CONSTANTS')
-born_path = Path.join(base_path, 'BORN')
-
-initial_structure = Structure(init_struct_path)
+# base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
+# #base_path = "C:\Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/cubic_2_2_2/"
 
 
-phonon = phonopy_utility.get_initialized_phononopy_instance(initial_structure, phonopy_inputs_dictionary, force_constants_path, born_path)
+# init_struct_path = Path.join(base_path, 'initial_structure')
+# mod_struct_path = Path.join("C:\Users\Tom\Desktop\Vesta_Inputs\mod.vasp")
+# force_constants_path = Path.join(base_path, 'FORCE_CONSTANTS')
+# born_path = Path.join(base_path, 'BORN')
+
+# initial_structure = Structure(init_struct_path)
 
 
-q_points_list = [(0.0, 0.0, 0.0), (0.5, 0.0, 0.0), (0.0, 0.5, 0.0), (0.0, 0.0, 0.5), (0.5, 0.5, 0.0), (0.5, 0.0, 0.5), (0.0, 0.5, 0.5), (0.5, 0.5, 0.5), (0.5, 0.5, 0.5)]
-
-eig_vecs = phonon.get_frequencies_with_eigenvectors(q_points_list[0])[1]
-
-#phonopy_utility.view_eigen_values_and_eigen_vectors(phonopy_instance=phonon, q_points_list=q_points_list)
+# phonon = phonopy_utility.get_initialized_phononopy_instance(initial_structure, phonopy_inputs_dictionary, force_constants_path, born_path)
 
 
-# qpoint = q_points_list[4]
+# q_points_list = [(0.0, 0.0, 0.0), (0.5, 0.0, 0.0), (0.0, 0.5, 0.0), (0.0, 0.0, 0.5), (0.5, 0.5, 0.0), (0.5, 0.0, 0.5), (0.0, 0.5, 0.5), (0.5, 0.5, 0.5), (0.5, 0.5, 0.5)]
 
-# band_index = 2 #1 through 15
-# amplitude = 14.0
-# phase = 0.0
+# eig_vecs = phonon.get_frequencies_with_eigenvectors(q_points_list[0])[1]
 
-# band_index -= 1
-
-# phonon_modes = [[qpoint, band_index, amplitude, phase]]
-
-# mod_struct = phonopy_utility.get_modulated_structure(phonon, phonopy_inputs_dictionary, phonon_modes)
-
-# mod_struct.to_poscar_file_path(mod_struct_path)
+# #phonopy_utility.view_eigen_values_and_eigen_vectors(phonopy_instance=phonon, q_points_list=q_points_list)
 
 
+# # qpoint = q_points_list[4]
 
+# # band_index = 2 #1 through 15
+# # amplitude = 14.0
+# # phase = 0.0
 
-pbs = phonopy_utility.get_phonon_band_structure_instance(phonopy_instance=phonon, q_points_list=q_points_list)
+# # band_index -= 1
 
-#print pbs
+# # phonon_modes = [[qpoint, band_index, amplitude, phase]]
 
+# # mod_struct = phonopy_utility.get_modulated_structure(phonon, phonopy_inputs_dictionary, phonon_modes)
 
-ps = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'])
-
-
-coordinate_index = 3
-ps.normal_coordinates_list[coordinate_index].coefficient = 1.0
-
-ps.normal_coordinates_list[111].coefficient = 1.0
-
-print ps
+# # mod_struct.to_poscar_file_path(mod_struct_path)
 
 
 
-ref_struct = ps.reference_supercell_structure
 
-dist_struct = ps.get_distorted_supercell_structure()
+# pbs = phonopy_utility.get_phonon_band_structure_instance(phonopy_instance=phonon, q_points_list=q_points_list)
 
-ref_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/reference_supercell.vasp")
-dist_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\distorted.vasp")
+# #print pbs
 
 
-#do the reverse now - go from distorted structure back to normal coordinates.
-ps_new = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'], 
-	distorted_structure=dist_struct)
-
-print ps_new
+# ps = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'])
 
 
-dist_struct = ps_new.get_distorted_supercell_structure()
+# coordinate_index = 3
+# ps.normal_coordinates_list[coordinate_index].coefficient = 1.0
 
-dist_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\distorted_2.vasp")
+# ps.normal_coordinates_list[111].coefficient = 1.0
+
+# print ps
+
+
+
+# ref_struct = ps.reference_supercell_structure
+
+# dist_struct = ps.get_distorted_supercell_structure()
+
+# ref_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/reference_supercell.vasp")
+# dist_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\distorted.vasp")
+
+
+# #do the reverse now - go from distorted structure back to normal coordinates.
+# ps_new = PhononStructure(primitive_cell_structure=pbs.primitive_cell_structure, phonon_band_structure=pbs, supercell_dimensions_list=phonopy_inputs_dictionary['supercell_dimensions'], 
+# 	distorted_structure=dist_struct)
+
+# print ps_new
+
+
+# dist_struct = ps_new.get_distorted_supercell_structure()
+
+# dist_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs\distorted_2.vasp")
 
 
 

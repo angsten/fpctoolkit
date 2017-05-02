@@ -87,6 +87,17 @@ class DisplacementVector(object):
 	__rmul__ = __imul__
 
 
+	def set(self, displacement_vector_list):
+		"""
+		Takes in list of displacements and sets self.displacement_vector equal to this list
+		"""
+
+		if len(displacement_vector_list) != self.reference_structure.site_count:
+			raise Exception("Length of displacement vector inputted and number of sites in reference structure do no match", len(displacement_vector_list) , self.reference_structure.site_count)
+
+		self.displacement_vector = copy.deepcopy(displacement_vector_list)
+
+
 	def is_zero_vector(self, zero_tolerance=1e-12):
 		"""
 		Returns true is the stored displacement vector magnitude is zero - then all components must be zero.
