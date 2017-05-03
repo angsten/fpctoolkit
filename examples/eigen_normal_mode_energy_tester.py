@@ -43,6 +43,8 @@ reference_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx
 
 component_indices = range(3*reference_structure.site_count)
 
+stored_energy = None
+
 
 for component_index in component_indices:
 	eigen_structure = EigenStructure(reference_structure=reference_structure, hessian=hessian)
@@ -70,7 +72,14 @@ for component_index in component_indices:
 		relax.update()
 
 
+		if start_range == 1 and i == 1:
+			print str(0.0), stored_energy
+
+
 		if relax.complete:
+			if i == 0:
+				stored_energy = relax.get_final_energy()
+
 			relaxed_structure = relax.final_structure
 
 			print str(eigen_structure[component_index+6]), relax.get_final_energy()
