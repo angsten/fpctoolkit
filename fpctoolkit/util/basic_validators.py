@@ -2,6 +2,12 @@
 
 import fpctoolkit.util.basic_checks as basic_checks
 
+def validate_sequence_of_real_numbers(should_be_a_list_of_real_numbers):
+
+	for should_be_a_real_number in should_be_a_list_of_real_numbers:
+		validate_real_number(should_be_a_real_number)
+
+
 
 def validate_index_tuple(index_tuple, array_shape):
 

@@ -92,8 +92,8 @@ class DisplacementVector(object):
 		Takes in list of displacements and sets self.displacement_vector equal to this list
 		"""
 
-		if len(displacement_vector_list) != self.reference_structure.site_count:
-			raise Exception("Length of displacement vector inputted and number of sites in reference structure do no match", len(displacement_vector_list) , self.reference_structure.site_count)
+		if len(displacement_vector_list) != self.reference_structure.site_count*3:
+			raise Exception("Length of displacement vector inputted and number of displacement degrees of freedom in reference structure do not match", len(displacement_vector_list) , 3*self.reference_structure.site_count)
 
 		self.displacement_vector = copy.deepcopy(displacement_vector_list)
 
@@ -202,7 +202,7 @@ class DisplacementVector(object):
 	@staticmethod
 	def displace_structure(reference_structure, displacement_vector, displacement_coordinate_mode):
 		"""
-		Adds displacement_vector to the positions of the input reference structure and returns a new structure. 
+		Adds displacement_vector (list of floats) to the positions of the input reference structure and returns a new structure. 
 		"""
 
 		if len(displacement_vector) != 3*reference_structure.site_count:

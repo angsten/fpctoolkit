@@ -33,127 +33,172 @@ from fpctoolkit.util.math.distribution_array import DistributionArray
 from fpctoolkit.util.math.distribution_generator import DistributionGenerator
 import fpctoolkit.util.phonopy_interface.phonopy_utility as phonopy_utility
 from fpctoolkit.phonon.phonon_structure import PhononStructure
-
 from fpctoolkit.phonon.normal_mode import NormalMode
 from fpctoolkit.structure.displacement_vector import DisplacementVector
+from fpctoolkit.phonon.hessian import Hessian
 
-
-
-
-a = 3.79
-Nx = 2
-Ny = 2
-Nz = 2
-
-
-initial_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx, 0.0, 0.0], [0.0, a*Ny, 0.0], [0.0, 0.0, a*Nz]], species_list=['Sr', 'Ti', 'O'])
-
-
-
-
-symmetrized = True
-
-def symmetrize(a):
-    return (a + a.T)/2.0
-
-def print_eigen_vector(eigen_vector):
-	f = su.pad_decimal_number_to_fixed_character_length
-	rnd = 5
-	pad = 8
-	for i in range(len(eigen_vector)/3):
-		print "Atom ", i, f(eigen_vector[3*i+0], rnd, pad),  f(eigen_vector[3*i+1], rnd, pad),  f(eigen_vector[3*i+2], rnd, pad)
-
-def print_hessian(hessian):
-	f = su.pad_decimal_number_to_fixed_character_length
-	rnd = 4
-	pad = 6
-
-	for i in range(len(hessian)):
-		for j in range(len(hessian)):
-			print f(hessian[i][j], rnd, pad),
-		print
 
 
 
 
 base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
 
-outcar = Outcar(Path.join(base_path, 'OUTCAR_large_refined'))
-
-np_hess_refined = np.asarray(outcar.get_hessian_matrix())
-
-
-if symmetrized:
-	np_hess_refined = symmetrize(np_hess_refined) #####################enforce symmetry across diagonal
-
-#print_hessian(np_hess_refined)
+outcar = Outcar(Path.join(base_path, 'OUTCAR_small_refined'))
 
 
 
+hessian = Hessian(outcar)
 
 
-if symmetrized:
-	eigen_values, eigen_vectors = np.linalg.eigh(np_hess_refined)
-else:
-	eigen_values, eigen_vectors = np.linalg.eig(np_hess_refined)
+print hessian
 
-
-
-
-eigen_value_vector_pairs = []
-
-for i in range(len(eigen_values)):
-	eigen_value_vector_pairs.append([eigen_values[i], eigen_vectors[:, i]])
-
-sorted_eigen_value_vector_pairs = sorted(eigen_value_vector_pairs, key=lambda pair: pair[0])
-
-
-
-eigen_values = []
-eigen_vectors = []
-
-for i in range(len(sorted_eigen_value_vector_pairs)):
-	eigen_values.append(sorted_eigen_value_vector_pairs[i][0])
-	eigen_vectors.append(sorted_eigen_value_vector_pairs[i][1])
+################################################################################################################force const stuff#####################################################
 
 
 
 
 
-print eigen_values
+
+
+
+# a = 3.79
+# Nx = 2
+# Ny = 2
+# Nz = 2
+
+
+# initial_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx, 0.0, 0.0], [0.0, a*Ny, 0.0], [0.0, 0.0, a*Nz]], species_list=['Sr', 'Ti', 'O'])
+
+
+
+
+# symmetrized = True
+
+# def symmetrize(a):
+#     return (a + a.T)/2.0
+
+# def print_eigen_vector(eigen_vector):
+# 	f = su.pad_decimal_number_to_fixed_character_length
+# 	rnd = 5
+# 	pad = 8
+# 	for i in range(len(eigen_vector)/3):
+# 		print "Atom ", i, f(eigen_vector[3*i+0], rnd, pad),  f(eigen_vector[3*i+1], rnd, pad),  f(eigen_vector[3*i+2], rnd, pad)
+
+# def print_hessian(hessian):
+# 	f = su.pad_decimal_number_to_fixed_character_length
+# 	rnd = 4
+# 	pad = 6
+
+# 	for i in range(len(hessian)):
+# 		for j in range(len(hessian)):
+# 			print f(hessian[i][j], rnd, pad),
+# 		print
+
+
+
+
+# base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
+
+# outcar = Outcar(Path.join(base_path, 'OUTCAR_large_refined'))
+
+# np_hess_refined = np.asarray(outcar.get_hessian_matrix())
+
+
+# if symmetrized:
+# 	np_hess_refined = symmetrize(np_hess_refined) #####################enforce symmetry across diagonal
+
+# #print_hessian(np_hess_refined)
+
+
+
+
+
+# if symmetrized:
+# 	eigen_values, eigen_vectors = np.linalg.eigh(np_hess_refined)
+# else:
+# 	eigen_values, eigen_vectors = np.linalg.eig(np_hess_refined)
+
+
+
+
+# eigen_value_vector_pairs = []
+
 # for i in range(len(eigen_values)):
-# 	print '-'*100
-# 	print "Eigenvalue", i, ": ", round(eigen_values[i], 7)
-# 	print_eigen_vector(eigen_vectors[i])
+# 	eigen_value_vector_pairs.append([eigen_values[i], eigen_vectors[:, i]])
+
+# sorted_eigen_value_vector_pairs = sorted(eigen_value_vector_pairs, key=lambda pair: pair[0])
 
 
 
-for i in range(len(eigen_values)):
-	for j in range(i+1, len(eigen_values)):
-		dot = np.dot(eigen_vectors[i], eigen_vectors[j])
+# eigen_values = []
+# eigen_vectors = []
 
-		if abs(dot) > 1e-12:
-			print dot, i, j
-
-
-
-
-
-# print np.linalg.det(np_hess_refined)
-
-# print reduce(lambda x, y: x*y, eigen_values)
+# for i in range(len(sorted_eigen_value_vector_pairs)):
+# 	eigen_values.append(sorted_eigen_value_vector_pairs[i][0])
+# 	eigen_vectors.append(sorted_eigen_value_vector_pairs[i][1])
 
 
 
 
 
+# print eigen_values
+# # for i in range(len(eigen_values)):
+# # 	print '-'*100
+# # 	print "Eigenvalue", i, ": ", round(eigen_values[i], 7)
+# # 	print_eigen_vector(eigen_vectors[i])
 
 
 
-disp_vec = DisplacementVector(reference_structure=initial_structure, coordinate_mode='Cartesian')
+# for i in range(len(eigen_values)):
+# 	for j in range(i+1, len(eigen_values)):
+# 		dot = np.dot(eigen_vectors[i], eigen_vectors[j])
 
-disp_vec.set(eigen_vectors[0])
+# 		if abs(dot) > 1e-12:
+# 			print dot, i, j
 
+
+
+
+
+# # print np.linalg.det(np_hess_refined)
+
+# # print reduce(lambda x, y: x*y, eigen_values)
+
+
+
+
+
+
+# for i, eig_val in enumerate(eigen_values):
+
+# 	disp_vec = DisplacementVector(reference_structure=initial_structure, coordinate_mode='Cartesian')
+
+# 	disp_vec.set(eigen_vectors[i])
+
+
+
+# 	displaced_structure = disp_vec.get_displaced_structure()
+
+# 	eigstr = str(i) + "_" + str(round(eig_val, 4))
+
+# 	displaced_structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/xx_disp_fc_" + eigstr + ".vasp")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+############################################################################################################end force const stuff#####################################################
 
 
 

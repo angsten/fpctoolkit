@@ -218,9 +218,11 @@ class Outcar(File):
 		.
 		atom_N_z
 
-		The output is a list of lists, looking like [[dE/du_atom_1_x*du_atom_1_x, dE/du_atom_1_x*du_atom_1_y, ...], [dE/du_atom_1_y*du_atom_1_x, ...], ...]
+		The output is a list of lists, looking like [[d^2E/du_atom_1_x*du_atom_1_x, d^2/du_atom_1_x*du_atom_1_y, ...], [d^2/du_atom_1_y*du_atom_1_x, ...], ...]
 
 		Here, atom_n is the nth atom in the poscar file.
+
+		NOTE: The negative of the components of the OUTCAR is taken because vasp puts derivatives in terms of forces, which are -dE/dx.
 		"""
 
 		hessian_matrix = []
@@ -245,7 +247,7 @@ class Outcar(File):
 
 			numerical_strings_list = cleaned_row_components_list[1:]
 
-			row_values_list = [float(component_string) for component_string in numerical_strings_list]
+			row_values_list = [-1.0*float(component_string) for component_string in numerical_strings_list] #must take the negative because vasp gives values in terms of changes in forces, which are negative of dEnergy terms
 
 			if not len(row_values_list) == number_of_degrees_of_freedom:
 				raise Exception("Number of degrees of freedom and number of columns in hessian row do not match. Row is", row_values_list, "number of dofs is", number_of_degrees_of_freedom)
