@@ -36,25 +36,37 @@ from fpctoolkit.phonon.phonon_structure import PhononStructure
 from fpctoolkit.phonon.normal_mode import NormalMode
 from fpctoolkit.structure.displacement_vector import DisplacementVector
 from fpctoolkit.phonon.hessian import Hessian
+from fpctoolkit.phonon.eigen_structure import EigenStructure
 
 
 
+
+a = 3.79
+Nx = 1
+Ny = 1
+Nz = 1
 
 
 base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
 
-outcar = Outcar(Path.join(base_path, 'OUTCAR_large_refined'))
-
-
-
+outcar = Outcar(Path.join(base_path, 'OUTCAR_small_refined'))
 hessian = Hessian(outcar)
 
 
-eigen_pairs = hessian.get_sorted_hessian_eigen_pairs_list()
+
+reference_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx, 0.0, 0.0], [0.0, a*Ny, 0.0], [0.0, 0.0, a*Nz]], species_list=['Sr', 'Ti', 'O'])
+
+eigen_structure = EigenStructure(reference_structure=reference_structure, hessian=hessian)
+
+eigen_structure[6] = 0.1
+
+print eigen_structure
 
 
-for pair in eigen_pairs:
-	print pair
+distorted_structure = eigen_structure.get_distorted_structure()
+
+distorted_structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/dist_fc.vasp")
+
 
 
 
