@@ -62,6 +62,8 @@ for component_index in component_indices:
 
 	component_complete = True
 
+	energies = [stored_energy]
+
 	for i in range(start_range, 3):
 		relaxation_path = Path.join(component_path, str(i))
 		
@@ -87,14 +89,13 @@ for component_index in component_indices:
 
 			print str(eigen_structure[component_index+6]), relax.get_final_energy()
 
-			energies.append(relax.get_final_energy())
+			if not i == 0:
+				energies.append(relax.get_final_energy())
 		else:
 			component_complete = False
 
-	energies = [stored_energy]
-
 	if component_complete:
 
-		curvature = (energies[1]-energies[0])/(increment**2.0)
+		curvature = (energies[1]-stored_energy)/(increment**2.0)
 
 		print "          eigenvalue, curvature", str(eigen_structure.eigen_components_list[component_index].eigenvalue), curvature
