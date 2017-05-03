@@ -41,7 +41,7 @@ reference_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx
 # eigen_structure.print_eigen_components()
 
 
-component_indices = range(len(eigen_structure.eigen_components_list))
+component_indices = range(3*reference_structure.site_count)
 
 
 for component_index in component_indices:
@@ -51,9 +51,13 @@ for component_index in component_indices:
 		
 	Path.make(component_path)
 
-	print "Component index is " + str(component_index) + ", eigenvalue is " + str(eigen_structure[component_index+6])
+	print "Component index is " + str(component_index) + ", eigenvalue is " + str(eigen_structure.eigen_components_list[component_index].eigenvalue)
 
-	for i in range(3):
+	if component_index == component_indices[0]:
+		start_range = 0
+	else:
+		start_range = 1
+	for i in range(start_range, 3):
 		relaxation_path = Path.join(component_path, str(i))
 		
 		eigen_structure[component_index+6] = i*0.05
