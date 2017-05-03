@@ -61,7 +61,7 @@ for component_index in component_indices:
 		start_range = 1
 
 	component_complete = True
-	energies = [stored_energy]
+
 	for i in range(start_range, 3):
 		relaxation_path = Path.join(component_path, str(i))
 		
@@ -90,6 +90,8 @@ for component_index in component_indices:
 			energies.append(relax.get_final_energy())
 		else:
 			component_complete = False
+
+	energies = [stored_energy]
 
 	if component_complete:
 
