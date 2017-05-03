@@ -97,6 +97,6 @@ for component_index in component_indices:
 	if component_complete:
 
 		curvature = (energies[1]-stored_energy)/(increment**2.0)
-		curvature_2 = (energies[2]-stored_energy)/(increment**2.0)
+		curvature_2 = (energies[2]-stored_energy)/((increment*2.0)**2.0)
 
 		print "                               eigenvalue, curvature, curvature_2", str(eigen_structure.eigen_components_list[component_index].eigenvalue), curvature, curvature_2
