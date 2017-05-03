@@ -28,11 +28,7 @@ class Hessian(object):
 
 
 
-
-
-
-
-	def get_list_of_hessian_eigen_pairs(self):
+	def get_sorted_hessian_eigen_pairs_list(self):
 		"""
 		Returns a list of HessianEigenPair instances.
 		The eigen vectors are checked to make sure they form a proper orthonormal basis for displacements in the structure:
@@ -41,28 +37,51 @@ class Hessian(object):
 			There must be exactly three translational modes
 		"""
 
-		eigenvalues, eigenvectors = np.linalg.eigh(np_hess_refined)
+		eigenvalues, eigenvectors = np.linalg.eigh(self.hermitian_matrix)
 
-		hessian_eigen_pair_list = []
-		translational_count = 0
+		hessian_eigen_pairs_list = []
 
 		for i in range(len(eigenvalues)):
-			eigenvalue = eigenvalues[i]
-			eigenvector = eigenvectors[:, i]
+			hessian_eigen_pairs_list.append(HessianEigenPair(eigenvalue=eigenvalues[i], eigenvector=eigenvectors[:, i]))
 
-			hessian_eigen_pair = HessianEigenPair(eigenvalue, eigenvector)
 
-			if hessian_eigen_pair.is_translational_mode():
+		Hessian.validate_translational_modes_in_eigen_pair_list(hessian_eigen_pairs_list)
+		Hessian.validate_eigen_pairs_are_orthonormal(hessian_eigen_pairs_list)
+
+		sorted_hessian_eigen_pairs_list = Hessian.get_sorted_eigen_pairs_list(hessian_eigen_pairs_list)
+
+		return sorted_hessian_eigen_pairs_list
+
+
+
+
+	@staticmethod
+	def validate_translational_modes_in_eigen_pair_list(eigen_pairs_list):
+		translational_count = 0
+
+		for eigen_pair in eigen_pairs_list:
+			if eigen_pair.is_translational_mode():
 				translational_count += 1
-
-			hessian_eigen_pair_list.append(hessian_eigen_pair)
 
 		if not translational_count == 3:
 			raise Exception("Number of translational modes in eigen list must be exactly three.", translational_count)
 
-		return hessian_eigen_pair_list
+	@staticmethod
+	def validate_eigen_pairs_are_orthonormal(eigen_pairs_list):
+		for i in range(0, len(eigen_pairs_list)):
+			eigen_pairs_list[i].validate_eigenvector_is_normalized()
+
+			for j in range(i+1, len(eigen_pairs_list)):
+				eigen_pairs_list[i].validate_eigen_pair_is_orthogonal_to(eigen_pairs_list[j])
+
+	@staticmethod
+	def get_sorted_eigen_pairs_list(eigen_pairs_list):
+
+		return sorted(eigen_pairs_list, key=lambda eigen_pair: eigen_pair.eigenvalue)
 
 
+
+				
 
 	def __str__(self):
 		output_string = ""

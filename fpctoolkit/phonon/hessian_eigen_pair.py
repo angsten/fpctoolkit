@@ -53,6 +53,7 @@ class HessianEigenPair(object):
 
 		return True
 
+
 	def validate_eigen_pair_is_orthogonal_to(self, eigen_pair_instance):
 		"""
 		Validates that this eigenpair instance's eigenvector is orthogonal to the input eigen_pair_instance's eigenvector.
@@ -65,18 +66,20 @@ class HessianEigenPair(object):
 	def validate_eigenvector_is_normalized(self):
 		return basic_validators.validate_approximately_equal(self.magnitude, 1.0, 1e-8)
 
+
 	@property
 	def magnitude(self):
 		return np.linalg.norm(self.eigenvector)
 
+
 	def __str__(self):
 		return_string = ""
-		return_string += '-'*80
+		return_string += '-'*80 + "\n"
 
 		if self.is_translational_mode():
-			translational_string += "   *translational mode*"
+			translational_string = "   *translational mode*\n\n"
 		else:
-			translational_string = ""
+			translational_string = "\n\n"
 
 		return_string += "Eigenvalue: " + str(self.eigenvalue) + translational_string
 
@@ -84,4 +87,6 @@ class HessianEigenPair(object):
 		rnd = 5
 		pad = 8
 		for i in range(len(self.eigenvector)/3):
-			return_string += "Atom ", i, f(self.eigen_vector[3*i+0], rnd, pad),  f(self.eigen_vector[3*i+1], rnd, pad),  f(self.eigen_vector[3*i+2], rnd, pad)
+			return_string += "Atom " + str(i) + " " + f(self.eigenvector[3*i+0], rnd, pad) + " " + f(self.eigenvector[3*i+1], rnd, pad) + " " + f(self.eigenvector[3*i+2], rnd, pad) + "\n"
+
+		return return_string

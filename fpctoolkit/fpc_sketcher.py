@@ -43,14 +43,20 @@ from fpctoolkit.phonon.hessian import Hessian
 
 base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
 
-outcar = Outcar(Path.join(base_path, 'OUTCAR_small_refined'))
+outcar = Outcar(Path.join(base_path, 'OUTCAR_large_refined'))
 
 
 
 hessian = Hessian(outcar)
 
 
-print hessian
+eigen_pairs = hessian.get_sorted_hessian_eigen_pairs_list()
+
+
+for pair in eigen_pairs:
+	print pair
+
+
 
 ################################################################################################################force const stuff#####################################################
 
@@ -72,7 +78,7 @@ print hessian
 
 
 
-# symmetrized = True
+# symmetrized = False
 
 # def symmetrize(a):
 #     return (a + a.T)/2.0
@@ -116,7 +122,7 @@ print hessian
 # if symmetrized:
 # 	eigen_values, eigen_vectors = np.linalg.eigh(np_hess_refined)
 # else:
-# 	eigen_values, eigen_vectors = np.linalg.eig(np_hess_refined)
+# 	eigen_values, eigen_vectors = np.linalg.eigh(np_hess_refined)
 
 
 
