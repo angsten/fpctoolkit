@@ -38,7 +38,7 @@ class VaspRelaxation(VaspRunSet):
 	external_relax_basename_string = "relax_"
 	static_basename_string = "static"
 
-	def __init__(self, path, initial_structure=None, input_dictionary=None, verbose=False):
+	def __init__(self, path, initial_structure=None, input_dictionary=None):
 		"""
 		Input dicitonary should look something like:
 		{
@@ -61,7 +61,6 @@ class VaspRelaxation(VaspRunSet):
 		if not input_dictionary:
 			self.load()
 		else:
-			self.verbose = verbose
 			self.vasp_run_list = []
 			self.input_initial_structure = initial_structure
 
@@ -109,13 +108,13 @@ class VaspRelaxation(VaspRunSet):
 		for i in range(self.external_relaxation_count):
 			run_path = self.get_extended_path(VaspRelaxation.external_relax_basename_string + str(i+1))
 			if Path.exists(run_path):
-				self.vasp_run_list.append(VaspRun(run_path, verbose=self.verbose))
+				self.vasp_run_list.append(VaspRun(run_path))
 			else:
 				return
 
 		static_path = self.get_extended_path(VaspRelaxation.static_basename_string)
 		if Path.exists(static_path):
-			self.vasp_run_list.append(VaspRun(static_path, verbose=self.verbose))
+			self.vasp_run_list.append(VaspRun(static_path))
 
 
 	def update(self):
@@ -155,7 +154,7 @@ class VaspRelaxation(VaspRunSet):
 			if key.upper() == 'NPAR':
 				input_set.incar['npar'] = self.incar_modifier_lists_dictionary['npar'][self.run_count]
 
-		vasp_run = VaspRun(run_path, input_set=input_set, verbose=self.verbose, wavecar_path=self.get_wavecar_path())
+		vasp_run = VaspRun(run_path, input_set=input_set, wavecar_path=self.get_wavecar_path())
 
 		#self.run_count += 1 #increment at end - this tracks how many runs have been created up to now
 		self.vasp_run_list.append(vasp_run)

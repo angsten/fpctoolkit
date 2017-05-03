@@ -9,6 +9,7 @@ from fpctoolkit.util.path import Path
 from fpctoolkit.structure.displacement_vector import DisplacementVector
 from fpctoolkit.phonon.hessian import Hessian
 from fpctoolkit.phonon.eigen_structure import EigenStructure
+from fpctoolkit.io.vasp.outcar import Outcar
 
 
 
