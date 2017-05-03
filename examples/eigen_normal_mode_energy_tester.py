@@ -44,7 +44,7 @@ reference_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx
 component_indices = range(3*reference_structure.site_count)
 
 stored_energy = None
-
+increment = 0.05
 
 for component_index in component_indices:
 	eigen_structure = EigenStructure(reference_structure=reference_structure, hessian=hessian)
@@ -59,10 +59,13 @@ for component_index in component_indices:
 		start_range = 0
 	else:
 		start_range = 1
+
+	component_complete = True
+	energies = [stored_energy]
 	for i in range(start_range, 3):
 		relaxation_path = Path.join(component_path, str(i))
 		
-		eigen_structure[component_index+6] = i*0.05
+		eigen_structure[component_index+6] = i*increment
 
 		distorted_structure = eigen_structure.get_distorted_structure()
 
@@ -83,3 +86,13 @@ for component_index in component_indices:
 			relaxed_structure = relax.final_structure
 
 			print str(eigen_structure[component_index+6]), relax.get_final_energy()
+
+			energies.append(relax.get_final_energy())
+		else:
+			component_complete = False
+
+	if component_complete:
+
+		curvature = (energies[1]-energies[0])/(increment**2.0)
+
+		print "          eigenvalue, curvature", str(eigen_structure.eigen_components_list[component_index].eigenvalue), curvature
