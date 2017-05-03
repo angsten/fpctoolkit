@@ -103,14 +103,19 @@ class EigenStructure(object):
 		return self.voigt_strains_list + [eigen_component.amplitude for eigen_component in self.eigen_components_list]
 
 
+	def print_eigen_components(self):
+		for i, eigen_component in enumerate(self.eigen_components_list):
+			print "Index: " + str(i) + "   " + str(eigen_component)
+
 
 	def __str__(self):
+		voigt_strings = ['exx', 'eyy', 'ezz', 'eyz', 'exz', 'exy']
 		return_string = "["
 
-		return_string += ", ".join(str(strain) for strain in self.voigt_strains_list)
+		return_string += ", ".join(voigt_strings[i] + '=' + str(strain) for i, strain in enumerate(self.voigt_strains_list)) 
 
-		for eigen_component in self.eigen_components_list:
-			return_string += ", " + str(eigen_component.amplitude)
+		for i, eigen_component in enumerate(self.eigen_components_list):
+			return_string += ", " + 'A' + str(i) + '=' + str(eigen_component.amplitude)
 
 			if eigen_component.is_translational_mode():
 				return_string += '*'
@@ -131,7 +136,7 @@ class EigenStructure(object):
 
 	def __setitem__(self, index, value):
 		list_representation = self.get_list_representation()
-		
+
 		basic_validators.validate_real_number(value)
 
 		basic_validators.validate_sequence_index(index, len(list_representation))

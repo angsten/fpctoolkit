@@ -38,3 +38,6 @@ class EigenComponent(object):
 	@property
 	def eigenvalue(self):
 		return self.eigen_pair.eigenvalue
+
+	def __str__(self):
+		return "Amplitude: " + str(self.amplitude) + '\n' + str(self.eigen_pair)

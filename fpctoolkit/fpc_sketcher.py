@@ -42,14 +42,14 @@ from fpctoolkit.phonon.eigen_structure import EigenStructure
 
 
 a = 3.79
-Nx = 1
-Ny = 1
-Nz = 1
+Nx = 2
+Ny = 2
+Nz = 2
 
 
 base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
 
-outcar = Outcar(Path.join(base_path, 'OUTCAR_small_refined'))
+outcar = Outcar(Path.join(base_path, 'OUTCAR_large_refined'))
 hessian = Hessian(outcar)
 
 
@@ -58,10 +58,17 @@ reference_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx
 
 eigen_structure = EigenStructure(reference_structure=reference_structure, hessian=hessian)
 
-eigen_structure[6] = 0.1
+
+component_index = 0
+eigen_structure[component_index+6] = 1.0
+
+component_index = 119
+eigen_structure[component_index+6] = 1.0
 
 print eigen_structure
+# print eigen_structure.eigen_components_list[component_index]
 
+eigen_structure.print_eigen_components()
 
 distorted_structure = eigen_structure.get_distorted_structure()
 
