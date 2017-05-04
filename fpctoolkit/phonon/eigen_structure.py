@@ -44,6 +44,9 @@ class EigenStructure(object):
 
 		eigen_pairs = hessian.get_sorted_hessian_eigen_pairs_list()
 
+		for eigen_pair in eigen_pairs:
+			print eigen_pair
+
 
 		self.voigt_strains_list = [0.0]*6
 
