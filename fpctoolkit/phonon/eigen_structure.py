@@ -109,11 +109,30 @@ class EigenStructure(object):
 
 
 
-	def set_strains_and_amplitudes_from_distorted_structure(self, distorted_structure):
+	def set_strains_and_amplitudes_from_distorted_structure(self, input_distorted_structure):
 		"""
 		Modifies the passed in voigt strains and eigen_components list such that the strains and amplitudes would reproduce the input distorted_structure if 
 		get_distorted_structure were called.
 		"""
+
+		distorted_structure = copy.deepcopy(input_distorted_structure)
+
+		strain_tensor = distorted_structure.lattice.get_strain_tensor_relative_to_reference(reference_lattice=self.reference_structure.lattice)
+
+
+		exx = strain_tensor[0][0] - 1.0
+		eyy = strain_tensor[1][1] - 1.0
+		ezz = strain_tensor[2][2] - 1.0
+
+		eyz = strain_tensor[1][2] + strain_tensor[2][1] #be careful of this double summation, but should work fine
+		exz = strain_tensor[0][2] + strain_tensor[2][0]
+		exy = strain_tensor[0][1] + strain_tensor[1][0]
+
+		self.voigt_strains_list = [exx, eyy, ezz, eyz, exz, exy]
+
+
+		distorted_structure.lattice = copy.deepcopy(self.reference_structure.lattice) #remove all strains before finding displacement amplitudes
+
 
 		total_displacement_vector_instance = DisplacementVector.get_instance_from_distorted_structure_relative_to_reference_structure(reference_structure=self.reference_structure, 
 			distorted_structure=distorted_structure, coordinate_mode='Cartesian')
@@ -131,9 +150,7 @@ class EigenStructure(object):
 			eigen_component.amplitude = projection
 
 
-		strain_tensor = distorted_structure.lattice.get_strain_tensor_relative_to_reference(reference_lattice=self.reference_structure.lattice)
 
-		print strain_tensor
 
 
 	def get_list_representation(self):
@@ -157,10 +174,12 @@ class EigenStructure(object):
 		voigt_strings = ['exx', 'eyy', 'ezz', 'eyz', 'exz', 'exy']
 		return_string = "["
 
-		return_string += ", ".join(voigt_strings[i] + '=' + str(strain) for i, strain in enumerate(self.voigt_strains_list)) 
+		rnd = 5
+
+		return_string += ", ".join(voigt_strings[i] + '=' + str(round(strain,rnd)) for i, strain in enumerate(self.voigt_strains_list)) 
 
 		for i, eigen_component in enumerate(self.eigen_components_list):
-			return_string += ", " + 'A' + str(i) + '=' + str(eigen_component.amplitude)
+			return_string += ", " + 'A' + str(i) + '=' + str(round(eigen_component.amplitude, rnd))
 
 			if eigen_component.is_translational_mode():
 				return_string += '*'

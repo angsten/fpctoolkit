@@ -205,7 +205,7 @@ class Lattice(object):
 
 		reference_lattice_matrix_inverse = np.linalg.inv(reference_lattice_matrix)
 
-		strain_tensor_transpose = np.dot(reference_lattice_matrix_inverse, reference_lattice_matrix)
+		strain_tensor_transpose = np.dot(reference_lattice_matrix_inverse, distorted_lattice_matrix)
 
 		return strain_tensor_transpose.T
 
