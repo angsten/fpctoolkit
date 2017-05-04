@@ -56,11 +56,21 @@ hessian = Hessian(outcar)
 
 reference_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx, 0.0, 0.0], [0.0, a*Ny, 0.0], [0.0, 0.0, a*Nz]], species_list=['Sr', 'Ti', 'O'])
 
-relaxed_struct = Structure("C:\Users\Tom\Desktop\Vesta_Inputs/rel_sr_ti_cont.vasp")
+relaxed_struct = Structure("C:\Users\Tom\Desktop\Vesta_Inputs/rel_sr_ti.vasp")
 print relaxed_struct
 print
 eigen_structure = EigenStructure(reference_structure=reference_structure, hessian=hessian, distorted_structure=relaxed_struct)
 print eigen_structure
+
+
+relaxed_struct.sites[0]['position'][2] = -0.000204
+
+
+print relaxed_struct
+print
+eigen_structure = EigenStructure(reference_structure=reference_structure, hessian=hessian, distorted_structure=relaxed_struct)
+print eigen_structure
+
 
 # dist_structure = eigen_structure.get_distorted_structure()
 

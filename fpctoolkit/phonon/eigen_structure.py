@@ -44,8 +44,8 @@ class EigenStructure(object):
 
 		eigen_pairs = hessian.get_sorted_hessian_eigen_pairs_list()
 
-		for eigen_pair in eigen_pairs:
-			print eigen_pair
+		# for eigen_pair in eigen_pairs:
+		# 	print eigen_pair
 
 
 		self.voigt_strains_list = [0.0]*6
@@ -128,15 +128,15 @@ class EigenStructure(object):
 
 
 
-	def set_strains_and_amplitudes_from_distorted_structure(self, input_distorted_structure):
+	def set_strains_and_amplitudes_from_distorted_structure(self, input_displaced_structure):
 		"""
-		Modifies the passed in voigt strains and eigen_components list such that the strains and amplitudes would reproduce the input distorted_structure if 
-		get_distorted_structure were called.
+		Modifies the passed in voigt strains and eigen_components list such that the strains and amplitudes would reproduce the input displaced_structure if 
+		get_displaced_structure were called.
 		"""
 
-		distorted_structure = copy.deepcopy(input_distorted_structure)
+		displaced_structure = copy.deepcopy(input_displaced_structure)
 
-		strain_tensor = distorted_structure.lattice.get_strain_tensor_relative_to_reference(reference_lattice=self.reference_structure.lattice)
+		strain_tensor = displaced_structure.lattice.get_strain_tensor_relative_to_reference(reference_lattice=self.reference_structure.lattice)
 
 
 		exx = strain_tensor[0][0] - 1.0
@@ -150,11 +150,11 @@ class EigenStructure(object):
 		self.voigt_strains_list = [exx, eyy, ezz, eyz, exz, exy]
 
 
-		distorted_structure.lattice = copy.deepcopy(self.reference_structure.lattice) #remove all strains before finding displacement amplitudes
+		displaced_structure.lattice = copy.deepcopy(self.reference_structure.lattice) #remove all strains before finding displacement amplitudes
 
 
-		total_displacement_vector_instance = DisplacementVector.get_instance_from_distorted_structure_relative_to_reference_structure(reference_structure=self.reference_structure, 
-			distorted_structure=distorted_structure, coordinate_mode='Cartesian')
+		total_displacement_vector_instance = DisplacementVector.get_instance_from_displaced_structure_relative_to_reference_structure(reference_structure=self.reference_structure, 
+			displaced_structure=displaced_structure, coordinate_mode='Cartesian')
 
 		total_displacement_vector = total_displacement_vector_instance.to_numpy_array()
 
@@ -163,7 +163,7 @@ class EigenStructure(object):
 
 			projection = np.dot(basis_vector, total_displacement_vector)
 
-			print "projection: ", projection, "     Basis Vector: ", " ".join(str(x) for x in basis_vector)
+			# print "projection: ", projection, "     Basis Vector: ", " ".join(str(x) for x in basis_vector)
 
 			if abs(projection) < 1e-10:
 				projection = 0.0

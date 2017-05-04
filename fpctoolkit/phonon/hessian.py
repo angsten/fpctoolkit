@@ -36,14 +36,8 @@ class Hessian(object):
 			Each vector must have a magnitude of one
 			There must be exactly three translational modes
 		"""
-		print "before"
-		print self.hermitian_matrix
-		temp_matrix = np.round(self.hermitian_matrix, 4)
 
-		print "after"
-		print temp_matrix
-
-		eigenvalues, eigenvectors = np.linalg.eigh(temp_matrix)#self.hermitian_matrix)
+		eigenvalues, eigenvectors = np.linalg.eigh(self.hermitian_matrix)
 
 		hessian_eigen_pairs_list = []
 

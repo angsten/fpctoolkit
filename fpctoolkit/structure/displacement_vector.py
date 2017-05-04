@@ -5,7 +5,7 @@ import copy
 
 import fpctoolkit.util.basic_validators as basic_validators
 from fpctoolkit.structure.structure import Structure
-
+from fpctoolkit.util.math.vector import Vector
 
 class DisplacementVector(object):
 	"""
@@ -165,37 +165,56 @@ class DisplacementVector(object):
 		return DisplacementVector.displace_structure(reference_structure, self.displacement_vector, self.coordinate_mode)
 
 	@staticmethod
-	def get_instance_from_distorted_structure_relative_to_reference_structure(reference_structure, distorted_structure, coordinate_mode='Cartesian'):
+	def get_instance_from_displaced_structure_relative_to_reference_structure(reference_structure, displaced_structure, coordinate_mode='Cartesian'):
 		"""
-		Returns a DisplacementVector instance made by comparing each atom in distorted_structure with those of reference_structure.
+		Returns a DisplacementVector instance made by comparing each atom in displaced_structure with those of reference_structure.
 		The atoms are mapped to each other based on their positions in the site collection lists.
+		The vector connecting two sites is the shorted one possible under periodic boundary conditions.
 
 		The coordinate_mode argument determines whether direct fractional coordinates (unitless) or Cartesian coordinates (in Angstroms) are used to describe the displacements.
 		"""
 
 		Structure.validate(reference_structure)
-		Structure.validate(distorted_structure)
+		Structure.validate(displaced_structure)
 
-		if reference_structure.site_count != distorted_structure.site_count:
-			raise Exception("Site counts of two structures must be equal.", reference_structure.site_count, distorted_structure.site_count)
+		if reference_structure.site_count != displaced_structure.site_count:
+			raise Exception("Site counts of two structures must be equal.", reference_structure.site_count, displaced_structure.site_count)
+
+
+		lattice_1_np_array = reference_structure.lattice.to_np_array().flatten()
+		lattice_2_np_array = displaced_structure.lattice.to_np_array().flatten()
+
+		difference_array = lattice_2_np_array - lattice_1_np_array
+
+		if np.linalg.norm(difference_array) > 1e-8:
+			raise Exception("Lattice for reference and displaced structure are not equivalent. This will break the pbc shorted vector portion of this call.", difference_array)
+
 
 		reference_structure = copy.deepcopy(reference_structure)
-		distorted_structure = copy.deepcopy(distorted_structure)
+		displaced_structure = copy.deepcopy(displaced_structure)
 
-		reference_structure.convert_sites_to_coordinate_mode(coordinate_mode)
-		distorted_structure.convert_sites_to_coordinate_mode(coordinate_mode)
+		reference_structure.convert_sites_to_coordinate_mode('Direct')
+		displaced_structure.convert_sites_to_coordinate_mode('Direct')
 
 		displacement_vector = DisplacementVector(reference_structure=reference_structure, coordinate_mode=coordinate_mode)
 
 		for site_index in range(reference_structure.site_count):
 			reference_site = reference_structure.sites[site_index]
-			distorted_site = distorted_structure.sites[site_index]
+			displaced_site = displaced_structure.sites[site_index]
 
-			if reference_site['type'] != distorted_site['type']:
-				raise Exception("Types of two structures do not align.", reference_site['type'], distorted_site['type'])
+			if reference_site['type'] != displaced_site['type']:
+				raise Exception("Types of two structures do not align.", reference_site['type'], displaced_site['type'])
+
+			#if lattices of displaced and reference and not the same at this point, problems will arise here!!!!
+			shorted_pbc_vector_between_sites = Vector.get_minimum_distance_between_two_periodic_points(fractional_coordinate_1=reference_site['position'], 
+				fractional_coordinate_2=displaced_site['position'], lattice=reference_structure.lattice, N_max=3, return_vector=True)[1]
+
+			if coordinate_mode =='Cartesian':
+				shorted_pbc_vector_between_sites = Vector.get_in_cartesian_coordinates(direct_vector=shorted_pbc_vector_between_sites, lattice=reference_structure.lattice)
 
 			for i in range(3):
-				displacement_vector[site_index*3+i] = distorted_site['position'][i] - reference_site['position'][i]
+				displacement_vector[site_index*3+i] = shorted_pbc_vector_between_sites[i]
+
 
 		return displacement_vector
 

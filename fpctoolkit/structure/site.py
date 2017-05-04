@@ -91,6 +91,19 @@ class Site(object):
 	def get_properties_dictionary(self):
 		return self._properties
 
+	def convert_to_coordinate_mode(self, coordinate_mode, lattice):
+
+		if coordinate_mode != self['coordinate_mode']:
+			self['coordinate_mode'] = coordinate_mode
+
+			if coordinate_mode == 'Cartesian':
+				self.convert_to_cartesian_coordinates(lattice)
+			elif coordinate_mode =='Direct':
+				self.convert_to_direct_coordinates(lattice)
+			else:
+				raise Exception("Coordinate mode given is not valid:", coordinate_mode)
+
+
 	def convert_to_cartesian_coordinates(self, lattice):
 		"""
 		Takes site in direct coordinates and changes
