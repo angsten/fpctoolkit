@@ -42,14 +42,14 @@ from fpctoolkit.phonon.eigen_structure import EigenStructure
 
 
 a = 3.79
-Nx = 2
-Ny = 2
-Nz = 2
+Nx = 1
+Ny = 1
+Nz = 1
 
 
 base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
 
-outcar = Outcar(Path.join(base_path, 'OUTCAR_large_refined'))
+outcar = Outcar(Path.join(base_path, 'OUTCAR_small_refined'))
 hessian = Hessian(outcar)
 
 
@@ -59,22 +59,39 @@ reference_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx
 eigen_structure = EigenStructure(reference_structure=reference_structure, hessian=hessian)
 
 
-component_index = 0
-eigen_structure[component_index+6] = 1.0
+# component_index = 0
+# eigen_structure[component_index+6] = 1.0
 
-component_index = 119
-eigen_structure[component_index+6] = 1.0
+component_index = 1
+eigen_structure[component_index+6] = 1.4355
 
-print eigen_structure
-# print eigen_structure.eigen_components_list[component_index]
+component_index = 5
+eigen_structure[component_index+6] = -0.111
 
-eigen_structure.print_eigen_components()
+for i in range(len(eigen_structure)):
+	if i <= 5:
+		if (i in [0, 1, 5]):
+			continue
+
+		eigen_structure[i] = random.uniform(-0.2, 0.2)
+	else:
+		eigen_structure[i] = 0.0#random.uniform(-1.0, 1.0)
+
+
+
+# print eigen_structure
+#print eigen_structure.eigen_components_list[component_index]
+# eigen_structure.print_eigen_components()
 
 distorted_structure = eigen_structure.get_distorted_structure()
 
 distorted_structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/dist_fc.vasp")
 
 
+dist_eig_struct = EigenStructure(reference_structure=reference_structure, hessian=hessian, distorted_structure=distorted_structure)
+
+print eigen_structure
+print dist_eig_struct
 
 
 ################################################################################################################force const stuff#####################################################

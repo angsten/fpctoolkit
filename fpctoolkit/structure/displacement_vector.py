@@ -141,6 +141,9 @@ class DisplacementVector(object):
 
 		return self.displacement_vector
 
+	def to_numpy_array(self):
+		return np.asarray(self.displacement_vector)
+
 	@property
 	def magnitude(self):
 		"""

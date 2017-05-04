@@ -31,6 +31,8 @@ class EigenStructure(object):
 
 	When distorting a structure, displacements are always applied first (so they're in Lagrangian coordinates) and then strains are applied.
 	When recovering the strains and eigen_component amplitudes from a structure, strains are removed first, then displacement amplitudes are determined.
+
+	Note: if exx = 0.0, these means no strain in xx direction.
 	"""
 
 	def __init__(self, reference_structure, hessian, distorted_structure=None):
@@ -60,7 +62,7 @@ class EigenStructure(object):
 
 
 		if distorted_structure:
-			pass
+			self.set_strains_and_amplitudes_from_distorted_structure(distorted_structure)
 
 
 
@@ -83,15 +85,55 @@ class EigenStructure(object):
 			total_displacement_vector += eigen_component.get_displacement_vector()
 
 
-		displaced_structure = DisplacementVector.displace_structure(reference_structure=self.reference_structure, displacement_vector=total_displacement_vector, displacement_coordinate_mode='Cartesian')
+		distorted_structure = DisplacementVector.displace_structure(reference_structure=self.reference_structure, displacement_vector=total_displacement_vector, displacement_coordinate_mode='Cartesian')
+
+		distorted_structure.lattice.strain(self.get_strain_tensor())
+
+		return distorted_structure
+
+
+	def get_strain_tensor(self):
+		"""
+		Converts voigt strains stored in self.voigt_strains_list to a 3x3 tensor and returns this tensor.
+		Upper triangle form is used.
+		"""
+
+		e = self.voigt_strains_list
+
+		strain_tensor = [[1.0+e[0], e[5], e[4]], 
+						 [0.0, 1.0+e[1], e[3]], 
+						 [0.0, 0.0, 1.0+e[2]]]
+
+		return strain_tensor
 
 
 
-		#####apply strains here############
+
+	def set_strains_and_amplitudes_from_distorted_structure(self, distorted_structure):
+		"""
+		Modifies the passed in voigt strains and eigen_components list such that the strains and amplitudes would reproduce the input distorted_structure if 
+		get_distorted_structure were called.
+		"""
+
+		total_displacement_vector_instance = DisplacementVector.get_instance_from_distorted_structure_relative_to_reference_structure(reference_structure=self.reference_structure, 
+			distorted_structure=distorted_structure, coordinate_mode='Cartesian')
+
+		total_displacement_vector = total_displacement_vector_instance.to_numpy_array()
+
+		for eigen_component in self.eigen_components_list:
+			basis_vector = eigen_component.eigenvector
+
+			projection = np.dot(basis_vector, total_displacement_vector)
+
+			if abs(projection) < 1e-10:
+				projection = 0.0
+
+			eigen_component.amplitude = projection
 
 
+		strain_tensor = distorted_structure.lattice.get_strain_tensor_relative_to_reference(reference_lattice=self.reference_structure.lattice)
 
-		return displaced_structure
+		print strain_tensor
 
 
 	def get_list_representation(self):
@@ -101,6 +143,9 @@ class EigenStructure(object):
 		"""
 
 		return self.voigt_strains_list + [eigen_component.amplitude for eigen_component in self.eigen_components_list]
+
+
+
 
 
 	def print_eigen_components(self):

@@ -195,6 +195,21 @@ class Lattice(object):
 
 		self.strain(strain_tensor)
 
+	def get_strain_tensor_relative_to_reference(self, reference_lattice):
+		"""
+		Returns a 3x3 tensor describing the strain needed to go from the reference_lattice to the current lattice.
+		"""
+
+		reference_lattice_matrix = reference_lattice.to_np_array()
+		distorted_lattice_matrix = self.to_np_array()
+
+		reference_lattice_matrix_inverse = np.linalg.inv(reference_lattice_matrix)
+
+		strain_tensor_transpose = np.dot(reference_lattice_matrix_inverse, reference_lattice_matrix)
+
+		return strain_tensor_transpose.T
+
+
 
 
 	@staticmethod
