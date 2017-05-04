@@ -160,6 +160,8 @@ class EigenStructure(object):
 
 			projection = np.dot(basis_vector, total_displacement_vector)
 
+			print "projection: ", projection, "     Basis Vector: ", " ".join(str(x) for x in basis_vector)
+
 			if abs(projection) < 1e-10:
 				projection = 0.0
 
