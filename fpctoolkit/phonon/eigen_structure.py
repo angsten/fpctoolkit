@@ -66,6 +66,22 @@ class EigenStructure(object):
 
 
 
+	def set_eigen_chromosome(self, eigen_chromosome):
+		"""
+		eigen_chromosome is a list that looks like: [eta_xx, eta_yy, eta_zz, eta_yz, eta_xz, eta_xy, A_1, A_2, A_3, A_4, ..., A_N]
+		This list does not have to extend all the way to A_N - if it does not, the remaining values are set to zero.
+		"""
+
+		for i in range(len(self)):
+			if i < len(eigen_chromosome):
+				self[i] = eigen_chromosome[i]
+			else:
+				self[i] = 0.0
+
+		#self.set_translational_eigen_component_amplitudes_to_zero() #**do we want to do this always?**!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!set elsewhere too
+
+
+
 	def set_translational_eigen_component_amplitudes_to_zero(self):
 		for eigen_component in self.eigen_components_list:
 			if eigen_component.is_translational_mode():
@@ -150,6 +166,7 @@ class EigenStructure(object):
 			eigen_component.amplitude = projection
 
 
+		#self.set_translational_eigen_component_amplitudes_to_zero() #**do we want to do this always?**
 
 
 
