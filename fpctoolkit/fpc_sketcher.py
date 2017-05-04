@@ -42,21 +42,32 @@ from fpctoolkit.phonon.eigen_structure import EigenStructure
 
 
 a = 3.79
-Nx = 2
-Ny = 2
-Nz = 2
+Nx = 1
+Ny = 1
+Nz = 1
 
 
 base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
 
-outcar = Outcar(Path.join(base_path, 'OUTCAR_large_refined'))
+outcar = Outcar(Path.join(base_path, 'OUTCAR_small_refined'))
 hessian = Hessian(outcar)
 
 
 
 reference_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx, 0.0, 0.0], [0.0, a*Ny, 0.0], [0.0, 0.0, a*Nz]], species_list=['Sr', 'Ti', 'O'])
 
-eigen_structure = EigenStructure(reference_structure=reference_structure, hessian=hessian)
+relaxed_struct = Structure("C:\Users\Tom\Desktop\Vesta_Inputs/rel_sr_ti_cont.vasp")
+print relaxed_struct
+print
+eigen_structure = EigenStructure(reference_structure=reference_structure, hessian=hessian, distorted_structure=relaxed_struct)
+print eigen_structure
+
+# dist_structure = eigen_structure.get_distorted_structure()
+
+# dist_structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/rel_sr_ti_reproduced.vasp")
+
+# dist_eigen_structure = EigenStructure(reference_structure=reference_structure, hessian=hessian, distorted_structure=dist_structure)
+# print dist_eigen_structure 
 
 
 # component_index = 0
@@ -80,39 +91,51 @@ eigen_structure = EigenStructure(reference_structure=reference_structure, hessia
 # 		eigen_structure[i] = random.uniform(-1.0, 1.0)
 
 
-for i in range(len(eigen_structure)):
-	if i >= 6 and i <= (120+5):
-		if (i in [12, 13, 14]):
-			continue
-			# eigen_structure[i] = random.uniform(-1.5, 1.5)
-		else:
-			eigen_structure[i] = random.uniform(-0.35, 0.35)
+# for i in range(len(eigen_structure)):
+# 	if i >= 6 and i <= (120+5):
+# 		if (i in [12, 13, 14]):
+# 			continue
+# 			# eigen_structure[i] = random.uniform(-1.5, 1.5)
+# 		else:
+# 			eigen_structure[i] = random.uniform(-0.35, 0.35)
 
+# chrom = [0.01875, 0.01872, 0.01869, 1e-05, 1e-05, 3e-05, -0.54132, 1.90443, -1.34194, 0.06017, -0.00184, 1.98603, -0.0001, -0.00015, 0.00026, 0.1911,  -2.87686,  -0.08586,  -0.93214, -0.00041, 3.14068]
+
+# eigen_structure.set_eigen_chromosome(chrom)
+
+# # print eigen_structure
+# #print eigen_structure.eigen_components_list[component_index]
+# # eigen_structure.print_eigen_components()
+
+# distorted_structure = eigen_structure.get_distorted_structure()
+
+# distorted_structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/dist_fc.vasp")
+
+
+# dist_eig_struct = EigenStructure(reference_structure=reference_structure, hessian=hessian, distorted_structure=distorted_structure)
 
 # print eigen_structure
-#print eigen_structure.eigen_components_list[component_index]
-# eigen_structure.print_eigen_components()
-
-distorted_structure = eigen_structure.get_distorted_structure()
-
-distorted_structure.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/dist_fc.vasp")
+# print
+# print dist_eig_struct
 
 
-dist_eig_struct = EigenStructure(reference_structure=reference_structure, hessian=hessian, distorted_structure=distorted_structure)
+# # for i in range(len(eigen_structure)):
+# # 	if abs(eigen_structure[i] - dist_eig_struct[i]) > 1e-8:
+# # 		raise Exception("Components not equal for component", i, eigen_structure[i], dist_eig_struct[i])
 
-print eigen_structure
-print
-print dist_eig_struct
-
-
-# for i in range(len(eigen_structure)):
-# 	if abs(eigen_structure[i] - dist_eig_struct[i]) > 1e-8:
-# 		raise Exception("Components not equal for component", i, eigen_structure[i], dist_eig_struct[i])
+# #dist_eig_struct.set_translational_eigen_component_amplitudes_to_zero()
+# dist_2_struct = dist_eig_struct.get_distorted_structure()
+# dist_2_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/dist_fc_eig_repro.vasp")
 
 
-dist_2_struct = dist_eig_struct.get_distorted_structure()
-dist_2_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/dist_fc_eig_repro.vasp")
 
+# struct = Structure("C:\Users\Tom\Desktop\Vesta_Inputs/rel_sr_ti_mod.vasp")
+# rel_eig_struct = EigenStructure(reference_structure=reference_structure, hessian=hessian, distorted_structure=struct)
+# print
+# print rel_eig_struct
+
+# rel_struct = dist_eig_struct.get_distorted_structure()
+# rel_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/dist_fc_eig_repro_relaxed_mod.vasp")
 
 ################################################################################################################force const stuff#####################################################
 

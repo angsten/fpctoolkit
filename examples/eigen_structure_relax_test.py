@@ -23,12 +23,13 @@ relax_input_dictionary = {
 	'kpoint_subdivisions_lists': [[6, 6, 6]],
 	'submission_node_count_list': [1],
 	'ediff': [1e-5, 1e-6, 1e-7],
+	'potim': [0.05, 0.1, 0.3],
 	'encut': [800]
 	}
 
 supercell_dimensions = [Nx, Ny, Nz]
 base_path = './'
-base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
+
 outcar = Outcar(Path.join(base_path, 'OUTCAR_small_refined'))
 hessian = Hessian(outcar)
 
@@ -69,4 +70,4 @@ for chromosome_index, chromosome in enumerate(random_chromosomes):
 	if relax.complete:
 		relaxed_structure = relax.final_structure
 		relaxed_eigen_structure = EigenStructure(reference_structure=reference_structure, hessian=hessian, distorted_structure=relaxed_structure)
-		print "\t   final eigenstructure is " + str(eigen_structure) + " " + str(relax.get_final_energy())
+		print "\t   final eigenstructure is " + str(relaxed_eigen_structure) + " " + str(relax.get_final_energy())
