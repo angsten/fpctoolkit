@@ -43,7 +43,7 @@ class Hessian(object):
 		print "after"
 		print temp_matrix
 
-		eigenvalues, eigenvectors = np.linalg.eigh(self.hermitian_matrix)
+		eigenvalues, eigenvectors = np.linalg.eigh(temp_matrix)#self.hermitian_matrix)
 
 		hessian_eigen_pairs_list = []
 
