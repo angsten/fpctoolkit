@@ -42,34 +42,54 @@ from fpctoolkit.phonon.eigen_structure import EigenStructure
 
 
 a = 3.79
-Nx = 1
-Ny = 1
-Nz = 1
+Nx = 2
+Ny = 2
+Nz = 2
 
 
 base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase Validation Paper\phonon_work/"
 
-outcar = Outcar(Path.join(base_path, 'OUTCAR_small_refined'))
+outcar = Outcar(Path.join(base_path, 'OUTCAR_large_refined'))
 hessian = Hessian(outcar)
 
 
 
 reference_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx, 0.0, 0.0], [0.0, a*Ny, 0.0], [0.0, 0.0, a*Nz]], species_list=['Sr', 'Ti', 'O'])
 
-relaxed_struct = Structure("C:\Users\Tom\Desktop\Vesta_Inputs/rel_sr_ti.vasp")
-print relaxed_struct
-print
-eigen_structure = EigenStructure(reference_structure=reference_structure, hessian=hessian, distorted_structure=relaxed_struct)
+# relaxed_struct = Structure("C:\Users\Tom\Desktop\Vesta_Inputs/rel_sr_ti.vasp")
+# print relaxed_struct
+# print
+eigen_structure = EigenStructure(reference_structure=reference_structure, hessian=hessian)
 print eigen_structure
 
+initial_structure = eigen_structure.get_distorted_structure()
+#print initial_structure
 
-relaxed_struct.sites[0]['position'][2] = -0.000204
+initial_structure.sites[9]['position'][2] += 0.1
+#initial_structure.sites.shift_direct_coordinates([0.1, 0.1, 0.1])
 
 
-print relaxed_struct
+print 
+# print initial_structure
+
+
+
+changed_eigen_structure = EigenStructure(reference_structure=reference_structure, hessian=hessian, distorted_structure=initial_structure)
 print
-eigen_structure = EigenStructure(reference_structure=reference_structure, hessian=hessian, distorted_structure=relaxed_struct)
-print eigen_structure
+print changed_eigen_structure
+
+changed_struct = changed_eigen_structure.get_distorted_structure()
+
+changed_struct.to_poscar_file_path("C:\Users\Tom\Desktop\Vesta_Inputs/changed.vasp")
+
+
+# relaxed_struct.sites[0]['position'][2] = -0.000204
+
+
+# print relaxed_struct
+# print
+# eigen_structure = EigenStructure(reference_structure=reference_structure, hessian=hessian, distorted_structure=relaxed_struct)
+# print eigen_structure
 
 
 # dist_structure = eigen_structure.get_distorted_structure()
