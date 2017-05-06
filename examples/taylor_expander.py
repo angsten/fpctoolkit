@@ -1,10 +1,11 @@
 
 class Variable(object):
 
-	def __init__(self, variable_type, variable_index):
+	def __init__(self, variable_type, variable_index, centrosymmetry=False):
 
 		self.variable_type = variable_type
 		self.variable_index = variable_index
+		self.centrosymmetry = centrosymmetry
 
 	def __str__(self):
 		if self.variable_type == 'strain':
@@ -100,31 +101,106 @@ class ExpansionTerm(object):
 				output_string += str(self.variables_list[index]) + "^2"
 			elif derivative_value == 3:
 				output_string += str(self.variables_list[index]) + "^3"
-			elif derivative_value == 3:
+			elif derivative_value == 4:
 				output_string += str(self.variables_list[index]) + "^4"
 		
 		return output_string
 
+	def is_pure_type(self, type_string):
+		if type_string == 'mode':
+			check_string = 'strain'
+		elif type_string == 'strain':
+			check_string = 'mode'
+
+		for i, variable in enumerate(self.variables_list):
+			if self.derivative_array[i] != 0 and variable.variable_type == check_string:
+				return False
+
+		return True
+
+	def is_centrosymmetric(self):
+
+		# print [str(variable) for variable in self.variables_list]
+		number_of_odd_centrosymmetric_terms = 0
+
+		for i, variable in enumerate(self.variables_list):
+			if variable.centrosymmetry:
+				if (self.derivative_array[i] % 2) == 1:
+					number_of_odd_centrosymmetric_terms += 1
+
+		# print self
+		# print number_of_odd_centrosymmetric_terms
+		# print "keep? ", not ((number_of_odd_centrosymmetric_terms % 2) == 1)					
+
+		return ((number_of_odd_centrosymmetric_terms % 2) == 1)
 
 
+class TaylorExpansion(object):
 
-strain_count = 1
-mode_count = 0
+	def __init__(self, expansion_terms_instances_list):
+
+		self.expansion_terms_list = expansion_terms_instances_list
+
+	def __str__(self):
+		return ' + '.join(str(expansion_term) for expansion_term in self.expansion_terms_list)
+
+	def __len__(self):
+		return len(self.expansion_terms_list)
+
+	def remove_zero_terms_by_symmetry(self):
+
+		remove_list = []
+
+		for i, expansion_term in enumerate(self.expansion_terms_list):
+			if expansion_term.is_centrosymmetric():
+				remove_list.append(expansion_term)
+
+		for expansion_term in remove_list:
+			self.expansion_terms_list.remove(expansion_term)
+
+	def remove_pure_strain_terms(self):
+	
+		remove_list = []
+
+		for i, expansion_term in enumerate(self.expansion_terms_list):
+			if expansion_term.is_pure_type('strain'):
+				remove_list.append(expansion_term)
+
+		for expansion_term in remove_list:
+			self.expansion_terms_list.remove(expansion_term)		
+
+	def remove_pure_mode_terms(self):
+		remove_list = []
+
+		for i, expansion_term in enumerate(self.expansion_terms_list):
+			if expansion_term.is_pure_type('mode'):
+				remove_list.append(expansion_term)
+
+		for expansion_term in remove_list:
+			self.expansion_terms_list.remove(expansion_term)				
+
+remove_pure_strain_terms = True
+remove_pure_mode_terms = False
+remove_terms_by_symmetry = True
+order = 2
+
+strain_count = 0
+mode_count = 6
 
 
 variables = []
 
 
 for i in range(strain_count):
-	variables.append(Variable('strain', i))
+	variables.append(Variable('strain', i+2))
 
 for i in range(mode_count):
-	variables.append(Variable('mode', i))
+	variables.append(Variable('mode', i, centrosymmetry=True))
 
 print "Variables list: " + '[' + ", ".join(str(variable) for variable in variables) + ']'
 
 
-series_string = 'E0 + '
+series_string = ''#'E0 + '
 
 
 first_order_terms = []
@@ -137,56 +213,58 @@ for i, variable in enumerate(variables):
 
 
 second_order_terms = []
-for i in range(len(variables)):
-	for j in range(i, len(variables)):
-		expansion_term = ExpansionTerm(variables)
+if order > 1:
+	for i in range(len(variables)):
+		for j in range(i, len(variables)):
+			expansion_term = ExpansionTerm(variables)
 
-		expansion_term.update_derivatives_list([i, j])
+			expansion_term.update_derivatives_list([i, j])
 
-		second_order_terms.append(expansion_term)
+			second_order_terms.append(expansion_term)
 
 third_order_terms = []
-for i in range(len(variables)):
-	for j in range(i, len(variables)):
-		for k in range(j, len(variables)):
-			expansion_term = ExpansionTerm(variables)
+if order > 2:
+	for i in range(len(variables)):
+		for j in range(i, len(variables)):
+			for k in range(j, len(variables)):
+				expansion_term = ExpansionTerm(variables)
 
-			expansion_term.update_derivatives_list([i, j, k])
+				expansion_term.update_derivatives_list([i, j, k])
 
-			second_order_terms.append(expansion_term)
+				second_order_terms.append(expansion_term)
 
 fourth_order_terms = []
-for i in range(len(variables)):
-	for j in range(i, len(variables)):
-		for k in range(j, len(variables)):
-			expansion_term = ExpansionTerm(variables)
 
-			expansion_term.update_derivatives_list([i, j, k])
+if order > 3:
+	for i in range(len(variables)):
+		for j in range(i, len(variables)):
+			for k in range(j, len(variables)):
+				for l in range(k, len(variables)):
+					expansion_term = ExpansionTerm(variables)
 
-			second_order_terms.append(expansion_term)
+					expansion_term.update_derivatives_list([i, j, k, l]) ########only add if all the same mode!
 
-
-
-all_terms_list = first_order_terms + second_order_terms + third_order_terms
-
-series_string += ' + '.join(str(expansion_term) for expansion_term in all_terms_list)
+					second_order_terms.append(expansion_term)
 
 
 
+all_terms_list = first_order_terms + second_order_terms + third_order_terms + fourth_order_terms
 
+taylor_expansion = TaylorExpansion(all_terms_list)
 
+if remove_terms_by_symmetry:
+	taylor_expansion.remove_zero_terms_by_symmetry()
 
+if remove_pure_strain_terms:
+	taylor_expansion.remove_pure_strain_terms()
 
+if remove_pure_mode_terms:
+	taylor_expansion.remove_pure_mode_terms()
 
-
-
-
-
-
-
-
+print
+print "Number of terms:", len(taylor_expansion)
 
 
 print '\n\t\t',
-print series_string
+print taylor_expansion
 print '\n'*3
