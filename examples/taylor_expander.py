@@ -4,14 +4,14 @@ class Variable(object):
 	A variable as part of a taylor expansion. Has a type string and index integer.
 	"""
 
-	def __init__(self, type_string, variable_index, centrosymmetry=False):
+	def __init__(self, type_string, index, centrosymmetry=False):
 		"""
 		Variable type can be displacement or strain. The index should denote which strain or displacement variable this is by an index.
 		"""
 
 		self.value = 0.0
 		self.type_string = type_string
-		self.variable_index = variable_index
+		self.index = index
 		self.centrosymmetry = centrosymmetry
 
 	def __str__(self):
@@ -20,7 +20,7 @@ class Variable(object):
 		elif self.type_string == 'displacement':
 			type_string = 'u'
 
-		return type_string + '_' + str(self.variable_index+1)
+		return type_string + '_' + str(self.index+1)
 
 
 
@@ -151,6 +151,23 @@ class ExpansionTerm(object):
 
 		return ((number_of_centrosymmetric_terms % 2) == 1)
 
+	def has_single_variable(self):
+		"""
+		Returns true if term has only one variable in it (regardless of order).
+		"""
+
+		if self.get_non_zero_count() == 1:
+			return True
+		else:
+			return False
+
+	def get_active_variables(self):
+		"""
+		Returns a list of variables that are included in this term.
+		"""
+
+		return [variable for i, variable in enumerate(self.variables_list) if self.derivative_array[i] > 0]
+
 
 	def __str__(self):
 		"""
@@ -211,14 +228,15 @@ class TaylorExpansion(object):
 		Create the terms in this expansion based on the given constraints.
 		"""
 
+		full_expansion_terms_list = []
 
 		for i, variable in enumerate(variables):
 			expansion_term = ExpansionTerm(variables)
 
 			expansion_term.update_derivatives_list([i])
 
-			if self.term_acceptance_function(expansion_term):
-				self.expansion_terms_list.append(expansion_term)
+
+			full_expansion_terms_list.append(expansion_term)
 
 
 
@@ -228,7 +246,7 @@ class TaylorExpansion(object):
 
 				expansion_term.update_derivatives_list([i, j])
 
-				self.expansion_terms_list.append(expansion_term)
+				full_expansion_terms_list.append(expansion_term)
 
 
 		for i in range(len(variables)):
@@ -238,7 +256,7 @@ class TaylorExpansion(object):
 
 					expansion_term.update_derivatives_list([i, j, k])
 
-					self.expansion_terms_list.append(expansion_term)
+					full_expansion_terms_list.append(expansion_term)
 
 
 		for i in range(len(variables)):
@@ -249,10 +267,13 @@ class TaylorExpansion(object):
 
 						expansion_term.update_derivatives_list([i, j, k, l]) ########only add if all the same displacement!
 
-						self.expansion_terms_list.append(expansion_term)
+						full_expansion_terms_list.append(expansion_term)
 
 
 
+		for expansion_term in full_expansion_terms_list:
+			if self.term_acceptance_function(expansion_term):
+				self.expansion_terms_list.append(expansion_term)
 
 
 	def remove_zero_terms_by_symmetry(self):
@@ -294,12 +315,9 @@ class TaylorExpansion(object):
 
 
 
-remove_pure_strain_terms = True
-remove_pure_displacement_terms = False
-remove_terms_by_symmetry = True
-order = 2
 
-strain_count = 3
+
+strain_count = 6
 displacement_count = 6
 
 
@@ -307,7 +325,7 @@ variables = []
 
 
 for i in range(strain_count):
-	variables.append(Variable('strain', i+2))
+	variables.append(Variable('strain', i))
 
 for i in range(displacement_count):
 	variables.append(Variable('displacement', i, centrosymmetry=True))
@@ -318,13 +336,29 @@ print "Variables list: " + '[' + ", ".join(str(variable) for variable in variabl
 
 def term_acceptance_function(expansion_term):
 
-	if expansion_term.order == 1: #assumes no forces or stresses on the cell
+	variables = expansion_term.get_active_variables()
+
+	#remove all terms with in-plane strain variables in them - these are fixed to 0 for (100) epitaxy
+	for variable in variables:
+		if variable.type_string == 'strain' and variable.index in [0, 1, 5]:
+			return False
+
+	#assume no forces or stresses on the cell
+	if expansion_term.order == 1: 
 		return False
 
+	#only expand to second order w.r.t. strain
+	if expansion_term.is_pure_type('strain') and expansion_term.order > 2:
+		return False
+
+	#for perovskite structure under arbitrary homogeneous strain, displacement terms are centrosymmetric
 	if expansion_term.is_centrosymmetric():
 		return False
 
-		ret 
+	#only go to fourth order in single variable dsiplacement terms - don't do fourth order cross terms
+	if expansion_term.order == 4 and not expansion_term.has_single_variable():
+		return False
+
 
 
 
@@ -332,15 +366,6 @@ def term_acceptance_function(expansion_term):
 
 
 taylor_expansion = TaylorExpansion(term_acceptance_function)
-
-# if remove_terms_by_symmetry:
-# 	taylor_expansion.remove_zero_terms_by_symmetry()
-
-# if remove_pure_strain_terms:
-# 	taylor_expansion.remove_pure_strain_terms()
-
-# if remove_pure_displacement_terms:
-# 	taylor_expansion.remove_pure_displacement_terms()
 
 print
 print "Number of terms:", len(taylor_expansion)
