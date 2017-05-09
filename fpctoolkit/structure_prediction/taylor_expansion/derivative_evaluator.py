@@ -220,14 +220,14 @@ class DerivativeEvaluator(object):
 		chromosome = eigen_structure.get_list_representation()
 
 
-		e_xx = chromosome[0]
-		e_yy = chromosome[1]
-		e_zz = chromosome[2]
-		e_yz = chromosome[3]
-		e_xz = chromosome[4]
-		e_xy = chromosome[5]
+		e_1 = chromosome[0]
+		e_2 = chromosome[1]
+		e_3 = chromosome[2]
+		e_4 = chromosome[3]
+		e_5 = chromosome[4]
+		e_6 = chromosome[5]
 
 		u_1 = chromosome[6]
 		u_2 = chromosome[7]
 
-		return 0.234*e_zz**2 + -0.52113*e_yz**2 + 0.0*e_xz**2 + 3.2*u_1**2 + 0.001*u_1*u_2 + 0.0*u_2**2
+		return 0.234*e_3**2 + -0.52113*e_4**2 + 0.0*e_5**2 + 400.23*e_3*e_4 + 0.00034*e_4*e_5 + 3.2*u_1**2 + 0.001*u_1*u_2 + 0.0*u_2**2
