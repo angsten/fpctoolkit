@@ -96,7 +96,7 @@ print '\n'*3
 
 perturbation_magnitudes_dictionary = {'strain': 0.01, 'displacement': 0.01}
 
-de_path = Path.join(base_path, 'derivative_evaluator_test_1')
+de_path = Path.join(base_path, 'de_test_1')
 
 relaxation_path = Path.join(base_path, 'relaxation')
 
