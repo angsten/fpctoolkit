@@ -119,7 +119,7 @@ class DerivativeEvaluator(object):
 
 		denominator = self.get_denominator(expansion_term)
 
-		return numerator/denominator
+		expansion_term.derivative_coefficient = numerator/denominator
 
 
 
