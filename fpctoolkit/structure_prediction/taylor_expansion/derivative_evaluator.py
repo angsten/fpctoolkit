@@ -53,7 +53,7 @@ class DerivativeEvaluator(object):
 
 	def update(self):
 
-		Path.make(path)
+		Path.make(self.path)
 
 		self.vasp_static_run_sets_list = []
 
