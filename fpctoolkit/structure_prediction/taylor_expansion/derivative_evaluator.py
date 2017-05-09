@@ -110,6 +110,9 @@ class DerivativeEvaluator(object):
 		Sets the derivative_coefficient_value attribute of expansion_term based on the energies in vasp_static_run_set.
 		"""
 
+		print '\n'*3
+		print expansion_term
+
 		term_coefficients_dictionary = self.get_central_difference_coefficients_dictionary()[expansion_term.get_derivative_type()]
 		term_factors_list = term_coefficients_dictionary['factors']
 
