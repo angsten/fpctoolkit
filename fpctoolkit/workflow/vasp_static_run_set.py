@@ -68,6 +68,8 @@ class VaspStaticRunSet(VaspRunSet):
 		Creates a static force calculation at path using structure as the initial structure and self.vasp_run_inputs as the run inputs.
 		"""
 
+		run_inputs = copy.deepcopy(self.vasp_run_inputs)
+
 		kpoints = Kpoints(scheme_string=self.vasp_run_inputs.pop('kpoint_scheme'), subdivisions_list=self.vasp_run_inputs.pop('kpoint_subdivisions_list'))
 		incar = IncarMaker.get_static_incar()
 
