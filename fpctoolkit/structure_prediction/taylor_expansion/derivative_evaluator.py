@@ -72,7 +72,7 @@ class DerivativeEvaluator(object):
 		This sets up a vasp static run set which will calculate the energies necessary to get the derivative for this expansion term.
 		"""
 
-		expansion_term_path = self.get_extended_path(str(expansion_term))
+		expansion_term_path = self.get_extended_path(str("_".join(expansion_term.derivative_array)))
 
 		
 		perturbed_structures_list = self.get_structures_list(expansion_term)
