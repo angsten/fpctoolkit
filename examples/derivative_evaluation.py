@@ -38,7 +38,7 @@ hessian = Hessian(outcar)
 reference_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx, 0.0, 0.0], [0.0, a*Ny, 0.0], [0.0, 0.0, a*Nz]], species_list=['Sr', 'Ti', 'O'])
 
 
-strain_count = 6
+strain_count = 3
 displacement_count = 0
 
 
