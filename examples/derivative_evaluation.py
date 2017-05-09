@@ -119,3 +119,6 @@ else:
 		reference_completed_vasp_relaxation_run=relaxation, vasp_run_inputs_dictionary=vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary)
 
 	derivative_evaluator.update()
+
+	if derivative_evaluator.complete:
+		print derivative_evaluator.taylor_expansion

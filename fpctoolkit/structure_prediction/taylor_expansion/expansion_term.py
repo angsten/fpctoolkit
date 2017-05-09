@@ -25,7 +25,7 @@ class ExpansionTerm(object):
 
 		self.derivative_array = [0]*len(variables_list)
 
-		self.derivative_coefficient_value = 0.0
+		self.derivative_coefficient_value = None
 
 		self.coefficient = 0.0
 		self.coefficient_string = '0.0'
@@ -208,12 +208,15 @@ class ExpansionTerm(object):
 		Returns a string like (1/2)*f[2,0,0,0,0,0]*u_1^2.
 		"""
 
-		if self.coefficient != 1.0:
-			coefficient_string = '(' + self.coefficient_string + ')' + '*'
-		else:
-			coefficient_string = ''
+		if self.derivative_coefficient == None:
+			if self.coefficient != 1.0:
+				coefficient_string = '(' + self.coefficient_string + ')' + '*'
+			else:
+				coefficient_string = ''
 
-		output_string = coefficient_string + 'f[' + ','.join(str(derivative_value) for derivative_value in self.derivative_array) + ']'
+			output_string = coefficient_string + 'f[' + ','.join(str(derivative_value) for derivative_value in self.derivative_array) + ']'
+		else:
+			output_string += str(self.derivative_coefficient*self.coefficient) + "*"
 
 		for index, derivative_value in enumerate(self.derivative_array):
 
