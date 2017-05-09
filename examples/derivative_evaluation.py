@@ -103,15 +103,19 @@ relaxation_path = Path.join(base_path, 'relaxation')
 
 input_dictionary = {
     'external_relaxation_count': 0,
-    'kpoint_schemes_list': [vasp_run_inputs_dictionary['kpoints_scheme']],
-    'kpoint_subdivisions_lists': [vasp_run_inputs_dictionary['kpoints_subdivisions_list']],
+    'kpoint_schemes_list': [vasp_run_inputs_dictionary['kpoint_scheme']],
+    'kpoint_subdivisions_lists': [vasp_run_inputs_dictionary['kpoint_subdivisions_list']],
     'ediff': [0.0001],
     'encut': [vasp_run_inputs_dictionary['encut']]
 }
 
-relaxation_run = VaspRelaxation(path=relaxation_path, initial_structure=reference_structure, input_dictionary=input_dictionary)
+relaxation = VaspRelaxation(path=relaxation_path, initial_structure=reference_structure, input_dictionary=input_dictionary)
 
-derivative_evaluator = DerivativeEvaluator(path=de_path, reference_structure=reference_structure, hessian=hessian, taylor_expansion=taylor_expansion, 
-	reference_completed_vasp_relaxation_run=vasp_relaxation_run, vasp_run_inputs_dictionary=vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary)
 
-derivative_evaluator.update()
+if not relaxation.complete:
+	relaxation.update()
+else:
+	derivative_evaluator = DerivativeEvaluator(path=de_path, reference_structure=reference_structure, hessian=hessian, taylor_expansion=taylor_expansion, 
+		reference_completed_vasp_relaxation_run=relaxation, vasp_run_inputs_dictionary=vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary)
+
+	derivative_evaluator.update()
