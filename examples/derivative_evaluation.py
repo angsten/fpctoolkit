@@ -39,7 +39,7 @@ reference_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx
 
 
 strain_count = 6
-displacement_count = 0
+displacement_count = 2
 
 
 variables = []
