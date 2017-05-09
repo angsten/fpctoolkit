@@ -117,7 +117,7 @@ class DerivativeEvaluator(object):
 
 		numerator = sum(map(lambda x, y: x*y, term_factors_list, energies_list))
 
-		denominator = self.get_denominator()
+		denominator = self.get_denominator(expansion_term)
 
 		return numerator/denominator
 
