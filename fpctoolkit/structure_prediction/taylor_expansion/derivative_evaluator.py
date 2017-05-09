@@ -117,9 +117,16 @@ class DerivativeEvaluator(object):
 
 		energies_list = [0.0] + [self.get_mock_energy(structure) for structure in self.get_structures_list(expansion_term)]
 
+
+		print "Energies: " + str(energies_list)
+		print "Term factors: " + str(term_factors_list)
+
 		numerator = sum(map(lambda x, y: x*y, term_factors_list, energies_list))
 
 		denominator = self.get_denominator(expansion_term)
+
+		print "Numerator: " + str(numerator)
+		print "Denominator: " + str(denominator)
 
 		expansion_term.derivative_coefficient = numerator/denominator
 
