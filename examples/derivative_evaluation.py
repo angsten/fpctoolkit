@@ -120,5 +120,4 @@ else:
 
 	derivative_evaluator.update()
 
-	if derivative_evaluator.complete:
-		print derivative_evaluator.taylor_expansion
+	print derivative_evaluator.taylor_expansion
