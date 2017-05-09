@@ -230,4 +230,4 @@ class DerivativeEvaluator(object):
 		u_1 = chromosome[6]
 		u_2 = chromosome[7]
 
-		return 0.234*e_zz**2 + -0.52113*e_yz**2 + 0.0*exz**2 + 3.2*u_1**2 + 0.001*u_1*u_2 + 0.0*u_2**2
+		return 0.234*e_zz**2 + -0.52113*e_yz**2 + 0.0*e_xz**2 + 3.2*u_1**2 + 0.001*u_1*u_2 + 0.0*u_2**2
