@@ -36,6 +36,7 @@ class DerivativeEvaluator(object):
 		self.reference_structure = reference_structure
 		self.hessian = hessian
 		self.taylor_expansion = taylor_expansion
+		self.vasp_run_inputs_dictionary = vasp_run_inputs_dictionary
 		self.perturbation_magnitudes_dictionary = perturbation_magnitudes_dictionary
 
 		if not reference_completed_vasp_relaxation_run.complete:
