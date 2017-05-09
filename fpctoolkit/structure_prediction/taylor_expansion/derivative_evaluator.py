@@ -151,6 +151,8 @@ class DerivativeEvaluator(object):
 			return 2.0*(non_zero_list[0]**2.0)*non_zero_list[1]
 		elif derivative_type == '12':
 			return 2.0*non_zero_list[0]*(non_zero_list[1]**2.0)
+		elif derivative_type == '111':
+			return 8.0*non_zero_list[0]*non_zero_list[1]*non_zero_list[2]
 		elif derivative_type == '4':
 			return (1.0/16.0)*non_zero_list[0]
 		else:
@@ -169,8 +171,9 @@ class DerivativeEvaluator(object):
 		central_difference_coefficients_dictionary['1'] =  {'factors':[0.0, 1.0, -1.0], 'perturbations_list': [[1.0], [-1.0]]}
 		central_difference_coefficients_dictionary['2'] =  {'factors':[-2.0, 1.0, 1.0], 'perturbations_list': [[-1.0], [1.0]]}
 		central_difference_coefficients_dictionary['11'] = {'factors':[0.0, 1.0, -1.0, -1.0, 1.0], 'perturbations_list': [[-1.0, -1.0], [-1.0, 1.0], [1.0, -1.0], [1.0, 1.0]]}
-		central_difference_coefficients_dictionary['21'] = {'factors':[0.0 -2.0, 2.0, -1.0, 1.0, -1.0, 1.0], 'perturbations_list': [[0.0, -1.0], [0.0, 1.0], [-1.0, -1.0], [-1.0, 1.0], [1.0, -1.0], [1.0, 1.0]]}
-		central_difference_coefficients_dictionary['12'] = {'factors':[0.0 -2.0, 2.0, -1.0, 1.0, -1.0, 1.0], 'perturbations_list': [[-1.0, 0.0], [1.0, 0.0], [-1.0, -1.0], [1.0, -1.0], [-1.0, 1.0], [1.0, 1.0]]}
+		central_difference_coefficients_dictionary['21'] = {'factors':[0.0, -2.0, 2.0, -1.0, 1.0, -1.0, 1.0], 'perturbations_list': [[0.0, -1.0], [0.0, 1.0], [-1.0, -1.0], [-1.0, 1.0], [1.0, -1.0], [1.0, 1.0]]}
+		central_difference_coefficients_dictionary['12'] = {'factors':[0.0, -2.0, 2.0, -1.0, 1.0, -1.0, 1.0], 'perturbations_list': [[-1.0, 0.0], [1.0, 0.0], [-1.0, -1.0], [1.0, -1.0], [-1.0, 1.0], [1.0, 1.0]]}
+		central_difference_coefficients_dictionary['111'] = {'factors':[0.0, -1.0, 1.0, 1.0, -1.0, 1.0, -1.0, -1.0, 1.0], 'perturbations_list': [[-1.0, -1.0, -1.0], [-1.0, -1.0, 1.0], [-1.0, 1.0, -1.0], [-1.0, 1.0, 1.0], [1.0, -1.0, -1.0], [1.0, -1.0, 1.0], [1.0, 1.0, -1.0], [1.0, 1.0, 1.0]]}		
 		central_difference_coefficients_dictionary['4'] =  {'factors':[6.0, 1.0, -4.0, 1.0, 1.0], 'perturbations_list': [[-1.0], [-0.5], [0.5], [1.0]]}
 
 		return central_difference_coefficients_dictionary
