@@ -94,9 +94,9 @@ print taylor_expansion
 print '\n'*3
 
 
-perturbation_magnitudes_dictionary = {'strain': 0.001, 'displacement': 0.01}
+perturbation_magnitudes_dictionary = {'strain': 0.01, 'displacement': 0.01}
 
-de_path = Path.join(base_path, 'de_test_2')
+de_path = Path.join(base_path, 'de_test_3')
 
 relaxation_path = Path.join(base_path, 'relaxation')
 
