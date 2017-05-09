@@ -25,7 +25,7 @@ class ExpansionTerm(object):
 
 		self.derivative_array = [0]*len(variables_list)
 
-		self.derivative_coefficient_value = None
+		self.derivative_coefficient = None
 
 		self.coefficient = 0.0
 		self.coefficient_string = '0.0'
