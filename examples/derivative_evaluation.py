@@ -12,32 +12,6 @@ from fpctoolkit.phonon.hessian import Hessian
 
 
 
-
-
-
-
-a = 3.79
-Nx = 1
-Ny = 1
-Nz = 1
-
-vasp_run_inputs_dictionary = {
-	'kpoint_scheme': 'Monkhorst',
-	'kpoint_subdivisions_list': [4, 4, 4],
-	'encut': 600
-}
-
-
-base_path = "./"
-
-outcar = Outcar(Path.join(base_path, 'OUTCAR_small_refined'))
-hessian = Hessian(outcar)
-
-
-
-reference_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx, 0.0, 0.0], [0.0, a*Ny, 0.0], [0.0, 0.0, a*Nz]], species_list=['Sr', 'Ti', 'O'])
-
-
 strain_count = 6
 displacement_count = 2
 
@@ -94,30 +68,67 @@ print taylor_expansion
 print '\n'*3
 
 
-perturbation_magnitudes_dictionary = {'strain': 0.0001, 'displacement': 0.002}
 
-de_path = Path.join(base_path, 'eval_test_4')
 
-relaxation_path = Path.join(base_path, 'relaxation')
+base_path = "./"
 
+
+perturbation_magnitudes_dictionary = {'strain': 0.01, 'displacement': 0.2}
+
+
+a = 3.79
+Nx = 1
+Ny = 1
+Nz = 1
+
+vasp_run_inputs_dictionary = {
+	'kpoint_scheme': 'Monkhorst',
+	'kpoint_subdivisions_list': [4, 4, 4],
+	'encut': 600
+}
 
 relaxation_input_dictionary= {
-    'external_relaxation_count': 0,
+    'external_relaxation_count': 3,
+    'isif': [6],
     'kpoint_schemes_list': [vasp_run_inputs_dictionary['kpoint_scheme']],
     'kpoint_subdivisions_lists': [vasp_run_inputs_dictionary['kpoint_subdivisions_list']],
     'ediff': [0.0001],
-    'encut': [vasp_run_inputs_dictionary['encut']]
+    'encut': [vasp_run_inputs_dictionary['encut']],
+    'lwave': [True]
 }
 
-relaxation = VaspRelaxation(path=relaxation_path, initial_structure=reference_structure, input_dictionary=relaxation_input_dictionary)
+
+initial_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx, 0.0, 0.0], [0.0, a*Ny, 0.0], [0.0, 0.0, a*Nz*1.02]], species_list=['Sr', 'Ti', 'O'])
+
+
+relaxation = VaspRelaxation(path=Path.join(base_path, 'relaxation'), initial_structure=initial_structure, input_dictionary=relaxation_input_dictionary)
 
 
 if not relaxation.complete:
 	relaxation.update()
 else:
-	derivative_evaluator = DerivativeEvaluator(path=de_path, reference_structure=reference_structure, hessian=hessian, taylor_expansion=taylor_expansion, 
-		reference_completed_vasp_relaxation_run=relaxation, vasp_run_inputs_dictionary=vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary)
+	
+	relaxed_structure = relaxation.final_structure
 
-	derivative_evaluator.update()
+	force_calculation_path = Path.join(base_path, 'dfpt_force_calculation')
 
-	print derivative_evaluator.taylor_expansion
+	kpoints = Kpoints(scheme_string=vasp_run_inputs['kpoint_scheme'], subdivisions_list=vasp_run_inputs['kpoint_subdivisions_list'])
+	incar = IncarMaker.get_dfpt_hessian_incar({'encut': vasp_run_inputs_dictionary['encut']})
+
+	input_set = VaspInputSet(relaxed_structure, kpoints, incar, auto_change_lreal=False, auto_change_npar=False)
+
+	dfpt_force_run = VaspRun(path=force_calculation_path, input_set=input_set)
+
+	if not dfpt_force_run.complete:
+		dfpt_force_run.update()
+	else:
+
+		hessian = Hessian(dfpt_force_run.outcar)
+
+		de_path = Path.join(base_path, 'derivative_evaluation_calculations')
+		derivative_evaluator = DerivativeEvaluator(path=de_path, reference_structure=relaxed_structure, hessian=hessian, taylor_expansion=taylor_expansion, 
+			reference_completed_vasp_relaxation_run=relaxation, vasp_run_inputs_dictionary=vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary)
+
+		derivative_evaluator.update()
+
+		print derivative_evaluator.taylor_expansion

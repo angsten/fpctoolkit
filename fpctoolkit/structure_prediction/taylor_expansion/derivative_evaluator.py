@@ -74,7 +74,6 @@ class DerivativeEvaluator(object):
 		
 		perturbed_structures_list = self.get_structures_list(expansion_term)
 
-
 		return VaspStaticRunSet(path=expansion_term_path, structures_list=perturbed_structures_list, vasp_run_inputs_dictionary=self.vasp_run_inputs_dictionary, 
 			wavecar_path=self.reference_completed_vasp_relaxation_run.get_wavecar_path())
 
