@@ -107,8 +107,8 @@ class DerivativeEvaluator(object):
 		Sets the derivative_coefficient_value attribute of expansion_term based on the energies in vasp_static_run_set.
 		"""
 
-		print '\n'*3
-		print expansion_term
+		# print '\n'*3
+		# print expansion_term
 
 		term_coefficients_dictionary = self.get_central_difference_coefficients_dictionary()[expansion_term.get_derivative_type()]
 		term_factors_list = term_coefficients_dictionary['factors']
@@ -118,15 +118,15 @@ class DerivativeEvaluator(object):
 		energies_list = [0.0] + [self.get_mock_energy(structure) for structure in self.get_structures_list(expansion_term)]
 
 
-		print "Energies: " + str(energies_list)
-		print "Term factors: " + str(term_factors_list)
+		# print "Energies: " + str(energies_list)
+		# print "Term factors: " + str(term_factors_list)
 
 		numerator = sum(map(lambda x, y: x*y, term_factors_list, energies_list))
 
 		denominator = self.get_denominator(expansion_term)
 
-		print "Numerator: " + str(numerator)
-		print "Denominator: " + str(denominator)
+		# print "Numerator: " + str(numerator)
+		# print "Denominator: " + str(denominator)
 
 		expansion_term.derivative_coefficient = numerator/denominator
 
@@ -237,6 +237,4 @@ class DerivativeEvaluator(object):
 		u_1 = chromosome[6]
 		u_2 = chromosome[7]
 
-		# return 0.234*e_3**2 + -0.52113*e_4**2 + 0.0*e_5**2 + 400.23*e_3*e_4 + 0.00034*e_4*e_5 + 3.2*u_1**2 + 0.001*u_1*u_2 + 0.0*u_2**2 + 7034.0234944959*u_1*u_2*e_4 + 93.0*u_2**2*e_5 + 1.8*u_1**4
-
-		return 70.0234944959*e_4*u_1*u_2#1.3433*u_1**2 + -0.5455*u_1**4
+		return 0.234*e_3**2 + -0.52113*e_4**2 + 0.0*e_5**2 + 400.23*e_3*e_4 + 0.00034*e_4*e_5 + 3.2*u_1**2 + 0.001*u_1*u_2 + 0.0*u_2**2 + 7034.0234944959*u_1*u_2*e_4 + 93.0*u_2**2*e_5 + 1.8*u_1**4
