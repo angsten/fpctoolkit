@@ -58,7 +58,7 @@ class ExpansionTerm(object):
 				self.coefficient = 1.0
 				self.coefficient_string = ''
 			elif non_zero_count == 1:
-				self.coefficient = 0.5
+				self.coefficient = 1.0/2.0
 				self.coefficient_string = '1/2'
 			else:
 				raise Exception("bad count", non_zero_count, self.derivative_array)
@@ -67,11 +67,11 @@ class ExpansionTerm(object):
 				self.coefficient = 1.0/6.0
 				self.coefficient_string = '1/6'
 			elif non_zero_count == 2:
-				self.coefficient = 1.0/3.0
-				self.coefficient_string = '1/3'
-			elif non_zero_count == 3:
-				self.coefficient = 0.5
+				self.coefficient = 1.0/2.0
 				self.coefficient_string = '1/2'
+			elif non_zero_count == 3:
+				self.coefficient = 1.0
+				self.coefficient_string = ''
 			else:
 				raise Exception("bad count", non_zero_count, self.derivative_array)
 		elif order == 4:
@@ -79,14 +79,20 @@ class ExpansionTerm(object):
 				self.coefficient = 1.0/24.0
 				self.coefficient_string = '1/24'
 			elif non_zero_count == 2:
-				self.coefficient = 1.0/12.0
-				self.coefficient_string = '1/12'
+				if self.get_derivative_type() in ['31', '13']:
+					self.coefficient = 1.0/6.0
+					self.coefficient_string = '1/6'
+				elif self.get_derivative_type() == '22':
+					self.coefficient = 1.0/4.0
+					self.coefficient_string = '1/12'
 			elif non_zero_count == 3:
-				self.coefficient = 1.0/8.0
-				self.coefficient_string = '1/8'
+				if self.get_derivative_type() in ['211', '121', '112']:
+					self.coefficient = 1.0/2.0
+					self.coefficient_string = '1/2'
 			elif non_zero_count == 4:
-				self.coefficient = 1.0/6.0
-				self.coefficient_string = '1/6'
+				if self.get_derivative_type() == '1111':
+					self.coefficient = 1.0
+					self.coefficient_string = ''
 			else:
 				raise Exception("bad count", non_zero_count, self.derivative_array)
 
@@ -183,7 +189,7 @@ class ExpansionTerm(object):
 		If f[2, 0, 0, ...], type is '2'
 		f[1, 1, 0, ...] is '11'
 		f[2, 1, ...] is '21'
-		f[1, 2, ...] is '21'
+		f[1, 2, ...] is '12'
 		f[4, 0, 0, ...] is '4'
 		"""
 
