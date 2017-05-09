@@ -5,6 +5,8 @@ from fpctoolkit.structure_prediction.taylor_expansion.variable import Variable
 from fpctoolkit.structure_prediction.taylor_expansion.expansion_term import ExpansionTerm
 from fpctoolkit.structure_prediction.taylor_expansion.taylor_expansion import TaylorExpansion
 from fpctoolkit.structure_prediction.taylor_expansion.derivative_evaluator import DerivativeEvaluator
+from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
+from fpctoolkit.util.path import Path
 
 
 
