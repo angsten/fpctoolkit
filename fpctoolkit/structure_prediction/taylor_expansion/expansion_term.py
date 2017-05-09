@@ -1,8 +1,9 @@
 #from fpctoolkit.structure_prediction.taylor_expansion.expansion_term import ExpansionTerm
 
-
+import numpy as np
 
 from fpctoolkit.structure_prediction.taylor_expansion.variable import Variable
+
 
 
 class ExpansionTerm(object):
@@ -152,16 +153,54 @@ class ExpansionTerm(object):
 		"""
 		perturbation_magnitudes_dictionary should look like {'strain': 0.02, 'displacement': 0.01} with strain as fractional and displacement in angstroms
 
-		returns self.derivative_array but with the appropriate magnitudes swapped in for the non-zero components.
+		returns self.derivative_array but with the appropriate magnitudes swapped in for the non-zero components. Also, a second order component is still replaced with the same magnitude as a first order.
 		"""
 
-		np_derivative_array = np.array(self.derivative_array)
+		np_derivative_array = np.array(self.get_unity_derivative_array())
 
 		for i, variable in self.variables_list:
 			np_derivative_array[i] *= perturbation_magnitudes_dictionary[variable.type_string]
 
 		return np_derivative_array
 
+	def get_unity_derivative_array(self):
+		"""
+		f[1, 3, 0, 0, 4] => [1, 1, 0, 0, 1]
+		"""
+
+		unity_array = []
+		for component in self.derivative_array:
+			if component != 0.0:
+				unity_array.append(1.0)
+			else:
+				unity_array.append(0.0)
+
+		return unity_array
+
+	def get_derivative_type(self):
+		"""
+		If f[1, 0, 0, ...], type is '1'
+		If f[2, 0, 0, ...], type is '2'
+		f[1, 1, 0, ...] is '11'
+		f[2, 1, ...] is '21'
+		f[1, 2, ...] is '21'
+		f[4, 0, 0, ...] is '4'
+		"""
+
+		return "".join(str(component) for component in self.get_list_of_non_zero_elements_in_derivative_array())
+
+	def get_list_of_non_zero_elements_in_derivative_array(self):
+		"""
+		f[1, 0, 0, 4, 0, 2] would return [1, 4, 2]
+		"""
+
+		non_zero_elements_list = []
+
+		for component in self.derivative_array:
+			if component != 0:
+				non_zero_elements_list.append(component)
+
+		return non_zero_elements_list
 
 
 	def __str__(self):
