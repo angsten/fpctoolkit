@@ -208,13 +208,15 @@ class ExpansionTerm(object):
 		Returns a string like (1/2)*f[2,0,0,0,0,0]*u_1^2.
 		"""
 
+		output_string = ""
+
 		if self.derivative_coefficient == None:
 			if self.coefficient != 1.0:
 				coefficient_string = '(' + self.coefficient_string + ')' + '*'
 			else:
 				coefficient_string = ''
 
-			output_string = coefficient_string + 'f[' + ','.join(str(derivative_value) for derivative_value in self.derivative_array) + ']'
+			output_string += coefficient_string + 'f[' + ','.join(str(derivative_value) for derivative_value in self.derivative_array) + ']'
 		else:
 			output_string += str(self.derivative_coefficient*self.coefficient) + "*"
 
