@@ -81,7 +81,7 @@ class DerivativeEvaluator(object):
 			wavecar_path=self.reference_completed_vasp_relaxation_run.get_wavecar_path())
 
 
-	def get_structures_list(expansion_term):
+	def get_structures_list(self, expansion_term):
 		"""
 		Get the set of perturbed structures necessary for the given finite differences calculation of this expansion term.
 		"""
@@ -197,7 +197,7 @@ class DerivativeEvaluator(object):
 
 
 
-	def get_distorted_structure_from_eigen_chromosome(eigen_chromosome):
+	def get_distorted_structure_from_eigen_chromosome(self, eigen_chromosome):
 
 		eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
 		eigen_structure.set_eigen_chromosome(eigen_chromosome)
