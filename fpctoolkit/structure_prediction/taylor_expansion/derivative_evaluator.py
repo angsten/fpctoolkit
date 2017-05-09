@@ -58,14 +58,15 @@ class DerivativeEvaluator(object):
 		self.vasp_static_run_sets_list = []
 
 		for expansion_term in self.taylor_expansion.expansion_terms_list:
-			self.initialize_vasp_static_run_set(expansion_term)
+			vasp_static_run_set = self.get_vasp_static_run_set(expansion_term)
+
+			if vasp_static_run_set.complete:
+				self.set_taylor_coefficient(vasp_static_run_set, expansion_term)
+			else:
+				vasp_static_run_set.update()
 
 
-		for vasp_static_run_set in self.vasp_static_run_sets_list:
-			vasp_static_run_set.update()
-
-
-	def initialize_vasp_static_run_set(self, expansion_term):
+	def get_vasp_static_run_set(self, expansion_term):
 		"""
 		This sets up a vasp static run set which will calculate the energies necessary to get the derivative for this expansion term.
 		"""
@@ -76,8 +77,8 @@ class DerivativeEvaluator(object):
 		perturbed_structures_list = self.get_structures_list(expansion_term)
 
 
-		self.vasp_static_run_sets_list.append(VaspStaticRunSet(path=expansion_term_path, structures_list=perturbed_structures_list, vasp_run_inputs_dictionary=self.vasp_run_inputs_dictionary, 
-			wavecar_path=self.reference_completed_vasp_relaxation_run.get_wavecar_path()))
+		return VaspStaticRunSet(path=expansion_term_path, structures_list=perturbed_structures_list, vasp_run_inputs_dictionary=self.vasp_run_inputs_dictionary, 
+			wavecar_path=self.reference_completed_vasp_relaxation_run.get_wavecar_path())
 
 
 	def get_structures_list(expansion_term):
@@ -89,60 +90,89 @@ class DerivativeEvaluator(object):
 
 		
 		np_derivative_arrays_list = []
+
+		#if term's derivative array is [2, 4, 0, 0, 0, 0, 1], np_perturbations_array will be [strain_mag, strain_mag, 0, 0, 0, 0, displacement_mag]
 		np_perturbation_array = expansion_term.get_perturbation_np_derivative_array(self.perturbation_magnitudes_dictionary)
 
-		eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
+		term_coefficients_dictionary = self.get_central_difference_coefficients_dictionary()[derivative_type]
 
-		if derivative_type == '1':
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [1.0]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [-1.0]))
-		elif derivative_type == '2':
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [-1.0]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [1.0]))
-		elif derivative_type == '11':
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [-1.0, -1.0]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [-1.0, 1.0]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [1.0, -1.0]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [1.0, 1.0]))
-		elif derivative_type == '21':
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [0.0, -1.0]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [0.0, 1.0]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [-1.0, -1.0]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [-1.0, 1.0]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [1.0, -1.0]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [1.0, 1.0]))
-		elif derivative_type == '12':
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [-1.0, 0.0]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [1.0, 0.0]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [-1.0, -1.0]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [1.0, -1.0]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [-1.0, 1.0]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [1.0, 1.0]))
-		elif derivative_type == '4':
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [-1.0]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [-0.5]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [0.5]))
-			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, [1.0]))			
-		else:
-			raise Exception("This derivative type is not currently supported", derivative_type)
+
+		for perturbations_factors_list in term_coefficients_dictionary['perturbations_list']:
+			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, perturbation_factors_list))
 
 		return [self.get_distorted_structure_from_eigen_chromosome(np_derivative_array) for np_derivative_array in np_derivative_arrays_list]
 
 
-	def get_coefficients_dictionary(self):
+
+	def set_taylor_coefficient(self, vasp_static_run_set, expansion_term):
+		"""
+		Sets the derivative_coefficient_value attribute of expansion_term based on the energies in vasp_static_run_set.
+		"""
+
+		term_coefficients_dictionary = self.get_central_difference_coefficients_dictionary()[expansion_term.get_derivative_type()]
+		term_factors_list = term_coefficients_dictionary['factors']
+
+		energies_list = [self.reference_completed_vasp_relaxation_run.get_final_energy()] + vasp_static_run_set.get_final_energies_list(per_atom=False)
+
+		numerator = sum(map(lambda x, y: x*y, term_factors_list, energies_list))
+
+		denominator = self.get_denominator()
+
+		return numerator/denominator
 
 
-		coefficients_dictionary = {}
 
-		coefficients_dictionary['1'] =  {'factors':[0.0, 1.0, -1.0], 'perturbations_list': [[1.0], [-1.0]]}
-		coefficients_dictionary['2'] =  {'factors':[-2.0, 1.0, 1.0], 'perturbations_list': [[1.0], [-1.0]]}
-		coefficients_dictionary['11'] = {'factors':[0.0, 1.0, -1.0, -1.0, 1.0], 'perturbations_list': [[-1.0, -1.0], [-1.0, 1.0], [1.0, -1.0], [1.0, 1.0]]}
-		coefficients_dictionary['21'] = {'factors':[0.0 -2.0, 2.0, -1.0, 1.0, -1.0, 1.0], 'perturbations_list': [[0.0, -1.0], [0.0, 1.0], [-1.0, -1.0], [-1.0, 1.0], [1.0, -1.0], [1.0, 1.0]]}
-		coefficients_dictionary['21'] = {'factors':[0.0 -2.0, 2.0, -1.0, 1.0, -1.0, 1.0], 'perturbations_list': [[-1.0, 0.0], [1.0, 0.0], [-1.0, -1.0], [1.0, -1.0], [-1.0, 1.0], [1.0, 1.0]]}
-		coefficients_dictionary['1'] =  {'factors':[1.0, -1.0], 'perturbations_list': [[1.0], [-1.0]]}
-		coefficients_dictionary['1'] =  {'factors':[1.0, -1.0], 'perturbations_list': [[1.0], [-1.0]]}
-		coefficients_dictionary['1'] =  {'factors':[1.0, -1.0], 'perturbations_list': [[1.0], [-1.0]]}
 
+	def get_term_coefficients(self, expansion_term):
+
+		derivative_type = expansion_term.get_derivative_type()
+
+		term_coefficients_dictionary = self.get_central_difference_coefficients_dictionary()[derivative_type]
+
+
+
+	def get_denominator(self, expansion_term):
+
+		derivative_type = expansion_term.get_derivative_type()
+
+		#if term's derivative array is [2, 4, 0, 0, 0, 0, 1], np_perturbations_array will be [strain_mag, strain_mag, 0, 0, 0, 0, displacement_mag]
+		np_perturbation_array = expansion_term.get_perturbation_np_derivative_array(self.perturbation_magnitudes_dictionary)
+
+		non_zero_list = [pert for pert in np_perturbation_array if pert != 0.0]
+
+		if derivative_type == '1':
+			return 2.0*non_zero_list[0]
+		elif derivative_type == '2':
+			return non_zero_list[0]**2.0
+		elif derivative_type == '11':
+			return 4.0*non_zero_list[0]*non_zero_list[1]
+		elif derivative_type == '21':
+			return 2.0*(non_zero_list[0]**2.0)*non_zero_list[1]
+		elif derivative_type == '12':
+			return 2.0*non_zero_list[0]*(non_zero_list[1]**2.0)
+		elif derivative_type == '4':
+			return (1.0/16.0)*non_zero_list[0]
+		else:
+			raise Exception("Derivative type not supported: ", derivative_type)
+
+
+
+	def get_central_difference_coefficients_dictionary(self):
+		"""
+		This returns a dictionary which forms the structure of central difference calculations. The factors key points to a list of coefficients that go
+		before the funciton outputs (the first is for the unperturbed structure), the perturbations_list tracks what the non-zero perturbations should look like.
+		"""
+
+		central_difference_coefficients_dictionary = {}
+
+		central_difference_coefficients_dictionary['1'] =  {'factors':[0.0, 1.0, -1.0], 'perturbations_list': [[1.0], [-1.0]]}
+		central_difference_coefficients_dictionary['2'] =  {'factors':[-2.0, 1.0, 1.0], 'perturbations_list': [[-1.0], [1.0]]}
+		central_difference_coefficients_dictionary['11'] = {'factors':[0.0, 1.0, -1.0, -1.0, 1.0], 'perturbations_list': [[-1.0, -1.0], [-1.0, 1.0], [1.0, -1.0], [1.0, 1.0]]}
+		central_difference_coefficients_dictionary['21'] = {'factors':[0.0 -2.0, 2.0, -1.0, 1.0, -1.0, 1.0], 'perturbations_list': [[0.0, -1.0], [0.0, 1.0], [-1.0, -1.0], [-1.0, 1.0], [1.0, -1.0], [1.0, 1.0]]}
+		central_difference_coefficients_dictionary['12'] = {'factors':[0.0 -2.0, 2.0, -1.0, 1.0, -1.0, 1.0], 'perturbations_list': [[-1.0, 0.0], [1.0, 0.0], [-1.0, -1.0], [1.0, -1.0], [-1.0, 1.0], [1.0, 1.0]]}
+		central_difference_coefficients_dictionary['4'] =  {'factors':[6.0, 1.0, -4.0, 1.0, 1.0], 'perturbations_list': [[-1.0], [-0.5], [0.5], [1.0]]}
+
+		return central_difference_coefficients_dictionary
 
 
 	def get_extended_path(self, relative_path):

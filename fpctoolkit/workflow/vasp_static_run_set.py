@@ -113,3 +113,6 @@ class VaspStaticRunSet(VaspRunSet):
 
 
 		return run_paths_list
+
+	def get_final_energies_list(self, per_atom=False):
+		return [vasp_run.get_final_energy(per_atom) for vasp_run in self.vasp_run_list]
