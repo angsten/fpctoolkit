@@ -49,7 +49,7 @@ class VaspRelaxation(VaspRunSet):
 			'submission_node_count_list': [1, 2],
 			'ediff': [0.001, 0.00001, 0.0000001],
 			'encut': [200, 400, 600, 800],
-			'isif' : [21, 33, 111]
+			'isif' : [5, 2, 3]
 			#any other incar parameters with value as a list
 		}
 

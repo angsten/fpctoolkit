@@ -1,7 +1,7 @@
 from fpctoolkit.structure_prediction.taylor_expansion.variable import Variable
 from fpctoolkit.structure_prediction.taylor_expansion.expansion_term import ExpansionTerm
 from fpctoolkit.structure_prediction.taylor_expansion.taylor_expansion import TaylorExpansion
-
+from fpctoolkit.phonon.eigen_structure import EigenStructure
 
 
 
@@ -67,3 +67,6 @@ print "Number of terms:", len(taylor_expansion)
 print '\n\t\t',
 print taylor_expansion
 print '\n'*3
+
+
+print taylor_expansion.expansion_terms_list[1]

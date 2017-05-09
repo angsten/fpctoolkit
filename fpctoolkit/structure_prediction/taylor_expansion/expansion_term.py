@@ -148,6 +148,21 @@ class ExpansionTerm(object):
 
 		return [variable for i, variable in enumerate(self.variables_list) if self.derivative_array[i] > 0]
 
+	def get_perturbation_np_derivative_array(self, perturbation_magnitudes_dictionary):
+		"""
+		perturbation_magnitudes_dictionary should look like {'strain': 0.02, 'displacement': 0.01} with strain as fractional and displacement in angstroms
+
+		returns self.derivative_array but with the appropriate magnitudes swapped in for the non-zero components.
+		"""
+
+		np_derivative_array = np.array(self.derivative_array)
+
+		for i, variable in self.variables_list:
+			np_derivative_array[i] *= perturbation_magnitudes_dictionary[variable.type_string]
+
+		return np_derivative_array
+
+
 
 	def __str__(self):
 		"""
