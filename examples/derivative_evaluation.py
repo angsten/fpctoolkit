@@ -116,7 +116,7 @@ else:
 
 	force_calculation_path = Path.join(base_path, 'dfpt_force_calculation')
 
-	kpoints = Kpoints(scheme_string=vasp_run_inputs['kpoint_scheme'], subdivisions_list=vasp_run_inputs['kpoint_subdivisions_list'])
+	kpoints = Kpoints(scheme_string=vasp_run_inputs_dictionary['kpoint_scheme'], subdivisions_list=vasp_run_inputs_dictionary['kpoint_subdivisions_list'])
 	incar = IncarMaker.get_dfpt_hessian_incar({'encut': vasp_run_inputs_dictionary['encut']})
 
 	input_set = VaspInputSet(relaxed_structure, kpoints, incar, auto_change_lreal=False, auto_change_npar=False)
