@@ -101,7 +101,7 @@ de_path = Path.join(base_path, 'derivative_evaluator_test_1')
 relaxation_path = Path.join(base_path, 'relaxation')
 
 
-input_dictionary relaxation_= {
+relaxation_input_dictionary= {
     'external_relaxation_count': 0,
     'kpoint_schemes_list': [vasp_run_inputs_dictionary['kpoint_scheme']],
     'kpoint_subdivisions_lists': [vasp_run_inputs_dictionary['kpoint_subdivisions_list']],
