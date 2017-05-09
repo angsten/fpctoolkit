@@ -113,7 +113,9 @@ class DerivativeEvaluator(object):
 		term_coefficients_dictionary = self.get_central_difference_coefficients_dictionary()[expansion_term.get_derivative_type()]
 		term_factors_list = term_coefficients_dictionary['factors']
 
-		energies_list = [self.reference_completed_vasp_relaxation_run.get_final_energy()] + vasp_static_run_set.get_final_energies_list(per_atom=False)
+		# energies_list = [self.reference_completed_vasp_relaxation_run.get_final_energy()] + vasp_static_run_set.get_final_energies_list(per_atom=False)
+
+		energies_list = [0.0] + [self.get_mock_energy(structure) for structure in self.get_structures_list(expansion_term)]
 
 		numerator = sum(map(lambda x, y: x*y, term_factors_list, energies_list))
 
@@ -206,3 +208,26 @@ class DerivativeEvaluator(object):
 		eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
 		eigen_structure.set_eigen_chromosome(eigen_chromosome)
 		return eigen_structure.get_distorted_structure()
+
+
+
+
+
+	def get_mock_energy(self, structure):
+
+		eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian, distorted_structure = structure)
+
+		chromosome = eigen_structure.get_list_representation()
+
+
+		e_xx = chromosome[0]
+		e_yy = chromosome[1]
+		e_zz = chromosome[2]
+		e_yz = chromosome[3]
+		e_xz = chromosome[4]
+		e_xy = chromosome[5]
+
+		u_1 = chromosome[6]
+		u_2 = chromosome[7]
+
+		return 0.234*e_zz**2 + -0.52113*e_yz**2 + 0.0*exz**2 + 3.2*u_1**2 + 0.001*u_1*u_2 + 0.0*u_2**2
