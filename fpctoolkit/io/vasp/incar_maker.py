@@ -72,8 +72,8 @@ class IncarMaker(object):
 		if incar['nsw'] <= 0:
 			raise Exception("NSW must be > 0 in an external relaxation")
 
-		if incar['isif'] != 3:
-			raise Exception("ISIF must be 3 in an external relaxation")
+		# if incar['isif'] != 3:
+		# 	raise Exception("ISIF must be 3 in an external relaxation")
 
 		return incar
 
