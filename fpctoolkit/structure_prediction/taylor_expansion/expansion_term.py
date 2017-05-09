@@ -218,7 +218,7 @@ class ExpansionTerm(object):
 
 			output_string += coefficient_string + 'f[' + ','.join(str(derivative_value) for derivative_value in self.derivative_array) + ']'
 		else:
-			output_string += str(self.derivative_coefficient*self.coefficient) + "*"
+			output_string += str(self.derivative_coefficient*self.coefficient)
 
 		for index, derivative_value in enumerate(self.derivative_array):
 
