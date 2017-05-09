@@ -8,8 +8,11 @@ from fpctoolkit.structure_prediction.taylor_expansion.derivative_evaluator impor
 from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
 from fpctoolkit.util.path import Path
 from fpctoolkit.phonon.hessian import Hessian
-
-
+from fpctoolkit.structure.structure import Structure
+from fpctoolkit.workflow.vasp_run import VaspRun
+from fpctoolkit.io.vasp.incar_maker import IncarMaker
+from fpctoolkit.io.vasp.kpoints import Kpoints
+from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 
 
 strain_count = 6
@@ -94,6 +97,7 @@ relaxation_input_dictionary= {
     'kpoint_subdivisions_lists': [vasp_run_inputs_dictionary['kpoint_subdivisions_list']],
     'ediff': [0.0001],
     'encut': [vasp_run_inputs_dictionary['encut']],
+    'submission_script_modification_keys_list': ['100'],
     'lwave': [True]
 }
 
