@@ -156,7 +156,7 @@ class DerivativeEvaluator(object):
 		elif derivative_type == '111':
 			return 8.0*non_zero_list[0]*non_zero_list[1]*non_zero_list[2]
 		elif derivative_type == '4':
-			return (1.0/16.0)*non_zero_list[0]
+			return (1.0/16.0)*non_zero_list[0]**4.0
 		else:
 			raise Exception("Derivative type not supported: ", derivative_type)
 
