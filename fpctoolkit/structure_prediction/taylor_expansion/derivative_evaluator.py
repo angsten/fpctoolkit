@@ -97,7 +97,7 @@ class DerivativeEvaluator(object):
 		term_coefficients_dictionary = self.get_central_difference_coefficients_dictionary()[derivative_type]
 
 
-		for perturbations_factors_list in term_coefficients_dictionary['perturbations_list']:
+		for perturbation_factors_list in term_coefficients_dictionary['perturbations_list']:
 			np_derivative_arrays_list.append(self.multiply_chromosome_components_sequentially_by(np_perturbation_array, perturbation_factors_list))
 
 		return [self.get_distorted_structure_from_eigen_chromosome(np_derivative_array) for np_derivative_array in np_derivative_arrays_list]
