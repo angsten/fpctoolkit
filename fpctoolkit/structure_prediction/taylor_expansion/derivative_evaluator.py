@@ -113,9 +113,9 @@ class DerivativeEvaluator(object):
 		term_coefficients_dictionary = self.get_central_difference_coefficients_dictionary()[expansion_term.get_derivative_type()]
 		term_factors_list = term_coefficients_dictionary['factors']
 
-		# energies_list = [self.reference_completed_vasp_relaxation_run.get_final_energy()] + vasp_static_run_set.get_final_energies_list(per_atom=False)
+		energies_list = [self.reference_completed_vasp_relaxation_run.get_final_energy()] + vasp_static_run_set.get_final_energies_list(per_atom=False)
 
-		energies_list = [0.0] + [self.get_mock_energy(structure) for structure in self.get_structures_list(expansion_term)]
+		# energies_list = [0.0] + [self.get_mock_energy(structure) for structure in self.get_structures_list(expansion_term)]
 
 
 		# print "Energies: " + str(energies_list)
