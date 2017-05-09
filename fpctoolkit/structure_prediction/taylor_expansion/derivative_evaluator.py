@@ -183,7 +183,7 @@ class DerivativeEvaluator(object):
 		central_difference_coefficients_dictionary['21'] = {'factors':[0.0, -2.0, 2.0, -1.0, 1.0, -1.0, 1.0], 'perturbations_list': [[0.0, -1.0], [0.0, 1.0], [-1.0, -1.0], [-1.0, 1.0], [1.0, -1.0], [1.0, 1.0]]}
 		central_difference_coefficients_dictionary['12'] = {'factors':[0.0, -2.0, 2.0, -1.0, 1.0, -1.0, 1.0], 'perturbations_list': [[-1.0, 0.0], [1.0, 0.0], [-1.0, -1.0], [1.0, -1.0], [-1.0, 1.0], [1.0, 1.0]]}
 		central_difference_coefficients_dictionary['111'] = {'factors':[0.0, -1.0, 1.0, 1.0, -1.0, 1.0, -1.0, -1.0, 1.0], 'perturbations_list': [[-1.0, -1.0, -1.0], [-1.0, -1.0, 1.0], [-1.0, 1.0, -1.0], [-1.0, 1.0, 1.0], [1.0, -1.0, -1.0], [1.0, -1.0, 1.0], [1.0, 1.0, -1.0], [1.0, 1.0, 1.0]]}		
-		central_difference_coefficients_dictionary['4'] =  {'factors':[6.0, 1.0, -4.0, 4.0, 1.0], 'perturbations_list': [[-1.0], [-0.5], [0.5], [1.0]]}
+		central_difference_coefficients_dictionary['4'] =  {'factors':[6.0, 1.0, -4.0, -4.0, 1.0], 'perturbations_list': [[-1.0], [-0.5], [0.5], [1.0]]}
 
 		return central_difference_coefficients_dictionary
 
