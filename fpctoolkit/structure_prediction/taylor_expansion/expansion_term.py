@@ -158,7 +158,7 @@ class ExpansionTerm(object):
 
 		np_derivative_array = np.array(self.get_unity_derivative_array())
 
-		for i, variable in self.variables_list:
+		for i, variable in enumerate(self.variables_list):
 			np_derivative_array[i] *= perturbation_magnitudes_dictionary[variable.type_string]
 
 		return np_derivative_array
