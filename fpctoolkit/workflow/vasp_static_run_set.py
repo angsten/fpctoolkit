@@ -1,6 +1,7 @@
 #from fpctoolkit.workflow.vasp_static_run_set import VaspStaticRunSet
 
 import numpy as np
+import copy
 
 from fpctoolkit.util.path import Path
 from fpctoolkit.workflow.vasp_run import VaspRun
@@ -39,7 +40,7 @@ class VaspStaticRunSet(VaspRunSet):
 
 		self.path = path
 		self.structures_list = structures_list
-		self.vasp_run_inputs = vasp_run_inputs_dictionary
+		self.vasp_run_inputs = copy.deepcopy(vasp_run_inputs_dictionary)
 		self.wavecar_path = wavecar_path
 
 		Path.make(path)
