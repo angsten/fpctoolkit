@@ -135,7 +135,7 @@ class DerivativeEvaluator(object):
 			#assume no forces on initial structures
 			force_sums_list = [0.0] + self.get_force_sums(vasp_static_run_set, expansion_term)
 
-			numerator = sum(map(lambda x, y: x*y, term_factors_list, energies_list))
+			numerator = sum(map(lambda x, y: x*y, term_factors_list, forces_sums_list))
 
 			denominator = self.get_denominator(modified_expansion_term)
 
