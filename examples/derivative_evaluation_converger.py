@@ -18,6 +18,9 @@ from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 strain_count = 6
 displacement_count = 2
 
+convergence_terms_list = [[0, 0, 0, 0, 0, 0, 2, 0],
+						  [0, 0, 0, 0, 0, 0, 0, 2]]
+
 
 variables = []
 
@@ -33,34 +36,10 @@ print "Variables list: " + '[' + ", ".join(str(variable) for variable in variabl
 
 
 def term_acceptance_function(expansion_term):
-
-	variables = expansion_term.get_active_variables()
-
-	if (not expansion_term.is_pure_type('displacement')) and not expansion_term.order == 2:
+	if expansion_term.derivative_array in convergence_terms_list:
 		return False
-
-	#remove all terms with in-plane strain variables in them - these are fixed to 0 for (100) epitaxy
-	for variable in variables:
-		if variable.type_string == 'strain' and variable.index in [0, 1, 5]:
-			return False
-
-	#assume no forces or stresses on the cell
-	if expansion_term.order == 1: 
-		return False
-
-	#only expand to second order w.r.t. strain
-	if expansion_term.is_pure_type('strain') and expansion_term.order > 2:
-		return False
-
-	#for perovskite structure under arbitrary homogeneous strain, displacement terms are centrosymmetric
-	if expansion_term.is_centrosymmetric():
-		return False
-
-	#only go to fourth order in single variable dsiplacement terms - don't do fourth order cross terms
-	if expansion_term.order == 4 and not expansion_term.has_single_variable():
-		return False
-
-	return True
+	else:
+		return True
 
 
 taylor_expansion = TaylorExpansion(variables_list=variables, term_acceptance_function=term_acceptance_function)
