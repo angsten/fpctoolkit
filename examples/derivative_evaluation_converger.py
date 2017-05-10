@@ -127,12 +127,14 @@ else:
 			derivative_evaluator = DerivativeEvaluator(path=de_path, reference_structure=relaxed_structure, hessian=hessian, taylor_expansion=taylor_expansion, 
 				reference_completed_vasp_relaxation_run=relaxation, vasp_run_inputs_dictionary=vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary)
 
-			derivative_evaluator_list.append(derivative_evaluator)		
-
-
-		for i, derivative_evaluator in enumerate(derivative_evaluator_list):
 			derivative_evaluator.update()
 
-			print dipslacement_magnitdues_list[i], derivative_evaluator.taylor_expansion
+			derivative_evaluator_list.append(derivative_evaluator)	
+
+
+		for i in len(derivative_evaluator_list[0].taylor_expansion.expansoin_terms_list):
+			for j, derivative_evaluator in enumerate(derivative_evaluator_list):
+
+				print dipslacement_magnitudes_list[j], derivative_evaluator.taylor_expansion.expansoin_terms_list[i]
 
 		
