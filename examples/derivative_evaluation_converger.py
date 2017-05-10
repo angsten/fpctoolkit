@@ -36,7 +36,8 @@ def term_acceptance_function(expansion_term):
 
 	variables = expansion_term.get_active_variables()
 
-	if not expansion_term.is_pure_type('strain')
+	if (not expansion_term.is_pure_type('displacement')) and not expansion_term.order == 2:
+		return False
 
 	#remove all terms with in-plane strain variables in them - these are fixed to 0 for (100) epitaxy
 	for variable in variables:
@@ -90,6 +91,8 @@ vasp_run_inputs_dictionary = {
 	'kpoint_scheme': 'Monkhorst',
 	'kpoint_subdivisions_list': [8, 8, 8],
 	'encut': 900,
+	'ediff': 1e-9,
+	'lreal': False,
 	'addgrid': True
 }
 
