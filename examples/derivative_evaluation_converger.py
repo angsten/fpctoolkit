@@ -37,9 +37,9 @@ print "Variables list: " + '[' + ", ".join(str(variable) for variable in variabl
 
 def term_acceptance_function(expansion_term):
 	if expansion_term.derivative_array in convergence_terms_list:
-		return False
-	else:
 		return True
+	else:
+		return False
 
 
 taylor_expansion = TaylorExpansion(variables_list=variables, term_acceptance_function=term_acceptance_function)
