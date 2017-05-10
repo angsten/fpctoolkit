@@ -53,6 +53,10 @@ class Hessian(object):
 		return sorted_hessian_eigen_pairs_list
 
 
+	def print_eigen_components(self):
+		for i, eigen_pair in enumerate(self.get_sorted_eigen_pairs_list()):
+			print "Index: " + str(i) + "   " + str(eigen_pair)
+
 
 
 	@staticmethod

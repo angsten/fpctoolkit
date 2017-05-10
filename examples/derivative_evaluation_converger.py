@@ -134,10 +134,7 @@ else:
 	else:
 
 		hessian = Hessian(dfpt_force_run.outcar)
-
-		eigen_structure = EigenStructure(reference_structure=relaxed_structure, hessian=hessian)
-		eigen_structure.print_eigen_components()
-
+		hessian.print_eigen_components()
 
 
 		de_path = Path.join(base_path, 'term_coefficient_calculations')
