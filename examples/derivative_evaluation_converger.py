@@ -1,3 +1,6 @@
+
+
+import fpctoolkit.util.string_util as su
 from fpctoolkit.structure.perovskite import Perovskite
 from fpctoolkit.io.vasp.outcar import Outcar
 from fpctoolkit.phonon.eigen_structure import EigenStructure
@@ -133,10 +136,14 @@ else:
 
 
 		for i in range(len(derivative_evaluator_list[0].taylor_expansion.expansion_terms_list)):
-			print '\n', derivative_evaluator_list[0].taylor_expansion.expansion_terms_list[i]
+			print '\n', derivative_evaluator_list[0].taylor_expansion.expansion_terms_list[i].get_variable_portion_string()
 
 			for j, derivative_evaluator in enumerate(derivative_evaluator_list):
 
-				print displacement_magnitudes_list[j], derivative_evaluator.taylor_expansion.expansion_terms_list[i].derivative_coefficient
+				f = su.pad_decimal_number_to_fixed_character_length
+				rnd = 6
+				padding_length = 10
+
+				print f(displacement_magnitudes_list[j], rnd, padding_length), f(derivative_evaluator.taylor_expansion.expansion_terms_list[i].derivative_coefficient, rnd, padding_length)
 
 		

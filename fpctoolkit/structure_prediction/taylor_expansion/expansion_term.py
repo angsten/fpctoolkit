@@ -209,6 +209,23 @@ class ExpansionTerm(object):
 		return non_zero_elements_list
 
 
+	def get_variable_portion_string(self):
+		for index, derivative_value in enumerate(self.derivative_array):
+
+			if not derivative_value == 0:
+				output_string += '*'
+
+			if derivative_value == 1:
+				output_string += str(self.variables_list[index])
+			elif derivative_value == 2:
+				output_string += str(self.variables_list[index]) + "^2"
+			elif derivative_value == 3:
+				output_string += str(self.variables_list[index]) + "^3"
+			elif derivative_value == 4:
+				output_string += str(self.variables_list[index]) + "^4"
+		
+		return output_string
+
 	def __str__(self):
 		"""
 		Returns a string like (1/2)*f[2,0,0,0,0,0]*u_1^2.
