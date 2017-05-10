@@ -86,8 +86,9 @@ Nz = 1
 
 vasp_run_inputs_dictionary = {
 	'kpoint_scheme': 'Monkhorst',
-	'kpoint_subdivisions_list': [4, 4, 4],
-	'encut': 600
+	'kpoint_subdivisions_list': [8, 8, 8],
+	'encut': 900,
+	'addgrid': True
 }
 
 relaxation_input_dictionary= {
@@ -95,7 +96,7 @@ relaxation_input_dictionary= {
     'isif': [6],
     'kpoint_schemes_list': [vasp_run_inputs_dictionary['kpoint_scheme']],
     'kpoint_subdivisions_lists': [vasp_run_inputs_dictionary['kpoint_subdivisions_list']],
-    'ediff': [0.0001],
+    'ediff': [0.00001, 1e-7, 1e-9],
     'encut': [vasp_run_inputs_dictionary['encut']],
     'submission_script_modification_keys_list': ['100'],
     'lwave': [True]
@@ -134,7 +135,7 @@ else:
 
 
 
-		de_path = Path.join(base_path, 'derivative_evaluation_calculations')
+		de_path = Path.join(base_path, 'term_coefficient_calculations')
 		derivative_evaluator = DerivativeEvaluator(path=de_path, reference_structure=relaxed_structure, hessian=hessian, taylor_expansion=taylor_expansion, 
 			reference_completed_vasp_relaxation_run=relaxation, vasp_run_inputs_dictionary=vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary)
 
