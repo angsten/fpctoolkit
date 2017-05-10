@@ -169,6 +169,36 @@ class ExpansionTerm(object):
 
 		return np_derivative_array
 
+	def lower_first_displacement_order(self):
+		"""
+		Take first displacement variable with non-zero derivative and low the derivative array for this component by one:
+
+		f[0, 2, 3, 4, 0, 2, 0, 0, 3, 0, 1] => f[0, 2, 3, 4, 0, 2, 0, 0, 3, 0, 1]
+		"""
+
+		if self.is_pure_type('strain'):
+			raise Exception("Cannot find any displacement variables")
+
+		for i, variable in enumerate(self.variables_list):
+			if variable.type_string == 'displacement' and self.derivative_array[i] > 0:
+				self.derivative_array[i] -= 1
+
+				return
+
+	def get_first_displacement_index(self):
+		"""
+		Finds first non-zero displacement derivative in derivative array and returns this variable's index
+		"""
+
+		if self.is_pure_type('strain'):
+			raise Exception("Cannot find any displacement variables")
+
+		for i, variable in enumerate(self.variables_list):
+			if variable.type_string == 'displacement' and self.derivative_array[i] > 0:
+				return variable.index
+
+
+
 	def get_unity_derivative_array(self):
 		"""
 		f[1, 3, 0, 0, 4] => [1, 1, 0, 0, 1]
@@ -211,7 +241,7 @@ class ExpansionTerm(object):
 
 	def get_variable_portion_string(self):
 		output_string = ''
-		
+
 		for index, derivative_value in enumerate(self.derivative_array):
 			if derivative_value == 1:
 				output_string += str(self.variables_list[index])

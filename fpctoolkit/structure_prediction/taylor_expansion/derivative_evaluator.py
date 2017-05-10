@@ -35,6 +35,7 @@ class DerivativeEvaluator(object):
 		self.path = path
 		self.reference_structure = reference_structure
 		self.hessian = hessian
+		self.eigen_pairs_list = hessian.get_sorted_hessian_eigen_pairs_list()
 		self.taylor_expansion = copy.deepcopy(taylor_expansion)
 		self.vasp_run_inputs_dictionary = copy.deepcopy(vasp_run_inputs_dictionary)
 		self.perturbation_magnitudes_dictionary = perturbation_magnitudes_dictionary
@@ -84,13 +85,18 @@ class DerivativeEvaluator(object):
 		Get the set of perturbed structures necessary for the given finite differences calculation of this expansion term.
 		"""
 
-		derivative_type = expansion_term.get_derivative_type()
+		modified_expansion_term = copy.deepcopy(expansion_term)
+
+		if not modified_expansion_term.is_pure_type('strain'):
+			modified_expansion_term.lower_first_displacement_order()
+
+		derivative_type = modified_expansion_term.get_derivative_type()
 
 		
 		np_derivative_arrays_list = []
 
 		#if term's derivative array is [2, 4, 0, 0, 0, 0, 1], np_perturbations_array will be [strain_mag, strain_mag, 0, 0, 0, 0, displacement_mag]
-		np_perturbation_array = expansion_term.get_perturbation_np_derivative_array(self.perturbation_magnitudes_dictionary)
+		np_perturbation_array = modified_expansion_term.get_perturbation_np_derivative_array(self.perturbation_magnitudes_dictionary)
 
 		term_coefficients_dictionary = self.get_central_difference_coefficients_dictionary()[derivative_type]
 
@@ -107,28 +113,54 @@ class DerivativeEvaluator(object):
 		Sets the derivative_coefficient_value attribute of expansion_term based on the energies in vasp_static_run_set.
 		"""
 
-		# print '\n'*3
-		# print expansion_term
-
-		term_coefficients_dictionary = self.get_central_difference_coefficients_dictionary()[expansion_term.get_derivative_type()]
-		term_factors_list = term_coefficients_dictionary['factors']
-
-		energies_list = [self.reference_completed_vasp_relaxation_run.get_final_energy()] + vasp_static_run_set.get_final_energies_list(per_atom=False)
-
-		# energies_list = [0.0] + [self.get_mock_energy(structure) for structure in self.get_structures_list(expansion_term)]
+		modified_expansion_term = copy.deepcopy(expansion_term)
 
 
-		# print "Energies: " + str(energies_list)
-		# print "Term factors: " + str(term_factors_list)
+		if modified_expansion_term.is_pure_type('strain'):
+			term_coefficients_dictionary = self.get_central_difference_coefficients_dictionary()[modified_expansion_term.get_derivative_type()]
+			term_factors_list = term_coefficients_dictionary['factors']
 
-		numerator = sum(map(lambda x, y: x*y, term_factors_list, energies_list))
+			energies_list = [self.reference_completed_vasp_relaxation_run.get_final_energy()] + vasp_static_run_set.get_final_energies_list(per_atom=False)
 
-		denominator = self.get_denominator(expansion_term)
+			numerator = sum(map(lambda x, y: x*y, term_factors_list, energies_list))
 
-		# print "Numerator: " + str(numerator)
-		# print "Denominator: " + str(denominator)
+			denominator = self.get_denominator(modified_expansion_term)
+		else:
+			modified_expansion_term.lower_first_displacement_order()
+
+			term_coefficients_dictionary = self.get_central_difference_coefficients_dictionary()[modified_expansion_term.get_derivative_type()]
+			term_factors_list = term_coefficients_dictionary['factors']
+
+			#assume no forces on initial structures
+			force_sums_list = [0.0] + self.get_force_sums(vasp_static_run_set, expansion_term)
+
+			numerator = sum(map(lambda x, y: x*y, term_factors_list, energies_list))
+
+			denominator = self.get_denominator(modified_expansion_term)
+
+
 
 		expansion_term.derivative_coefficient = numerator/denominator
+
+
+	def get_force_sums(self, vasp_static_run_set, expansion_term):
+		"""
+		Returns a list of weighted force sums for each static calculation. Basically, this takes -1.0*eigen_vector of the first displacement expansion term and dots
+		it with the force set of the run. This gives dE/dA
+		"""
+
+		displacement_mode_index = expansion_term.get_first_displacement_index()
+
+		basis_vector = np.array(self.eigen_pairs_list[displacement_mode_index].eigen_vector)
+
+		forces_sums_list = []
+
+		forces_lists = vasp_static_run_set.get_forces_lists()
+
+
+		return [np.dot(np.array(forces_list), basis_vector) for forces_list in forces_lists]
+
+
 
 
 

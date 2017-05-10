@@ -11,6 +11,7 @@ class Outcar(File):
 	dielectric_tensor_string = "MACROSCOPIC STATIC DIELECTRIC TENSOR (including local field effects in DFT)"
 	born_effective_charge_tensor_string = "BORN EFFECTIVE CHARGES (in e, cummulative output)"
 	hessian_string = "SECOND DERIVATIVES (NOT SYMMETRIZED)"
+	forces_string = "POSITION                                       TOTAL-FORCE (eV/Angst)"
 
 	def __init__(self, file_path=None):
 		super(Outcar, self).__init__(file_path)
@@ -43,6 +44,40 @@ class Outcar(File):
 	@property
 	def energy_per_atom(self):
 		return self.energy / self.get_number_of_atoms()
+
+	@property
+	def final_forces_list(self):
+		"""
+		Returns list of forces - one for each x, y, z component of each atom, ordered by poscar position.
+		"""
+
+		if not self.complete:
+			raise Exception("Run not yet completed - cannot get forces list")
+
+		forces_start_indices = self.get_line_indices_containing_string(Outcar.forces_string)
+
+		if len(forces_start_indices) == 0:
+			raise Exception("No set of forces found in completed outcar file")
+
+		forces_start_index = forces_start_indices[-1] + 2
+
+		final_forces_list = []
+
+		for line_index in range(self.get_number_of_atoms()):
+			line = self.lines[forces_start_index + line_index]
+				
+			row_number_list = su.get_number_list_from_string(line)
+
+			if not len(row_number_list) == 6:
+				raise Exception("Error reading row from forces data. Length should be 6 but is not. Row number list looks like", row_number_list)
+
+			final_forces_list += row_number_list[3:6]		
+
+
+		if len(final_forces_list) != self.get_number_of_atoms()*3:
+			raise Exception("Incorrect number of forces obtained:", final_forces_list)
+
+		return final_forces_list
 
 
 	def get_ionic_energies(self):

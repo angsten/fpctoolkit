@@ -223,6 +223,17 @@ class VaspRun(object):
 		else:
 			return None
 
+	def get_final_forces_list(self):
+		"""
+		Returns list of forces - one for each x, y, z component of each atom, ordered by poscar position.
+		"""
+
+		if self.complete:
+			return self.outcar.final_forces_list
+		else:
+			return None
+
+
 	@property
 	def total_time(self):
 		"""Defaults to cpu*hours for now (best measure of total resources used)"""

@@ -43,9 +43,10 @@ from fpctoolkit.structure_prediction.taylor_expansion.taylor_expansion import Ta
 from fpctoolkit.structure_prediction.taylor_expansion.derivative_evaluator import DerivativeEvaluator
 
 
+outcar = Outcar("C:/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Outcar/outcar")
 
 
-
+print outcar.final_forces_list
 
 
 
@@ -65,6 +66,7 @@ base_path = "C:\Users\Tom\Documents\Berkeley/research\my_papers\Epitaxial Phase 
 
 outcar = Outcar(Path.join(base_path, 'OUTCAR_small_refined'))
 hessian = Hessian(outcar)
+
 
 
 
