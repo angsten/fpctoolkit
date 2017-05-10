@@ -133,6 +133,6 @@ else:
 		for i, derivative_evaluator in enumerate(derivative_evaluator_list):
 			derivative_evaluator.update()
 
-			print derivative_evaluator.taylor_expansion
+			print dipslacement_magnitdues_list[i], derivative_evaluator.taylor_expansion
 
 		
