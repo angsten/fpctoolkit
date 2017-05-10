@@ -132,7 +132,7 @@ else:
 			derivative_evaluator_list.append(derivative_evaluator)	
 
 
-		for i in len(derivative_evaluator_list[0].taylor_expansion.expansion_terms_list):
+		for i in range(len(derivative_evaluator_list[0].taylor_expansion.expansion_terms_list)):
 			for j, derivative_evaluator in enumerate(derivative_evaluator_list):
 
 				print dipslacement_magnitudes_list[j], derivative_evaluator.taylor_expansion.expansion_terms_list[i]
