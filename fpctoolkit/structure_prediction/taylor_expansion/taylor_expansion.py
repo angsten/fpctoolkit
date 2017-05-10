@@ -113,3 +113,4 @@ class TaylorExpansion(object):
 
 		for expansion_term in remove_list:
 			self.expansion_terms_list.remove(expansion_term)
+

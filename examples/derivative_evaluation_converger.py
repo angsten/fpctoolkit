@@ -22,6 +22,9 @@ convergence_terms_list = [[0, 0, 0, 0, 0, 0, 2, 0],
 						  [0, 0, 0, 0, 0, 0, 0, 2]]
 
 
+displacement_magnitudes_list = [0.005, 0.01, 0.05, 0.1, 0.2, 0.5]
+
+
 variables = []
 
 
@@ -58,7 +61,6 @@ print '\n'*3
 base_path = "./"
 
 
-perturbation_magnitudes_dictionary = {'strain': 0.01, 'displacement': 0.2}
 
 
 a = 3.79
@@ -116,10 +118,21 @@ else:
 		hessian.print_eigen_components()
 
 
-		de_path = Path.join(base_path, 'term_coefficient_calculations')
-		derivative_evaluator = DerivativeEvaluator(path=de_path, reference_structure=relaxed_structure, hessian=hessian, taylor_expansion=taylor_expansion, 
-			reference_completed_vasp_relaxation_run=relaxation, vasp_run_inputs_dictionary=vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary)
+		derivative_evaluator_list = []
+		for i in range(len(displacement_magnitudes_list)):
 
-		derivative_evaluator.update()
+			perturbation_magnitudes_dictionary = {'strain': 0.01, 'displacement': displacement_magnitudes_list[i]}
 
-		print derivative_evaluator.taylor_expansion
+			de_path = Path.join(base_path, 'term_coefficient_calculations_' + str(displacement_magnitudes_list[i]))
+			derivative_evaluator = DerivativeEvaluator(path=de_path, reference_structure=relaxed_structure, hessian=hessian, taylor_expansion=taylor_expansion, 
+				reference_completed_vasp_relaxation_run=relaxation, vasp_run_inputs_dictionary=vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary)
+
+			derivative_evaluator_list.append(derivative_evaluator)		
+
+
+		for i, derivative_evaluator in enumerate(derivative_evaluator_list):
+			derivative_evaluator.update()
+
+			print derivative_evaluator.taylor_expansion
+
+		
