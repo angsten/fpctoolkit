@@ -25,7 +25,7 @@ convergence_terms_list = [[0, 0, 0, 0, 0, 0, 2, 0],
 						  [0, 0, 0, 0, 0, 0, 0, 2]]
 
 
-displacement_magnitudes_list = [0.005, 0.01, 0.05, 0.1, 0.2, 0.5]
+displacement_magnitudes_list = [0.001, 0.005, 0.0075, 0.01, 0.02, 0.03, 0.04, 0.05, 0.075, 0.1, 0.15, 0.2, 0.5]
 
 
 variables = []
@@ -74,18 +74,18 @@ Nz = 1
 vasp_run_inputs_dictionary = {
 	'kpoint_scheme': 'Monkhorst',
 	'kpoint_subdivisions_list': [8, 8, 8],
-	'encut': 900,
-	'ediff': 1e-9,
+	'encut': 1100,
+	'ediff': 1e-11,
 	'lreal': False,
 	'addgrid': True
 }
 
 relaxation_input_dictionary= {
-    'external_relaxation_count': 3,
+    'external_relaxation_count': 4,
     'isif': [6],
     'kpoint_schemes_list': [vasp_run_inputs_dictionary['kpoint_scheme']],
     'kpoint_subdivisions_lists': [vasp_run_inputs_dictionary['kpoint_subdivisions_list']],
-    'ediff': [0.00001, 1e-7, 1e-9],
+    'ediff': [0.00001, 1e-7, 1e-9, 1e-11],
     'encut': [vasp_run_inputs_dictionary['encut']],
     'submission_script_modification_keys_list': ['100'],
     'lwave': [True]
@@ -107,7 +107,7 @@ else:
 	force_calculation_path = Path.join(base_path, 'dfpt_force_calculation')
 
 	kpoints = Kpoints(scheme_string=vasp_run_inputs_dictionary['kpoint_scheme'], subdivisions_list=vasp_run_inputs_dictionary['kpoint_subdivisions_list'])
-	incar = IncarMaker.get_dfpt_hessian_incar({'encut': vasp_run_inputs_dictionary['encut']})
+	incar = IncarMaker.get_dfpt_hessian_incar({'encut': vasp_run_inputs_dictionary['encut'], 'ediff': vasp_run_inputs_dictionary['ediff']})
 
 	input_set = VaspInputSet(relaxed_structure, kpoints, incar, auto_change_lreal=False, auto_change_npar=False)
 
@@ -148,7 +148,7 @@ else:
 				coefficient_string = ""
 
 				if coefficient_value == None:
-					coefficient_string = "  None"
+					coefficient_string = " None"
 				else:
 					coefficient_string = f(coefficient_value, rnd, padding_length)
 
