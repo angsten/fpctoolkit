@@ -210,11 +210,9 @@ class ExpansionTerm(object):
 
 
 	def get_variable_portion_string(self):
+		output_string = ''
+		
 		for index, derivative_value in enumerate(self.derivative_array):
-
-			if not derivative_value == 0:
-				output_string += '*'
-
 			if derivative_value == 1:
 				output_string += str(self.variables_list[index])
 			elif derivative_value == 2:
