@@ -141,14 +141,14 @@ else:
 			for j, derivative_evaluator in enumerate(derivative_evaluator_list):
 
 				f = su.pad_decimal_number_to_fixed_character_length
-				rnd = 6
-				padding_length = 10
+				rnd = 5
+				padding_length = 8
 
 				coefficient_value = derivative_evaluator.taylor_expansion.expansion_terms_list[i].derivative_coefficient
 				coefficient_string = ""
 
 				if coefficient_value == None:
-					coefficient_string = "None"
+					coefficient_string = "  None"
 				else:
 					coefficient_string = f(coefficient_value, rnd, padding_length)
 
