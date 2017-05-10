@@ -60,6 +60,7 @@ class DerivativeEvaluator(object):
 
 			if vasp_static_run_set.complete:
 				self.set_taylor_coefficient(vasp_static_run_set, expansion_term)
+				vasp_static_run_set.delete_wavecar()
 			else:
 				vasp_static_run_set.update()
 

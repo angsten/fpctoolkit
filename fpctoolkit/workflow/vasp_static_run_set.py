@@ -99,6 +99,14 @@ class VaspStaticRunSet(VaspRunSet):
 
 		return True
 
+	def delete_wavecar(self):
+		"""
+		If the wavecar file exists in this run, delete it.
+		"""
+
+		if Path.exists(self.get_extended_path('WAVECAR')):
+			Path.remove(self.get_extended_path('WAVECAR'))
+
 	def get_run_paths_list(self):
 		"""
 		Returns the a list of paths containing the vasp (static) force calculation run paths, i.e. [.../0, .../1, ...]
