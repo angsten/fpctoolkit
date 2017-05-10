@@ -129,6 +129,11 @@ else:
 
 		hessian = Hessian(dfpt_force_run.outcar)
 
+		eigen_structure = EigenStructure(reference_structure=relaxed_structure, hessian=hessian)
+		eigen_structure.print_eigen_components()
+
+
+
 		de_path = Path.join(base_path, 'derivative_evaluation_calculations')
 		derivative_evaluator = DerivativeEvaluator(path=de_path, reference_structure=relaxed_structure, hessian=hessian, taylor_expansion=taylor_expansion, 
 			reference_completed_vasp_relaxation_run=relaxation, vasp_run_inputs_dictionary=vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary)
