@@ -146,13 +146,13 @@ class DerivativeEvaluator(object):
 
 	def get_force_sums(self, vasp_static_run_set, expansion_term):
 		"""
-		Returns a list of weighted force sums for each static calculation. Basically, this takes -1.0*eigen_vector of the first displacement expansion term and dots
+		Returns a list of weighted force sums for each static calculation. Basically, this takes -1.0*eigenvector of the first displacement expansion term and dots
 		it with the force set of the run. This gives dE/dA
 		"""
 
 		displacement_mode_index = expansion_term.get_first_displacement_index()
 
-		basis_vector = np.array(self.eigen_pairs_list[displacement_mode_index].eigen_vector)
+		basis_vector = np.array(self.eigen_pairs_list[displacement_mode_index].eigenvector)
 
 		forces_sums_list = []
 
