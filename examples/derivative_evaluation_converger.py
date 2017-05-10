@@ -144,6 +144,14 @@ else:
 				rnd = 6
 				padding_length = 10
 
-				print f(displacement_magnitudes_list[j], rnd, padding_length), f(derivative_evaluator.taylor_expansion.expansion_terms_list[i].derivative_coefficient, rnd, padding_length)
+				coefficient_value = derivative_evaluator.taylor_expansion.expansion_terms_list[i].derivative_coefficient
+				coefficient_string = ""
+
+				if coefficient_value == None:
+					coefficient_string = "None"
+				else:
+					coefficient_string = f(coefficient_value, rnd, padding_length)
+
+				print f(displacement_magnitudes_list[j], rnd, padding_length), coefficient_string
 
 		
