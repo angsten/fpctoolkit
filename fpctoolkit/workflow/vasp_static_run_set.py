@@ -86,8 +86,6 @@ class VaspStaticRunSet(VaspRunSet):
 			for vasp_run in self.vasp_run_list:
 				vasp_run.update()
 
-		self.delete_wavecars_of_completed_runs()
-
 	@property
 	def vasp_run_list(self):
 		return [VaspRun(path=run_path) for run_path in self.get_run_paths_list()]
