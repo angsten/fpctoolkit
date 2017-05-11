@@ -16,7 +16,7 @@ from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 
 
 
-def get_taylor_expansion(strain_count, displacement_count, translational_mode_indices)
+def get_taylor_expansion(strain_count, displacement_count, translational_mode_indices):
 
 	variables = []
 
