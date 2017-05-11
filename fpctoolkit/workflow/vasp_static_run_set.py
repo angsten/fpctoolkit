@@ -86,7 +86,7 @@ class VaspStaticRunSet(VaspRunSet):
 			input_set.set_node_count(node_count)
 
 			if 'npar' not in run_inputs:
-				input_set.set_npar_from_number_of_cores()s
+				input_set.set_npar_from_number_of_cores()
 
 		vasp_run = VaspRun(path=path, input_set=input_set, wavecar_path=self.wavecar_path)
 
