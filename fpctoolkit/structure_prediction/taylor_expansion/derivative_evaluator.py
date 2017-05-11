@@ -117,20 +117,20 @@ class DerivativeEvaluator(object):
 		Sets the derivative_coefficient_value attribute of expansion_term based on the energies in vasp_static_run_set.
 		"""
 
-		print "\nSetting taylor coefficient for", str(expansion_term)
+		# print "\nSetting taylor coefficient for", str(expansion_term)
 
 		modified_expansion_term = copy.deepcopy(expansion_term)
 
 
 		if modified_expansion_term.is_pure_type('strain'):
-			print "All strain - getting energies"
+			# print "All strain - getting energies"
 
 			term_coefficients_dictionary = self.get_central_difference_coefficients_dictionary()[modified_expansion_term.get_derivative_type()]
 			term_factors_list = term_coefficients_dictionary['factors']
 
 			energies_list = [self.reference_completed_vasp_relaxation_run.get_final_energy()] + vasp_static_run_set.get_final_energies_list(per_atom=False)
 
-			print "Energies: ", str(energies_list)
+			# print "Energies: ", str(energies_list)
 
 			numerator = sum(map(lambda x, y: x*y, term_factors_list, energies_list))
 
@@ -148,8 +148,8 @@ class DerivativeEvaluator(object):
 
 			denominator = self.get_denominator(modified_expansion_term)
 
-		print "Numerator: ", str(numerator)
-		print "Denominator:", str(denominator)
+		# print "Numerator: ", str(numerator)
+		# print "Denominator:", str(denominator)
 
 
 		expansion_term.derivative_coefficient = numerator/denominator
