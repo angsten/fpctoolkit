@@ -22,7 +22,10 @@ strain_count = 6
 displacement_count = 12
 
 convergence_terms_list = [
-						  [0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+						  [0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+						  [0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+						  [0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+						  [0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 						  # [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
 						  # [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
 						  # [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
@@ -157,9 +160,10 @@ else:
 
 
 		derivative_evaluator_list = []
-		for i in range(len(displacement_magnitudes_list)):
+		for i in range(len(strain_magnitudes_list)):
 
-			perturbation_magnitudes_dictionary = {'strain': 0.01, 'displacement': displacement_magnitudes_list[i]}
+			# perturbation_magnitudes_dictionary = {'strain': 0.01, 'displacement': displacement_magnitudes_list[i]}
+			perturbation_magnitudes_dictionary = {'strain': strain_magnitudes_list[i], 'displacement': 0.01}
 
 			de_path = Path.join(base_path, 'term_coefficient_calculations_' + str(displacement_magnitudes_list[i]))
 			derivative_evaluator = DerivativeEvaluator(path=de_path, reference_structure=relaxed_structure, hessian=hessian, taylor_expansion=taylor_expansion, 
