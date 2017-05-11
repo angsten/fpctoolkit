@@ -58,6 +58,9 @@ class DerivativeEvaluator(object):
 		self.vasp_static_run_sets_list = []
 
 		for expansion_term in self.taylor_expansion.expansion_terms_list:
+
+			
+
 			vasp_static_run_set = self.get_vasp_static_run_set(expansion_term)
 
 			if vasp_static_run_set.complete:

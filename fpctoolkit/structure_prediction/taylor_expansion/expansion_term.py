@@ -111,6 +111,14 @@ class ExpansionTerm(object):
 
 		return len(filter(lambda x: x > 0, self.derivative_array))
 
+	def get_displacement_indices_list(self):
+		indices_list = []
+
+		for i, variable in enumerate(self.variables_list):
+			if self.derivative_array[i] != 0 and variable.type_string == 'displacement':
+				indices_list.append(variable.index)
+
+		return indices_list
 
 	def is_pure_type(self, type_string):
 		"""

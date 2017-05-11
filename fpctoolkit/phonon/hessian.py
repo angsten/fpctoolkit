@@ -50,6 +50,13 @@ class Hessian(object):
 
 		sorted_hessian_eigen_pairs_list = Hessian.get_sorted_eigen_pairs_list(hessian_eigen_pairs_list)
 
+
+		self.translational_mode_indices = []
+
+		for i, eigen_pair in enumerate(sorted_hessian_eigen_pairs_list):
+			if eigen_pair.is_translational_mode():
+				self.translational_mode_indices.append(i)
+
 		return sorted_hessian_eigen_pairs_list
 
 
@@ -57,6 +64,10 @@ class Hessian(object):
 		for i, eigen_pair in enumerate(self.get_sorted_hessian_eigen_pairs_list()):
 			print "Index: " + str(i) + "\n" + str(eigen_pair)
 
+
+	def get_translational_mode_indices(self):
+		for eigen_pair in Hessian.get_sorted_eigen_pairs_list(hessian_eigen_pairs_list):
+			if eigen_pair.is_translational_mode():		
 
 
 	@staticmethod
