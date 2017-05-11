@@ -104,7 +104,7 @@ vasp_run_inputs_dictionary = {
 
 dfpt_incar_settings = {
 	'encut': vasp_run_inputs_dictionary['encut'],
-	'eidff': 1e-9
+	'ediff': 1e-9
 }
 
 relaxation_input_dictionary= {
