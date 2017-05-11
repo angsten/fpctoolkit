@@ -86,6 +86,7 @@ class VaspStaticRunSet(VaspRunSet):
 			for vasp_run in self.vasp_run_list:
 				vasp_run.update()
 
+		self.delete_wavecars_of_completed_runs()
 
 	@property
 	def vasp_run_list(self):
@@ -99,13 +100,13 @@ class VaspStaticRunSet(VaspRunSet):
 
 		return True
 
-	def delete_wavecar(self):
+	def delete_wavecars_of_completed_runs(self):
 		"""
-		If the wavecar file exists in this run, delete it.
+		If any wavecar files exist in these runs, delete them.
 		"""
 
-		if Path.exists(self.get_extended_path('WAVECAR')):
-			Path.remove(self.get_extended_path('WAVECAR'))
+		for vasp_run in self.vasp_run_list:
+			vasp_run.delete_wavecar_if_complete()
 
 	def get_run_paths_list(self):
 		"""

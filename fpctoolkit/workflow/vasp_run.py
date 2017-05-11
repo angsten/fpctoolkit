@@ -260,7 +260,10 @@ class VaspRun(object):
 			return QueueAdapter.get_job_properties_from_id_string(self.job_id_string)
 
 
-
+	def delete_wavecar_if_complete(self):
+		if self.complete:
+			if Path.exists(self.get_extended_path('WAVECAR')):
+				Path.remove(self.get_extended_path('WAVECAR'))
 
 
 	def get_extended_path(self, relative_path):
