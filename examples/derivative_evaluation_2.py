@@ -116,7 +116,8 @@ relaxation_input_dictionary= {
     'encut': [vasp_run_inputs_dictionary['encut']],
     'submission_script_modification_keys_list': ['100'],
     'lwave': [True],
-    'lreal': [False]
+    'lreal': [False],
+    'addgrid': [True]
 }
 
 
