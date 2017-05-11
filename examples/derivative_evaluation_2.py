@@ -13,6 +13,7 @@ from fpctoolkit.workflow.vasp_run import VaspRun
 from fpctoolkit.io.vasp.incar_maker import IncarMaker
 from fpctoolkit.io.vasp.kpoints import Kpoints
 from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
+from fpctoolkit.structure_prediction.taylor_expansion.minima_relaxer import MinimaRelaxer
 
 
 
@@ -93,27 +94,45 @@ Nx = 1
 Ny = 1
 Nz = 1
 
-vasp_run_inputs_dictionary = {
-	'kpoint_scheme': 'Monkhorst',
-	'kpoint_subdivisions_list': [8, 8, 8],
-	'encut': 900,
-	'ediff': 1e-9,
+encut = 800
+kpoint_scheme = 'Monkhorst'
+kpoint_subdivisions_list = [8, 8, 8]
+
+
+initial_relaxation_input_dictionary= {
+    'external_relaxation_count': 3,
+    'isif': [6],
+    'kpoint_schemes_list': [kpoint_scheme],
+    'kpoint_subdivisions_lists': [kpoint_subdivisions_list],
+    'ediff': [1e-4, 1e-6, 1e-8],
+    'encut': [encut],
+    'submission_script_modification_keys_list': ['100'],
+    'lwave': [True],
+    'lreal': [False],
+    'addgrid': [True]
+}
+
+dfpt_incar_settings = {
+	'encut': encut,
+	'ediff': 1e-8
+}
+
+derivative_evaluation_vasp_run_inputs_dictionary = {
+	'kpoint_scheme': kpoint_scheme,
+	'kpoint_subdivisions_list': kpoint_subdivisions_list,
+	'submission_node_count': 1,
+	'encut': encut,
+	'ediff': 1e-6,
 	'lreal': False,
 	'addgrid': True
 }
 
-dfpt_incar_settings = {
-	'encut': vasp_run_inputs_dictionary['encut'],
-	'ediff': 1e-9
-}
-
-relaxation_input_dictionary= {
+minima_relaxation_input_dictionary= {
     'external_relaxation_count': 3,
-    'isif': [6],
-    'kpoint_schemes_list': [vasp_run_inputs_dictionary['kpoint_scheme']],
-    'kpoint_subdivisions_lists': [vasp_run_inputs_dictionary['kpoint_subdivisions_list']],
-    'ediff': [1e-5, 1e-7, 1e-9],
-    'encut': [vasp_run_inputs_dictionary['encut']],
+    'kpoint_schemes_list': [kpoint_scheme],
+    'kpoint_subdivisions_lists': [kpoint_subdivisions_list],
+    'ediff': [1e-4, 1e-5, 1e-6],
+    'encut': [encut],
     'submission_script_modification_keys_list': ['100'],
     'lwave': [True],
     'lreal': [False],
@@ -124,7 +143,7 @@ relaxation_input_dictionary= {
 initial_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx, 0.0, 0.0], [0.0, a*Ny, 0.0], [0.0, 0.0, a*Nz*1.02]], species_list=['Sr', 'Ti', 'O'])
 
 
-relaxation = VaspRelaxation(path=Path.join(base_path, 'relaxation'), initial_structure=initial_structure, input_dictionary=relaxation_input_dictionary)
+relaxation = VaspRelaxation(path=Path.join(base_path, 'relaxation'), initial_structure=initial_structure, input_dictionary=initial_relaxation_input_dictionary)
 
 
 if not relaxation.complete:
@@ -133,28 +152,31 @@ else:
 	
 	relaxed_structure = relaxation.final_structure
 
+
 	force_calculation_path = Path.join(base_path, 'dfpt_force_calculation')
 
-	kpoints = Kpoints(scheme_string=vasp_run_inputs_dictionary['kpoint_scheme'], subdivisions_list=vasp_run_inputs_dictionary['kpoint_subdivisions_list'])
+	kpoints = Kpoints(scheme_string=kpoint_scheme, subdivisions_list=kpoint_subdivisions_list)
 	incar = IncarMaker.get_dfpt_hessian_incar(dfpt_incar_settings)
-
 	input_set = VaspInputSet(relaxed_structure, kpoints, incar, auto_change_lreal=False, auto_change_npar=False)
 
 	dfpt_force_run = VaspRun(path=force_calculation_path, input_set=input_set)
 
 	if not dfpt_force_run.complete:
 		dfpt_force_run.update()
+
+
 	else:
 
 		hessian = Hessian(dfpt_force_run.outcar)
 		hessian.print_eigen_components()
+		hessian.print_eigenvalues()
 
 		taylor_expansion = get_taylor_expansion(strain_count, displacement_count, hessian.translational_mode_indices)
 
 
 		de_path = Path.join(base_path, 'term_coefficient_calculations')
 		derivative_evaluator = DerivativeEvaluator(path=de_path, reference_structure=relaxed_structure, hessian=hessian, taylor_expansion=taylor_expansion, 
-			reference_completed_vasp_relaxation_run=relaxation, vasp_run_inputs_dictionary=vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary)
+			reference_completed_vasp_relaxation_run=relaxation, vasp_run_inputs_dictionary=derivative_evaluation_vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary)
 
 		derivative_evaluator.update()
 

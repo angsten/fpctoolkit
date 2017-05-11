@@ -70,10 +70,23 @@ class VaspStaticRunSet(VaspRunSet):
 
 		run_inputs = copy.deepcopy(self.vasp_run_inputs)
 
+		if 'submission_node_count' in run_inputs:
+			node_count = run_inputs.pop('submission_node_count')
+		else:
+			node_count == None
+
+
 		kpoints = Kpoints(scheme_string=run_inputs.pop('kpoint_scheme'), subdivisions_list=run_inputs.pop('kpoint_subdivisions_list'))
 		incar = IncarMaker.get_static_incar(run_inputs)
 
 		input_set = VaspInputSet(structure, kpoints, incar, auto_change_lreal=('lreal' not in run_inputs), auto_change_npar=('npar' not in run_inputs))
+
+
+		if node_count != None:
+			input_set.set_node_count(node_count)
+
+			if 'npar' not in run_inputs:
+				input_set.set_npar_from_number_of_cores()s
 
 		vasp_run = VaspRun(path=path, input_set=input_set, wavecar_path=self.wavecar_path)
 
