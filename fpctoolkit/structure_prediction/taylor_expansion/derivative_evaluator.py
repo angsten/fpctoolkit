@@ -67,24 +67,36 @@ class DerivativeEvaluator(object):
 				displacement_magnitudes_list = self.get_pure_eigen_chromosome_components_from_distorted_structures_list(vasp_static_run_set.get_final_structures_list())
 				energies_list = vasp_static_run_set.get_final_energies_list()
 
+				for i in range(len(energies_list)-1, -1, -1):
+					print -1.0*displacement_magnitudes_list[i], energies_list[i]
+
 				for i in range(len(energies_list)):
 					print displacement_magnitudes_list[i], energies_list[i]
-					
+
 			else:
 				vasp_static_run_set.update()
 
 
-		# #e^2 terms
-		# for strain_variable in self.taylor_expansion.get_active_variables_list(type_string='strain'):
-		# 	print "Running static for " + str(strain_variable)
+		#e^2 terms
+		for strain_variable in self.taylor_expansion.get_active_variables_list(type_string='strain'):
+			print "Running static for " + str(strain_variable)
 
-		# 	vasp_static_run_set = self.get_pure_strain_vasp_static_run_set(strain_variable.index)
+			vasp_static_run_set = self.get_pure_strain_vasp_static_run_set(strain_variable.index)
 
-		# 	if vasp_static_run_set.complete:
-		# 		print " ".join(str(energy) for energy in vasp_static_run_set.get_final_energies_list())
-		# 	else:
-		# 		vasp_static_run_set.update()
+			if vasp_static_run_set.complete:
+				strain_magnitudes_list = self.get_pure_eigen_chromosome_components_from_distorted_structures_list(vasp_static_run_set.get_final_structures_list())
+				energies_list = vasp_static_run_set.get_final_energies_list()
 
+				for i in range(len(energies_list)):
+					print strain_magnitudes_list[i], energies_list[i]
+			else:
+				vasp_static_run_set.update()
+
+
+		#e*u^2 terms
+		for strain_variable in self.taylor_expansion.get_active_variables_list(type_string='strain'):
+			for displacement_variable in self.taylor_expansion.get_active_variables_list(type_string='displacement')
+				pass
 
 
 		# for expansion_term in self.taylor_expansion.expansion_terms_list:
@@ -96,6 +108,70 @@ class DerivativeEvaluator(object):
 		# 		vasp_static_run_set.delete_wavecars_of_completed_runs()
 		# 	else:
 		# 		vasp_static_run_set.update()
+
+
+	def get_pure_displacement_vasp_static_run_set(self, displacement_variable_index):
+
+		displacement_run_set_path = self.get_extended_path('u_' + str(displacement_variable_index+1))
+
+		perturbed_structures_list = self.get_pure_displacement_structures_list(displacement_variable_index)
+
+		return VaspStaticRunSet(path=displacement_run_set_path, structures_list=perturbed_structures_list, vasp_run_inputs_dictionary=self.vasp_run_inputs_dictionary, 
+			wavecar_path=self.reference_completed_vasp_relaxation_run.get_wavecar_path())
+
+	def get_pure_strain_vasp_static_run_set(self, strain_variable_index):
+
+		strain_run_set_path = self.get_extended_path('e_' + str(strain_variable_index+1))
+
+		perturbed_structures_list = self.get_pure_strain_structures_list(strain_variable_index)
+
+		return VaspStaticRunSet(path=strain_run_set_path, structures_list=perturbed_structures_list, vasp_run_inputs_dictionary=self.vasp_run_inputs_dictionary, 
+			wavecar_path=self.reference_completed_vasp_relaxation_run.get_wavecar_path())		
+
+	def get_pure_displacement_structures_list(self, displacement_variable_index):
+		"""
+		Get the set of perturbed structures necessary for the given finite differences calculation of this expansion term.
+		"""
+
+		displacement_step_size = self.perturbation_magnitudes_dictionary['displacement'] #in Angstroms
+
+		eigen_chromosomes_list = []
+
+		for i in range(1, 9):
+			eigen_chromosome = [0.0]*(3*self.reference_structure.site_count)
+			eigen_chromosome[displacement_variable_index + 6] = i*displacement_step_size
+
+			eigen_chromosomes_list.append(eigen_chromosome)
+
+		return [self.get_distorted_structure_from_eigen_chromosome(eigen_chromosome) for eigen_chromosome in eigen_chromosomes_list]
+
+
+	def get_pure_strain_structures_list(self, strain_variable_index):
+		"""
+		Get the set of perturbed structures necessary for the given finite differences calculation of this expansion term.
+		"""
+
+		strain_step_size = self.perturbation_magnitudes_dictionary['strain'] #in Angstroms
+
+		eigen_chromosomes_list = []
+
+		for i in range(-8, 9):
+			eigen_chromosome = [0.0]*(3*self.reference_structure.site_count)
+			eigen_chromosome[strain_variable_index] = i*strain_step_size
+
+			eigen_chromosomes_list.append(eigen_chromosome)
+
+		return [self.get_distorted_structure_from_eigen_chromosome(eigen_chromosome) for eigen_chromosome in eigen_chromosomes_list]
+
+
+	def get_distorted_structure_from_eigen_chromosome(self, eigen_chromosome):
+
+		eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
+		eigen_structure.set_eigen_chromosome(eigen_chromosome)
+		return eigen_structure.get_distorted_structure()
+
+
+
 
 	def get_pure_eigen_chromosome_components_from_distorted_structures_list(self, distorted_structures_list):
 
@@ -112,46 +188,6 @@ class DerivativeEvaluator(object):
 			eigen_chromosome_pure_components_list.append(sum(eigen_chromosome))
 
 		return eigen_chromosome_pure_components_list
-
-	def get_pure_displacement_vasp_static_run_set(self, displacement_variable_index):
-
-		displacement_run_set_path = self.get_extended_path('u_' + str(displacement_variable_index+1))
-
-		perturbed_structures_list = self.get_pure_displacement_structures_list(displacement_variable_index)
-
-		return VaspStaticRunSet(path=displacement_run_set_path, structures_list=perturbed_structures_list, vasp_run_inputs_dictionary=self.vasp_run_inputs_dictionary, 
-			wavecar_path=self.reference_completed_vasp_relaxation_run.get_wavecar_path())		
-
-	def get_pure_displacement_structures_list(self, displacement_variable_index):
-		"""
-		Get the set of perturbed structures necessary for the given finite differences calculation of this expansion term.
-		"""
-
-		displacement_step_size = self.perturbation_magnitudes_dictionary['displacement'] #in Angstroms
-
-		eigen_chromosomes_list = []
-
-		for i in range(-8, 9):
-			eigen_chromosome = [0.0]*(3*self.reference_structure.site_count)
-			eigen_chromosome[displacement_variable_index + 6] = i*displacement_step_size
-
-			eigen_chromosomes_list.append(eigen_chromosome)
-
-		return [self.get_distorted_structure_from_eigen_chromosome(eigen_chromosome) for eigen_chromosome in eigen_chromosomes_list]
-
-
-
-
-
-
-
-	def get_distorted_structure_from_eigen_chromosome(self, eigen_chromosome):
-
-		eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
-		eigen_structure.set_eigen_chromosome(eigen_chromosome)
-		return eigen_structure.get_distorted_structure()
-
-
 
 
 
