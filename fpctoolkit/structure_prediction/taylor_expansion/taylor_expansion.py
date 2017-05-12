@@ -1,5 +1,6 @@
 #from fpctoolkit.structure_prediction.taylor_expansion.taylor_expansion import TaylorExpansion
 
+from sets import Set
 
 from fpctoolkit.structure_prediction.taylor_expansion.expansion_term import ExpansionTerm
 
@@ -114,3 +115,22 @@ class TaylorExpansion(object):
 		for expansion_term in remove_list:
 			self.expansion_terms_list.remove(expansion_term)
 
+
+	def get_pure_expansion_terms(self, type_string):
+
+		pure_displacement_expansion_terms_list = []
+		for expansion_term in self.expansion_terms_list:
+			if expansion_term.is_pure_type(type_string):
+				pure_displacement_expansion_terms_list.append(expansion_term)
+
+		return pure_displacement_expansion_terms_list
+
+	def get_active_variables_list(self, type_string):
+
+		displacement_variables_set = Set()
+		for expansion_term in self.expansion_terms_list:
+			for active_variable in expansion_term.get_active_variables():
+				if active_variable.type_string == type_string:
+					displacement_variables_set.add(active_variable)
+
+		return list(displacement_variables_set)

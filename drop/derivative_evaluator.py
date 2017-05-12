@@ -57,64 +57,15 @@ class DerivativeEvaluator(object):
 
 		self.vasp_static_run_sets_list = []
 
-		for displacement_variable in self.taylor_expansion.get_active_variables_list(type_string='displacement'):
-			print "Running static for " + str(displacement_variable)
+		for expansion_term in self.taylor_expansion.expansion_terms_list:
 
-			vasp_static_run_set = self.get_pure_displacement_vasp_static_run_set(displacement_variable.index)
+			vasp_static_run_set = self.get_vasp_static_run_set(expansion_term)
 
 			if vasp_static_run_set.complete:
-				print " ".join(str(energy) for energy in vasp_static_run_set.get_final_energies_list())
+				self.set_taylor_coefficient(vasp_static_run_set, expansion_term)
+				vasp_static_run_set.delete_wavecars_of_completed_runs()
 			else:
 				vasp_static_run_set.update()
-
-		# for expansion_term in self.taylor_expansion.expansion_terms_list:
-
-		# 	vasp_static_run_set = self.get_vasp_static_run_set(expansion_term)
-
-		# 	if vasp_static_run_set.complete:
-		# 		self.set_taylor_coefficient(vasp_static_run_set, expansion_term)
-		# 		vasp_static_run_set.delete_wavecars_of_completed_runs()
-		# 	else:
-		# 		vasp_static_run_set.update()
-
-	def get_pure_displacement_vasp_static_run_set(self, displacement_variable_index):
-
-		displacement_run_set_path = self.get_extended_path('u_' + str(displacement_variable_index+1))
-
-		perturbed_structures_list = self.get_pure_displacement_structures_list(displacement_variable_index)
-
-		return VaspStaticRunSet(path=displacement_run_set_path, structures_list=perturbed_structures_list, vasp_run_inputs_dictionary=self.vasp_run_inputs_dictionary, 
-			wavecar_path=self.reference_completed_vasp_relaxation_run.get_wavecar_path())		
-
-	def get_pure_displacement_structures_list(self, displacement_variable_index):
-		"""
-		Get the set of perturbed structures necessary for the given finite differences calculation of this expansion term.
-		"""
-
-		displacement_step_size = self.perturbation_magnitudes_dictionary['displacement'] #in Angstroms
-
-		eigen_chromosomes_list = []
-
-		for i in range(-8, 9):
-			eigen_chromosome = [0.0]*(3*self.reference_structure.site_count)
-			eigen_chromosome[displacement_variable_index + 6] = i*displacement_step_size
-
-			eigen_chromosomes_list.append(eigen_chromosome)
-
-		return [self.get_distorted_structure_from_eigen_chromosome(eigen_chromosome) for eigen_chromosome in eigen_chromosomes_list]
-
-
-
-	def get_distorted_structure_from_eigen_chromosome(self, eigen_chromosome):
-
-		eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
-		eigen_structure.set_eigen_chromosome(eigen_chromosome)
-		return eigen_structure.get_distorted_structure()
-
-
-
-
-
 
 
 	def get_vasp_static_run_set(self, expansion_term):
@@ -317,6 +268,11 @@ class DerivativeEvaluator(object):
 
 
 
+	def get_distorted_structure_from_eigen_chromosome(self, eigen_chromosome):
+
+		eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
+		eigen_structure.set_eigen_chromosome(eigen_chromosome)
+		return eigen_structure.get_distorted_structure()
 
 
 
