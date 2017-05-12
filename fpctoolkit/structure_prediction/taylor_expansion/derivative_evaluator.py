@@ -98,10 +98,11 @@ class DerivativeEvaluator(object):
 			for displacement_variable in self.taylor_expansion.get_active_variables_list(type_string='displacement'):
 				print "Running static for " + str(strain_variable) + str(displacement_variable)
 
-				for i in range(-3, 3):
-					path = self.get_extended_path(str(strain_variable) + str(displacement_variable))
-					
+				for i in range(-5, 6):
 					strain = i*self.perturbation_magnitudes_dictionary['strain']
+
+					path = self.get_extended_path(str(strain_variable) + str(displacement_variable) + "_" + str(strain).replace('.', 'o').replace('-', 'n'))
+					
 
 					eigen_chromosome = [0.0]*(3*self.reference_structure.site_count)
 					eigen_chromosome[strain_variable.index] = strain
