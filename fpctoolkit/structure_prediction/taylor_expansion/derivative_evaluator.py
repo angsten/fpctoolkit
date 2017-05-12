@@ -222,7 +222,7 @@ class DerivativeEvaluator(object):
 		for perturbation_magnitude in central_difference_coefficients_dictionary['1']['perturbations_list']:
 			eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian, distorted_structure=structure)
 
-			eigen_structure[displacement_variable_index+6] = perturbation_magnitude*displacement_factor
+			eigen_structure[displacement_variable_index+6] = perturbation_magnitude[0]*displacement_factor
 
 			perturbed_structures_list.append(eigen_structure.get_distorted_structure())
 
