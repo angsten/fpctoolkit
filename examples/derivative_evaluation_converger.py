@@ -109,7 +109,8 @@ vasp_run_inputs_dictionary = {
 	'encut': 800,
 	'ediff': 1e-8,
 	'lreal': False,
-	'addgrid': True
+	'addgrid': True,
+	'submission_node_count': 2
 }
 
 dfpt_incar_settings = {
