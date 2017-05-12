@@ -208,7 +208,8 @@ class DerivativeEvaluator(object):
 		# elif derivative_type == '111':
 		# 	return 8.0*non_zero_list[0]*non_zero_list[1]*non_zero_list[2]
 		elif derivative_type == '3':
-			return 8.0*non_zero_list[0]**3.0
+			return 112.0*h**3.0
+			#return 8.0*non_zero_list[0]**3.0
 		# elif derivative_type == '4':
 		# 	return (1.0/16.0)*non_zero_list[0]**4.0
 		else:
@@ -236,8 +237,9 @@ class DerivativeEvaluator(object):
 		#central_difference_coefficients_dictionary['21'] = {'factors':[0.0, -2.0, 2.0, -1.0, 1.0, -1.0, 1.0], 'perturbations_list': [[0.0, -1.0], [0.0, 1.0], [-1.0, -1.0], [-1.0, 1.0], [1.0, -1.0], [1.0, 1.0]]}
 		#central_difference_coefficients_dictionary['12'] = {'factors':[0.0, -2.0, 2.0, -1.0, 1.0, -1.0, 1.0], 'perturbations_list': [[-1.0, 0.0], [1.0, 0.0], [-1.0, -1.0], [1.0, -1.0], [-1.0, 1.0], [1.0, 1.0]]}
 		#central_difference_coefficients_dictionary['111'] = {'factors':[0.0, -1.0, 1.0, 1.0, -1.0, 1.0, -1.0, -1.0, 1.0], 'perturbations_list': [[-1.0, -1.0, -1.0], [-1.0, -1.0, 1.0], [-1.0, 1.0, -1.0], [-1.0, 1.0, 1.0], [1.0, -1.0, -1.0], [1.0, -1.0, 1.0], [1.0, 1.0, -1.0], [1.0, 1.0, 1.0]]}		
-		
-		central_difference_coefficients_dictionary['3'] =  {'factors':[0.0, -1.0, 8.0, -13.0, 13.0, -8.0, 1.0], 'perturbations_list': [[3.0], [2.0], [1.0], [-1.0], [-2.0], [-3.0]]}
+		#central_difference_coefficients_dictionary['3'] =  {'factors':[0.0, -1.0, 8.0, -13.0, 13.0, -8.0, 1.0], 'perturbations_list': [[3.0], [2.0], [1.0], [-1.0], [-2.0], [-3.0]]}
+				
+		central_difference_coefficients_dictionary['3'] =  {'factors':[0.0, 3.0, -4.0, -70.0, 140.0, -140.0, 70.0, 4.0, -3.0], 'perturbations_list': [[-4.0], [-3.0], [-2.0], [-1.0], [1.0], [2.0], [3.0], [4.0]]}
 
 		#central_difference_coefficients_dictionary['4'] =  {'factors':[6.0, 1.0, -4.0, -4.0, 1.0], 'perturbations_list': [[-1.0], [-0.5], [0.5], [1.0]]}
 
