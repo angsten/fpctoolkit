@@ -115,7 +115,7 @@ class DerivativeEvaluator(object):
 		Sets the derivative_coefficient_value attribute of expansion_term based on the energies in vasp_static_run_set.
 		"""
 
-		# print "\nSetting taylor coefficient for", str(expansion_term)
+		print "\nSetting taylor coefficient for", str(expansion_term)
 
 		modified_expansion_term = copy.deepcopy(expansion_term)
 
@@ -146,8 +146,8 @@ class DerivativeEvaluator(object):
 
 			denominator = self.get_denominator(modified_expansion_term)
 
-		# print "Numerator: ", str(numerator)
-		# print "Denominator:", str(denominator)
+		print "Numerator: ", str(numerator)
+		print "Denominator:", str(denominator)
 
 
 		expansion_term.derivative_coefficient = numerator/denominator
