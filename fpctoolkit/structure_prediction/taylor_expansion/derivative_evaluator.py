@@ -204,7 +204,7 @@ class DerivativeEvaluator(object):
 
 
 
-	def self.get_displacement_second_derivative(self, path, structure, displacement_variable_index):
+	def get_displacement_second_derivative(self, path, structure, displacement_variable_index):
 		"""
 		Determines the second derivative of the energy w.r.t. the given displacement variable for structure.
 
