@@ -160,7 +160,7 @@ else:
 
 
 		derivative_evaluator_list = []
-		for i in range(len(strain_magnitudes_list)):
+		for i in range(len(displacement_magnitudes_list)):
 
 			# perturbation_magnitudes_dictionary = {'strain': 0.01, 'displacement': displacement_magnitudes_list[i]}
 			perturbation_magnitudes_dictionary = {'strain': 0.01, 'displacement': displacement_magnitudes_list[i]}
