@@ -19,13 +19,13 @@ from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 
 
 strain_count = 6
-displacement_count = 12
+displacement_count = 2
 
 convergence_terms_list = [
-						  [0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-						  [0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-						  [0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-						  [0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+						  [0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+						  # [0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+						  # [0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+						  # [0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 						  # [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
 						  # [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0],
 						  # [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0],
@@ -57,7 +57,7 @@ convergence_terms_list = [
 
 
 strain_magnitudes_list = [0.0025, 0.005, 0.0075, 0.01, 0.0125, 0.015, 0.0175, 0.02]
-displacement_magnitudes_list = [0.005, 0.0075, 0.01, 0.0125, 0.015, 0.02, 0.05, 0.1]
+displacement_magnitudes_list = [0.005, 0.01, 0.02, 0.1]
 
 
 variables = []
@@ -99,22 +99,22 @@ base_path = "./"
 
 
 a = 3.79
-Nx = 1
-Ny = 1
-Nz = 1
+Nx = 2
+Ny = 2
+Nz = 2
 
 vasp_run_inputs_dictionary = {
 	'kpoint_scheme': 'Monkhorst',
-	'kpoint_subdivisions_list': [8, 8, 8],
-	'encut': 1100,
-	'ediff': 1e-11,
+	'kpoint_subdivisions_list': [3, 3, 3],
+	'encut': 800,
+	'ediff': 1e-8,
 	'lreal': False,
 	'addgrid': True
 }
 
 dfpt_incar_settings = {
 	'encut': vasp_run_inputs_dictionary['encut'],
-	'eidff': 1e-10
+	'ediff': 1e-10
 }
 
 relaxation_input_dictionary= {
@@ -163,7 +163,7 @@ else:
 		for i in range(len(strain_magnitudes_list)):
 
 			# perturbation_magnitudes_dictionary = {'strain': 0.01, 'displacement': displacement_magnitudes_list[i]}
-			perturbation_magnitudes_dictionary = {'strain': strain_magnitudes_list[i], 'displacement': 0.01}
+			perturbation_magnitudes_dictionary = {'strain': 0.01, 'displacement': displacement_magnitudes_list[i]}
 
 			de_path = Path.join(base_path, 'term_coefficient_calculations_' + str(displacement_magnitudes_list[i]))
 			derivative_evaluator = DerivativeEvaluator(path=de_path, reference_structure=relaxed_structure, hessian=hessian, taylor_expansion=taylor_expansion, 
