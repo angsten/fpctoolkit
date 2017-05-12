@@ -95,7 +95,7 @@ class DerivativeEvaluator(object):
 
 		#e*u^2 terms
 		for strain_variable in self.taylor_expansion.get_active_variables_list(type_string='strain'):
-			for displacement_variable in self.taylor_expansion.get_active_variables_list(type_string='displacement')
+			for displacement_variable in self.taylor_expansion.get_active_variables_list(type_string='displacement'):
 				pass
 
 
