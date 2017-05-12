@@ -140,6 +140,9 @@ class VaspStaticRunSet(VaspRunSet):
 	def get_final_energies_list(self, per_atom=False):
 		return [vasp_run.get_final_energy(per_atom) for vasp_run in self.vasp_run_list]
 
+	def get_final_structures_list(self):
+		return [vasp_run.final_structure for vasp_run in self.vasp_run_list]
+
 	def get_forces_lists(self):
 		"""
 		Returns list of lists, where each component is a list of the forces on all the displacmeent degrees of freedom of the system for that run.

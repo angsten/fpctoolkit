@@ -57,15 +57,35 @@ class DerivativeEvaluator(object):
 
 		self.vasp_static_run_sets_list = []
 
+		#u^2 and u^4 coefficients
 		for displacement_variable in self.taylor_expansion.get_active_variables_list(type_string='displacement'):
 			print "Running static for " + str(displacement_variable)
 
 			vasp_static_run_set = self.get_pure_displacement_vasp_static_run_set(displacement_variable.index)
 
 			if vasp_static_run_set.complete:
-				print " ".join(str(energy) for energy in vasp_static_run_set.get_final_energies_list())
+				displacement_magnitudes_list = self.get_pure_eigen_chromosome_components_from_distorted_structures_list(vasp_static_run_set.get_final_structures_list())
+				energies_list = vasp_static_run_set.get_final_energies_list()
+
+				for i in range(len(energies_list)):
+					print displacement_magnitudes_list[i], energies_list[i]
+					
 			else:
 				vasp_static_run_set.update()
+
+
+		# #e^2 terms
+		# for strain_variable in self.taylor_expansion.get_active_variables_list(type_string='strain'):
+		# 	print "Running static for " + str(strain_variable)
+
+		# 	vasp_static_run_set = self.get_pure_strain_vasp_static_run_set(strain_variable.index)
+
+		# 	if vasp_static_run_set.complete:
+		# 		print " ".join(str(energy) for energy in vasp_static_run_set.get_final_energies_list())
+		# 	else:
+		# 		vasp_static_run_set.update()
+
+
 
 		# for expansion_term in self.taylor_expansion.expansion_terms_list:
 
@@ -76,6 +96,22 @@ class DerivativeEvaluator(object):
 		# 		vasp_static_run_set.delete_wavecars_of_completed_runs()
 		# 	else:
 		# 		vasp_static_run_set.update()
+
+	def get_pure_eigen_chromosome_components_from_distorted_structures_list(self, distorted_structures_list):
+
+		eigen_chromosome_pure_components_list = []
+
+		for distorted_structure in distorted_structures_list:
+			eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian, distorted_structure=distorted_structure)
+
+			eigen_chromosome = eigen_structure.get_list_representation()
+
+			if np.count_nonzero(eigen_chromosome) > 1:
+				raise Exception("There should only be one non-zero component")
+
+			eigen_chromosome_pure_components_list.append(sum(eigen_chromosome))
+
+		return eigen_chromosome_pure_components_list
 
 	def get_pure_displacement_vasp_static_run_set(self, displacement_variable_index):
 
@@ -102,6 +138,10 @@ class DerivativeEvaluator(object):
 			eigen_chromosomes_list.append(eigen_chromosome)
 
 		return [self.get_distorted_structure_from_eigen_chromosome(eigen_chromosome) for eigen_chromosome in eigen_chromosomes_list]
+
+
+
+
 
 
 
