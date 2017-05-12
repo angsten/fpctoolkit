@@ -231,7 +231,7 @@ class DerivativeEvaluator(object):
 		vasp_static_run_set = VaspStaticRunSet(path=path, structures_list=perturbed_structures_list, vasp_run_inputs_dictionary=self.vasp_run_inputs_dictionary, 
 			wavecar_path=self.reference_completed_vasp_relaxation_run.get_wavecar_path())
 
-		if vasp_static_run_set.complete():
+		if vasp_static_run_set.complete:
 
 			term_factors_list = central_difference_coefficients_dictionary['1']['factors']
 
