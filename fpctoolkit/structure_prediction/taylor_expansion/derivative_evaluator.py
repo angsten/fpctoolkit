@@ -108,7 +108,7 @@ class DerivativeEvaluator(object):
 
 					structure = self.get_distorted_structure_from_eigen_chromosome(eigen_chromosome)
 
-					print str(strain), str(self.get_displacement_second_derivative(self, path, structure, displacement_variable.index))
+					print str(strain), str(self.get_displacement_second_derivative(path, structure, displacement_variable.index))
 
 
 
