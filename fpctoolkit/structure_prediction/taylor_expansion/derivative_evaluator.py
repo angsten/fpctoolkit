@@ -96,6 +96,7 @@ class DerivativeEvaluator(object):
 		#e*u^2 terms
 		for strain_variable in self.taylor_expansion.get_active_variables_list(type_string='strain'):
 			for displacement_variable in self.taylor_expansion.get_active_variables_list(type_string='displacement'):
+				print "Running static for " + str(strain_variable) + str(displacement_variable)
 
 				for i in range(-3, 3):
 					path = self.get_extended_path(str(strain_variable) + str(displacement_variable))
@@ -107,7 +108,7 @@ class DerivativeEvaluator(object):
 
 					structure = self.get_distorted_structure_from_eigen_chromosome(eigen_chromosome)
 
-					print str(strain), str(get_displacement_second_derivative(self, path, structure, displacement_variable_index))
+					print str(strain), str(self.get_displacement_second_derivative(self, path, structure, displacement_variable_index))
 
 
 
@@ -203,7 +204,7 @@ class DerivativeEvaluator(object):
 
 
 
-	def get_displacement_second_derivative(self, path, structure, displacement_variable_index):
+	def self.get_displacement_second_derivative(self, path, structure, displacement_variable_index):
 		"""
 		Determines the second derivative of the energy w.r.t. the given displacement variable for structure.
 
