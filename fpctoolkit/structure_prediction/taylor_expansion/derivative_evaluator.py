@@ -344,8 +344,6 @@ class DerivativeEvaluator(object):
 		it with the force set of the run. This gives dE/dA
 		"""
 
-		first_displacement_index = expansion_term.get_first_displacement_index()
-
 		basis_vector = np.array(self.eigen_pairs_list[first_displacement_index].eigenvector)
 
 		forces_sums_list = []
