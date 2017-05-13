@@ -236,7 +236,7 @@ class DerivativeEvaluator(object):
 
 			term_factors_list = central_difference_coefficients_dictionary['1']['factors']
 
-			force_sums_list = [0.0] + self.get_force_sums(vasp_static_run_set, expansion_term)
+			force_sums_list = [0.0] + self.get_force_sums(vasp_static_run_set, displacement_variable_index)
 
 			numerator = sum(map(lambda x, y: -x*y, term_factors_list, force_sums_list))
 			denominator = 12.0*displacement_factor
