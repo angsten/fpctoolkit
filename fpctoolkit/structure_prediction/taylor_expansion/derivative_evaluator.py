@@ -212,7 +212,7 @@ class DerivativeEvaluator(object):
 		Returns None if not done yet
 		"""
 
-		displacement_factor = 0.01 #hardcoded!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		displacement_factor = self.displacement_finite_differrences_step_size
 
 		central_difference_coefficients_dictionary = {}
 		central_difference_coefficients_dictionary['1'] =  {'factors':[0.0, -1.0, 8.0, -8.0, 1.0], 'perturbations_list': [[2.0], [1.0], [-1.0], [-2.0]]}
