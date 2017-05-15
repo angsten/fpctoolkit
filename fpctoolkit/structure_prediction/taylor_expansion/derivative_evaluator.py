@@ -16,7 +16,7 @@ class DerivativeEvaluator(object):
 	A central differences approach is used to evaluate all derivative terms.
 	"""
 
-	def __init__(self, path, reference_structure, hessian, taylor_expansion, reference_completed_vasp_relaxation_run, vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary):
+	def __init__(self, path, reference_structure, hessian, taylor_expansion, reference_completed_vasp_relaxation_run, vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary, displacement_finite_differrences_step_size=0.01):
 		"""
 		taylor_expansion should be an initialized TaylorExpansion instance with the appropriate terms.
 		
@@ -46,7 +46,7 @@ class DerivativeEvaluator(object):
 
 		self.reference_completed_vasp_relaxation_run = reference_completed_vasp_relaxation_run
 
-
+		self.displacement_finite_differrences_step_size = displacement_finite_differrences_step_size
 
 		self.vasp_static_run_sets_list = None
 
