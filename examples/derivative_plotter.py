@@ -1,8 +1,11 @@
 import numpy as np
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
+
 
 from fpctoolkit.io.file import File
+
 
 
 
@@ -64,7 +67,11 @@ def get_plot(file_lines):
 	plt.plot(x_data, y_data, 'ro')
 	plt.plot(fit_x_data, fit_y_data)
 
-	plt.show()
+	plt.savefig(pp, format='pdf')
+
+	plt.clf()
+
+	# plt.show()
 
 def get_fit_string(fitting_parameters):
 
@@ -90,6 +97,8 @@ def get_fit_string(fitting_parameters):
 
 
 
+pp = PdfPages('C:\Users\Tom\Desktop\derivative_fits.pdf')
+
 start_index = 0
 end_index = None
 
@@ -102,3 +111,6 @@ for i, line in enumerate(data_file):
 		get_plot(data_file[start_index:end_index])
 
 		start_index = end_index+1
+
+
+pp.close()
