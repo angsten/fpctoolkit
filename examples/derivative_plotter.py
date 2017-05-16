@@ -9,22 +9,17 @@ from fpctoolkit.io.file import File
 
 
 
-data_file = File("C:/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/data/derivative_plot_data")
-
-
-def get_plot(file_lines):
+def get_plot(file_lines, header_data):
 	x_data = []
 	y_data = []
-
-	header_line = file_lines[0]
-
-	header_data = header_line.split(' ') #SrTiO3 a=3.79 encut=600eV kpoints=3x3x3M disp_step=0.01A u2 Energy
 
 	title_string = header_data[0] + ' ' + header_data[1]
 	right_title_string = header_data[2] + ' ' + header_data[3] + ' ' + header_data[4]
 
-	x_label_string = header_data[5]
-	y_label_string = header_data[6]
+	labels_line = file_lines[0]
+
+	x_label_string = labels_line.split(' ')[0]
+	y_label_string = labels_line.split(' ')[1]
 
 	for i in range(1, len(file_lines)):
 		line = file_lines[i].strip()
@@ -99,16 +94,25 @@ def get_fit_string(fitting_parameters):
 
 pp = PdfPages('C:\Users\Tom\Desktop\derivative_fits.pdf')
 
-start_index = 0
+data_file = File("C:/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/data/derivative_plot_data")
+
+header_line = data_file[0]
+header_data = header_line.split(' ') #SrTiO3 a=3.79 encut=600eV kpoints=3x3x3M disp_step=0.01A u2 Energy
+
+
+
+
+start_index = 1
 end_index = None
 
 for i, line in enumerate(data_file):
+
 	if line.strip() == '':
 		end_index = i
 
 
 
-		get_plot(data_file[start_index:end_index])
+		get_plot(data_file[start_index:end_index], header_data)
 
 		start_index = end_index+1
 

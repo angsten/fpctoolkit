@@ -17,15 +17,15 @@ from fpctoolkit.structure_prediction.taylor_expansion.minima_relaxer import Mini
 
 
 
-def get_taylor_expansion(strain_count, displacement_count, translational_mode_indices):
+def get_taylor_expansion(number_of_strain_terms, number_of_displacement_terms, translational_mode_indices):
 
 	variables = []
 
 
-	for i in range(strain_count):
+	for i in range(number_of_strain_terms):
 		variables.append(Variable('strain', i))
 
-	for i in range(displacement_count):
+	for i in range(number_of_displacement_terms):
 		variables.append(Variable('displacement', i, centrosymmetry=True))
 
 	print "Variables list: " + '[' + ", ".join(str(variable) for variable in variables) + ']'
@@ -79,24 +79,37 @@ def get_taylor_expansion(strain_count, displacement_count, translational_mode_in
 
 
 
-strain_count = 6
-displacement_count = 5 
-
-
 base_path = "./"
 
 
-perturbation_magnitudes_dictionary = {'strain': 0.01, 'displacement': 0.01}
 
 
+#######################################################################################################
+
+
+number_of_strain_terms = 6
+number_of_displacement_terms = 5 
+
+#controls finite differences step size for evaluation of displacement second derivatives
+displacement_finite_differrences_step_size = 0.04
+
+#controls step size in plots
+perturbation_magnitudes_dictionary = {'strain': 0.01, 'displacement': 0.04}
+
+
+species_list = ['Sr', 'Ti', 'O']
 a = 3.79
-Nx = 1
-Ny = 1
-Nz = 1
+Nx = 2
+Ny = 2
+Nz = 2
 
-encut = 800
+ediff = 1e-6
+encut = 600
 kpoint_scheme = 'Monkhorst'
-kpoint_subdivisions_list = [8, 8, 8]
+kpoint_subdivisions_list = [3, 3, 3]
+
+
+#######################################################################################################
 
 
 initial_relaxation_input_dictionary= {
@@ -122,7 +135,7 @@ derivative_evaluation_vasp_run_inputs_dictionary = {
 	'kpoint_subdivisions_list': kpoint_subdivisions_list,
 	'submission_node_count': 1,
 	'encut': encut,
-	'ediff': 1e-6,
+	'ediff': ediff,
 	'lreal': False,
 	'addgrid': True
 }
@@ -140,7 +153,7 @@ minima_relaxation_input_dictionary= {
 }
 
 
-initial_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx, 0.0, 0.0], [0.0, a*Ny, 0.0], [0.0, 0.0, a*Nz*1.02]], species_list=['Sr', 'Ti', 'O'])
+initial_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx, 0.0, 0.0], [0.0, a*Ny, 0.0], [0.0, 0.0, a*Nz*1.02]], species_list=species_list)
 
 
 relaxation = VaspRelaxation(path=Path.join(base_path, 'relaxation'), initial_structure=initial_structure, input_dictionary=initial_relaxation_input_dictionary)
@@ -168,10 +181,13 @@ else:
 	else:
 
 		hessian = Hessian(dfpt_force_run.outcar)
-		hessian.print_eigen_components()
+		#hessian.print_eigen_components()
 		hessian.print_eigenvalues()
 
-		taylor_expansion = get_taylor_expansion(strain_count, displacement_count, hessian.translational_mode_indices)
+		taylor_expansion = get_taylor_expansion(number_of_strain_terms, number_of_displacement_terms, hessian.translational_mode_indices)
+
+
+		print ''.join(initial_structure.get_species_list()) + '3' + ' a=' + str(a) + ' ediff=' + str(ediff) + ' encut=' + str(vasp_run_inputs_dictionary['encut']) + ' ' + 'x'.join(str(k) for k in vasp_run_inputs_dictionary['kpoint_subdivisions_list']) + vasp_run_inputs_dictionary['kpoint_scheme'][0] + ' disp_step=' + str(displacement_finite_differrences_step_size) + 'A',
 
 
 		de_path = Path.join(base_path, 'term_coefficient_calculations')
@@ -180,4 +196,5 @@ else:
 
 		derivative_evaluator.update()
 
+		print
 		print derivative_evaluator.taylor_expansion
