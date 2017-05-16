@@ -59,7 +59,7 @@ class DerivativeEvaluator(object):
 
 		#u^2 and u^4 coefficients
 		for displacement_variable in self.taylor_expansion.get_active_variables_list(type_string='displacement'):
-			print str(displacement_variable), 'Energy'
+			print '\n' + str(displacement_variable), 'Energy'
 
 			vasp_static_run_set = self.get_pure_displacement_vasp_static_run_set(displacement_variable.index)
 
@@ -78,11 +78,10 @@ class DerivativeEvaluator(object):
 			else:
 				vasp_static_run_set.update()
 
-		print
 
 		#e^2 terms
 		for strain_variable in self.taylor_expansion.get_active_variables_list(type_string='strain'):
-			print str(strain_variable), 'Energy'
+			print '\n' + str(strain_variable), 'Energy'
 
 			vasp_static_run_set = self.get_pure_strain_vasp_static_run_set(strain_variable.index)
 
@@ -95,12 +94,10 @@ class DerivativeEvaluator(object):
 			else:
 				vasp_static_run_set.update()
 
-		print
-
 		#e*u^2 terms
 		for strain_variable in self.taylor_expansion.get_active_variables_list(type_string='strain'):
 			for displacement_variable in self.taylor_expansion.get_active_variables_list(type_string='displacement'):
-				print str(strain_variable), 'd^2E/d' + str(displacement_variable)
+				print '\n' + str(strain_variable), 'd^2E/d' + str(displacement_variable)
 
 				for i in range(-5, 6):
 					strain = i*self.perturbation_magnitudes_dictionary['strain']
