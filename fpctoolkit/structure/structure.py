@@ -117,6 +117,23 @@ class Structure(object):
 	def get_coordinates_list(self):
 		return self.sites.get_coordinates_list()
 
+	def get_formula_string(self):
+		out_string = ''
+
+		for i, species in enumerate(self.get_species_list()):
+			species_count = self.get_species_count_list[i]
+
+			if species_count == 1:
+				species_count_string = ''
+			else:
+				species_count_string = str(species_count)
+
+			out_string += species + species_count_string
+
+		return out_string
+
+
+
 	@property
 	def site_count(self):
 		return len(self.sites)
