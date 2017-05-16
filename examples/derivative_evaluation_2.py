@@ -192,7 +192,8 @@ else:
 
 		de_path = Path.join(base_path, 'term_coefficient_calculations')
 		derivative_evaluator = DerivativeEvaluator(path=de_path, reference_structure=relaxed_structure, hessian=hessian, taylor_expansion=taylor_expansion, 
-			reference_completed_vasp_relaxation_run=relaxation, vasp_run_inputs_dictionary=derivative_evaluation_vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary)
+			reference_completed_vasp_relaxation_run=relaxation, vasp_run_inputs_dictionary=derivative_evaluation_vasp_run_inputs_dictionary, 
+			perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary, displacement_finite_differrences_step_size=displacement_finite_differrences_step_size)
 
 		derivative_evaluator.update()
 
