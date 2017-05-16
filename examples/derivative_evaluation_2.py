@@ -187,7 +187,7 @@ else:
 		taylor_expansion = get_taylor_expansion(number_of_strain_terms, number_of_displacement_terms, hessian.translational_mode_indices)
 
 
-		print ''.join(initial_structure.get_species_list()) + '3' + ' a=' + str(a) + ' ediff=' + str(ediff) + ' encut=' + str(vasp_run_inputs_dictionary['encut']) + ' ' + 'x'.join(str(k) for k in vasp_run_inputs_dictionary['kpoint_subdivisions_list']) + vasp_run_inputs_dictionary['kpoint_scheme'][0] + ' disp_step=' + str(displacement_finite_differrences_step_size) + 'A',
+		print ''.join(initial_structure.get_species_list()) + '3' + ' a=' + str(a) + 'A ediff=' + str(ediff) + ' encut=' + str(encut) + ' ' + 'x'.join(str(k) for k in kpoint_subdivisions_list) + kpoint_scheme[0] + ' disp_step=' + str(displacement_finite_differrences_step_size) + 'A',
 
 
 		de_path = Path.join(base_path, 'term_coefficient_calculations')
