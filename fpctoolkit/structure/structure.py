@@ -121,7 +121,7 @@ class Structure(object):
 		out_string = ''
 
 		for i, species in enumerate(self.get_species_list()):
-			species_count = self.get_species_count_list[i]
+			species_count = self.get_species_count_list()[i]
 
 			if species_count == 1:
 				species_count_string = ''
