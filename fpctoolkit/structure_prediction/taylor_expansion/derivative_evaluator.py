@@ -95,22 +95,27 @@ class DerivativeEvaluator(object):
 				vasp_static_run_set.update()
 
 		#e*u^2 terms
+
+		displacement_variable_terms_list = self.taylor_expansion.get_active_variables_list(type_string='displacement')
+
 		for strain_variable in self.taylor_expansion.get_active_variables_list(type_string='strain'):
-			for displacement_variable in self.taylor_expansion.get_active_variables_list(type_string='displacement'):
-				print '\n' + str(strain_variable), 'd^2E/d' + str(displacement_variable)
+			for m, displacement_variable_1 in enumerate(displacement_variable_terms_list):
+				for j in range(m, len(displacement_variable_terms_list)):
+					displacement_variable_2 = displacement_variable_terms_list[j]
 
-				for i in range(-5, 6):
-					strain = i*self.perturbation_magnitudes_dictionary['strain']
+					print '\n' + str(strain_variable), 'd^2E/d' + str(displacement_variable_1) + 'd' + str(displacement_variable_2)
 
-					path = self.get_extended_path(str(strain_variable) + str(displacement_variable) + "_" + str(strain).replace('.', 'o').replace('-', 'n'))
-					
+					for i in range(-4, 5):
+						strain = i*self.perturbation_magnitudes_dictionary['strain']
 
-					eigen_chromosome = [0.0]*(3*self.reference_structure.site_count)
-					eigen_chromosome[strain_variable.index] = strain
+						path = self.get_extended_path(str(strain_variable) + str(displacement_variable_1) + "_" + str(displacement_variable_2) + "_" + str(strain).replace('.', 'o').replace('-', 'n'))
+						
+						eigen_chromosome = [0.0]*(3*self.reference_structure.site_count)
+						eigen_chromosome[strain_variable.index] = strain
 
-					structure = self.get_distorted_structure_from_eigen_chromosome(eigen_chromosome)
+						structure = self.get_distorted_structure_from_eigen_chromosome(eigen_chromosome)
 
-					print str(strain), str(self.get_displacement_second_derivative(path, structure, displacement_variable.index))
+						print str(strain), str(self.get_displacement_second_derivative(path, structure, displacement_variable_1.index, displacement_variable_2.index))
 
 
 
@@ -152,7 +157,7 @@ class DerivativeEvaluator(object):
 
 		eigen_chromosomes_list = []
 
-		for i in range(1, 9):
+		for i in range(1, 10):
 			eigen_chromosome = [0.0]*(3*self.reference_structure.site_count)
 			eigen_chromosome[displacement_variable_index + 6] = i*displacement_step_size
 
@@ -170,7 +175,7 @@ class DerivativeEvaluator(object):
 
 		eigen_chromosomes_list = []
 
-		for i in range(-8, 9):
+		for i in range(-4, 5):
 			eigen_chromosome = [0.0]*(3*self.reference_structure.site_count)
 			eigen_chromosome[strain_variable_index] = i*strain_step_size
 
@@ -206,7 +211,7 @@ class DerivativeEvaluator(object):
 
 
 
-	def get_displacement_second_derivative(self, path, structure, displacement_variable_index):
+	def get_displacement_second_derivative(self, path, structure, displacement_variable_1_index, displacement_variable_2_index):
 		"""
 		Determines the second derivative of the energy w.r.t. the given displacement variable for structure.
 
@@ -224,7 +229,7 @@ class DerivativeEvaluator(object):
 		for perturbation_magnitude in central_difference_coefficients_dictionary['1']['perturbations_list']:
 			eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian, distorted_structure=structure)
 
-			eigen_structure[displacement_variable_index+6] = perturbation_magnitude[0]*displacement_factor
+			eigen_structure[displacement_variable_1_index+6] = perturbation_magnitude[0]*displacement_factor
 
 			perturbed_structures_list.append(eigen_structure.get_distorted_structure())
 
@@ -237,7 +242,7 @@ class DerivativeEvaluator(object):
 
 			term_factors_list = central_difference_coefficients_dictionary['1']['factors']
 
-			force_sums_list = [0.0] + self.get_force_sums(vasp_static_run_set, displacement_variable_index)
+			force_sums_list = [0.0] + self.get_force_sums(vasp_static_run_set, displacement_variable_2_index)
 
 			numerator = sum(map(lambda x, y: -x*y, term_factors_list, force_sums_list))
 			denominator = 12.0*displacement_factor

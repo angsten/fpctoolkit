@@ -137,7 +137,8 @@ derivative_evaluation_vasp_run_inputs_dictionary = {
 	'encut': encut,
 	'ediff': ediff,
 	'lreal': False,
-	'addgrid': True
+	'addgrid': True,
+	'symprec': 1e-6
 }
 
 minima_relaxation_input_dictionary= {

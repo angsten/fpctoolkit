@@ -92,7 +92,7 @@ def get_fit_string(fitting_parameters):
 
 
 
-pp = PdfPages('C:\Users\Tom\Desktop\derivative_fits.pdf')
+
 
 data_file = File("C:/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/data/derivative_plot_data")
 
@@ -100,6 +100,8 @@ header_line = data_file[0]
 header_data = header_line.split(' ') #SrTiO3 a=3.79 encut=600eV kpoints=3x3x3M disp_step=0.01A u2 Energy
 
 
+
+pp = PdfPages('C:\Users\Tom\Desktop\derivative_fits/' + header_data[0] + '.pdf')
 
 
 start_index = 1
