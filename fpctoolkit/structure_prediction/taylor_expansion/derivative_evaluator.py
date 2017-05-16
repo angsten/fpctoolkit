@@ -78,6 +78,7 @@ class DerivativeEvaluator(object):
 			else:
 				vasp_static_run_set.update()
 
+		print
 
 		#e^2 terms
 		for strain_variable in self.taylor_expansion.get_active_variables_list(type_string='strain'):
@@ -94,6 +95,7 @@ class DerivativeEvaluator(object):
 			else:
 				vasp_static_run_set.update()
 
+		print
 
 		#e*u^2 terms
 		for strain_variable in self.taylor_expansion.get_active_variables_list(type_string='strain'):
