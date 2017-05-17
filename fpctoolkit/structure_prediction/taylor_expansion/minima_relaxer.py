@@ -86,7 +86,7 @@ class MinimaRelaxer(object):
 
 			initial_structure = eigen_structure.get_distorted_structure()
 
-			self.vasp_relaxations_list.append(VaspRelaxation(path=self.get_extended_path("_".join(str(x) for x in eigen_chromosome)), initial_structure=initial_structure, input_dictionary=self.vasp_relaxation_inputs_dictionary))
+			self.vasp_relaxations_list.append(VaspRelaxation(path=self.get_extended_path("rank_" + str(I) + "_" + "_".join(str(x) for x in eigen_chromosome)), initial_structure=initial_structure, input_dictionary=self.vasp_relaxation_inputs_dictionary))
 
 
 	def update(self):
