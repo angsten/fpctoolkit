@@ -37,6 +37,8 @@ class MinimaRelaxer(object):
 		}
 		"""
 
+		Path.make(path)
+
 		self.path = path
 		self.reference_structure = reference_structure
 		self.reference_completed_vasp_relaxation_run = reference_completed_vasp_relaxation_run

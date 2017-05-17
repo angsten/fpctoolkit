@@ -101,7 +101,7 @@ header_data = header_line.split(' ') #SrTiO3 a=3.79 encut=600eV kpoints=3x3x3M d
 
 
 
-pp = PdfPages('C:\Users\Tom\Desktop\derivative_fits/' + header_data[0] + '.pdf')
+pp = PdfPages('C:\Users\Tom\Desktop\derivative_fits/' + header_data[0] + "_" + header_data[1] + '.pdf')
 
 
 start_index = 1
