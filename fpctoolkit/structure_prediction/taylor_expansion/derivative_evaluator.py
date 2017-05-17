@@ -101,11 +101,14 @@ class DerivativeEvaluator(object):
 		for strain_variable in self.taylor_expansion.get_active_variables_list(type_string='strain'):
 			for m, displacement_variable_1 in enumerate(displacement_variable_terms_list):
 				for j in range(m, len(displacement_variable_terms_list)):
+					if not j == m:
+						continue
+
 					displacement_variable_2 = displacement_variable_terms_list[j]
 
 					print '\n' + str(strain_variable), 'd^2E/d' + str(displacement_variable_1) + 'd' + str(displacement_variable_2)
 
-					for i in range(-4, 5):
+					for i in range(-3, 4):
 						strain = i*self.perturbation_magnitudes_dictionary['strain']
 
 						path = self.get_extended_path(str(strain_variable) + str(displacement_variable_1) + "_" + str(displacement_variable_2) + "_" + str(strain).replace('.', 'o').replace('-', 'n'))
