@@ -17,9 +17,9 @@ class MinimaRelaxer(object):
 	The relaxations are then sortable by energy, and one can see the change in the eigen_chromosomes in going from the guess to the relaxed structure
 	"""
 
-	def __init__(self, path, reference_structure, hessian, vasp_relaxation_inputs_dictionary, eigen_chromosome_energy_pairs_list):
+	def __init__(self, path, reference_structure, reference_completed_vasp_relaxation_run, hessian, vasp_relaxation_inputs_dictionary, eigen_chromosome_energy_pairs_list):
 		"""
-		eigen_chromosome_energy_pairs_list should look like [[guessed eigen_chromosome, predicted energy], [...],...]
+		eigen_chromosome_energy_pairs_list should look like [[predicted energy change, guessed eigen_chromosome], [...],...]
 
 		vasp_relaxation_inputs_dictionary should look like:
 
@@ -39,12 +39,27 @@ class MinimaRelaxer(object):
 
 		self.path = path
 		self.reference_structure = reference_structure
+		self.reference_completed_vasp_relaxation_run = reference_completed_vasp_relaxation_run
 		self.hessian = hessian
 		self.eigen_pairs_list = hessian.get_sorted_hessian_eigen_pairs_list()
 		self.vasp_relaxation_inputs_dictionary = copy.deepcopy(vasp_relaxation_inputs_dictionary)
 
-		self.eigen_chromosomes_list = [eigen_chromosome_energy_pair[0] for eigen_chromosome_energy_pair in eigen_chromosome_energy_pairs_list]
-		self.predicted_energies_list = [eigen_chromosome_energy_pair[1] for eigen_chromosome_energy_pair in eigen_chromosome_energy_pairs_list]
+
+		sorted_eigen_chromosome_energy_pairs_list = sorted(eigen_chromosome_energy_pairs_list, key=lambda x: x[0])
+
+
+		final_pairs_list = []
+		energies_list = []
+		for eigen_chromosome_energy_pair in sorted_eigen_chromosome_energy_pairs_list:
+			if eigen_chromosome_energy_pair[0] in energies_list:
+				continue
+			else:
+				energies_list.append(eigen_chromosome_energy_pair[0])
+				final_pairs_list.append(eigen_chromosome_energy_pair)
+
+
+		self.predicted_energies_list = [eigen_chromosome_energy_pair[0] for eigen_chromosome_energy_pair in final_pairs_list]
+		self.eigen_chromosomes_list = [eigen_chromosome_energy_pair[1] for eigen_chromosome_energy_pair in final_pairs_list]
 
 
 		self.completed_relaxations_data_list = [] #list of lists with each component like [relaxation, initial chromosome, final chromosome]
@@ -82,6 +97,7 @@ class MinimaRelaxer(object):
 
 				print "Structure", str(i)
 				print "Predicted Energy Change", str(self.predicted_energies_list[i])
+				print "Calculated Energy Change", str(vasp_relaxation.get_final_energy(per_atom=False)-self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False))
 				print "Original Chromosome"
 				print str(self.eigen_chromosomes_list[i])
 				print "Final Chromosome"
@@ -92,6 +108,8 @@ class MinimaRelaxer(object):
 		"""
 		Returns a list of lists with each component like [relaxation, initial chromosome, final chromosome] sorted by relaxation energy (lowest to highest)
 		"""
+
+		pass
 
 
 	def complete(self):
