@@ -1,6 +1,6 @@
 #from fpctoolkit.structure_prediction.taylor_expansion.taylor_expansion import TaylorExpansion
 
-from sets import Set
+from collections import OrderedDict
 
 from fpctoolkit.structure_prediction.taylor_expansion.expansion_term import ExpansionTerm
 
@@ -127,10 +127,16 @@ class TaylorExpansion(object):
 
 	def get_active_variables_list(self, type_string):
 
-		displacement_variables_set = Set()
+		displacement_variables_dictionary = OrderedDict()
 		for expansion_term in self.expansion_terms_list:
 			for active_variable in expansion_term.get_active_variables():
 				if active_variable.type_string == type_string:
-					displacement_variables_set.add(active_variable)
+					displacement_variables_dictionary[str(active_variable)] = active_variable
 
-		return list(displacement_variables_set)
+
+		displacement_variables_list = []
+
+		for d, v in displacement_variables_dictionary.items():
+			displacement_variables_list.append(v)
+
+		return displacement_variables_list
