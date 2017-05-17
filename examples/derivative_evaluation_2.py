@@ -215,16 +215,16 @@ else:
 
 		if Path.exists(guessed_minima_data_path):
 
-			minima_file = File(minima_path)
+			minima_file = File(guessed_minima_data_path)
 
 			eigen_chromosome_energy_pairs_list = [] #[[predicted_energy_difference_1, [e1, e2, e3, e4, ...]], [predicted_energy_difference_2, [e1, ...]]]
 
 			for line in minima_file:
 				energy_difference = float((line.strip()).split(',')[0])
-				eigen_chromosome = (line.strip()).split(',')[1].split(' ')
+				eigen_chromosome = [float(x) for x in (line.strip()).split(',')[1].split(' ')[1:]]
 
 
-				eigen_chromosome_energy_pairs_list.append(energy_difference, eigen_chromosome)
+				eigen_chromosome_energy_pairs_list.append([energy_difference, eigen_chromosome])
 
 			minima_relaxer = MinimaRelaxer(path=minima_path, reference_structure=relaxed_structure, reference_completed_vasp_relaxation_run=relaxation, hessian=hessian, 
 				vasp_relaxation_inputs_dictionary=minima_relaxation_input_dictionary, eigen_chromosome_energy_pairs_list=eigen_chromosome_energy_pairs_list)
