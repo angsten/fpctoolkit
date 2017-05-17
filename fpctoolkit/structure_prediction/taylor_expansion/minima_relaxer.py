@@ -58,6 +58,10 @@ class MinimaRelaxer(object):
 				final_pairs_list.append(eigen_chromosome_energy_pair)
 
 
+		print "Final pairs list: "
+		print final_pairs_list
+
+
 		self.predicted_energies_list = [eigen_chromosome_energy_pair[0] for eigen_chromosome_energy_pair in final_pairs_list]
 		self.eigen_chromosomes_list = [eigen_chromosome_energy_pair[1] for eigen_chromosome_energy_pair in final_pairs_list]
 
