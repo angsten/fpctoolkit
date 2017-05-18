@@ -107,7 +107,7 @@ class MinimaRelaxer(object):
 				print "Original Chromosome"
 				print str(self.eigen_chromosomes_list[i])
 				print "Final Chromosome"
-				print str(eigen_structure.get_list_represenation())
+				print str(eigen_structure.get_list_representation())
 
 
 	def get_sorted_relaxation_data_list(self):
