@@ -2,6 +2,7 @@
 
 import numpy as np
 import copy
+import random
 
 from fpctoolkit.io.file import File
 from fpctoolkit.io.vasp.poscar import Poscar
@@ -165,3 +166,17 @@ class Structure(object):
 			site.convert_to_direct_coordinates(self.lattice)
 
 
+	def randomly_displace_sites(self, max_displacement_magnitude):
+		"""
+		max_displacement_magnitude is the maximum displacement in a single cartesian direction (in angstroms)
+		"""
+
+		original_coordinate_mode = self.sites.get_coordinate_mode()
+
+		self.convert_sites_to_cartesian_coordinates()
+
+		for site in self.sites:
+			for i in range(3):
+				site['position'][i] += random.uniform(-1.0*max_displacement_magnitude, max_displacement_magnitude)
+
+		self.convert_sites_to_coordinate_mode(original_coordinate_mode)

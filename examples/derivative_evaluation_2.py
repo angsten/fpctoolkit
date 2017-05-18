@@ -147,6 +147,8 @@ minima_relaxation_input_dictionary = {
     'kpoint_schemes_list': [kpoint_scheme],
     'kpoint_subdivisions_lists': [kpoint_subdivisions_list],
     'submission_node_count': 1,
+    'potim': [0.1, 0.2, 0.4],
+    'isif': [21, 71, 161],
     'ediff': [1e-4, 1e-5, 1e-6],
     'encut': [encut],
     'submission_script_modification_keys_list': ['100'],
