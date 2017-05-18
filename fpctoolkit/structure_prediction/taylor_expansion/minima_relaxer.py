@@ -99,7 +99,7 @@ class MinimaRelaxer(object):
 			if vasp_relaxation.complete:
 				eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian, distorted_structure=vasp_relaxation.final_structure)
 
-				self.completed_relaxations_data_list.append([vasp_relaxation, self.eigen_chromosomes_list[i], eigen_structure.get_list_represenation()])
+				self.completed_relaxations_data_list.append([vasp_relaxation, self.eigen_chromosomes_list[i], eigen_structure.get_list_representation()])
 
 				print "Structure", str(i)
 				print "Predicted Energy Change", str(self.predicted_energies_list[i])
