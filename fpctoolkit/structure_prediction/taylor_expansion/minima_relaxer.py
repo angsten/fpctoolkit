@@ -108,7 +108,13 @@ class MinimaRelaxer(object):
 				print "Original Chromosome"
 				print str(self.eigen_chromosomes_list[i])
 				print "Final Chromosome"
-				print str(eigen_structure.get_list_representation())
+
+				for component in eigen_structure.get_list_representation():
+					if component < 0.0001:
+						print '0.0 ',
+					else:
+						print str(round(component, 4)),
+				print
 				print
 
 
