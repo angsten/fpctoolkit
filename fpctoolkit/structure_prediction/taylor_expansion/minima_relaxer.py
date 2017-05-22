@@ -101,6 +101,7 @@ class MinimaRelaxer(object):
 
 				self.completed_relaxations_data_list.append([vasp_relaxation, self.eigen_chromosomes_list[i], eigen_structure.get_list_representation()])
 
+				print
 				print "Structure", str(i)
 				print "Predicted Energy Change", str(self.predicted_energies_list[i])
 				print "Calculated Energy Change", str(vasp_relaxation.get_final_energy(per_atom=False)-self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False))
@@ -108,6 +109,7 @@ class MinimaRelaxer(object):
 				print str(self.eigen_chromosomes_list[i])
 				print "Final Chromosome"
 				print str(eigen_structure.get_list_representation())
+				print
 
 
 	def get_sorted_relaxation_data_list(self):
