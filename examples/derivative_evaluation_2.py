@@ -189,6 +189,40 @@ else:
 		#hessian.print_eigen_components()
 		hessian.print_eigenvalues()
 
+
+
+
+		guessed_minima_data_path = Path.join(base_path, 'guessed_chromosomes')
+		minima_path = Path.join(base_path, 'minima_tests')
+
+		if Path.exists(guessed_minima_data_path):
+
+		    minima_file = File(guessed_minima_data_path)
+
+		    eigen_chromosome_energy_pairs_list = [] #[[predicted_energy_difference_1, [e1, e2, e3, e4, ...]], [predicted_energy_difference_2, [e1, ...]]]
+
+		    for line in minima_file:
+				energy_difference = float((line.strip()).split(',')[0])
+				eigen_chromosome = [float(x) for x in (line.strip()).split(',')[1].split(' ')[1:]]
+
+
+				eigen_chromosome_energy_pairs_list.append([energy_difference, eigen_chromosome])
+
+
+			minima_relaxer = MinimaRelaxer(path=minima_path, reference_structure=relaxed_structure, reference_completed_vasp_relaxation_run=relaxation, hessian=hessian,
+				vasp_relaxation_inputs_dictionary=minima_relaxation_input_dictionary, eigen_chromosome_energy_pairs_list=eigen_chromosome_energy_pairs_list)
+
+			minima_relaxer.update()
+
+			if minima_relaxer.complete:
+				sorted_relaxed_minima_list = minima_relaxer.get_sorted_relaxation_data_list()
+
+
+
+
+		else:
+
+
 		taylor_expansion = get_taylor_expansion(number_of_strain_terms, number_of_displacement_terms, hessian.translational_mode_indices)
 
 
@@ -204,29 +238,3 @@ else:
 
 		print
 		print derivative_evaluator.taylor_expansion
-
-
-
-
-
-
-
-		guessed_minima_data_path = Path.join(base_path, 'guessed_chromosomes')
-		minima_path = Path.join(base_path, 'minima_tests')
-
-
-		if Path.exists(guessed_minima_data_path):
-
-			minima_file = File(guessed_minima_data_path)
-
-			eigen_chromosome_energy_pairs_list = [] #[[predicted_energy_difference_1, [e1, e2, e3, e4, ...]], [predicted_energy_difference_2, [e1, ...]]]
-
-			for line in minima_file:
-				energy_difference = float((line.strip()).split(',')[0])
-				eigen_chromosome = [float(x) for x in (line.strip()).split(',')[1].split(' ')[1:]]
-
-
-				eigen_chromosome_energy_pairs_list.append([energy_difference, eigen_chromosome])
-
-			minima_relaxer = MinimaRelaxer(path=minima_path, reference_structure=relaxed_structure, reference_completed_vasp_relaxation_run=relaxation, hessian=hessian, 
-				vasp_relaxation_inputs_dictionary=minima_relaxation_input_dictionary, eigen_chromosome_energy_pairs_list=eigen_chromosome_energy_pairs_list)

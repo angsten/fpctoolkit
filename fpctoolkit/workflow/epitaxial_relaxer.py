@@ -12,6 +12,7 @@ from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 from fpctoolkit.structure.structure import Structure
 from fpctoolkit.io.file import File
 import fpctoolkit.util.basic_validators as basic_validators
+from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
 
 class EpitaxialRelaxer(object):
 	"""
@@ -72,7 +73,7 @@ class EpitaxialRelaxer(object):
 		for misfit_strain in self.misfit_strains_list:
 			lattice_constant = self.reference_lattice_constant*(1.0+misfit_strain)
 
-			for initial_structure in self.initial_structures_list:
+			for i, initial_structure in enumerate(self.initial_structures_list):
 				structure = copy.deepcopy(initial_structure)
 
 				if abs(structure.lattice[0][1]) > 0.0 or abs(structure.lattice[0][2]) > 0.0 or abs(structure.lattice[1][0]) > 0.0 or abs(structure.lattice[1][2]) > 0.0:
@@ -85,8 +86,12 @@ class EpitaxialRelaxer(object):
 				structure.randomly_displace_sites(max_displacement_magnitude=0.01)
 
 
-				#randomly shear a bit
-				structure.lattice[]
+				relax_path = Path.join(self.path, str(misfit_strain), 'structure_' + str(i))
+
+				relaxation = VaspRelaxation(path=relax_path, initial_structure=structure, input_dictionary=self.vasp_relaxation_inputs_dictionary)
+
+				self.vasp_relaxations_list.append(relaxation)
+
 
 
 
