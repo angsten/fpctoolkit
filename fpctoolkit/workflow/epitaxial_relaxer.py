@@ -73,7 +73,7 @@ class EpitaxialRelaxer(object):
 		for misfit_strain in self.misfit_strains_list:
 			lattice_constant = self.reference_lattice_constant*(1.0+misfit_strain)
 
-			misfit_path = self.get_extended_path(str(misfit_strain))
+			misfit_path = self.get_extended_path(str(misfit_strain).replace('-', 'n'))
 
 			Path.make(misfit_path)
 
