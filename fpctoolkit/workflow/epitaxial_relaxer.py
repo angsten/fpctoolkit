@@ -73,6 +73,8 @@ class EpitaxialRelaxer(object):
 		for misfit_strain in self.misfit_strains_list:
 			lattice_constant = self.reference_lattice_constant*(1.0+misfit_strain)
 
+			Path.make(str(misfit_strain))
+
 			for i, initial_structure in enumerate(self.initial_structures_list):
 				structure = copy.deepcopy(initial_structure)
 
