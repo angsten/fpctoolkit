@@ -123,7 +123,7 @@ class MinimaRelaxer(object):
 		Returns a list of lists with each component like [relaxation, initial chromosome, final chromosome] sorted by relaxation energy (lowest to highest)
 		"""
 
-		return sorted(self.completed_relaxations_data_list, key=(lambda data_set: data_set[0].final_energy(per_atom=False)))
+		return sorted(self.completed_relaxations_data_list, key=(lambda data_set: data_set[0].get_final_energy(per_atom=False)))
 
 
 	def complete(self):
