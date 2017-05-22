@@ -57,6 +57,7 @@ class EpitaxialRelaxer(object):
 		self.vasp_relaxation_inputs_dictionary = vasp_relaxation_inputs_dictionary
 		self.reference_lattice_constant = reference_lattice_constant
 		self.misfit_strains_list = misfit_strains_list
+		self.supercell_dimensions_list = supercell_dimensions_list
 
 		Path.make(path)
 
@@ -83,8 +84,8 @@ class EpitaxialRelaxer(object):
 				if abs(structure.lattice[0][1]) > 0.0 or abs(structure.lattice[0][2]) > 0.0 or abs(structure.lattice[1][0]) > 0.0 or abs(structure.lattice[1][2]) > 0.0:
 					raise Exception("Current lattice is incompatible with (100) epitaxy: ", str(structure.lattice))
 
-				structure.lattice[0][0] = lattice_constant*supercell_dimensions_list[0]
-				structure.lattice[1][1] = lattice_constant*supercell_dimensions_list[1]
+				structure.lattice[0][0] = lattice_constant*self.supercell_dimensions_list[0]
+				structure.lattice[1][1] = lattice_constant*self.supercell_dimensions_list[1]
 
 				#break symmetry
 				structure.randomly_displace_sites(max_displacement_magnitude=0.01)
