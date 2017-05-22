@@ -110,7 +110,7 @@ class MinimaRelaxer(object):
 				print "Final Chromosome"
 
 				for component in eigen_structure.get_list_representation():
-					if component < 0.0001:
+					if abs(component) < 0.0001:
 						print '0.0 ',
 					else:
 						print str(round(component, 4)),
