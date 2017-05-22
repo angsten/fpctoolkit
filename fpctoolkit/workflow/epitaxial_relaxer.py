@@ -73,7 +73,9 @@ class EpitaxialRelaxer(object):
 		for misfit_strain in self.misfit_strains_list:
 			lattice_constant = self.reference_lattice_constant*(1.0+misfit_strain)
 
-			Path.make(str(misfit_strain))
+			misfit_path = self.get_extended_path(str(misfit_strain))
+
+			Path.make(misfit_path)
 
 			for i, initial_structure in enumerate(self.initial_structures_list):
 				structure = copy.deepcopy(initial_structure)
@@ -88,7 +90,7 @@ class EpitaxialRelaxer(object):
 				structure.randomly_displace_sites(max_displacement_magnitude=0.01)
 
 
-				relax_path = Path.join(self.path, str(misfit_strain), 'structure_' + str(i))
+				relax_path = Path.join(misfit_path, 'structure_' + str(i))
 
 				relaxation = VaspRelaxation(path=relax_path, initial_structure=structure, input_dictionary=self.vasp_relaxation_inputs_dictionary)
 
@@ -109,3 +111,6 @@ class EpitaxialRelaxer(object):
 				return False
 
 		return True
+
+	def get_extended_path(self, relative_path):
+		return Path.join(self.path, relative_path)
