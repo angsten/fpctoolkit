@@ -19,7 +19,7 @@ class EpitaxialRelaxer(object):
 	Calculates the minimum energy structures across a series of (100) misfit strains.
 	"""
 
-	def __init__(self, path, initial_structures_list, vasp_relaxation_inputs_dictionary, reference_lattice_constant, misfit_strains_list):
+	def __init__(self, path, initial_structures_list, vasp_relaxation_inputs_dictionary, reference_lattice_constant, misfit_strains_list, supercell_dimensions_list):
 		"""
 		path should be the main path of the calculation set
 
@@ -83,8 +83,8 @@ class EpitaxialRelaxer(object):
 				if abs(structure.lattice[0][1]) > 0.0 or abs(structure.lattice[0][2]) > 0.0 or abs(structure.lattice[1][0]) > 0.0 or abs(structure.lattice[1][2]) > 0.0:
 					raise Exception("Current lattice is incompatible with (100) epitaxy: ", str(structure.lattice))
 
-				structure.lattice[0][0] = lattice_constant
-				structure.lattice[1][1] = lattice_constant
+				structure.lattice[0][0] = lattice_constant*supercell_dimensions_list[0]
+				structure.lattice[1][1] = lattice_constant*supercell_dimensions_list[1]
 
 				#break symmetry
 				structure.randomly_displace_sites(max_displacement_magnitude=0.01)
