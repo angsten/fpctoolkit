@@ -6,6 +6,7 @@ import numpy as np
 from fpctoolkit.workflow.vasp_static_run_set import VaspStaticRunSet
 from fpctoolkit.util.path import Path
 from fpctoolkit.phonon.eigen_structure import EigenStructure
+from fpctoolkit.structure_prediction.taylor_expansion.variable import Variable
 
 
 
@@ -16,9 +17,9 @@ class DerivativeEvaluator(object):
 	A central differences approach is used to evaluate all derivative terms.
 	"""
 
-	def __init__(self, path, reference_structure, hessian, taylor_expansion, reference_completed_vasp_relaxation_run, vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary, displacement_finite_differrences_step_size):
+	def __init__(self, path, reference_structure, hessian, reference_completed_vasp_relaxation_run, vasp_run_inputs_dictionary, 
+		perturbation_magnitudes_dictionary, displacement_finite_differrences_step_size):
 		"""
-		taylor_expansion should be an initialized TaylorExpansion instance with the appropriate terms.
 		
 		perturbation_magnitudes_dictionary should look like {'strain': 0.02, 'displacement': 0.01} with strain as fractional and displacement in angstroms
 
@@ -31,13 +32,13 @@ class DerivativeEvaluator(object):
 			'npar': 1 (optional),
 			other incar params
 		}
-		"""
+		"""		
+
 
 		self.path = path
 		self.reference_structure = reference_structure
 		self.hessian = hessian
 		self.eigen_pairs_list = hessian.get_sorted_hessian_eigen_pairs_list()
-		self.taylor_expansion = copy.deepcopy(taylor_expansion)
 		self.vasp_run_inputs_dictionary = copy.deepcopy(vasp_run_inputs_dictionary)
 		self.perturbation_magnitudes_dictionary = perturbation_magnitudes_dictionary
 
@@ -51,6 +52,34 @@ class DerivativeEvaluator(object):
 		self.vasp_static_run_sets_list = None
 
 
+
+		self.strain_variables_list = []
+		self.displcement_variables_list = []
+
+		for strain_index in [2, 3, 4]:
+			self.strain_variables_list.append(Variable(type_string='strain', index=strain_index, centrosymmetry=False))
+
+		for displacement_index in self.get_displacement_indices_list():
+			self.displacement_variables_list.append(Variable(type_string='displacement', index=displacement_index, centrosymmetry=True))
+
+
+	def get_displacement_indices_list(self):
+		"""
+		Find all negative eigenvalues (that aren't translational modes) and return list of corresponding indices.
+		"""
+		displacement_indices_list = []
+
+		sorted_eigen_pair_list = self.hessian.get_sorted_hessian_eigen_pairs_list()
+
+		for i, eigen_pair in enumerate(sorted_eigen_pair_list):
+			if eigen_pair.is_unstable():
+				displacement_indices_list.append(i)
+
+		return displacement_indices_list
+
+
+
+
 	def update(self):
 
 		Path.make(self.path)
@@ -58,7 +87,7 @@ class DerivativeEvaluator(object):
 		self.vasp_static_run_sets_list = []
 
 		#u^2 and u^4 coefficients
-		for displacement_variable in self.taylor_expansion.get_active_variables_list(type_string='displacement'):
+		for displacement_variable in self.displacement_variables_list:
 			print '\n' + str(displacement_variable), 'Energy'
 
 			vasp_static_run_set = self.get_pure_displacement_vasp_static_run_set(displacement_variable.index)
@@ -80,7 +109,7 @@ class DerivativeEvaluator(object):
 
 
 		#e^2 terms
-		for strain_variable in self.taylor_expansion.get_active_variables_list(type_string='strain'):
+		for strain_variable in self.strain_variables_list:
 			print '\n' + str(strain_variable), 'Energy'
 
 			vasp_static_run_set = self.get_pure_strain_vasp_static_run_set(strain_variable.index)
@@ -95,16 +124,13 @@ class DerivativeEvaluator(object):
 				vasp_static_run_set.update()
 
 		#e*u^2 terms
-
-		displacement_variable_terms_list = self.taylor_expansion.get_active_variables_list(type_string='displacement')
-
-		for strain_variable in self.taylor_expansion.get_active_variables_list(type_string='strain'):
-			for m, displacement_variable_1 in enumerate(displacement_variable_terms_list):
-				for j in range(m, len(displacement_variable_terms_list)):
+		for strain_variable in self.strain_variables_list:
+			for m, displacement_variable_1 in enumerate(self.displacement_variables_list):
+				for j in range(m, len(self.displacement_variables_list)):
 					if not j == m:
 						continue
 
-					displacement_variable_2 = displacement_variable_terms_list[j]
+					displacement_variable_2 = self.displacement_variables_list[j]
 
 					print '\n' + str(strain_variable), 'd^2E/d' + str(displacement_variable_1) + 'd' + str(displacement_variable_2)
 
@@ -120,17 +146,6 @@ class DerivativeEvaluator(object):
 
 						print str(strain), str(self.get_displacement_second_derivative(path, structure, displacement_variable_1.index, displacement_variable_2.index))
 
-
-
-		# for expansion_term in self.taylor_expansion.expansion_terms_list:
-
-		# 	vasp_static_run_set = self.get_vasp_static_run_set(expansion_term)
-
-		# 	if vasp_static_run_set.complete:
-		# 		self.set_taylor_coefficient(vasp_static_run_set, expansion_term)
-		# 		vasp_static_run_set.delete_wavecars_of_completed_runs()
-		# 	else:
-		# 		vasp_static_run_set.update()
 
 
 	def get_pure_displacement_vasp_static_run_set(self, displacement_variable_index):
@@ -304,47 +319,47 @@ class DerivativeEvaluator(object):
 
 
 
-	def set_taylor_coefficient(self, vasp_static_run_set, expansion_term):
-		"""
-		Sets the derivative_coefficient_value attribute of expansion_term based on the energies in vasp_static_run_set.
-		"""
+	# def set_taylor_coefficient(self, vasp_static_run_set, expansion_term):
+	# 	"""
+	# 	Sets the derivative_coefficient_value attribute of expansion_term based on the energies in vasp_static_run_set.
+	# 	"""
 
-		print "\nSetting taylor coefficient for", str(expansion_term)
+	# 	print "\nSetting taylor coefficient for", str(expansion_term)
 
-		modified_expansion_term = copy.deepcopy(expansion_term)
-
-
-		if modified_expansion_term.is_pure_type('strain'):
-			# print "All strain - getting energies"
-
-			term_coefficients_dictionary = self.get_central_difference_coefficients_dictionary()[modified_expansion_term.get_derivative_type()]
-			term_factors_list = term_coefficients_dictionary['factors']
-
-			energies_list = [self.reference_completed_vasp_relaxation_run.get_final_energy()] + vasp_static_run_set.get_final_energies_list(per_atom=False)
-
-			# print "Energies: ", str(energies_list)
-
-			numerator = sum(map(lambda x, y: x*y, term_factors_list, energies_list))
-
-			denominator = self.get_denominator(modified_expansion_term)
-		else:
-			modified_expansion_term.lower_first_displacement_order()
-
-			term_coefficients_dictionary = self.get_central_difference_coefficients_dictionary()[modified_expansion_term.get_derivative_type()]
-			term_factors_list = term_coefficients_dictionary['factors']
-
-			#assume no forces on initial structures
-			force_sums_list = [0.0] + self.get_force_sums(vasp_static_run_set, expansion_term.get_first_displacement_index())
-
-			numerator = sum(map(lambda x, y: -x*y, term_factors_list, force_sums_list))
-
-			denominator = self.get_denominator(modified_expansion_term)
-
-		print "Numerator: ", str(numerator)
-		print "Denominator:", str(denominator)
+	# 	modified_expansion_term = copy.deepcopy(expansion_term)
 
 
-		expansion_term.derivative_coefficient = numerator/denominator
+	# 	if modified_expansion_term.is_pure_type('strain'):
+	# 		# print "All strain - getting energies"
+
+	# 		term_coefficients_dictionary = self.get_central_difference_coefficients_dictionary()[modified_expansion_term.get_derivative_type()]
+	# 		term_factors_list = term_coefficients_dictionary['factors']
+
+	# 		energies_list = [self.reference_completed_vasp_relaxation_run.get_final_energy()] + vasp_static_run_set.get_final_energies_list(per_atom=False)
+
+	# 		# print "Energies: ", str(energies_list)
+
+	# 		numerator = sum(map(lambda x, y: x*y, term_factors_list, energies_list))
+
+	# 		denominator = self.get_denominator(modified_expansion_term)
+	# 	else:
+	# 		modified_expansion_term.lower_first_displacement_order()
+
+	# 		term_coefficients_dictionary = self.get_central_difference_coefficients_dictionary()[modified_expansion_term.get_derivative_type()]
+	# 		term_factors_list = term_coefficients_dictionary['factors']
+
+	# 		#assume no forces on initial structures
+	# 		force_sums_list = [0.0] + self.get_force_sums(vasp_static_run_set, expansion_term.get_first_displacement_index())
+
+	# 		numerator = sum(map(lambda x, y: -x*y, term_factors_list, force_sums_list))
+
+	# 		denominator = self.get_denominator(modified_expansion_term)
+
+	# 	print "Numerator: ", str(numerator)
+	# 	print "Denominator:", str(denominator)
+
+
+	# 	expansion_term.derivative_coefficient = numerator/denominator
 
 
 	def get_force_sums(self, vasp_static_run_set, first_displacement_index):

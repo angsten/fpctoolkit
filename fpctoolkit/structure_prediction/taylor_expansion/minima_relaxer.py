@@ -137,7 +137,7 @@ class MinimaRelaxer(object):
 
 
 		for i, vasp_relaxation in enumerate(self.vasp_relaxations_list):
-			file += '-'*38 + "Structure Guess " + str(i) + '-'*38
+			file += '-'*38 + " Structure Guess " + str(i) + ' ' + '-'*38
 			file += ''
 
 			if vasp_relaxation.complete:
