@@ -103,21 +103,16 @@ class MinimaRelaxer(object):
 				self.completed_relaxations_data_list.append([vasp_relaxation, self.eigen_chromosomes_list[i], eigen_structure.get_list_representation()])
 
 				print
-				print "Structure", str(i)
+				print "Structure Guess ", str(i)
 				print "Predicted Energy Change", str(self.predicted_energies_list[i])
-				print "Calculated Energy Change", str(vasp_relaxation.get_final_energy(per_atom=False)-self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False))
-				print "Original Chromosome"
-				# print str(self.eigen_chromosomes_list[i])
+				print "      DFT Energy Change", str(vasp_relaxation.get_final_energy(per_atom=False)-self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False))
+				print "Guessed Chromosome"
 				print misc.get_formatted_chromosome_string(self.eigen_chromosomes_list[i])
+				print
 				print "Final Chromosome"
 
 				print misc.get_formatted_chromosome_string(eigen_structure.get_list_representation())
-
-				# for component in eigen_structure.get_list_representation():
-				# 	if abs(component) < 0.0001:
-				# 		print '0.0 ',
-				# 	else:
-				# 		print str(round(component, 4)),
+				
 				print
 				print
 
