@@ -6,6 +6,7 @@ import copy
 import fpctoolkit.util.string_util as su
 import fpctoolkit.util.basic_validators as basic_validators
 from fpctoolkit.phonon.hessian_eigen_pair import HessianEigenPair
+from fpctoolkit.io.file import File
 
 
 class Hessian(object):
@@ -64,10 +65,25 @@ class Hessian(object):
 		for i, eigen_pair in enumerate(self.get_sorted_hessian_eigen_pairs_list()):
 			print "Index: " + str(i) + "\n" + str(eigen_pair)
 
+	def print_eigen_components_to_file(self, file_path):
+		file = File(file_path)
+
+		for i, eigen_pair in enumerate(self.get_sorted_hessian_eigen_pairs_list()):
+			file += "Index: " + str(i) + "\n" + str(eigen_pair)
+
+		file.write_to_path()
+
 	def print_eigenvalues(self):
 		for i, eigen_pair in enumerate(self.get_sorted_hessian_eigen_pairs_list()):
-			print "u_" + str(i+1) + ": " + str(eigen_pair.eigenvalue)			
+			print "u_" + str(i+1) + ": " + str(eigen_pair.eigenvalue)
 
+	def print_eigenvalues_to_file(self, file_path):
+		file = File(file_path)
+
+		for i, eigen_pair in enumerate(self.get_sorted_hessian_eigen_pairs_list()):
+			file += "u_" + str(i+1) + ": " + str(eigen_pair.eigenvalue)
+
+		file.write_to_path()
 
 	@staticmethod
 	def validate_translational_modes_in_eigen_pair_list(eigen_pairs_list):
