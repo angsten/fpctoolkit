@@ -114,6 +114,8 @@ class DerivativeEvaluator(object):
 				for i in range(len(energies_list)):
 					file += str(displacement_magnitudes_list[i]) + " " + str(energies_list[i])
 
+				file += ''
+
 			else:
 				vasp_static_run_set.update()
 
@@ -145,7 +147,7 @@ class DerivativeEvaluator(object):
 					displacement_variable_2 = self.displacement_variables_list[j]
 
 					print str(strain_variable) + ' d^2E/d' + str(displacement_variable_1) + 'd' + str(displacement_variable_2)
-					
+
 					file += '\n' + str(strain_variable) + ' d^2E/d' + str(displacement_variable_1) + 'd' + str(displacement_variable_2)
 
 					for i in range(-3, 4):
