@@ -125,6 +125,36 @@ class MinimaRelaxer(object):
 
 		return sorted(self.completed_relaxations_data_list, key=(lambda data_set: data_set[0].get_final_energy(per_atom=False)))
 
+	def get_sorted_unique_relaxation_data_list(self):
+		"""
+		Returns a list of lists with each component like [relaxation, initial chromosome, final chromosome] sorted by relaxation energy (lowest to highest) but
+		removes instances whose final chromosomes are too alike (keeps only one of the two).
+		"""
+
+		#eventually, set translational components to zero before testing distance
+
+
+		sorted_relaxation_data_list = self.get_sorted_relaxation_data_list()
+
+		unique_data_list = []
+
+		for i in range(len(sorted_relaxation_data_list)):
+			
+			eigen_chromosome_1 = np.array(sorted_relaxation_data_list[i])
+
+			for j in range(i+1, len(sorted_relaxation_data_list)):
+
+				eigen_chromosome_2 = np.array(sorted_relaxation_data_list[j])
+
+				difference_chromosome = eigen_chromosome_2 - eigen_chromosome_1
+
+				difference_magnitude = np.linalg.norm(difference_chromosome)
+
+				print i, j, difference_magnitude
+
+
+
+
 
 	def complete(self):
 
