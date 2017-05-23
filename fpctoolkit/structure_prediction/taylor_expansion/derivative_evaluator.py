@@ -124,7 +124,7 @@ class DerivativeEvaluator(object):
 		for strain_variable in self.strain_variables_list:
 			print str(strain_variable)
 
-			file += '\n' + str(strain_variable) + ' Energy'
+			file += str(strain_variable) + ' Energy'
 
 			vasp_static_run_set = self.get_pure_strain_vasp_static_run_set(strain_variable.index)
 
@@ -134,6 +134,8 @@ class DerivativeEvaluator(object):
 
 				for i in range(len(energies_list)):
 					file += str(strain_magnitudes_list[i]) + " " +  str(energies_list[i])
+
+				file += ''
 			else:
 				vasp_static_run_set.update()
 
@@ -148,7 +150,7 @@ class DerivativeEvaluator(object):
 
 					print str(strain_variable) + ' d^2E/d' + str(displacement_variable_1) + 'd' + str(displacement_variable_2)
 
-					file += '\n' + str(strain_variable) + ' d^2E/d' + str(displacement_variable_1) + 'd' + str(displacement_variable_2)
+					file += str(strain_variable) + ' d^2E/d' + str(displacement_variable_1) + 'd' + str(displacement_variable_2)
 
 					for i in range(-3, 4):
 						strain = i*self.perturbation_magnitudes_dictionary['strain']
@@ -162,6 +164,8 @@ class DerivativeEvaluator(object):
 
 						file += str(strain) + " " + str(self.get_displacement_second_derivative(path, structure, displacement_variable_1.index, displacement_variable_2.index))
 
+					file += ''
+					
 		file.write_to_path(self.status_file_path)
 
 
