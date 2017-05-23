@@ -53,7 +53,7 @@ def get_formatted_chromosome_string(eigen_chromosome_list):
 		if abs(component) < 0.0001:
 			component = 0.0
 		
-		out_str += su.pad_decimal_number_to_fixed_character_length(0.0, rnd, padding_length) + ' '
+		out_str += su.pad_decimal_number_to_fixed_character_length(component, rnd, padding_length) + ' '
 
 
 	out_str += ']'
