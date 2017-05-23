@@ -20,7 +20,7 @@ class MinimaRelaxer(object):
 	The relaxations are then sortable by energy, and one can see the change in the eigen_chromosomes in going from the guess to the relaxed structure
 	"""
 
-	def __init__(self, path, reference_structure, reference_completed_vasp_relaxation_run, hessian, vasp_relaxation_inputs_dictionary, eigen_chromosome_energy_pairs_list):
+	def __init__(self, path, reference_structure, reference_completed_vasp_relaxation_run, hessian, vasp_relaxation_inputs_dictionary, eigen_chromosome_energy_pairs_file):
 		"""
 		eigen_chromosome_energy_pairs_list should look like [[predicted energy change, guessed eigen_chromosome], [...],...]
 
@@ -39,6 +39,18 @@ class MinimaRelaxer(object):
 			#any other incar parameters with value as a list
 		}
 		"""
+
+		minima_file = File(eigen_chromosome_energy_pairs_file)
+
+		eigen_chromosome_energy_pairs_list = [] #[[predicted_energy_difference_1, [e1, e2, e3, e4, ...]], [predicted_energy_difference_2, [e1, ...]]]
+
+		for line in minima_file:
+			energy_difference = float((line.strip()).split(',')[0])
+			eigen_chromosome = [float(x) for x in (line.strip()).split(',')[1].split(' ')[1:]]
+
+
+		eigen_chromosome_energy_pairs_list.append([energy_difference, eigen_chromosome])
+
 
 		self.path = path
 		self.reference_structure = reference_structure
@@ -134,8 +146,6 @@ class MinimaRelaxer(object):
 
 				self.completed_relaxations_data_list.append([vasp_relaxation, self.eigen_chromosomes_list[i], eigen_structure.get_list_representation()])
 
-
-				file += "Structure Guess " + str(i)
 				file += "Predicted Energy Change " + str(self.predicted_energies_list[i])
 				file += "DFT Energy Change       " + str(vasp_relaxation.get_final_energy(per_atom=False)-self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False))
 				file += "Guessed Chromosome"
@@ -144,10 +154,11 @@ class MinimaRelaxer(object):
 
 				file += misc.get_formatted_chromosome_string(eigen_structure.get_list_representation())
 
-				file += ''
+
 			else:
 				file += "Incomplete"
 
+		file += ''
 		file.write_to_path(file_path)
 
 
