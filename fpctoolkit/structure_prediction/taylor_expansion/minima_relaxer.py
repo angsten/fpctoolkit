@@ -139,19 +139,25 @@ class MinimaRelaxer(object):
 		unique_data_list = []
 
 		for i in range(len(sorted_relaxation_data_list)):
-			
+			select = True
 			eigen_chromosome_1 = np.array(sorted_relaxation_data_list[i][2])
 
-			for j in range(i+1, len(sorted_relaxation_data_list)):
+			for j in range(len(unique_data_list)):
 
-				eigen_chromosome_2 = np.array(sorted_relaxation_data_list[j][2])
+				eigen_chromosome_2 = np.array(unique_data_list[j][2])
 
 				difference_chromosome = eigen_chromosome_2 - eigen_chromosome_1
 
 				difference_magnitude = np.linalg.norm(difference_chromosome)
 
-				print i, j, difference_magnitude
+				if difference_magnitude < 0.04:
+					select = False
+					break
 
+			if select:
+				unique_data_list.append(sorted_relaxation_data_list[i])
+
+		return unique_data_list
 
 
 
