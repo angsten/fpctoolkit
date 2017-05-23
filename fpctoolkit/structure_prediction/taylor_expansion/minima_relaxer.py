@@ -7,6 +7,7 @@ from fpctoolkit.workflow.vasp_static_run_set import VaspStaticRunSet
 from fpctoolkit.util.path import Path
 from fpctoolkit.phonon.eigen_structure import EigenStructure
 from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
+import fpctoolkit.util.misc as misc
 
 
 
@@ -106,14 +107,17 @@ class MinimaRelaxer(object):
 				print "Predicted Energy Change", str(self.predicted_energies_list[i])
 				print "Calculated Energy Change", str(vasp_relaxation.get_final_energy(per_atom=False)-self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False))
 				print "Original Chromosome"
-				print str(self.eigen_chromosomes_list[i])
+				# print str(self.eigen_chromosomes_list[i])
+				print misc.get_formatted_chromosome_string(self.eigen_chromosomes_list[i])
 				print "Final Chromosome"
 
-				for component in eigen_structure.get_list_representation():
-					if abs(component) < 0.0001:
-						print '0.0 ',
-					else:
-						print str(round(component, 4)),
+				print misc.get_formatted_chromosome_string(eigen_structure.get_list_representation())
+
+				# for component in eigen_structure.get_list_representation():
+				# 	if abs(component) < 0.0001:
+				# 		print '0.0 ',
+				# 	else:
+				# 		print str(round(component, 4)),
 				print
 				print
 
