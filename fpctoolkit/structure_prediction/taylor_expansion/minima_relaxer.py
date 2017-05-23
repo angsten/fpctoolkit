@@ -8,6 +8,8 @@ from fpctoolkit.util.path import Path
 from fpctoolkit.phonon.eigen_structure import EigenStructure
 from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
 import fpctoolkit.util.misc as misc
+from fpctoolkit.io.file import File
+
 
 
 
@@ -102,18 +104,50 @@ class MinimaRelaxer(object):
 
 				self.completed_relaxations_data_list.append([vasp_relaxation, self.eigen_chromosomes_list[i], eigen_structure.get_list_representation()])
 
-				print '-'*80
-				print
-				print "Structure Guess ", str(i)
-				print "Predicted Energy Change", str(self.predicted_energies_list[i])
-				print "DFT Energy Change      ", str(vasp_relaxation.get_final_energy(per_atom=False)-self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False))
-				print "Guessed Chromosome"
-				print misc.get_formatted_chromosome_string(self.eigen_chromosomes_list[i])
-				print "Final Chromosome"
+				# print '-'*80
+				# print
+				# print "Structure Guess ", str(i)
+				# print "Predicted Energy Change", str(self.predicted_energies_list[i])
+				# print "DFT Energy Change      ", str(vasp_relaxation.get_final_energy(per_atom=False)-self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False))
+				# print "Guessed Chromosome"
+				# print misc.get_formatted_chromosome_string(self.eigen_chromosomes_list[i])
+				# print "Final Chromosome"
 
-				print misc.get_formatted_chromosome_string(eigen_structure.get_list_representation())
+				# print misc.get_formatted_chromosome_string(eigen_structure.get_list_representation())
 
-				print
+				# print
+
+	def print_status_to_file(self, file_path):
+		file = File()
+
+		file += "Complete: " + str(self.complete)
+		file += ""
+
+
+		for i, vasp_relaxation in enumerate(self.vasp_relaxations_list):
+			file += "Structure Guess ", str(i)
+
+			if vasp_relaxation.complete:
+				eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian, distorted_structure=vasp_relaxation.final_structure)
+
+				self.completed_relaxations_data_list.append([vasp_relaxation, self.eigen_chromosomes_list[i], eigen_structure.get_list_representation()])
+
+				file += '-'*80
+				file += ''
+				file += "Structure Guess ", str(i)
+				file += "Predicted Energy Change", str(self.predicted_energies_list[i])
+				file += "DFT Energy Change      ", str(vasp_relaxation.get_final_energy(per_atom=False)-self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False))
+				file += "Guessed Chromosome"
+				file += misc.get_formatted_chromosome_string(self.eigen_chromosomes_list[i])
+				file += "Final Chromosome"
+
+				file += misc.get_formatted_chromosome_string(eigen_structure.get_list_representation())
+
+				file += ''
+			else:
+				file += "Incomplete"
+
+		file.write_to_path(file_path)
 
 
 	def get_sorted_relaxation_data_list(self):
