@@ -54,7 +54,7 @@ class DerivativeEvaluator(object):
 
 
 		self.strain_variables_list = []
-		self.displcement_variables_list = []
+		self.displacement_variables_list = []
 
 		for strain_index in [2, 3, 4]:
 			self.strain_variables_list.append(Variable(type_string='strain', index=strain_index, centrosymmetry=False))
