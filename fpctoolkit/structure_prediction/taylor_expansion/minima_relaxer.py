@@ -20,7 +20,7 @@ class MinimaRelaxer(object):
 	The relaxations are then sortable by energy, and one can see the change in the eigen_chromosomes in going from the guess to the relaxed structure
 	"""
 
-	def __init__(self, path, reference_structure, reference_completed_vasp_relaxation_run, hessian, vasp_relaxation_inputs_dictionary, eigen_chromosome_energy_pairs_file):
+	def __init__(self, path, reference_structure, reference_completed_vasp_relaxation_run, hessian, vasp_relaxation_inputs_dictionary, eigen_chromosome_energy_pairs_file_path):
 		"""
 		eigen_chromosome_energy_pairs_list should look like [[predicted energy change, guessed eigen_chromosome], [...],...]
 
