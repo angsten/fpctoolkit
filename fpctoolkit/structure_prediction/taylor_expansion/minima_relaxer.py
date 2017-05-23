@@ -49,7 +49,7 @@ class MinimaRelaxer(object):
 			eigen_chromosome = [float(x) for x in (line.strip()).split(',')[1].split(' ')[1:]]
 
 
-		eigen_chromosome_energy_pairs_list.append([energy_difference, eigen_chromosome])
+			eigen_chromosome_energy_pairs_list.append([energy_difference, eigen_chromosome])
 
 
 		self.path = path
