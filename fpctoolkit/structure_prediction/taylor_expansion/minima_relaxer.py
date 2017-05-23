@@ -125,18 +125,19 @@ class MinimaRelaxer(object):
 
 
 		for i, vasp_relaxation in enumerate(self.vasp_relaxations_list):
-			file += "Structure Guess ", str(i)
+			file += '-'*80
+			file += ''
+			file += "Structure Guess " + str(i)
 
 			if vasp_relaxation.complete:
 				eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian, distorted_structure=vasp_relaxation.final_structure)
 
 				self.completed_relaxations_data_list.append([vasp_relaxation, self.eigen_chromosomes_list[i], eigen_structure.get_list_representation()])
 
-				file += '-'*80
-				file += ''
-				file += "Structure Guess ", str(i)
-				file += "Predicted Energy Change", str(self.predicted_energies_list[i])
-				file += "DFT Energy Change      ", str(vasp_relaxation.get_final_energy(per_atom=False)-self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False))
+
+				file += "Structure Guess " + str(i)
+				file += "Predicted Energy Change " + str(self.predicted_energies_list[i])
+				file += "DFT Energy Change       " + str(vasp_relaxation.get_final_energy(per_atom=False)-self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False))
 				file += "Guessed Chromosome"
 				file += misc.get_formatted_chromosome_string(self.eigen_chromosomes_list[i])
 				file += "Final Chromosome"
