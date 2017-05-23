@@ -140,11 +140,11 @@ class MinimaRelaxer(object):
 
 		for i in range(len(sorted_relaxation_data_list)):
 			
-			eigen_chromosome_1 = np.array(sorted_relaxation_data_list[i])
+			eigen_chromosome_1 = np.array(sorted_relaxation_data_list[i][2])
 
 			for j in range(i+1, len(sorted_relaxation_data_list)):
 
-				eigen_chromosome_2 = np.array(sorted_relaxation_data_list[j])
+				eigen_chromosome_2 = np.array(sorted_relaxation_data_list[j][2])
 
 				difference_chromosome = eigen_chromosome_2 - eigen_chromosome_1
 
