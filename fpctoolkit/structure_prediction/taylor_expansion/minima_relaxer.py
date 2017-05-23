@@ -205,7 +205,7 @@ class MinimaRelaxer(object):
 
 
 
-
+	@property
 	def complete(self):
 
 		for vasp_relaxation in self.vasp_relaxations_list:
