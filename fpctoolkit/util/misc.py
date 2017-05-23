@@ -46,11 +46,11 @@ def flatten_multi_dimensional_list(multi_dimensional_list):
 def get_formatted_chromosome_string(eigen_chromosome_list):
 
 	out_str = '['
-	rnd = 4
-	padding_length = 7
+	rnd = 3
+	padding_length = 6
 
 	for component in eigen_chromosome_list:
-		if abs(component) < 0.0001:
+		if abs(component) < 0.001:
 			component = 0.0
 		
 		out_str += su.pad_decimal_number_to_fixed_character_length(component, rnd, padding_length) + ' '
