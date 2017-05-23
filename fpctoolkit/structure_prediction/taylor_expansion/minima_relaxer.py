@@ -158,7 +158,7 @@ class MinimaRelaxer(object):
 			else:
 				file += "Incomplete"
 
-		file += ''
+		file += '\n'
 		file.write_to_path(file_path)
 
 
