@@ -59,7 +59,7 @@ def get_formatted_chromosome_string(eigen_chromosome_list):
 		count += 1
 
 		if count == 6:
-			out_str += '   '
+			out_str += '    '
 
 	out_str += ']'
 
