@@ -40,7 +40,7 @@ class MinimaRelaxer(object):
 		}
 		"""
 
-		minima_file = File(eigen_chromosome_energy_pairs_file)
+		minima_file = File(eigen_chromosome_energy_pairs_file_path)
 
 		eigen_chromosome_energy_pairs_list = [] #[[predicted_energy_difference_1, [e1, e2, e3, e4, ...]], [predicted_energy_difference_2, [e1, ...]]]
 
