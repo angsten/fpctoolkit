@@ -143,7 +143,7 @@ class DerivativeEvaluator(object):
 
 				eigen_chromosome[variable.index + add_index] = perturbation_magnitude				
 
-				energies_list += self.get_energy_of_eigen_chromosome(path=Path.join(variable_path, str(perturbation_magnitude)), eigen_chromosome=eigen_chromosome)
+				energies_list.append(self.get_energy_of_eigen_chromosome(path=Path.join(variable_path, str(perturbation_magnitude)), eigen_chromosome=eigen_chromosome))
 
 			if variable.type_string == 'displacement':
 				#Due to centrosymmetry, we know the negative chromosomes have equal energy
