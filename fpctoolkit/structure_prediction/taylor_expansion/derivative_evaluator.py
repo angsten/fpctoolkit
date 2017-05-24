@@ -136,7 +136,7 @@ class DerivativeEvaluator(object):
 			for perturbation_magnitude in perturbation_magnitudes_list:
 				eigen_chromosome = [0.0]*(3*self.reference_structure.site_count)
 
-				if variable.type_string == 'dispalcement':
+				if variable.type_string == 'displacement':
 					add_index = 6
 				else:
 					add_index = 0
