@@ -129,6 +129,7 @@ class MinimaRelaxer(object):
 
 				# print
 
+
 	def print_status_to_file(self, file_path):
 		file = File()
 
@@ -157,6 +158,17 @@ class MinimaRelaxer(object):
 			else:
 				file += "Incomplete"
 			file += ''
+
+		file.write_to_path(file_path)
+
+	def print_selected_uniques_to_file(self, file_path):
+		file = File()
+
+		for unique_data_triplet in self.get_sorted_unique_relaxation_data_list():
+			file += "Energy: " + str(unique_data_triplet[0].get_final_energy(per_atom=False))
+			file += "Final Chromosome:"
+			file += misc.get_formatted_chromosome_string(unique_data_triplet[2])
+
 
 		file.write_to_path(file_path)
 

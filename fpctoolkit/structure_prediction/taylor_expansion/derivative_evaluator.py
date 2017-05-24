@@ -87,7 +87,7 @@ class DerivativeEvaluator(object):
 
 		file = File()
 
-		file += ''.join(self.reference_structure.get_species_list()) + '3' + ' a=' + str(self.reference_structure.lattice[0][0]) + 'A ediff=' + str(self.vasp_run_inputs_dictionary['ediff']) + ' encut=' + str(self.vasp_run_inputs_dictionary['encut']) + ' ' + 'x'.join(str(k) for k in self.vasp_run_inputs_dictionary['kpoint_subdivisions_list']) + self.vasp_run_inputs_dictionary['kpoint_scheme'][0] + ' disp_step=' + str(self.displacement_finite_differrences_step_size) + 'A'
+		file += ''.join(self.reference_structure.get_species_list()) + '3' + ' a=' + str(self.reference_structure.lattice[0][0]/2.0) + 'A ediff=' + str(self.vasp_run_inputs_dictionary['ediff']) + ' encut=' + str(self.vasp_run_inputs_dictionary['encut']) + ' ' + 'x'.join(str(k) for k in self.vasp_run_inputs_dictionary['kpoint_subdivisions_list']) + self.vasp_run_inputs_dictionary['kpoint_scheme'][0] + ' disp_step=' + str(self.displacement_finite_differrences_step_size) + 'A'
 
 
 		Path.make(self.path)
@@ -165,7 +165,7 @@ class DerivativeEvaluator(object):
 						file += str(strain) + " " + str(self.get_displacement_second_derivative(path, structure, displacement_variable_1.index, displacement_variable_2.index))
 
 					file += ''
-					
+
 		file.write_to_path(self.status_file_path)
 
 
