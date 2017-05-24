@@ -62,7 +62,6 @@ class EpitaxialRelaxer(object):
 		Path.make(path)
 
 		self.initialize_vasp_relaxations()
-		self.update()
 
 
 	def initialize_vasp_relaxations(self):

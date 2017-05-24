@@ -8,6 +8,7 @@ from fpctoolkit.util.path import Path
 from fpctoolkit.phonon.eigen_structure import EigenStructure
 from fpctoolkit.structure_prediction.taylor_expansion.variable import Variable
 from fpctoolkit.io.file import File
+from fpctoolkit.workflow.vasp_run import VaspRun
 
 
 
@@ -19,7 +20,7 @@ class DerivativeEvaluator(object):
 	"""
 
 	def __init__(self, path, reference_structure, hessian, reference_completed_vasp_relaxation_run, vasp_run_inputs_dictionary, 
-		perturbation_magnitudes_dictionary, displacement_finite_differrences_step_size, status_file_path):
+		perturbation_magnitudes_dictionary, displacement_finite_differrences_step_size, status_file_path, variable_specialty_points_dictionary=None):
 		"""
 		
 		perturbation_magnitudes_dictionary should look like {'strain': 0.02, 'displacement': 0.01} with strain as fractional and displacement in angstroms
@@ -33,6 +34,8 @@ class DerivativeEvaluator(object):
 			'npar': 1 (optional),
 			other incar params
 		}
+
+		variable_specialty_points_dictionary = {'u1': [0.2, 0.5, 0.8], 'e3': [0.01, 0.002]}
 		"""		
 
 
@@ -54,6 +57,7 @@ class DerivativeEvaluator(object):
 
 		self.status_file_path = status_file_path
 
+		self.variable_specialty_points_dictionary = variable_specialty_points_dictionary
 
 
 		self.strain_variables_list = []
@@ -92,52 +96,58 @@ class DerivativeEvaluator(object):
 
 		Path.make(self.path)
 
-		self.vasp_static_run_sets_list = []
 
-		#u^2 and u^4 coefficients
-		for displacement_variable in self.displacement_variables_list:
-			print str(displacement_variable)
+		perturbation_magnitude_lists_dictionary = {
+			'displacement': [self.perturbation_magnitudes_dictionary['displacement']*i for i in range(1, 12)],
+			'strain': [self.perturbation_magnitudes_dictionary['strain']*i for i in range(-3, 4)]
+			} 
 
-			file += str(displacement_variable) + ' Energy'
 
-			vasp_static_run_set = self.get_pure_displacement_vasp_static_run_set(displacement_variable.index)
+		total_variables_list = self.displacement_variables_list + self.strain_variables_list
 
-			if vasp_static_run_set.complete:
-				displacement_magnitudes_list = self.get_pure_eigen_chromosome_components_from_distorted_structures_list(vasp_static_run_set.get_final_structures_list())
-				energies_list = vasp_static_run_set.get_final_energies_list()
+		#u^2, u^4, and e^2 coefficients
+		for variable in total_variables_list:
+			print str(variable)
 
+			file += str(variable) + ' Energy'
+
+			
+			perturbation_magnitudes_list = copy.deepcopy(perturbation_magnitude_lists_dictionary[variable.type_string])
+
+			if str(variable) in self.variable_specialty_points_dictionary:
+				for additional_perturbation_magnitude in self.variable_specialty_points_dictionary[str(variable)]:
+					perturbation_magnitudes_list.append(additional_perturbation_magnitude)
+
+			perturbation_magnitudes_list = sorted(perturbation_magnitudes_list)
+
+			print "Pert list is " + str(perturbation_magnitudes_list)
+
+			energies_list = []
+			for perturbation_magnitude in perturbation_magnitudes_list:
+				eigen_chromosome = [0.0]*(3*self.reference_structure.site_count)
+
+				if variable.type_string == 'dispalcement':
+					add_index = 6
+				else:
+					add_index = 0
+
+				eigen_chromosome[variable.index + add_index] = perturbation_magnitude				
+
+				energies_list += self.get_energy_of_eigen_chromosome(path=Path.join(self.get_extended_path(str(variable)), str(perturbation_magnitude)), eigen_chromosome=eigen_chromosome)
+
+			if variable.type_string == 'displacement':
+				#Due to centrosymmetry, we know the negative chromosomes have equal energy
 				for i in range(len(energies_list)-1, -1, -1):
-					file += str(-1.0*displacement_magnitudes_list[i]) + " " + str(energies_list[i])
+					file += str(-1.0*perturbation_magnitudes_list[i]) + " " + str(energies_list[i])
 
 				file += "0.0 " + str(self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False))
+			
 
-				for i in range(len(energies_list)):
-					file += str(displacement_magnitudes_list[i]) + " " + str(energies_list[i])
+			for i in range(len(energies_list)):
+				file += str(perturbation_magnitudes_list[i]) + " " + str(energies_list[i])
 
-				file += ''
-
-			else:
-				vasp_static_run_set.update()
-
-
-		#e^2 terms
-		for strain_variable in self.strain_variables_list:
-			print str(strain_variable)
-
-			file += str(strain_variable) + ' Energy'
-
-			vasp_static_run_set = self.get_pure_strain_vasp_static_run_set(strain_variable.index)
-
-			if vasp_static_run_set.complete:
-				strain_magnitudes_list = self.get_pure_eigen_chromosome_components_from_distorted_structures_list(vasp_static_run_set.get_final_structures_list())
-				energies_list = vasp_static_run_set.get_final_energies_list()
-
-				for i in range(len(energies_list)):
-					file += str(strain_magnitudes_list[i]) + " " +  str(energies_list[i])
-
-				file += ''
-			else:
-				vasp_static_run_set.update()
+			file += ''
+			
 
 		#e*u^2 terms
 		for strain_variable in self.strain_variables_list:
@@ -167,6 +177,38 @@ class DerivativeEvaluator(object):
 					file += ''
 
 		file.write_to_path(self.status_file_path)
+
+
+	def get_energy_of_eigen_chromosome(path, eigen_chromosome):
+
+		structure = self.get_distorted_structure_from_eigen_chromosome(eigen_chromosome)
+
+		run_inputs = copy.deepcopy(self.vasp_run_inputs_dictionary)
+
+		if 'submission_node_count' in run_inputs:
+			node_count = run_inputs.pop('submission_node_count')
+		else:
+			node_count == None
+
+		kpoints = Kpoints(scheme_string=run_inputs.pop('kpoint_scheme'), subdivisions_list=run_inputs.pop('kpoint_subdivisions_list'))
+		incar = IncarMaker.get_static_incar(run_inputs)
+
+		input_set = VaspInputSet(structure, kpoints, incar, auto_change_lreal=('lreal' not in run_inputs), auto_change_npar=('npar' not in run_inputs))
+
+		if node_count != None:
+			input_set.set_node_count(node_count)
+
+			if 'npar' not in run_inputs:
+				input_set.set_npar_from_number_of_cores()
+
+		vasp_run = VaspRun(path=path, input_set=input_set, wavecar_path=self.reference_completed_vasp_relaxation_run.get_wavecar_path())
+
+		vasp_run.update()
+
+		if vasp_run.complete:
+			return vasp_run.get_final_energy(per_atom=False)
+		else:
+			return None
 
 
 	def get_pure_displacement_vasp_static_run_set(self, displacement_variable_index):
