@@ -173,14 +173,14 @@ class DerivativeEvaluator(object):
 					file += str(strain_variable) + ' d^2E/d' + str(displacement_variable_1) + 'd' + str(displacement_variable_2)
 
 
-					path = self.get_extended_path(str(strain_variable) + str(displacement_variable_1) + "_" + str(displacement_variable_2))
+					path = self.get_extended_path(str(strain_variable) + "_" + str(displacement_variable_1) + "_" + str(displacement_variable_2))
 					Path.make(path)
 
 
 					for i in range(-3, 4):
 						strain = i*self.perturbation_magnitudes_dictionary['strain']
 
-						calculation_path = Path.join(path, str(strain).replace('.', 'o').replace('-', 'n'))
+						calculation_path = Path.join(path, str(strain).replace('-', 'n'))
 						
 						eigen_chromosome = [0.0]*(3*self.reference_structure.site_count)
 						eigen_chromosome[strain_variable.index] = strain
