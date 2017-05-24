@@ -191,6 +191,8 @@ class DerivativeEvaluator(object):
 
 	def get_energy_of_eigen_chromosome(self, path, eigen_chromosome):
 
+		print "chrom " + str(eigen_chromosome)
+
 		structure = self.get_distorted_structure_from_eigen_chromosome(eigen_chromosome)
 
 		run_inputs = copy.deepcopy(self.vasp_run_inputs_dictionary)
