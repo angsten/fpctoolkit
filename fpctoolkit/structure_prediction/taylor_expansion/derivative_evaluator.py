@@ -9,6 +9,10 @@ from fpctoolkit.phonon.eigen_structure import EigenStructure
 from fpctoolkit.structure_prediction.taylor_expansion.variable import Variable
 from fpctoolkit.io.file import File
 from fpctoolkit.workflow.vasp_run import VaspRun
+from fpctoolkit.io.vasp.incar_maker import IncarMaker
+from fpctoolkit.io.vasp.kpoints import Kpoints
+from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
+from fpctoolkit.structure.structure import Structure
 
 
 
