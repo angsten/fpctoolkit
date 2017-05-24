@@ -57,7 +57,10 @@ class DerivativeEvaluator(object):
 
 		self.status_file_path = status_file_path
 
-		self.variable_specialty_points_dictionary = variable_specialty_points_dictionary
+		if variable_specialty_points_dictionary == None:
+			self.variable_specialty_points_dictionary = {}
+		else:
+			self.variable_specialty_points_dictionary = variable_specialty_points_dictionary
 
 
 		self.strain_variables_list = []
@@ -147,7 +150,7 @@ class DerivativeEvaluator(object):
 				file += str(perturbation_magnitudes_list[i]) + " " + str(energies_list[i])
 
 			file += ''
-			
+
 
 		#e*u^2 terms
 		for strain_variable in self.strain_variables_list:
