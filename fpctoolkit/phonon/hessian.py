@@ -70,6 +70,7 @@ class Hessian(object):
 
 		for i, eigen_pair in enumerate(self.get_sorted_hessian_eigen_pairs_list()):
 			file += "Index: " + str(i) + "\n" + str(eigen_pair)
+			file += ''
 
 		file.write_to_path(file_path)
 

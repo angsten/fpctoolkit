@@ -166,6 +166,9 @@ class DerivativeEvaluator(object):
 					if not j == m:
 						continue
 
+					path = self.get_extended_path(str(strain_variable) + str(displacement_variable_1) + "_" + str(displacement_variable_2))
+					Path.make(path)
+
 					displacement_variable_2 = self.displacement_variables_list[j]
 
 					print str(strain_variable) + ' d^2E/d' + str(displacement_variable_1) + 'd' + str(displacement_variable_2)
@@ -175,14 +178,14 @@ class DerivativeEvaluator(object):
 					for i in range(-3, 4):
 						strain = i*self.perturbation_magnitudes_dictionary['strain']
 
-						path = self.get_extended_path(str(strain_variable) + str(displacement_variable_1) + "_" + str(displacement_variable_2) + "_" + str(strain).replace('.', 'o').replace('-', 'n'))
+						calculation_path = Path.join(path, str(strain).replace('.', 'o').replace('-', 'n'))
 						
 						eigen_chromosome = [0.0]*(3*self.reference_structure.site_count)
 						eigen_chromosome[strain_variable.index] = strain
 
 						structure = self.get_distorted_structure_from_eigen_chromosome(eigen_chromosome)
 
-						file += str(strain) + " " + str(self.get_displacement_second_derivative(path, structure, displacement_variable_1.index, displacement_variable_2.index))
+						file += str(strain) + " " + str(self.get_displacement_second_derivative(calculation_path, structure, displacement_variable_1.index, displacement_variable_2.index))
 
 					file += ''
 
@@ -191,7 +194,7 @@ class DerivativeEvaluator(object):
 
 	def get_energy_of_eigen_chromosome(self, path, eigen_chromosome):
 
-		print "chrom " + str(eigen_chromosome)
+		# print "chrom " + str(eigen_chromosome)
 
 		structure = self.get_distorted_structure_from_eigen_chromosome(eigen_chromosome)
 
@@ -326,7 +329,6 @@ class DerivativeEvaluator(object):
 
 			perturbed_structures_list.append(eigen_structure.get_distorted_structure())
 
-		perturbed_structures_list
 
 		vasp_static_run_set = VaspStaticRunSet(path=path, structures_list=perturbed_structures_list, vasp_run_inputs_dictionary=self.vasp_run_inputs_dictionary, 
 			wavecar_path=self.reference_completed_vasp_relaxation_run.get_wavecar_path())
