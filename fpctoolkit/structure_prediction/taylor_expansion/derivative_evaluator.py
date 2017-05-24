@@ -39,7 +39,7 @@ class DerivativeEvaluator(object):
 			other incar params
 		}
 
-		variable_specialty_points_dictionary = {'u1': [0.2, 0.5, 0.8], 'e3': [0.01, 0.002]}
+		variable_specialty_points_dictionary = {'u_1': [0.2, 0.5, 0.8], 'e_3': [0.01, 0.002]}
 		"""		
 
 
