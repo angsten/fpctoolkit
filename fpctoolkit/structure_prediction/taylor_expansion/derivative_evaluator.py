@@ -166,14 +166,16 @@ class DerivativeEvaluator(object):
 					if not j == m:
 						continue
 
-					path = self.get_extended_path(str(strain_variable) + str(displacement_variable_1) + "_" + str(displacement_variable_2))
-					Path.make(path)
-
 					displacement_variable_2 = self.displacement_variables_list[j]
 
 					print str(strain_variable) + ' d^2E/d' + str(displacement_variable_1) + 'd' + str(displacement_variable_2)
 
 					file += str(strain_variable) + ' d^2E/d' + str(displacement_variable_1) + 'd' + str(displacement_variable_2)
+
+
+					path = self.get_extended_path(str(strain_variable) + str(displacement_variable_1) + "_" + str(displacement_variable_2))
+					Path.make(path)
+
 
 					for i in range(-3, 4):
 						strain = i*self.perturbation_magnitudes_dictionary['strain']
