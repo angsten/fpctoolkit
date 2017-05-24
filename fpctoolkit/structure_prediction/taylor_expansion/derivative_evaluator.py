@@ -182,7 +182,7 @@ class DerivativeEvaluator(object):
 		file.write_to_path(self.status_file_path)
 
 
-	def get_energy_of_eigen_chromosome(path, eigen_chromosome):
+	def get_energy_of_eigen_chromosome(self, path, eigen_chromosome):
 
 		structure = self.get_distorted_structure_from_eigen_chromosome(eigen_chromosome)
 
