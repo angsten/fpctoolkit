@@ -114,6 +114,9 @@ class DerivativeEvaluator(object):
 
 		#u^2, u^4, and e^2 coefficients
 		for variable in total_variables_list:
+			variable_path = self.get_extended_path(str(variable))
+			Path.make(variable_path)
+
 			print str(variable)
 
 			file += str(variable) + ' Energy'
@@ -140,7 +143,7 @@ class DerivativeEvaluator(object):
 
 				eigen_chromosome[variable.index + add_index] = perturbation_magnitude				
 
-				energies_list += self.get_energy_of_eigen_chromosome(path=Path.join(self.get_extended_path(str(variable)), str(perturbation_magnitude)), eigen_chromosome=eigen_chromosome)
+				energies_list += self.get_energy_of_eigen_chromosome(path=Path.join(variable_path, str(perturbation_magnitude)), eigen_chromosome=eigen_chromosome)
 
 			if variable.type_string == 'displacement':
 				#Due to centrosymmetry, we know the negative chromosomes have equal energy
