@@ -149,7 +149,7 @@ if __name__ == '__main__':
 	    'kpoint_subdivisions_lists': [kpoint_subdivisions_list],
 	    'ediff': [1e-4, 1e-6, 1e-8],
 	    'encut': [encut],
-	    'submission_node_count': 1,
+	    'submission_node_count': [1],
 	    'submission_script_modification_keys_list': ['100'],
 	    'lwave': [True],
 	    'lreal': [False],
