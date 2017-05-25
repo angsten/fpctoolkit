@@ -103,7 +103,7 @@ if __name__ == '__main__':
 	#######################################################################################################
 
 	#which misfit strains to run expansion approximation scheme at 
-	misfit_strains_list = [-0.02]
+	misfit_strains_list = [0.0]
 
 	variable_specialty_points_dictionary_set = {}
 	#variable_specialty_points_dictionary_set[-0.02] = {
@@ -125,9 +125,9 @@ if __name__ == '__main__':
 	input_dictionary['perturbation_magnitudes_dictionary'] = {'strain': 0.01, 'displacement': 0.04}
 
 
-	ediff = 1e-6
-	dfpt_ediff = 1e-7
-	encut = 500
+	ediff = 1e-7
+	dfpt_ediff = 1e-8
+	encut = 800
 	kpoint_scheme = 'Monkhorst'
 	kpoint_subdivisions_list = [3, 3, 3]
 
@@ -149,6 +149,7 @@ if __name__ == '__main__':
 	    'kpoint_subdivisions_lists': [kpoint_subdivisions_list],
 	    'ediff': [1e-4, 1e-6, 1e-8],
 	    'encut': [encut],
+	    'submission_node_count': 1,
 	    'submission_script_modification_keys_list': ['100'],
 	    'lwave': [True],
 	    'lreal': [False],
