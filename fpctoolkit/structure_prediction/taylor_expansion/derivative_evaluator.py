@@ -223,6 +223,7 @@ class DerivativeEvaluator(object):
 		vasp_run.update()
 
 		if vasp_run.complete:
+			vasp_run.delete_wavecar_if_complete()
 			return vasp_run.get_final_energy(per_atom=False)
 		else:
 			return None
@@ -331,11 +332,12 @@ class DerivativeEvaluator(object):
 
 			perturbed_structures_list.append(eigen_structure.get_distorted_structure())
 
-
 		vasp_static_run_set = VaspStaticRunSet(path=path, structures_list=perturbed_structures_list, vasp_run_inputs_dictionary=self.vasp_run_inputs_dictionary, 
 			wavecar_path=self.reference_completed_vasp_relaxation_run.get_wavecar_path())
 
 		if vasp_static_run_set.complete:
+
+			vasp_static_run_set.delete_wavecars_of_completed_runs()
 
 			term_factors_list = central_difference_coefficients_dictionary['1']['factors']
 
