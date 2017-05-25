@@ -67,7 +67,7 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 
 
 	
-	variable_specialty_points_dictionary = input_dictionary['variable_specialty_points_dictionary_set'][misfit_strain]
+	variable_specialty_points_dictionary = input_dictionary['variable_specialty_points_dictionary_set'][misfit_strain] if input_dictionary.has_key(misfit_strain) else {}
        
 	derivative_evaluation_path = Path.join(path, 'expansion_coefficient_calculations')
 	derivative_evaluator = DerivativeEvaluator(path=derivative_evaluation_path, reference_structure=relaxed_structure, hessian=hessian, reference_completed_vasp_relaxation_run=relaxation,
@@ -135,8 +135,12 @@ if __name__ == '__main__':
 
 	#base_path = Path.join("./", "".join(input_dictionary['species_list']) + "3")
 	base_path = './'
-	
-	Path.make(base_path)
+	expansion_path = Path.join(base_path, 'expansions')
+	epitaxial_path = Path.join(base_path, 'epitaxial_relaxations')
+
+	Path.make(expansion_path)
+
+
 	
 	initial_relaxation_input_dictionary= {
 	    'external_relaxation_count': 3,
@@ -199,19 +203,27 @@ if __name__ == '__main__':
 
 	for misfit_strain in misfit_strains_list:
 
-		run_path = Path.join(base_path, str(misfit_strain).replace('-', 'n'))
+		run_path = Path.join(expansion_path, str(misfit_strain).replace('-', 'n'))
 		
-		sorted_uniques = run_misfit_strain(path=run_path, misfit_strain=misfit_strain, input_dictionary=input_dictionary, initial_relaxation_input_dictionary=initial_relaxation_input_dictionary,
+		sorted_unique_triplets = run_misfit_strain(path=run_path, misfit_strain=misfit_strain, input_dictionary=input_dictionary, initial_relaxation_input_dictionary=initial_relaxation_input_dictionary,
 				  dfpt_incar_settings=dfpt_incar_settings, derivative_evaluation_vasp_run_inputs_dictionary=derivative_evaluation_vasp_run_inputs_dictionary,
 				  minima_relaxation_input_dictionary=minima_relaxation_input_dictionary, epitaxial_relaxation_input_dictionary=epitaxial_relaxation_input_dictionary)
 			
-	        #curtailed_sorted_relaxations = sorted_relaxations[:5]
-				
-	        #initial_structures_list += [data_triplet[0].final_structure for data_triplet in curtailed_sorted_relaxations]
+		if sorted_unique_triplets:
+	        curtailed_sorted_triplets = sorted_unique_triplets[:8]		
+	        initial_structures_list += [data_triplet[0].final_structure for data_triplet in curtailed_sorted_triplets]
 
 
-	#if len(initial_epitaxial_structures_list) > 0:
-	        #epitaxy_path = Path.join(path, 'epitaxial_relaxations')
-	        #epitaxial_relaxer = EpitaxialRelaxer(path=epitaxy_path, initial_structures_list=initial_epitaxial_structures_list, vasp_relaxation_inputs_dictionary=epitaxial_relaxation_input_dictionary, reference_lattice_constant=3.86, misfit_strains_list=[-0.04, -0.02, 0.0, 0.02, 0.04], supercell_dimensions_list=input_dictionary['supercell_dimensions_list'])
-		#epitaxial_relaxer.update()
-		#NOTE: This epitaxial relaxer needs to have a memory of past initial structures' eigen_chromosomes so that duplicates are not rerun
+	#we need one more uniqueness test here to filter out similar structures between the different expansion runs at different misfit strains. The exx and eyy of the chromosome will be different - need to blank those out.
+
+	#Note - get rid of initial unique pass inside the above function and do all unique testing here
+
+
+	#maybe don't run this until all structures have been determined
+	if len(initial_epitaxial_structures_list) > 0:
+		Path.make(epitaxial_path)
+
+	    epitaxial_relaxer = EpitaxialRelaxer(path=epitaxial_path, initial_structures_list=initial_epitaxial_structures_list, vasp_relaxation_inputs_dictionary=epitaxial_relaxation_input_dictionary, 
+	    	reference_lattice_constant=3.86, misfit_strains_list=[-0.04, -0.02, 0.0, 0.02, 0.04], supercell_dimensions_list=input_dictionary['supercell_dimensions_list'])
+		
+		epitaxial_relaxer.update()
