@@ -180,3 +180,24 @@ class Structure(object):
 				site['position'][i] += random.uniform(-1.0*max_displacement_magnitude, max_displacement_magnitude)
 
 		self.convert_sites_to_coordinate_mode(original_coordinate_mode)
+
+	def is_equivalent_to_structure(self, other_structure):
+		"""
+		Returns true if lattice vectors and atomic positions are all the same (within floating-point accuracy).
+		"""
+
+		if self.sites.get_coordinate_mode() != other_structure.sites.get_coordinate_mode():
+			raise Exception("Coordinate modes are different - cannot compare the two structures.")
+
+		for i, lattice_vector in self.lattice.to_array():
+			for j in range(3):
+				if abs(lattice_vector[j]-other_structure.lattice[i][j]) > 0.00001:
+					return False
+
+		for i, site in enumerate(self.sites):
+			for j in range(3):
+				if abs(site['position'][j]-other_structure.sites[i]['position'][j]) > 0.00001:
+					return False
+
+		return True
+

@@ -68,8 +68,6 @@ class EpitaxialRelaxer(object):
 		"""
 		"""
 
-		self.vasp_relaxations_list = []
-
 		for misfit_strain in self.misfit_strains_list:
 			lattice_constant = self.reference_lattice_constant*(1.0+misfit_strain)
 
@@ -78,6 +76,11 @@ class EpitaxialRelaxer(object):
 			Path.make(misfit_path)
 
 			for i, initial_structure in enumerate(self.initial_structures_list):
+
+				if self.structure_is_duplicate(initial_structure):
+					print "Duplicate structure found - skipping"
+					continue
+
 				structure = copy.deepcopy(initial_structure)
 
 				if abs(structure.lattice[0][1]) > 0.0 or abs(structure.lattice[0][2]) > 0.0 or abs(structure.lattice[1][0]) > 0.0 or abs(structure.lattice[1][2]) > 0.0:
@@ -94,23 +97,50 @@ class EpitaxialRelaxer(object):
 
 				relaxation = VaspRelaxation(path=relax_path, initial_structure=structure, input_dictionary=self.vasp_relaxation_inputs_dictionary)
 
-				self.vasp_relaxations_list.append(relaxation)
+				initial_structure.to_poscar_file_path(Path.join(relax_path, 'original_initial_structure'))
 
 
+	def structure_is_duplicate(self, structure):
+		"""
+		Returns true if this has been the initial structure for any previous relaxation
+		"""
+
+		for i in range(10000):
+			relax_path = Path.join(misfit_path, 'structure_' + str(i))
+
+			if not Path.exists(relax_path):
+				return False
+			else:
+				comparison_structure = Structure(file_path=Path.join(relax_path, 'original_initial_structure'))
+
+				if structure.is_equivalent_to_structure(comparison_structure):
+					return True
 
 
 	def update(self):
 
-		for relaxation in self.vasp_relaxations_list:
+		for i in range(10000):
+			relax_path = Path.join(misfit_path, 'structure_' + str(i))
+
+			if not Path.exists(relax_path):
+				break
+
+			relaxation = VaspRelaxation(path=relax_path)
+
 			relaxation.update()
 
 	@property
 	def complete(self):
-		for relaxation in self.vasp_relaxations_list:
-			if not relaxation.complete:
-				return False
+		for i in range(10000):
+			relax_path = Path.join(misfit_path, 'structure_' + str(i))
 
-		return True
+			if not Path.exists(relax_path):
+				return True
+			else:
+				relaxation = VaspRelaxation(path=relax_path)
+
+				if not relaxation.complete:
+					return False
 
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)
