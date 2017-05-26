@@ -16,6 +16,7 @@ from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 from fpctoolkit.structure_prediction.taylor_expansion.minima_relaxer import MinimaRelaxer
 from fpctoolkit.io.file import File
 from fpctoolkit.workflow.epitaxial_relaxer import EpitaxialRelaxer
+import sys
 
 
 def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_input_dictionary, dfpt_incar_settings, derivative_evaluation_vasp_run_inputs_dictionary, minima_relaxation_input_dictionary,
@@ -65,6 +66,7 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 	hessian.print_eigenvalues_to_file(Path.join(path, 'output_eigen_values'))
 	hessian.print_eigen_components_to_file(Path.join(path, 'output_eigen_components'))
 
+	#sys.exit()
 
 	
 	variable_specialty_points_dictionary = input_dictionary['variable_specialty_points_dictionary_set'][misfit_strain] if input_dictionary.has_key(misfit_strain) else {}
