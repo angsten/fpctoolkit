@@ -166,6 +166,9 @@ class DerivativeEvaluator(object):
 					if not j == m:
 						continue
 
+					if str(strain_variable) in ['e_4', 'e_5']:##########################################temp remove!!!!!!!!!!!!
+						continue
+
 					displacement_variable_2 = self.displacement_variables_list[j]
 
 					print str(strain_variable) + ' d^2E/d' + str(displacement_variable_1) + 'd' + str(displacement_variable_2)

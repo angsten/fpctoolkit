@@ -178,7 +178,7 @@ if __name__ == '__main__':
 	    'external_relaxation_count': 4,
 	    'kpoint_schemes_list': [kpoint_scheme],
 	    'kpoint_subdivisions_lists': [kpoint_subdivisions_list],
-	    'ediff': [1e-4, 1e-5, 1e-6. 1e-7],
+	    'ediff': [1e-4, 1e-5, 1e-6, 1e-7],
 	    'encut': [encut],
 	    'submission_script_modification_keys_list': ['100'],
 	    'lreal': [False],
