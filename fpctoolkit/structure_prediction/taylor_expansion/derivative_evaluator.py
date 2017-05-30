@@ -105,7 +105,7 @@ class DerivativeEvaluator(object):
 
 
 		perturbation_magnitude_lists_dictionary = {
-			'displacement': [self.perturbation_magnitudes_dictionary['displacement']*i for i in range(1, 8)],
+			'displacement': [self.perturbation_magnitudes_dictionary['displacement']*i for i in range(0, 8)],
 			'strain': [self.perturbation_magnitudes_dictionary['strain']*i for i in range(-2, 3)]
 			} 
 
@@ -147,10 +147,10 @@ class DerivativeEvaluator(object):
 
 			if variable.type_string == 'displacement':
 				#Due to centrosymmetry, we know the negative chromosomes have equal energy
-				for i in range(len(energies_list)-1, -1, -1):
+				for i in range(len(energies_list)-1, 0, -1):
 					file += str(-1.0*perturbation_magnitudes_list[i]) + " " + str(energies_list[i])
 
-				file += "0.0 " + str(self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False))
+				#file += "0.0 " + str(self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False))
 			
 
 			for i in range(len(energies_list)):
