@@ -180,7 +180,7 @@ class DerivativeEvaluator(object):
 					Path.make(path)
 
 
-					for i in range(-1, 2):
+					for i in range(-2, 3):
 						strain = i*self.perturbation_magnitudes_dictionary['strain']*0.5
 
 						calculation_path = Path.join(path, str(strain).replace('-', 'n'))
