@@ -38,9 +38,17 @@ def get_plot(file_lines, header_data):
 	plt.xlabel(x_label_string, size=16)
 	plt.ylabel(y_label_string, size=16)
 
-	fitting_parameters = np.polyfit(x_data, y_data, 4)
+	if x_label_string in ['e_3', 'e_4', 'e_5']:
+		order = 2
+	else:
+		order = 4
 
-	f = lambda x: fitting_parameters[0]*x**4.0 + fitting_parameters[1]*x**3.0 + fitting_parameters[2]*x**2.0 + fitting_parameters[3]*x + fitting_parameters[4]
+	fitting_parameters = np.polyfit(x_data, y_data, order)
+
+	if order == 2:
+		f = lambda x: fitting_parameters[0]*x**2.0 + fitting_parameters[1]*x + fitting_parameters[2]
+	elif order == 4:
+		f = lambda x: fitting_parameters[0]*x**4.0 + fitting_parameters[1]*x**3.0 + fitting_parameters[2]*x**2.0 + fitting_parameters[3]*x + fitting_parameters[4]
 
 	fit_x_data = []
 
@@ -101,7 +109,7 @@ header_data = header_line.split(' ') #SrTiO3 a=3.79 encut=600eV kpoints=3x3x3M d
 
 
 
-pp = PdfPages('C:\Users\Tom\Desktop\derivative_fits/' + header_data[0] + "_" + header_data[1] + '.pdf')
+pp = PdfPages('C:\Users\Tom\Desktop\derivative_fits/' + header_data[0] + "/" + header_data[1] + '.pdf')
 
 
 start_index = 1

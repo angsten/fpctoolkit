@@ -105,8 +105,8 @@ class DerivativeEvaluator(object):
 
 
 		perturbation_magnitude_lists_dictionary = {
-			'displacement': [self.perturbation_magnitudes_dictionary['displacement']*i for i in range(1, 12)],
-			'strain': [self.perturbation_magnitudes_dictionary['strain']*i for i in range(-3, 4)]
+			'displacement': [self.perturbation_magnitudes_dictionary['displacement']*i for i in range(1, 8)],
+			'strain': [self.perturbation_magnitudes_dictionary['strain']*i for i in range(-2, 3)]
 			} 
 
 
@@ -177,8 +177,8 @@ class DerivativeEvaluator(object):
 					Path.make(path)
 
 
-					for i in range(-2, 3):
-						strain = i*self.perturbation_magnitudes_dictionary['strain']
+					for i in range(-1, 2):
+						strain = i*self.perturbation_magnitudes_dictionary['strain']*0.5
 
 						calculation_path = Path.join(path, str(strain).replace('-', 'n'))
 						
@@ -320,7 +320,9 @@ class DerivativeEvaluator(object):
 		displacement_factor = self.displacement_finite_differrences_step_size
 
 		central_difference_coefficients_dictionary = {}
-		central_difference_coefficients_dictionary['1'] =  {'factors':[0.0, -1.0, 8.0, -8.0, 1.0], 'perturbations_list': [[2.0], [1.0], [-1.0], [-2.0]]}
+		#central_difference_coefficients_dictionary['1'] =  {'factors':[0.0, -1.0, 8.0, -8.0, 1.0], 'perturbations_list': [[2.0], [1.0], [-1.0], [-2.0]]}
+
+		central_difference_coefficients_dictionary['1'] =  {'factors':[0.0, 1.0, -1.0], 'perturbations_list': [[1.0], [-1.0]]}
 
 
 		perturbed_structures_list = []
@@ -344,7 +346,8 @@ class DerivativeEvaluator(object):
 			force_sums_list = [0.0] + self.get_force_sums(vasp_static_run_set, displacement_variable_2_index)
 
 			numerator = sum(map(lambda x, y: -x*y, term_factors_list, force_sums_list))
-			denominator = 12.0*displacement_factor
+			#denominator = 12.0*displacement_factor
+			denominator = 2.0*displacement_factor
 
 			return numerator/denominator
 
