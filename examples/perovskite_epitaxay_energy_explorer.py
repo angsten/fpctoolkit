@@ -129,7 +129,7 @@ if __name__ == '__main__':
 
 	ediff = 1e-5
 	dfpt_ediff = 1e-9
-	encut = 600
+	encut = 800
 	kpoint_scheme = 'Monkhorst'
 	kpoint_subdivisions_list = [3, 3, 3]
 
