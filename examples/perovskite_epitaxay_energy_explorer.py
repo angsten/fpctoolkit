@@ -76,6 +76,7 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 						   vasp_run_inputs_dictionary=derivative_evaluation_vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary,
 						   displacement_finite_differrences_step_size=displacement_finite_differrences_step_size, status_file_path=Path.join(path, 'output_derivative_plot_data'),
 						   variable_specialty_points_dictionary=variable_specialty_points_dictionary)
+	
 	derivative_evaluator.update()
 
 

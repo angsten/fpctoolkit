@@ -325,7 +325,10 @@ class DerivativeEvaluator(object):
 		central_difference_coefficients_dictionary = {}
 		#central_difference_coefficients_dictionary['1'] =  {'factors':[0.0, -1.0, 8.0, -8.0, 1.0], 'perturbations_list': [[2.0], [1.0], [-1.0], [-2.0]]}
 
-		central_difference_coefficients_dictionary['1'] =  {'factors':[0.0, 1.0, -1.0], 'perturbations_list': [[1.0], [-1.0]]}
+		#central_difference_coefficients_dictionary['1'] =  {'factors':[0.0, 1.0, -1.0], 'perturbations_list': [[1.0], [-1.0]]}
+
+
+		central_difference_coefficients_dictionary['1'] =  {'factors':[0.0, 1.0, -1.0], 'perturbations_list': [[1.0]]} #NOTE!! assumes centrosymmetry - only works if atoms are at ideal perov positions
 
 
 		perturbed_structures_list = []
@@ -346,7 +349,10 @@ class DerivativeEvaluator(object):
 
 			term_factors_list = central_difference_coefficients_dictionary['1']['factors']
 
-			force_sums_list = [0.0] + self.get_force_sums(vasp_static_run_set, displacement_variable_2_index)
+
+			force_sum = self.get_force_sums(vasp_static_run_set, displacement_variable_2_index)[0] #THIS ASSUMES CENTROSYMMETRY AND ONLY ONE ELEMENT IN FORCE SUMS LIST
+
+			force_sums_list = [0.0, force_sum, -1.0*force_sum] ################assumes centrosymmetry and one element in force sumes list
 
 			numerator = sum(map(lambda x, y: -x*y, term_factors_list, force_sums_list))
 			#denominator = 12.0*displacement_factor
@@ -360,6 +366,20 @@ class DerivativeEvaluator(object):
 			return None
 
 
+	def get_force_sums(self, vasp_static_run_set, first_displacement_index):
+		"""
+		Returns a list of weighted force sums for each static calculation. Basically, this takes -1.0*eigenvector of the first displacement expansion term and dots
+		it with the force set of the run. This gives dE/dA
+		"""
+
+		basis_vector = np.array(self.eigen_pairs_list[first_displacement_index].eigenvector)
+
+		forces_sums_list = []
+
+		forces_lists = vasp_static_run_set.get_forces_lists()
+
+
+		return [np.dot(np.array(forces_list), basis_vector) for forces_list in forces_lists]
 
 
 
@@ -449,20 +469,7 @@ class DerivativeEvaluator(object):
 	# 	expansion_term.derivative_coefficient = numerator/denominator
 
 
-	def get_force_sums(self, vasp_static_run_set, first_displacement_index):
-		"""
-		Returns a list of weighted force sums for each static calculation. Basically, this takes -1.0*eigenvector of the first displacement expansion term and dots
-		it with the force set of the run. This gives dE/dA
-		"""
 
-		basis_vector = np.array(self.eigen_pairs_list[first_displacement_index].eigenvector)
-
-		forces_sums_list = []
-
-		forces_lists = vasp_static_run_set.get_forces_lists()
-
-
-		return [np.dot(np.array(forces_list), basis_vector) for forces_list in forces_lists]
 
 
 

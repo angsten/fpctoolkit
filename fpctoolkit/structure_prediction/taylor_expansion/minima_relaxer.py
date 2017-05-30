@@ -63,6 +63,7 @@ class MinimaRelaxer(object):
 		sorted_eigen_chromosome_energy_pairs_list = sorted(eigen_chromosome_energy_pairs_list, key=lambda x: x[0])
 
 
+		#remove redundant energies from list
 		final_pairs_list = []
 		energies_list = []
 		for eigen_chromosome_energy_pair in sorted_eigen_chromosome_energy_pairs_list:

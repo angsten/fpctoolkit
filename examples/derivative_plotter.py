@@ -46,7 +46,11 @@ def get_plot(file_lines, header_data):
 	fitting_parameters = np.polyfit(x_data, y_data, order)
 
 	if order == 2:
+		if y_label_string == 'Energy':
+			fitting_parameters[1] = 0.0
+
 		f = lambda x: fitting_parameters[0]*x**2.0 + fitting_parameters[1]*x + fitting_parameters[2]
+
 	elif order == 4:
 		f = lambda x: fitting_parameters[0]*x**4.0 + fitting_parameters[1]*x**3.0 + fitting_parameters[2]*x**2.0 + fitting_parameters[3]*x + fitting_parameters[4]
 
@@ -73,6 +77,17 @@ def get_plot(file_lines, header_data):
 	plt.savefig(pp, format='pdf')
 
 	plt.clf()
+
+
+	rnd = 2
+	if x_label_string[0] == 'u':
+		print 'u' + x_label_string[2] + 'o2 = ' + str(round(fitting_parameters[2], rnd)) + ';'
+		print 'u' + x_label_string[2] + 'o4 = ' + str(round(fitting_parameters[0], rnd)) + ';'
+	elif x_label_string[0] == 'e':
+		if y_label_string == 'Energy':
+			print 'e' + x_label_string[2] + 'o2 = ' + str(round(fitting_parameters[0], rnd)) + ';'
+		else:
+			print 'e' + x_label_string[2] + 'u' + y_label_string[-1] + 'o2 = ' + str(round(fitting_parameters[1], rnd)) + ';'
 
 	# plt.show()
 
