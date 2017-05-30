@@ -127,9 +127,9 @@ if __name__ == '__main__':
 	input_dictionary['perturbation_magnitudes_dictionary'] = {'strain': 0.01, 'displacement': 0.04}
 
 
-	ediff = 1e-7
+	ediff = 1e-5
 	dfpt_ediff = 1e-9
-	encut = 800
+	encut = 600
 	kpoint_scheme = 'Monkhorst'
 	kpoint_subdivisions_list = [3, 3, 3]
 
