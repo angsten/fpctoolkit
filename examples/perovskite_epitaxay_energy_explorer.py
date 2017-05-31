@@ -183,7 +183,7 @@ if __name__ == '__main__':
 	    'encut': [encut],
 	    'submission_script_modification_keys_list': ['100'],
 	    'lreal': [False],
-	    'potim': [0.1, 0.2, 0.4],
+	    'potim': [0.2, 0.3, 0.4],
 	    'nsw': [21, 71, 161],
 	    'addgrid': [True]
 	}

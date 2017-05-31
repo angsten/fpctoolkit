@@ -81,13 +81,24 @@ def get_plot(file_lines, header_data):
 
 	rnd = 2
 	if x_label_string[0] == 'u':
-		print 'u' + x_label_string[2] + 'o2 = ' + str(round(fitting_parameters[2], rnd)) + ';'
-		print 'u' + x_label_string[2] + 'o4 = ' + str(round(fitting_parameters[0], rnd)) + ';'
+		ulbl = x_label_string[2]
+
+		if len(x_label_string) > 3:
+			ulbl += x_label_string[3]
+
+		print 'u' + ulbl + 'o2 = ' + str(round(fitting_parameters[2], rnd)) + ';'
+		print 'u' + ulbl + 'o4 = ' + str(round(fitting_parameters[0], rnd)) + ';'
 	elif x_label_string[0] == 'e':
 		if y_label_string == 'Energy':
 			print 'e' + x_label_string[2] + 'o2 = ' + str(round(fitting_parameters[0], rnd)) + ';'
 		else:
-			print 'e' + x_label_string[2] + 'u' + y_label_string[-1] + 'o2 = ' + str(round(fitting_parameters[1], rnd)) + ';'
+			if y_label_string[-3] == '_':
+				ulbl = y_label_string[-2:]
+			else:
+				ulbl = y_label_string[-1]
+
+
+			print 'e' + x_label_string[2] + 'u' + ulbl + 'o2 = ' + str(round(fitting_parameters[1], rnd)) + ';'
 
 	# plt.show()
 
