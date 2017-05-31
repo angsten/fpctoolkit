@@ -87,9 +87,9 @@ class DerivativeEvaluator(object):
 
 		for i, eigen_pair in enumerate(sorted_eigen_pair_list):
 			if eigen_pair.is_unstable():
-				if len(displacement_indices_list) <= 6: ####################################hardcoded!
+				if len(displacement_indices_list) < 6: ####################################hardcoded!
 					displacement_indices_list.append(i)
-					
+
 		return displacement_indices_list
 
 
