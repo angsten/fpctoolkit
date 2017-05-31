@@ -86,9 +86,9 @@ class MinimaRelaxer(object):
 
 		self.vasp_relaxations_list = None
 
-		self.initialize_relaxation_list()
-
 		Path.make(path)
+
+		self.initialize_relaxation_list()
 
 
 
