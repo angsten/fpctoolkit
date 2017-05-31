@@ -24,7 +24,7 @@ class DerivativeEvaluator(object):
 	"""
 
 	def __init__(self, path, reference_structure, hessian, reference_completed_vasp_relaxation_run, vasp_run_inputs_dictionary, 
-		perturbation_magnitudes_dictionary, displacement_finite_differrences_step_size, status_file_path, variable_specialty_points_dictionary=None):
+		perturbation_magnitudes_dictionary, displacement_finite_differences_step_size, status_file_path, variable_specialty_points_dictionary=None):
 		"""
 		
 		perturbation_magnitudes_dictionary should look like {'strain': 0.02, 'displacement': 0.01} with strain as fractional and displacement in angstroms
@@ -55,7 +55,7 @@ class DerivativeEvaluator(object):
 
 		self.reference_completed_vasp_relaxation_run = reference_completed_vasp_relaxation_run
 
-		self.displacement_finite_differrences_step_size = displacement_finite_differrences_step_size
+		self.displacement_finite_differences_step_size = displacement_finite_differences_step_size
 
 		self.vasp_static_run_sets_list = None
 
@@ -99,7 +99,7 @@ class DerivativeEvaluator(object):
 
 		file = File()
 
-		file += ''.join(self.reference_structure.get_species_list()) + '3' + ' a=' + str(round(self.reference_structure.lattice[0][0]/2.0, 2)) + 'A ediff=' + str(self.vasp_run_inputs_dictionary['ediff']) + ' encut=' + str(self.vasp_run_inputs_dictionary['encut']) + ' ' + 'x'.join(str(k) for k in self.vasp_run_inputs_dictionary['kpoint_subdivisions_list']) + self.vasp_run_inputs_dictionary['kpoint_scheme'][0] + ' disp_step=' + str(self.displacement_finite_differrences_step_size) + 'A'
+		file += ''.join(self.reference_structure.get_species_list()) + '3' + ' a=' + str(round(self.reference_structure.lattice[0][0]/2.0, 2)) + 'A ediff=' + str(self.vasp_run_inputs_dictionary['ediff']) + ' encut=' + str(self.vasp_run_inputs_dictionary['encut']) + ' ' + 'x'.join(str(k) for k in self.vasp_run_inputs_dictionary['kpoint_subdivisions_list']) + self.vasp_run_inputs_dictionary['kpoint_scheme'][0] + ' disp_step=' + str(self.displacement_finite_differences_step_size) + 'A'
 
 
 		Path.make(self.path)
@@ -321,7 +321,7 @@ class DerivativeEvaluator(object):
 		Returns None if not done yet
 		"""
 
-		displacement_factor = self.displacement_finite_differrences_step_size
+		displacement_factor = self.displacement_finite_differences_step_size
 
 		central_difference_coefficients_dictionary = {}
 		#central_difference_coefficients_dictionary['1'] =  {'factors':[0.0, -1.0, 8.0, -8.0, 1.0], 'perturbations_list': [[2.0], [1.0], [-1.0], [-2.0]]}

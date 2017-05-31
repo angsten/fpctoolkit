@@ -29,7 +29,7 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 	Nx = input_dictionary['supercell_dimensions_list'][0]
 	Ny = input_dictionary['supercell_dimensions_list'][1]
 	Nz = input_dictionary['supercell_dimensions_list'][2]	
-	displacement_finite_differrences_step_size = input_dictionary['displacement_finite_differrences_step_size']	
+	displacement_finite_differences_step_size = input_dictionary['displacement_finite_differences_step_size']	
 	perturbation_magnitudes_dictionary = input_dictionary['perturbation_magnitudes_dictionary']
 
 	a = reference_lattice_constant*(1.0+misfit_strain)
@@ -74,7 +74,7 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 	derivative_evaluation_path = Path.join(path, 'expansion_coefficient_calculations')
 	derivative_evaluator = DerivativeEvaluator(path=derivative_evaluation_path, reference_structure=relaxed_structure, hessian=hessian, reference_completed_vasp_relaxation_run=relaxation,
 						   vasp_run_inputs_dictionary=derivative_evaluation_vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary,
-						   displacement_finite_differrences_step_size=displacement_finite_differrences_step_size, status_file_path=Path.join(path, 'output_derivative_plot_data'),
+						   displacement_finite_differences_step_size=displacement_finite_differences_step_size, status_file_path=Path.join(path, 'output_derivative_plot_data'),
 						   variable_specialty_points_dictionary=variable_specialty_points_dictionary)
 
 	derivative_evaluator.update()
@@ -122,7 +122,7 @@ if __name__ == '__main__':
 
 	
 	#controls finite differences step size for evaluation of displacement second derivatives
-	input_dictionary['displacement_finite_differrences_step_size'] = 0.04
+	input_dictionary['displacement_finite_differences_step_size'] = 0.04
 
 	#controls step size in plots
 	input_dictionary['perturbation_magnitudes_dictionary'] = {'strain': 0.01, 'displacement': 0.06}
