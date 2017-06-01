@@ -4,6 +4,7 @@ import numpy as np
 import copy
 import random
 from phonopy import Phonopy
+from phonopy.interface.vasp import read_vasp
 
 from fpctoolkit.io.file import File
 from fpctoolkit.io.vasp.poscar import Poscar
@@ -13,7 +14,6 @@ from fpctoolkit.structure.site_collection import SiteCollection
 from fpctoolkit.util.math.vector import Vector
 from fpctoolkit.util.random_selector import RandomSelector
 from fpctoolkit.util.path import Path
-from fpctoolkit.util.phonopy_interface.phonopy_utility import convert_structure_to_phonopy_atoms 
 
 
 
@@ -213,7 +213,7 @@ class Structure(object):
 		symprec controls the symmetry tolerance for atomic positions (in Angstroms)
 		"""
 
-		unit_cell_phonopy_structure = convert_structure_to_phonopy_atoms(self)
+		unit_cell_phonopy_structure = self.convert_structure_to_phonopy_atoms()
 		supercell_dimensions_matrix = np.diag([1, 1, 1])
 
 		phonon = Phonopy(unitcell=unit_cell_phonopy_structure, supercell_matrix=supercell_dimensions_matrix, symprec=symprec)
@@ -221,3 +221,22 @@ class Structure(object):
 		symmetry = phonon.get_symmetry()
 
 		return symmetry.get_international_table()
+
+	def convert_structure_to_phonopy_atoms(structure):
+	"""
+	Returns a PhonopyAtoms class (phonopy's representation of structures)
+	"""
+
+		temporary_write_path = Path.get_temporary_path()
+
+		Structure.validate(structure)
+
+		Path.validate_does_not_exist(temporary_write_path)
+		Path.validate_writeable(temporary_write_path)
+
+		structure.to_poscar_file_path(temporary_write_path)
+		phonopy_structure = read_vasp(temporary_write_path)
+
+		Path.remove(temporary_write_path)
+
+		return phonopy_structure
