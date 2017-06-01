@@ -105,6 +105,9 @@ if __name__ == '__main__':
 
 	#######################################################################################################
 
+	input_dictionary = {}
+	input_dictionary['species_list'] = ['Sr', 'Ti', 'O']
+
 	#which misfit strains to run expansion approximation scheme at 
 	misfit_strains_list = [-0.02, -0.01, 0.0, 0.01, 0.02]
 
@@ -114,9 +117,13 @@ if __name__ == '__main__':
 	#	'e_3': [0.45]
 	#	}
 
-	input_dictionary = {}
-	input_dictionary['species_list'] = ['Sr', 'Ti', 'O']
-	input_dictionary['reference_lattice_constant'] = 3.86
+	lattice_constants_dictionary = {}
+	lattice_constants_dictionary['SrTiO'] = 3.8610547
+	lattice_constants_dictionary['CaTiO'] = 3.81331597
+	lattice_constants_dictionary['SrHfO'] = 4.0680851
+
+	
+	input_dictionary['reference_lattice_constant'] = lattice_constants_dictionary["".join(input_dictionary['species_list'])]
 	input_dictionary['supercell_dimensions_list'] = [2, 2, 2]
 	input_dictionary['variable_specialty_points_dictionary_set'] = variable_specialty_points_dictionary_set
 
@@ -130,7 +137,7 @@ if __name__ == '__main__':
 
 	ediff = 1e-5
 	dfpt_ediff = 1e-9
-	encut = 800
+	encut = 600
 	kpoint_scheme = 'Monkhorst'
 	kpoint_subdivisions_list = [3, 3, 3]
 
@@ -167,19 +174,19 @@ if __name__ == '__main__':
 	derivative_evaluation_vasp_run_inputs_dictionary = {
 		'kpoint_scheme': kpoint_scheme,
 		'kpoint_subdivisions_list': kpoint_subdivisions_list,
-		'submission_node_count': 1,
+		#'submission_node_count': 1,
 		'encut': encut,
 		'ediff': ediff,
 		'lreal': False,
 		'addgrid': True,
-		'symprec': 1e-6
+		'symprec': 1e-7
 	}
 
 	minima_relaxation_input_dictionary = {
-	    'external_relaxation_count': 4,
+	    'external_relaxation_count': 3,
 	    'kpoint_schemes_list': [kpoint_scheme],
 	    'kpoint_subdivisions_lists': [kpoint_subdivisions_list],
-	    'ediff': [1e-4, 1e-5, 1e-6, 1e-7],
+	    'ediff': [1e-4, 1e-5, 1e-6],
 	    'encut': [encut],
 	    'submission_script_modification_keys_list': ['100'],
 	    'lreal': [False],
@@ -189,15 +196,15 @@ if __name__ == '__main__':
 	}
 
 	epitaxial_relaxation_input_dictionary = {
-	    'external_relaxation_count': 4,
+	    'external_relaxation_count': 3,
 	    'kpoint_schemes_list': [kpoint_scheme],
 	    'kpoint_subdivisions_lists': [kpoint_subdivisions_list],
-	    'ediff': [1e-6, 1e-7, 1e-8, 1e-8],
+	    'ediff': [1e-6, 1e-7, 1e-7],
 	    'encut': [encut],
 	    'submission_script_modification_keys_list': ['100'],
 	    'lwave': [True],
 	    'lreal': [False],
-	    'potim': [0.1, 0.2, 0.4],
+	    'potim': [0.2, 0.3, 0.4],
 	    'nsw': [21, 71, 161],
 	    'addgrid': [True]
 	}

@@ -97,6 +97,11 @@ class MinimaRelaxer(object):
 		self.vasp_relaxations_list = []
 
 		for i, eigen_chromosome in enumerate(self.eigen_chromosomes_list):
+
+			if i > 6: ###########################################################hardcoded value!!!!!!!!!!!
+				break
+
+
 			eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
 			eigen_structure.set_eigen_chromosome(eigen_chromosome)
 

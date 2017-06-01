@@ -120,6 +120,7 @@ class VaspRelaxation(VaspRunSet):
 	def update(self):
 
 		if self.complete:
+			self.delete_non_static_wavecars()
 			return True
 		elif self.run_count == 0 or self.get_current_vasp_run().complete:
 			self.create_next_run()
@@ -128,7 +129,6 @@ class VaspRelaxation(VaspRunSet):
 
 		return False
 
-		#delete all wavecars when finished or if True is returned
 
 	def create_next_run(self):
 		run_path = self.get_next_run_path()
@@ -240,7 +240,7 @@ class VaspRelaxation(VaspRunSet):
 	def structure_list(self):
 		"""
 		Returns a list of structures starting with the initial structure and continuing to the last run's (usually static) poscar (which should be the final structure)
-		It is assumed that the last run in the relaxation is a static calculation
+		It is assumed that the last run in the relaxation is a calculation
 		"""
 
 		return [run.initial_structure for run in self.vasp_run_list]
@@ -256,6 +256,12 @@ class VaspRelaxation(VaspRunSet):
 		"""Defaults to cpu*hours for now (best measure of total resources used)"""
 
 		return sum([run.total_time for run in self.vasp_run_list if run.complete])
+
+
+	def delete_non_static_wavecars(self):
+		for i, vasp_run in enumerate(self.vasp_run_list):
+			if i < len(self.vasp_run_list)-1:
+				vasp_run.delete_wavecar_if_complete()
 
 	def get_data_dictionary(self):
 		"""
