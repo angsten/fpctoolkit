@@ -13,7 +13,7 @@ from fpctoolkit.structure.site_collection import SiteCollection
 from fpctoolkit.util.math.vector import Vector
 from fpctoolkit.util.random_selector import RandomSelector
 from fpctoolkit.util.path import Path
-import fpctoolkit.util.phonopy_interface.phonopy_utility as phonopy_utility
+from fpctoolkit.util.phonopy_interface.phonopy_utility import convert_structure_to_phonopy_atoms 
 
 
 
@@ -213,7 +213,7 @@ class Structure(object):
 		symprec controls the symmetry tolerance for atomic positions (in Angstroms)
 		"""
 
-		unit_cell_phonopy_structure = phonopy_utility.convert_structure_to_phonopy_atoms(self)
+		unit_cell_phonopy_structure = convert_structure_to_phonopy_atoms(self)
 		supercell_dimensions_matrix = np.diag([1, 1, 1])
 
 		phonon = Phonopy(unitcell=unit_cell_phonopy_structure, supercell_matrix=supercell_dimensions_matrix, symprec=symprec)
