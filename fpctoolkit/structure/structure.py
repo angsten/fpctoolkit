@@ -223,9 +223,9 @@ class Structure(object):
 		return symmetry.get_international_table()
 
 	def convert_structure_to_phonopy_atoms(structure):
-	"""
-	Returns a PhonopyAtoms class (phonopy's representation of structures)
-	"""
+		"""
+		Returns a PhonopyAtoms class (phonopy's representation of structures)
+		"""
 
 		temporary_write_path = Path.get_temporary_path()
 
