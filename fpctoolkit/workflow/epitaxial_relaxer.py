@@ -114,6 +114,7 @@ class EpitaxialRelaxer(object):
 				comparison_structure = Structure(file_path=Path.join(relax_path, 'original_initial_structure'))
 
 				if structure.is_equivalent_to_structure(comparison_structure):
+					print "FOUND DUPLICATE in epitaxial_relaxer.py"
 					return True
 
 

@@ -3,6 +3,7 @@
 import numpy as np
 import copy
 import random
+from phonopy import Phonopy
 
 from fpctoolkit.io.file import File
 from fpctoolkit.io.vasp.poscar import Poscar
@@ -12,6 +13,10 @@ from fpctoolkit.structure.site_collection import SiteCollection
 from fpctoolkit.util.math.vector import Vector
 from fpctoolkit.util.random_selector import RandomSelector
 from fpctoolkit.util.path import Path
+import fpctoolkit.util.phonopy_interface.phonopy_utility as phonopy_utility
+
+
+
 
 class Structure(object):
 	"""
@@ -201,3 +206,18 @@ class Structure(object):
 
 		return True
 
+	def get_spacegroup_string(self, symprec=0.001):
+		"""
+		Returns string of spacegroup information like Imma (74).
+
+		symprec controls the symmetry tolerance for atomic positions (in Angstroms)
+		"""
+
+		unit_cell_phonopy_structure = phonopy_utility.convert_structure_to_phonopy_atoms(self)
+		supercell_dimensions_matrix = np.diag([1, 1, 1])
+
+		phonon = Phonopy(unitcell=unit_cell_phonopy_structure, supercell_matrix=supercell_dimensions_matrix, symprec=symprec)
+
+		symmetry = phonon.get_symmetry()
+
+		return symmetry.get_international_table()

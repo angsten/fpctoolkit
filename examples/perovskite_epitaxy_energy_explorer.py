@@ -206,7 +206,8 @@ if __name__ == '__main__':
 	    'lreal': [False],
 	    'potim': [0.2, 0.3, 0.4],
 	    'nsw': [21, 71, 161],
-	    'addgrid': [True]
+	    'addgrid': [True],
+	    'symprec': [1e-7]
 	}
 
 	initial_epitaxial_structures_list = []
@@ -221,21 +222,20 @@ if __name__ == '__main__':
 				  minima_relaxation_input_dictionary=minima_relaxation_input_dictionary, epitaxial_relaxation_input_dictionary=epitaxial_relaxation_input_dictionary)
 			
 		if sorted_unique_triplets:
-			curtailed_sorted_triplets = sorted_unique_triplets[:4]		
-			initial_structures_list += [data_triplet[0].final_structure for data_triplet in curtailed_sorted_triplets]
+			curtailed_sorted_triplets = sorted_unique_triplets[0] ##########################################################only selecting lowest energy for now		
+			initial_epitaxial_structures_list += [data_triplet[0].final_structure for data_triplet in curtailed_sorted_triplets]
 
 
-	#we need one more uniqueness test here to filter out similar structures between the different expansion runs at different misfit strains. The exx and eyy of the chromosome will be different - need to blank those out.
 
-	#Note - get rid of initial unique pass inside the above function and do all unique testing here
+	sys.exit()
 
 	#for now, just arrange super list of [relaxation, chromosome] and print out energy and first few of chromosome - inspect these to see how diverse they are, sort by energy first
 
 	#maybe don't run this until all structures have been determined
-	# if len(initial_epitaxial_structures_list) > 0:
-	# 	Path.make(epitaxial_path)
+	if len(initial_epitaxial_structures_list) > 0:
+		Path.make(epitaxial_path)
 
-	# 	epitaxial_relaxer = EpitaxialRelaxer(path=epitaxial_path, initial_structures_list=initial_epitaxial_structures_list, vasp_relaxation_inputs_dictionary=epitaxial_relaxation_input_dictionary, 
-	# 		reference_lattice_constant=3.86, misfit_strains_list=[-0.04, -0.02, 0.0, 0.02, 0.04], supercell_dimensions_list=input_dictionary['supercell_dimensions_list'])
+		epitaxial_relaxer = EpitaxialRelaxer(path=epitaxial_path, initial_structures_list=initial_epitaxial_structures_list, vasp_relaxation_inputs_dictionary=epitaxial_relaxation_input_dictionary, 
+			reference_lattice_constant=input_dictionary['reference_lattice_constant'], misfit_strains_list=[-0.02, -0.015, -0.01], supercell_dimensions_list=input_dictionary['supercell_dimensions_list'])
 		
-	# 	epitaxial_relaxer.update()
+		epitaxial_relaxer.update()
