@@ -66,6 +66,14 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 	hessian.print_eigenvalues_to_file(Path.join(path, 'output_eigen_values'))
 	hessian.print_eigen_components_to_file(Path.join(path, 'output_eigen_components'))
 
+	eigen_structure = EigenStructure(reference_structure=relaxed_structure, hessian=hessian)
+
+	mode_structures_path = Path.join(path, 'mode_rendered_structures')
+	Path.make(mode_structures_path)
+
+	for i, structure in enumerate(eigen_structure.get_mode_distorted_structures_list(amplitude=0.5)):
+		structure.to_poscar_file_path(Path.join(mode_structures_path, 'structure_mode_'+str(i+1)))
+
 	#sys.exit()
 
 	
@@ -225,7 +233,6 @@ if __name__ == '__main__':
 				  minima_relaxation_input_dictionary=minima_relaxation_input_dictionary, epitaxial_relaxation_input_dictionary=epitaxial_relaxation_input_dictionary)
 			
 		if sorted_unique_triplets:
-			print "sut", sorted_unique_triplets
 			curtailed_sorted_triplets = [sorted_unique_triplets[0]] ##########################################################only selecting lowest energy for now		
 			initial_epitaxial_structures_list += [data_triplet[0].final_structure for data_triplet in curtailed_sorted_triplets]
 

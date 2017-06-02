@@ -18,7 +18,7 @@ class EigenStructure(object):
 	amplitudes representing degree of displacement along each normal mode. This set is stored as a list of EigenComponent instances, which store amplitudes and EigenPair
 	instances.
 
-	We can think of a eigenchromosome storing all of an eigenstructure's data looking like:
+	We can think of an eigenchromosome storing all of an eigenstructure's data looking like:
 
 	[eta_xx, eta_yy, eta_zz, eta_yz, eta_xz, eta_xy, A_1, A_2, A_3, A_4, ..., A_N], where A_1 is the amplitude of the displacement eigen-vector with the lowest eigenvector and A_N
 	is the amplitude of the displacement eigen-vector with the highest eigenvalue.
@@ -172,6 +172,25 @@ class EigenStructure(object):
 
 
 		#self.set_translational_eigen_component_amplitudes_to_zero() #**do we want to do this always?**
+
+
+	def get_mode_distorted_structures_list(self, amplitude=0.5):
+		"""
+		Takes the list of all displacement modes, applies them with significant amplitude to the reference structure, and returns the corresponding list of distorted structures.
+		Useful for visualizing the displacement modes.
+		"""
+
+		structures_list = []
+
+		for eigen_component in self.eigen_components_list:
+			eigen_component.amplitude = amplitude
+
+			structures_list.append(self.get_distorted_structure())
+
+			eigen_component.amplitude = 0
+
+		return structures_list
+
 
 
 

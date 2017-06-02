@@ -573,8 +573,6 @@ class DerivativeEvaluator(object):
 
 
 
-
-
 	def get_mock_energy(self, structure):
 
 		eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian, distorted_structure = structure)
