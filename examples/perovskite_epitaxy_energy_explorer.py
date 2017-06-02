@@ -225,6 +225,7 @@ if __name__ == '__main__':
 				  minima_relaxation_input_dictionary=minima_relaxation_input_dictionary, epitaxial_relaxation_input_dictionary=epitaxial_relaxation_input_dictionary)
 			
 		if sorted_unique_triplets:
+			print "sut", sorted_unique_triplets
 			curtailed_sorted_triplets = [sorted_unique_triplets[0]] ##########################################################only selecting lowest energy for now		
 			initial_epitaxial_structures_list += [data_triplet[0].final_structure for data_triplet in curtailed_sorted_triplets]
 
