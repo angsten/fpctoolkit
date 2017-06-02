@@ -72,7 +72,7 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 	Path.make(mode_structures_path)
 
 	for i, structure in enumerate(eigen_structure.get_mode_distorted_structures_list(amplitude=0.6)):
-		structure.to_poscar_file_path(Path.join(mode_structures_path, 'structure_mode_'+str(i+1)))
+		structure.to_poscar_file_path(Path.join(mode_structures_path, 'structure_mode_'+str(i+1)+'.vasp'))
 
 	#sys.exit()
 
