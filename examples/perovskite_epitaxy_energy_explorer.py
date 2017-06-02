@@ -71,7 +71,7 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 	mode_structures_path = Path.join(path, 'mode_rendered_structures')
 	Path.make(mode_structures_path)
 
-	for i, structure in enumerate(eigen_structure.get_mode_distorted_structures_list(amplitude=0.5)):
+	for i, structure in enumerate(eigen_structure.get_mode_distorted_structures_list(amplitude=0.6)):
 		structure.to_poscar_file_path(Path.join(mode_structures_path, 'structure_mode_'+str(i+1)))
 
 	#sys.exit()
@@ -129,6 +129,7 @@ if __name__ == '__main__':
 	lattice_constants_dictionary['SrTiO'] = 3.8610547
 	lattice_constants_dictionary['CaTiO'] = 3.81331597
 	lattice_constants_dictionary['SrHfO'] = 4.0680851
+	lattice_constants_dictionary['KVO'] = 3.75
 
 	
 	input_dictionary['reference_lattice_constant'] = lattice_constants_dictionary["".join(input_dictionary['species_list'])]
