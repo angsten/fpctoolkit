@@ -20,7 +20,7 @@ class MinimaRelaxer(object):
 	The relaxations are then sortable by energy, and one can see the change in the eigen_chromosomes in going from the guess to the relaxed structure
 	"""
 
-	def __init__(self, path, reference_structure, reference_completed_vasp_relaxation_run, hessian, vasp_relaxation_inputs_dictionary, eigen_chromosome_energy_pairs_file_path):
+	def __init__(self, path, reference_structure, reference_completed_vasp_relaxation_run, hessian, vasp_relaxation_inputs_dictionary, eigen_chromosome_energy_pairs_file_path, max_minima=None):
 		"""
 		eigen_chromosome_energy_pairs_list should look like [[predicted energy change, guessed eigen_chromosome], [...],...]
 
@@ -38,6 +38,8 @@ class MinimaRelaxer(object):
 			'isif' : [5, 2, 3]
 			#any other incar parameters with value as a list
 		}
+
+		max_minima controls how many minima are relaxed. If None, all are relaxed
 		"""
 
 		minima_file = File(eigen_chromosome_energy_pairs_file_path)
@@ -58,7 +60,7 @@ class MinimaRelaxer(object):
 		self.hessian = hessian
 		self.eigen_pairs_list = hessian.get_sorted_hessian_eigen_pairs_list()
 		self.vasp_relaxation_inputs_dictionary = copy.deepcopy(vasp_relaxation_inputs_dictionary)
-
+		self.max_minima = max_minima
 
 		sorted_eigen_chromosome_energy_pairs_list = sorted(eigen_chromosome_energy_pairs_list, key=lambda x: x[0])
 
@@ -98,7 +100,7 @@ class MinimaRelaxer(object):
 
 		for i, eigen_chromosome in enumerate(self.eigen_chromosomes_list):
 
-			if i > 6: ###########################################################hardcoded value!!!!!!!!!!!
+			if (self.max_minima != None) and (i > self.max_minima):
 				break
 
 
@@ -121,19 +123,6 @@ class MinimaRelaxer(object):
 				eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian, distorted_structure=vasp_relaxation.final_structure)
 
 				self.completed_relaxations_data_list.append([vasp_relaxation, self.eigen_chromosomes_list[i], eigen_structure.get_list_representation()])
-
-				# print '-'*80
-				# print
-				# print "Structure Guess ", str(i)
-				# print "Predicted Energy Change", str(self.predicted_energies_list[i])
-				# print "DFT Energy Change      ", str(vasp_relaxation.get_final_energy(per_atom=False)-self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False))
-				# print "Guessed Chromosome"
-				# print misc.get_formatted_chromosome_string(self.eigen_chromosomes_list[i])
-				# print "Final Chromosome"
-
-				# print misc.get_formatted_chromosome_string(eigen_structure.get_list_representation())
-
-				# print
 
 
 	def print_status_to_file(self, file_path):

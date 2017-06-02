@@ -141,6 +141,9 @@ if __name__ == '__main__':
 	kpoint_scheme = 'Monkhorst'
 	kpoint_subdivisions_list = [3, 3, 3]
 
+	#max number of minima relaxations to perform
+	max_minima = 6
+
 	#######################################################################################################
 
 	#base_path = Path.join("./", "".join(input_dictionary['species_list']) + "3")
@@ -219,7 +222,7 @@ if __name__ == '__main__':
 		
 		sorted_unique_triplets = run_misfit_strain(path=run_path, misfit_strain=misfit_strain, input_dictionary=input_dictionary, initial_relaxation_input_dictionary=initial_relaxation_input_dictionary,
 				  dfpt_incar_settings=dfpt_incar_settings, derivative_evaluation_vasp_run_inputs_dictionary=derivative_evaluation_vasp_run_inputs_dictionary,
-				  minima_relaxation_input_dictionary=minima_relaxation_input_dictionary, epitaxial_relaxation_input_dictionary=epitaxial_relaxation_input_dictionary)
+				  minima_relaxation_input_dictionary=minima_relaxation_input_dictionary, epitaxial_relaxation_input_dictionary=epitaxial_relaxation_input_dictionary, max_minima=max_minima)
 			
 		if sorted_unique_triplets:
 			curtailed_sorted_triplets = sorted_unique_triplets[0] ##########################################################only selecting lowest energy for now		
