@@ -100,7 +100,7 @@ class MinimaRelaxer(object):
 
 		for i, eigen_chromosome in enumerate(self.eigen_chromosomes_list):
 
-			if (self.max_minima != None) and (i > self.max_minima):
+			if (self.max_minima != None) and (i >= self.max_minima):
 				break
 
 
