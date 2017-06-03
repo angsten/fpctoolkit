@@ -166,7 +166,7 @@ class MinimaRelaxer(object):
 			file += "Energy: " + str(unique_data_triplet[0].get_final_energy(per_atom=False))
 			file += "Final Chromosome:"
 			file += misc.get_formatted_chromosome_string(unique_data_triplet[2])
-
+			file += ""
 
 		file.write_to_path(file_path)
 

@@ -153,6 +153,9 @@ if __name__ == '__main__':
 	#max number of minima relaxations to perform. Set to None to relax all guessed minima.
 	input_dictionary['max_minima'] = 6
 
+	#controls which misfit strains to apply to the minima structures when constructing the final phase diagram
+	epitaxial_relaxations_misfit_strains_list = [-0.02, -0.015, -0.01]
+
 	#######################################################################################################
 
 	#base_path = Path.join("./", "".join(input_dictionary['species_list']) + "3")
@@ -208,10 +211,10 @@ if __name__ == '__main__':
 	}
 
 	epitaxial_relaxation_input_dictionary = {
-	    'external_relaxation_count': 3,
+	    'external_relaxation_count': 4,
 	    'kpoint_schemes_list': [kpoint_scheme],
 	    'kpoint_subdivisions_lists': [kpoint_subdivisions_list],
-	    'ediff': [1e-6, 1e-7, 1e-7],
+	    'ediff': [1e-5, 1e-6, 1e-7, 1e-7],
 	    'encut': [encut],
 	    'submission_script_modification_keys_list': ['100'],
 	    'lwave': [True],
@@ -248,6 +251,6 @@ if __name__ == '__main__':
 		Path.make(epitaxial_path)
 
 		epitaxial_relaxer = EpitaxialRelaxer(path=epitaxial_path, initial_structures_list=initial_epitaxial_structures_list, vasp_relaxation_inputs_dictionary=epitaxial_relaxation_input_dictionary, 
-			reference_lattice_constant=input_dictionary['reference_lattice_constant'], misfit_strains_list=[-0.02, -0.015, -0.01], supercell_dimensions_list=input_dictionary['supercell_dimensions_list'])
+			reference_lattice_constant=input_dictionary['reference_lattice_constant'], misfit_strains_list=epitaxial_relaxations_misfit_strains_list, supercell_dimensions_list=input_dictionary['supercell_dimensions_list'])
 		
 		epitaxial_relaxer.update()
