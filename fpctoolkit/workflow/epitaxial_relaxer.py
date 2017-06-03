@@ -120,15 +120,18 @@ class EpitaxialRelaxer(object):
 
 	def update(self):
 
-		for i in range(10000):
-			relax_path = Path.join(misfit_path, 'structure_' + str(i))
+		for misfit_strain in self.misfit_strains_list:
+			misfit_path = self.get_extended_path(str(misfit_strain).replace('-', 'n'))
 
-			if not Path.exists(relax_path):
-				break
+			for i in range(10000):
+				relax_path = Path.join(misfit_path, 'structure_' + str(i))
 
-			relaxation = VaspRelaxation(path=relax_path)
+				if not Path.exists(relax_path):
+					break
 
-			relaxation.update()
+				relaxation = VaspRelaxation(path=relax_path)
+
+				relaxation.update()
 
 	@property
 	def complete(self):
