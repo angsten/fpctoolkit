@@ -77,9 +77,9 @@ class EpitaxialRelaxer(object):
 
 			for i, initial_structure in enumerate(self.initial_structures_list):
 
-				if self.structure_is_duplicate(initial_structure, misfit_path):
-					print "Duplicate structure found - skipping"
-					continue
+				#if self.structure_is_duplicate(initial_structure, misfit_path): #####################FIX THIS AND PUT BACK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				#	print "Duplicate structure found - skipping"
+				#	continue
 
 				structure = copy.deepcopy(initial_structure)
 
