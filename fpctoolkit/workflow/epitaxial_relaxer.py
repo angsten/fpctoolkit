@@ -100,7 +100,7 @@ class EpitaxialRelaxer(object):
 				initial_structure.to_poscar_file_path(Path.join(relax_path, 'original_initial_structure'))
 
 
-	def structure_is_duplicate(self, structure, msifit_path):
+	def structure_is_duplicate(self, structure, misfit_path):
 		"""
 		Returns true if this has been the initial structure for any previous relaxation
 		"""
