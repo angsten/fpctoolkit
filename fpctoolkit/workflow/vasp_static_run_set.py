@@ -73,7 +73,7 @@ class VaspStaticRunSet(VaspRunSet):
 		if 'submission_node_count' in run_inputs:
 			node_count = run_inputs.pop('submission_node_count')
 		else:
-			node_count == None
+			node_count = None
 
 
 		kpoints = Kpoints(scheme_string=run_inputs.pop('kpoint_scheme'), subdivisions_list=run_inputs.pop('kpoint_subdivisions_list'))
