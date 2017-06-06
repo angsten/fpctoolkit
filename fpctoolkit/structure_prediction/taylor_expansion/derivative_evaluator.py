@@ -125,6 +125,9 @@ class DerivativeEvaluator(object):
 			
 			perturbation_magnitudes_list = copy.deepcopy(perturbation_magnitude_lists_dictionary[variable.type_string])
 
+			if str(variable) in ['e_4', 'e_5']:
+				perturbation_magnitudes_list = [-0.02, -0.01, 0.0, 0.01, 0.02]
+
 			if str(variable) in self.variable_specialty_points_dictionary:
 				for additional_perturbation_magnitude in self.variable_specialty_points_dictionary[str(variable)]:
 					perturbation_magnitudes_list.append(additional_perturbation_magnitude)
@@ -182,7 +185,7 @@ class DerivativeEvaluator(object):
 
 
 					for i in range(-2, 3):
-						strain = i*self.perturbation_magnitudes_dictionary['strain']*0.5
+						strain = i*0.005#self.perturbation_magnitudes_dictionary['strain']*0.5
 
 						calculation_path = Path.join(path, str(strain).replace('-', 'n'))
 						
