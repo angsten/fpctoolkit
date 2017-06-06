@@ -107,7 +107,7 @@ class DerivativeEvaluator(object):
 
 		perturbation_magnitude_lists_dictionary = {
 			'displacement': [self.perturbation_magnitudes_dictionary['displacement']*i for i in range(0, 8)],
-			'strain': [self.perturbation_magnitudes_dictionary['strain']*i for i in range(-2, 3)]
+			'strain': [self.perturbation_magnitudes_dictionary['strain']*i for i in range(-7, 6)]
 			} 
 
 

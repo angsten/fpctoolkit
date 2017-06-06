@@ -38,7 +38,7 @@ def get_plot(file_lines, header_data):
 	plt.xlabel(x_label_string, size=16)
 	plt.ylabel(y_label_string, size=16)
 
-	if x_label_string in ['e_3', 'e_4', 'e_5']:
+	if x_label_string in ['e_4', 'e_5']:
 		order = 2
 	else:
 		order = 4
@@ -52,6 +52,9 @@ def get_plot(file_lines, header_data):
 		f = lambda x: fitting_parameters[0]*x**2.0 + fitting_parameters[1]*x + fitting_parameters[2]
 
 	elif order == 4:
+		#if x_label_string in ['e_3']:
+		#	fitting_parameters[3] = 0.0
+
 		f = lambda x: fitting_parameters[0]*x**4.0 + fitting_parameters[1]*x**3.0 + fitting_parameters[2]*x**2.0 + fitting_parameters[3]*x + fitting_parameters[4]
 
 	fit_x_data = []
