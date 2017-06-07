@@ -117,6 +117,18 @@ class Lattice(object):
 
 		return np.array(self.to_array())
 
+	def equals(self, other_lattice):
+		"""
+		Returns true if lattices are effectively equal within numerical accuracy.
+		"""
+
+		for i in range(3):
+			for j in range(3):
+				if abs(self[i][j] - other_lattice[i][j]) > 0.00000001:
+					return False
+
+		return True
+
 
 	def get_super_lattice(self, supercell_dimensions_list):
 		"""
