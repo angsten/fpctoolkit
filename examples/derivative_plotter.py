@@ -38,7 +38,7 @@ def get_plot(file_lines, header_data):
 	plt.xlabel(x_label_string, size=16)
 	plt.ylabel(y_label_string, size=16)
 
-	if x_label_string in ['e_4', 'e_5']:
+	if x_label_string in ['e_4', 'e_5'] or (x_label_string == 'e_3' and y_label_string[0] == 'd'):
 		order = 2
 	else:
 		order = 4
@@ -52,8 +52,8 @@ def get_plot(file_lines, header_data):
 		f = lambda x: fitting_parameters[0]*x**2.0 + fitting_parameters[1]*x + fitting_parameters[2]
 
 	elif order == 4:
-		#if x_label_string in ['e_3']:
-		#	fitting_parameters[3] = 0.0
+		if x_label_string in ['e_3']:
+			fitting_parameters[3] = 0.0
 
 		f = lambda x: fitting_parameters[0]*x**4.0 + fitting_parameters[1]*x**3.0 + fitting_parameters[2]*x**2.0 + fitting_parameters[3]*x + fitting_parameters[4]
 
@@ -93,7 +93,12 @@ def get_plot(file_lines, header_data):
 		print 'u' + ulbl + 'o4 = ' + str(round(fitting_parameters[0], rnd)) + ';'
 	elif x_label_string[0] == 'e':
 		if y_label_string == 'Energy':
-			print 'e' + x_label_string[2] + 'o2 = ' + str(round(fitting_parameters[0], rnd)) + ';'
+			if x_label_string[2] == '3':
+				print 'e' + x_label_string[2] + 'o2 = ' + str(round(fitting_parameters[2], rnd)) + ';'
+				print 'e' + x_label_string[2] + 'o3 = ' + str(round(fitting_parameters[1], rnd)) + ';'
+				print 'e' + x_label_string[2] + 'o4 = ' + str(round(fitting_parameters[0], rnd)) + ';'
+			else:
+				print 'e' + x_label_string[2] + 'o2 = ' + str(round(fitting_parameters[0], rnd)) + ';'
 		else:
 			if y_label_string[-3] == '_':
 				ulbl = y_label_string[-2:]
