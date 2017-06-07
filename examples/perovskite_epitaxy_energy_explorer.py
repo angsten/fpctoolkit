@@ -23,6 +23,7 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 		      epitaxial_relaxation_input_dictionary):
 
 	Path.make(path)
+	guessed_minima_data_path = Path.join(path, 'guessed_chromosomes')
 
 	species_list = input_dictionary['species_list']
 	reference_lattice_constant = input_dictionary['reference_lattice_constant']
@@ -77,23 +78,21 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 	#sys.exit()
 
 	
-	variable_specialty_points_dictionary = input_dictionary['variable_specialty_points_dictionary_set'][misfit_strain] if input_dictionary.has_key(misfit_strain) else {}
+	if not Path.exists(guessed_minima_data_path):
+		variable_specialty_points_dictionary = input_dictionary['variable_specialty_points_dictionary_set'][misfit_strain] if input_dictionary.has_key(misfit_strain) else {}
 
-	derivative_evaluation_path = Path.join(path, 'expansion_coefficient_calculations')
-	derivative_evaluator = DerivativeEvaluator(path=derivative_evaluation_path, reference_structure=relaxed_structure, hessian=hessian, reference_completed_vasp_relaxation_run=relaxation,
-						   vasp_run_inputs_dictionary=derivative_evaluation_vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary,
-						   displacement_finite_differences_step_size=displacement_finite_differences_step_size, status_file_path=Path.join(path, 'output_derivative_plot_data'),
-						   variable_specialty_points_dictionary=variable_specialty_points_dictionary)
+		derivative_evaluation_path = Path.join(path, 'expansion_coefficient_calculations')
+		derivative_evaluator = DerivativeEvaluator(path=derivative_evaluation_path, reference_structure=relaxed_structure, hessian=hessian, reference_completed_vasp_relaxation_run=relaxation,
+							   vasp_run_inputs_dictionary=derivative_evaluation_vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary,
+							   displacement_finite_differences_step_size=displacement_finite_differences_step_size, status_file_path=Path.join(path, 'output_derivative_plot_data'),
+							   variable_specialty_points_dictionary=variable_specialty_points_dictionary)
 
-	derivative_evaluator.update()
+		derivative_evaluator.update()
 
 
-			
-	
-	guessed_minima_data_path = Path.join(path, 'guessed_chromosomes')
-	minima_path = Path.join(path, 'minima_relaxations')
+	else:			
+		minima_path = Path.join(path, 'minima_relaxations')
 
-	if Path.exists(guessed_minima_data_path):
 		minima_relaxer = MinimaRelaxer(path=minima_path, reference_structure=relaxed_structure, reference_completed_vasp_relaxation_run=relaxation, hessian=hessian, 
 					       vasp_relaxation_inputs_dictionary=minima_relaxation_input_dictionary, eigen_chromosome_energy_pairs_file_path=guessed_minima_data_path, max_minima=input_dictionary['max_minima'])
 		
@@ -141,10 +140,10 @@ if __name__ == '__main__':
 	input_dictionary['displacement_finite_differences_step_size'] = 0.04
 
 	#controls step size in plots
-	input_dictionary['perturbation_magnitudes_dictionary'] = {'strain': 0.01, 'displacement': 0.06}
+	input_dictionary['perturbation_magnitudes_dictionary'] = {'strain': 0.005, 'displacement': 0.06}
 
 
-	ediff = 1e-8
+	ediff = 1e-7
 	dfpt_ediff = 1e-9
 	encut = 600
 	kpoint_scheme = 'Monkhorst'
@@ -154,7 +153,7 @@ if __name__ == '__main__':
 	input_dictionary['max_minima'] = 6
 
 	#controls which misfit strains to apply to the minima structures when constructing the final phase diagram
-	epitaxial_relaxations_misfit_strains_list = [-0.02, -0.015, -0.01]
+	epitaxial_relaxations_misfit_strains_list = [-0.02, -0.015, -0.01, -0.005, 0.0, 0.005, 0.01, 0.015, 0.02]
 
 	#######################################################################################################
 
