@@ -42,6 +42,7 @@ class VaspPolarizationRunSet(object):
 		self.reference_structure = reference_structure
 		self.distorted_structure = distorted_structure
 		self.vasp_run_inputs = copy.deepcopy(vasp_run_inputs_dictionary)
+		self.vasp_run_list = []
 
 		Path.make(path)
 
@@ -89,6 +90,8 @@ class VaspPolarizationRunSet(object):
 
 		vasp_run = VaspRun(path=path, input_set=input_set)
 
+		self.vasp_run_list.append(vasp_run)
+
 	def update(self):
 		"""
 		Runs update on all force calculations until they are all complete. 
@@ -97,6 +100,119 @@ class VaspPolarizationRunSet(object):
 		if not self.complete:
 			for vasp_run in self.vasp_run_list:
 				vasp_run.update()
+
+
+	def get_change_in_polarization(self):
+
+		if not self.complete:
+			return None
+
+		ref_volume = getVolume(os.path.join(ref_path,'OUTCAR')) #in Angstroms cubed
+		ref_lattice = vaspio.poscar(os.path.join(ref_path,'POSCAR')).lattice
+		pol_volume = getVolume(os.path.join(pol_path,'OUTCAR')) #in Angstroms cubed
+
+		pol_lattice = vaspio.poscar(os.path.join(pol_path,'POSCAR')).lattice
+
+
+		e = -1.6021766209*10**-19 #negative because vasp outputs in e, not abs value of e
+		angstroms_sq_per_meter_sq = 10**20
+
+		ref_pol = get_polarization(ref_path) #now holds reference ionic and electronic polarization in e*A
+		ref_ion_pol = vector(ref_pol[0])
+		ref_elec_pol = vector(ref_pol[1])
+		ref_total_pol = ref_ion_pol.add(ref_elec_pol)
+
+		a_ref = vector(ref_lattice[0])
+		b_ref = vector(ref_lattice[1])
+		c_ref = vector(ref_lattice[2])
+
+		changed_pol = get_polarization(pol_path)
+		changed_ion_pol = vector(changed_pol[0])
+		changed_elec_pol = vector(changed_pol[1])
+		changed_total_pol = changed_ion_pol.add(changed_elec_pol)
+
+		#    print "Reference Lattice: " + str(ref_lattice)
+		#    print "Deformed Lattice: " + str(pol_lattice)
+		#    print
+		'''
+		print "\tReference Ionic Polarization: " + str(ref_ion_pol.getArray())
+		print "\tDeformed Ionic Polarization:  " + str(changed_ion_pol.getArray())
+		print
+		print "\tReference Electronic Polarization: " + str(ref_elec_pol.getArray())
+		print "\tDeformed Electronic Polarization:  " + str(changed_elec_pol.getArray())
+		print
+		'''
+		ref_conv_factor = e*(1/ref_volume)*angstroms_sq_per_meter_sq
+		change_conv_factor = e*(1/pol_volume)*angstroms_sq_per_meter_sq
+		diff_ion_pol = (changed_ion_pol.scale(change_conv_factor)).subtract(ref_ion_pol.scale(ref_conv_factor))
+		diff_elec_pol = (changed_elec_pol.scale(change_conv_factor)).subtract(ref_elec_pol.scale(ref_conv_factor))
+		pol_total = diff_ion_pol.add(diff_elec_pol)
+		#print "\tChange in Polarization Before Shift: " + str(pol_total.getArray())
+
+		search_range_min = -3
+		search_range_max = 3
+		min_mag = 100000000
+		vec = None
+		for i in range(search_range_min,search_range_max):
+			for j in range(search_range_min,search_range_max):
+				for k in range(search_range_min,search_range_max):
+					ref_vec = (((a_ref.scale(2*i)).add(b_ref.scale(2*j))).add(c_ref.scale(2*k))) #polarization defined within modulo eR/omega
+
+					shifted_changed_pol = changed_total_pol.add(ref_vec)
+
+					diff_vec = shifted_changed_pol.subtract(ref_total_pol) #vector between two choice branch lattice points
+					mag = diff_vec.magnitude()
+
+					if mag < min_mag:
+						min_mag = mag
+						vec = vector(diff_vec.getArray()) #this is shortest change in polarization found and thus most likely polariation vect
+
+		return (vec.scale(ref_conv_factor)).getArray()
+
+
+
+
+
+
+
+
+		def get_polarization(run_path):
+			ionic_pol = []
+			elec_pol = []
+
+			out_path = os.path.join(run_path,'OUTCAR')
+			file = open(out_path,'rb')
+			lines = file.readlines()
+			file.close()
+
+			volume = getVolume(out_path)
+			coulumbs_per_e = -1.6021766209*10**-19 #negative because vasp outputs in e but not abs value of e
+			angstroms_sq_per_meter_sq = 10**20
+
+			for i in range(len(lines)-1,-1,-1):
+				if not lines[i].find('Ionic dipole moment: p[ion]') == -1:
+					ionic_pol = extractNumbers(lines[i])
+				if not lines[i].find('Total electronic dipole moment: p[elc]=') == -1:
+					elec_pol = extractNumbers(lines[i])
+
+			if len(elec_pol) > 0 and len(ionic_pol) > 0:
+				break
+
+			'''
+			for i in range(0,3):
+			ionic_pol[i] *= coulumbs_per_e*(1/volume)*angstroms_sq_per_meter_sq #converted change in polarization in C/m^2 for this component
+			elec_pol[i] *= coulumbs_per_e*(1/volume)*angstroms_sq_per_meter_sq
+			'''
+			return [ionic_pol,elec_pol]
+
+
+	@property
+	def complete(self):
+		for vasp_run in self.vasp_run_list:
+			if not vasp_run.complete:
+				return False
+
+		return True
 
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)
