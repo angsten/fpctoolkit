@@ -294,3 +294,34 @@ class Outcar(File):
 			raise Exception("Number of degrees of freedom and number of rows in hessian matrix do not match. Matrix row count is", len(hessian_matrix), "number of dofs is", number_of_degrees_of_freedom)
 
 		return hessian_matrix
+
+	def get_ionic_and_electronic_polarization_vectors(self):
+		"""
+		Returns two vectors, one containing the x, y, and z components of the ionic polarization, and another those of the electronic polarization.
+		This return list looks like [vec_ionic, vec_electronic]
+		"""
+
+		ionic_polarization_indices = self.get_line_indices_containing_string('Ionic dipole moment: p[ion]')
+
+		if len(ionic_polarization_indices) != 1:
+			raise Exception("There must be one line containing the ionic polarization information.", len(ionic_polarization_indices))
+
+		components_string = self[ionic_polarization_indices[0]].split('(')[1].split(')')[0]
+		components_string = su.remove_extra_spaces(components_string)
+		component_strings_list = components_string.split(' ')
+
+		ionic_polarization_vector = [float(component) for component in component_strings_list]
+
+
+		electronic_polarization_indices = self.get_line_indices_containing_string('Ionic dipole moment: p[ion]')
+
+		if len(electronic_polarization_indices) != 1:
+			raise Exception("There must be one line containing the electronic polarization information.", len(electronic_polarization_indices))
+
+		components_string = self[electronic_polarization_indices[0]].split('(')[1].split(')')[0]
+		components_string = su.remove_extra_spaces(components_string)
+		component_strings_list = components_string.split(' ')
+
+		electronic_polarization_vector = [float(component) for component in component_strings_list]
+
+		return [np.array(ionic_polarization_vector), np.array(electronic_polarization_vector)]

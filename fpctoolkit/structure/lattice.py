@@ -129,6 +129,17 @@ class Lattice(object):
 
 		return True
 
+	def get_volume(self):
+		"""
+		Returns the volume of the lattice in Angstroms cubed.
+		"""
+
+		np_array = self.to_np_array()
+
+		volume = np.dot(np_array[2], np.cross(np_array[0], np_array[1]))
+
+		return volume
+
 
 	def get_super_lattice(self, supercell_dimensions_list):
 		"""

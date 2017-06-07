@@ -222,21 +222,29 @@ class Structure(object):
 
 		return symmetry.get_international_table()
 
-	def convert_structure_to_phonopy_atoms(structure):
+	def convert_structure_to_phonopy_atoms(self):
 		"""
-		Returns a PhonopyAtoms class (phonopy's representation of structures)
+		Returns a PhonopyAtoms class (phonopy's representation of selfs)
 		"""
 
 		temporary_write_path = Path.get_temporary_path()
 
-		Structure.validate(structure)
+		Structure.validate(self)
 
 		Path.validate_does_not_exist(temporary_write_path)
 		Path.validate_writeable(temporary_write_path)
 
-		structure.to_poscar_file_path(temporary_write_path)
+		self.to_poscar_file_path(temporary_write_path)
 		phonopy_structure = read_vasp(temporary_write_path)
 
 		Path.remove(temporary_write_path)
 
 		return phonopy_structure
+
+
+	def get_volume(self):
+		"""
+		Returns the volume of the structure's unit cell in Angstroms cubed.
+		"""
+
+		return self.lattice.get_volume()
