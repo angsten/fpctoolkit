@@ -74,7 +74,9 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 
 	sorted_eigen_pairs = hessian.get_sorted_hessian_eigen_pairs_list()
 	for i, structure in enumerate(eigen_structure.get_mode_distorted_structures_list(amplitude=0.6)):
-		structure.to_poscar_file_path(Path.join(mode_structures_path, 'u'+str(i+1)+'_'+str(sorted_eigen_pairs[i].eigenvalue)+'.vasp'))
+		if i > 30:
+			break
+		structure.to_poscar_file_path(Path.join(mode_structures_path, 'u'+str(i+1)+'_'+str(round(sorted_eigen_pairs[i].eigenvalue, 2))+'.vasp'))
 
 	#sys.exit()
 
@@ -114,7 +116,9 @@ if __name__ == '__main__':
 	#######################################################################################################
 
 	input_dictionary = {}
-	input_dictionary['species_list'] = ['Sr', 'Ti', 'O']
+	input_dictionary['species_list'] = File('./system_formula')[0].strip().split(' ')
+	print input_dictionary['species_list']
+
 
 	#which misfit strains to run expansion approximation scheme at 
 	misfit_strains_list = [-0.02, -0.01, 0.0, 0.01, 0.02]

@@ -18,8 +18,9 @@ class Hessian(object):
 		"""
 		outcar should be an initialized Outcar instance from a force constants calculation.
 		"""
+		self.outcar = outcar
 
-		original_matrix = np.asarray(outcar.get_hessian_matrix())
+		original_matrix = np.asarray(self.outcar.get_hessian_matrix())
 
 		Hessian.validate_matrix_is_sufficiently_symmetric(original_matrix)
 
@@ -59,6 +60,32 @@ class Hessian(object):
 				self.translational_mode_indices.append(i)
 
 		return sorted_hessian_eigen_pairs_list
+
+
+	def get_mode_effective_charge_vectors(self, displacement_mode_vector):
+		"""
+		Returns the born effective charge dotted with the mode eigenvector associated with displacement_mode_vector. This resulting vector describes how the macroscopic polarization changes
+		as the given displacement mode sets in.
+		
+	
+		displacement_mode_vector should be a vector that is N*3 in length and looks like [disp_atom_1_x, disp_atom_1_y, ..., disp_atom_N_z]
+
+		"""
+
+		polarization_vector = [0.0, 0.0, 0.0]
+
+		bec_tensor = self.outcar.get_born_effective_charge_tensor() #NEED TO DIVIDE BY VOLUME IN ANGSTROMS^3 first then mult by Angstroms with displacements, then convert to C/m^2 from e/A^2
+
+		for atom_index in range(len(bec_tensor)):
+			ion_3x3_tensor = bec_tensor[atom_index]
+
+			for cartesian_direction_index in range(3):
+				for polarization_direciton_index in range(3):
+					polarization_vector[polarization_direction_index] += displacement_mode_vector[cartesian_direction_index+atom_index*3]*ion_3x3_tensor[polarization_direction_index][cartesian_direction_index]
+
+
+		###watch units!
+		return polarization_vector
 
 
 	def print_eigen_components(self):
@@ -109,7 +136,6 @@ class Hessian(object):
 	def get_sorted_eigen_pairs_list(eigen_pairs_list):
 
 		return sorted(eigen_pairs_list, key=lambda eigen_pair: eigen_pair.eigenvalue)
-
 
 
 				
