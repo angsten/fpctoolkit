@@ -1,5 +1,7 @@
 #from fpctoolkit.workflow.vasp_polarization_run_set import VaspPolarizationRunSet
 
+import numpy as np
+
 import copy
 
 from fpctoolkit.io.file import File
