@@ -91,7 +91,7 @@ class Hessian(object):
 		file = File()
 
 		for i, eigen_pair in enumerate(self.get_sorted_hessian_eigen_pairs_list()):
-			file += "u_" + str(i+1) + str(self.get_mode_effective_charge_vector(eigen_pair.eigenvector))
+			file += "u_" + str(i+1) + ': <' + " ".join(str(round(x, 3)) for x in self.get_mode_effective_charge_vector(eigen_pair.eigenvector)) + '>'
 			file += ''
 
 		file.write_to_path(file_path)
