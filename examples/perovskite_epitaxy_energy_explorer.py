@@ -147,7 +147,7 @@ if __name__ == '__main__':
 	input_dictionary['displacement_finite_differences_step_size'] = 0.04
 
 	#controls step size in plots
-	input_dictionary['perturbation_magnitudes_dictionary'] = {'strain': 0.005, 'displacement': 0.06}
+	input_dictionary['perturbation_magnitudes_dictionary'] = {'strain': 0.005, 'displacement': 0.05}
 
 
 	ediff = 1e-7

@@ -1,4 +1,4 @@
-
+import numpy as np
 
 from fpctoolkit.io.file import File
 import fpctoolkit.util.string_util as su
