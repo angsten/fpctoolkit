@@ -13,17 +13,20 @@ from fpctoolkit.structure.structure import Structure
 from fpctoolkit.io.file import File
 import fpctoolkit.util.basic_validators as basic_validators
 from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
+from fpctoolkit.workflow.vasp_polarization_run_set import VaspPolarizationRunSet
 
 class EpitaxialRelaxer(object):
 	"""
 	Calculates the minimum energy structures across a series of (100) misfit strains.
 	"""
 
-	def __init__(self, path, initial_structures_list, vasp_relaxation_inputs_dictionary, reference_lattice_constant, misfit_strains_list, supercell_dimensions_list):
+	def __init__(self, path, initial_structures_list, reference_structure, vasp_relaxation_inputs_dictionary, reference_lattice_constant, misfit_strains_list, supercell_dimensions_list):
 		"""
 		path should be the main path of the calculation set
 
 		initial_structures_list should be the set of structures that are relaxed at each misfit strain
+
+		reference structure can have any lattice but its atom positions must be in direct coords as the positions to compare polarizations to (choose a centrosymmetric structure if possible)
 
 		vasp_relaxation_inputs_dictionary should look something like:
 		{
@@ -54,6 +57,7 @@ class EpitaxialRelaxer(object):
 
 		self.path = path
 		self.initial_structures_list = initial_structures_list
+		self.reference_structure = reference_structure
 		self.vasp_relaxation_inputs_dictionary = vasp_relaxation_inputs_dictionary
 		self.reference_lattice_constant = reference_lattice_constant
 		self.misfit_strains_list = misfit_strains_list
@@ -133,6 +137,9 @@ class EpitaxialRelaxer(object):
 
 				relaxation.update()
 
+				if relaxation.complete:
+					self.update_polarization_run(relaxation)
+
 	@property
 	def complete(self):
 		for i in range(10000):
@@ -148,3 +155,12 @@ class EpitaxialRelaxer(object):
 
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)
+
+	def update_polarization_run(self, relaxation):
+
+		if not relaxation.complete:
+			return
+
+
+
+		polarization_run = VaspPolarizationRunSet(path, reference_structure, distorted_structure, vasp_run_inputs_dictionary)

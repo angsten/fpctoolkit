@@ -105,7 +105,7 @@ class Hessian(object):
 			while len(index_string) < 3:
 				index_string += ' '
 
-			file += "u_" + index_string + '   ' + f(eigen_pair.eigenvalue, rnd, pad) + '      ' + " ".join(f(x, rnd, pad) for x in self.get_mode_effective_charge_vector(eigen_pair.eigenvector, reference_structure))
+			file += "u_" + index_string + '   ' + f(eigen_pair.eigenvalue, 2, pad) + '      ' + " ".join(f(x, rnd, pad) for x in self.get_mode_effective_charge_vector(eigen_pair.eigenvector, reference_structure))
 			#file += ''
 
 		file.write_to_path(file_path)
