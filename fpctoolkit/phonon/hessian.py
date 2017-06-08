@@ -62,7 +62,7 @@ class Hessian(object):
 		return sorted_hessian_eigen_pairs_list
 
 
-	def get_mode_effective_charge_vector(self, displacement_mode_vector):
+	def get_mode_effective_charge_vector(self, displacement_mode_vector, reference_structure):
 		"""
 		Returns the born effective charge dotted with the mode eigenvector associated with displacement_mode_vector. This resulting vector describes how the macroscopic polarization changes
 		as the given displacement mode sets in.
@@ -84,10 +84,15 @@ class Hessian(object):
 					polarization_vector[polarization_direction_index] += displacement_mode_vector[cartesian_direction_index+atom_index*3]*ion_3x3_tensor[polarization_direction_index][cartesian_direction_index]
 
 
-		###watch units!
-		return polarization_vector
+		cell_volume = reference_structure.get_volume()
+		e = 1.6021766209*10**-19 #in coulombs
+		angstroms_sq_per_meter_sq = 10**20
+		conversion_factor = e*(1/cell_volume)*angstroms_sq_per_meter_sq
 
-	def print_mode_effective_charge_vectors_to_file(self, file_path):
+		###watch units!
+		return [conversion_factor*component for component in polarization_vector]
+
+	def print_mode_effective_charge_vectors_to_file(self, file_path, reference_structure):
 		file = File()
 
 		f = su.pad_decimal_number_to_fixed_character_length
@@ -100,7 +105,7 @@ class Hessian(object):
 			while len(index_string) < 3:
 				index_string += ' '
 
-			file += "u_" + index_string + '   ' + f(eigen_pair.eigenvalue, rnd, pad) + '   ' + " ".join(f(x, rnd, pad) for x in self.get_mode_effective_charge_vector(eigen_pair.eigenvector))
+			file += "u_" + index_string + '   ' + f(eigen_pair.eigenvalue, rnd, pad) + '      ' + " ".join(f(x, rnd, pad) for x in self.get_mode_effective_charge_vector(eigen_pair.eigenvector, reference_structure))
 			#file += ''
 
 		file.write_to_path(file_path)
