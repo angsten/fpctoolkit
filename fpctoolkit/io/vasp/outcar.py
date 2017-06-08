@@ -303,6 +303,8 @@ class Outcar(File):
 
 		ionic_polarization_indices = self.get_line_indices_containing_string('Ionic dipole moment: p[ion]')
 
+		print self
+
 		if len(ionic_polarization_indices) != 1:
 			raise Exception("There must be one line containing the ionic polarization information.", len(ionic_polarization_indices))
 
@@ -313,7 +315,7 @@ class Outcar(File):
 		ionic_polarization_vector = [float(component) for component in component_strings_list]
 
 
-		electronic_polarization_indices = self.get_line_indices_containing_string('Ionic dipole moment: p[ion]')
+		electronic_polarization_indices = self.get_line_indices_containing_string('Total electronic dipole moment: p[elc]')
 
 		if len(electronic_polarization_indices) != 1:
 			raise Exception("There must be one line containing the electronic polarization information.", len(electronic_polarization_indices))
