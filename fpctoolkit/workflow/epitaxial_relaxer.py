@@ -164,6 +164,7 @@ class EpitaxialRelaxer(object):
 		path = relaxation.path
 		reference_structure = self.reference_structure
 		distorted_structure = relaxation.final_structure
+		reference_structure.lattice = copy.deepcopy(distorted_structure.lattice)
 		vasp_run_inputs_dictionary = {
 			'kpoint_scheme': relaxation.kpoint_schemes[-1],
 			'kpoint_subdivisions_list': relaxation.kpoint_subdivisions_lists[-1],

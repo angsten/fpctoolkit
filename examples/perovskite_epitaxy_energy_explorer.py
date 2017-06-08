@@ -64,21 +64,23 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 		return False
 	
 	hessian = Hessian(dfpt_force_run.outcar)
-	hessian.print_eigenvalues_to_file(Path.join(path, 'output_eigen_values'))
-	hessian.print_eigen_components_to_file(Path.join(path, 'output_eigen_components'))
-	hessian.print_mode_effective_charge_vectors_to_file(Path.join(path, 'output_mode_effective_charge_vectors'), relaxed_structure)
+
+	if True:
+		hessian.print_eigenvalues_to_file(Path.join(path, 'output_eigen_values'))
+		hessian.print_eigen_components_to_file(Path.join(path, 'output_eigen_components'))
+		hessian.print_mode_effective_charge_vectors_to_file(Path.join(path, 'output_mode_effective_charge_vectors'), relaxed_structure)
 
 
-	eigen_structure = EigenStructure(reference_structure=relaxed_structure, hessian=hessian)
+		eigen_structure = EigenStructure(reference_structure=relaxed_structure, hessian=hessian)
 
-	mode_structures_path = Path.join(path, 'mode_rendered_structures')
-	Path.make(mode_structures_path)
+		mode_structures_path = Path.join(path, 'mode_rendered_structures')
+		Path.make(mode_structures_path)
 
-	sorted_eigen_pairs = hessian.get_sorted_hessian_eigen_pairs_list()
-	for i, structure in enumerate(eigen_structure.get_mode_distorted_structures_list(amplitude=0.6)):
-		if i > 30:
-			break
-		structure.to_poscar_file_path(Path.join(mode_structures_path, 'u'+str(i+1)+'_'+str(round(sorted_eigen_pairs[i].eigenvalue, 2))+'.vasp'))
+		sorted_eigen_pairs = hessian.get_sorted_hessian_eigen_pairs_list()
+		for i, structure in enumerate(eigen_structure.get_mode_distorted_structures_list(amplitude=0.6)):
+			if i > 30:
+				break
+			structure.to_poscar_file_path(Path.join(mode_structures_path, 'u'+str(i+1)+'_'+str(round(sorted_eigen_pairs[i].eigenvalue, 2))+'.vasp'))
 
 	#sys.exit()
 
@@ -105,7 +107,7 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 		minima_relaxer.print_status_to_file(Path.join(path, 'output_minima_relaxations_status'))
 		
 		if minima_relaxer.complete:
-			minima_relaxer.print_selected_uniques_to_file(file_path=Path.join(path, 'output_selected_unique_minima_relaxations'))
+			#minima_relaxer.print_selected_uniques_to_file(file_path=Path.join(path, 'output_selected_unique_minima_relaxations'))
 			sorted_uniques = minima_relaxer.get_sorted_unique_relaxation_data_list()
 
 			return sorted_uniques
@@ -248,15 +250,24 @@ if __name__ == '__main__':
 
 
 
-	sys.exit()
+	sys.exit('exiting before epitaxial relaxation')
 
 	#for now, just arrange super list of [relaxation, chromosome] and print out energy and first few of chromosome - inspect these to see how diverse they are, sort by energy first
 
 	#maybe don't run this until all structures have been determined
 	if len(initial_epitaxial_structures_list) > 0:
+		print "Updating Epitaxial Relaxations"
+
 		Path.make(epitaxial_path)
 
-		epitaxial_relaxer = EpitaxialRelaxer(path=epitaxial_path, initial_structures_list=initial_epitaxial_structures_list, vasp_relaxation_inputs_dictionary=epitaxial_relaxation_input_dictionary, 
+		a = 1.0 #doesn't matter
+		Nx = input_dictionary['supercell_dimensions_list'][0]
+		Ny = input_dictionary['supercell_dimensions_list'][1]
+		Nz = input_dictionary['supercell_dimensions_list'][2]	
+
+		reference_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx, 0.0, 0.0], [0.0, a*Ny, 0.0], [0.0, 0.0, a]], species_list=input_dictionary['species_list'])
+
+		epitaxial_relaxer = EpitaxialRelaxer(path=epitaxial_path, initial_structures_list=initial_epitaxial_structures_list, reference_structure=reference_structure, vasp_relaxation_inputs_dictionary=epitaxial_relaxation_input_dictionary, 
 			reference_lattice_constant=input_dictionary['reference_lattice_constant'], misfit_strains_list=epitaxial_relaxations_misfit_strains_list, supercell_dimensions_list=input_dictionary['supercell_dimensions_list'])
 		
 		epitaxial_relaxer.update()
