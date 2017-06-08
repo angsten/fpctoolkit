@@ -66,7 +66,7 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 	hessian = Hessian(dfpt_force_run.outcar)
 	hessian.print_eigenvalues_to_file(Path.join(path, 'output_eigen_values'))
 	hessian.print_eigen_components_to_file(Path.join(path, 'output_eigen_components'))
-	hessian.print_mode_effective_charge_vectors_to_file(Path.join(path, 'output_mode_effective_charge_vectors'))
+	hessian.print_mode_effective_charge_vectors_to_file(Path.join(path, 'output_mode_effective_charge_vectors'), relaxed_structure)
 
 
 	eigen_structure = EigenStructure(reference_structure=relaxed_structure, hessian=hessian)
