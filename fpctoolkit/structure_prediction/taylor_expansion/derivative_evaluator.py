@@ -106,8 +106,8 @@ class DerivativeEvaluator(object):
 
 
 		perturbation_magnitude_lists_dictionary = {
-			'displacement': [self.perturbation_magnitudes_dictionary['displacement']*i for i in range(0, 8)],
-			'strain': [self.perturbation_magnitudes_dictionary['strain']*i for i in range(-12, 13)]
+			'displacement': [self.perturbation_magnitudes_dictionary['displacement']*i for i in range(0, 14)],
+			'strain': [self.perturbation_magnitudes_dictionary['strain']*i for i in range(-13, 14)]
 			} 
 
 
@@ -184,7 +184,7 @@ class DerivativeEvaluator(object):
 					Path.make(path)
 
 
-					for i in range(-2, 3):
+					for i in range(-3, 4):
 						strain = i*0.005#self.perturbation_magnitudes_dictionary['strain']*0.5
 
 						calculation_path = Path.join(path, str(strain).replace('-', 'n'))
