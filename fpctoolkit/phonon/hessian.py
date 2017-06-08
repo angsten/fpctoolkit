@@ -95,7 +95,12 @@ class Hessian(object):
 		pad = 5
 
 		for i, eigen_pair in enumerate(self.get_sorted_hessian_eigen_pairs_list()):
-			file += "u_" + f(i+1, 0, 3) + ': ' + " ".join(f(x, rnd, pad) for x in self.get_mode_effective_charge_vector(eigen_pair.eigenvector))
+			index_string = str(i+1)
+
+			while len(index_string) < 3:
+				index_string += ' '
+
+			file += "u_" + index_string + '  ' + " ".join(f(x, rnd, pad) for x in self.get_mode_effective_charge_vector(eigen_pair.eigenvector))
 			#file += ''
 
 		file.write_to_path(file_path)
