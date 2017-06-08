@@ -94,6 +94,8 @@ class Hessian(object):
 			file += "u_" + str(i+1) + str(self.get_mode_effective_charge_vector(eigen_pair.eigenvector))
 			file += ''
 
+		file.write_to_path(file_path)
+
 	def print_eigen_components(self):
 		for i, eigen_pair in enumerate(self.get_sorted_hessian_eigen_pairs_list()):
 			print "Index: " + str(i) + "\n" + str(eigen_pair)
