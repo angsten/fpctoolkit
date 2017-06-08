@@ -161,6 +161,17 @@ class EpitaxialRelaxer(object):
 		if not relaxation.complete:
 			return
 
+		path = relaxation.path
+		reference_structure = self.reference_structure
+		distorted_structure = relaxation.final_structure
+		vasp_run_inputs_dictionary = {
+			'kpoint_scheme': relaxation.kpoint_schemes[-1],
+			'kpoint_subdivisions_list': relaxation.kpoint_subdivisions_lists[-1],
+			'encut': relaxation.incar_modifier_lists_dictionary['encut'],
+			'isym': 0
+		}
 
 
 		polarization_run = VaspPolarizationRunSet(path, reference_structure, distorted_structure, vasp_run_inputs_dictionary)
+
+		polarization_run.update()

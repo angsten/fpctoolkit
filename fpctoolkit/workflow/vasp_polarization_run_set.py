@@ -37,7 +37,6 @@ class VaspPolarizationRunSet(object):
 			'kpoint_scheme': 'Monkhorst',
 			'kpoint_subdivisions_list': [4, 4, 4],
 			'encut': 800,
-			'npar': 1 (optional)
 		}
 
 		"""
