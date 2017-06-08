@@ -62,7 +62,7 @@ class Hessian(object):
 		return sorted_hessian_eigen_pairs_list
 
 
-	def get_mode_effective_charge_vectors(self, displacement_mode_vector):
+	def get_mode_effective_charge_vector(self, displacement_mode_vector):
 		"""
 		Returns the born effective charge dotted with the mode eigenvector associated with displacement_mode_vector. This resulting vector describes how the macroscopic polarization changes
 		as the given displacement mode sets in.
@@ -87,6 +87,12 @@ class Hessian(object):
 		###watch units!
 		return polarization_vector
 
+	def print_mode_effective_charge_vectors_to_file(self, file_path):
+		file = File()
+
+		for i, eigen_pair in enumerate(self.get_sorted_eigen_pairs_list()):
+			file += "u_" + str(i+1) + str(self.get_mode_effective_charge_vector(eigen_pair.eigenvector))
+			file += ''
 
 	def print_eigen_components(self):
 		for i, eigen_pair in enumerate(self.get_sorted_hessian_eigen_pairs_list()):
