@@ -154,7 +154,7 @@ class VaspPolarizationRunSet(object):
 
 
 
-	def get_reference_polarization(self, path):
+	def get_polarization(self, path):
 		"""
 		Returns the polarization vector in e for the lcalcpol calculation at path
 		"""
