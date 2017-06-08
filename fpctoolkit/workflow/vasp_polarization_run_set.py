@@ -22,6 +22,16 @@ class VaspPolarizationRunSet(object):
 		absolute polarizations of the distorted structure can be caluclated.
 
 		distorted_structure should be a Structure instance with the same lattice as the reference structure, but some of the atoms shifted to cause a change in polarization.
+
+		vasp_run_inputs_dictionary should look like:
+
+		vasp_run_inputs_dictionary = {
+			'kpoint_scheme': 'Monkhorst',
+			'kpoint_subdivisions_list': [4, 4, 4],
+			'encut': 800,
+			'npar': 1 (optional)
+		}
+
 		"""
 
 		Structure.validate(reference_structure)
