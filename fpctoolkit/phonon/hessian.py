@@ -80,7 +80,7 @@ class Hessian(object):
 			ion_3x3_tensor = bec_tensor[atom_index]
 
 			for cartesian_direction_index in range(3):
-				for polarization_direciton_index in range(3):
+				for polarization_direction_index in range(3):
 					polarization_vector[polarization_direction_index] += displacement_mode_vector[cartesian_direction_index+atom_index*3]*ion_3x3_tensor[polarization_direction_index][cartesian_direction_index]
 
 
