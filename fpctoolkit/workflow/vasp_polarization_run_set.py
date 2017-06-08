@@ -1,15 +1,9 @@
 #from fpctoolkit.workflow.vasp_polarization_run_set import VaspPolarizationRunSet
 
 from fpctoolkit.io.file import File
-from fpctoolkit.io.vasp.kpoints import Kpoints
-from fpctoolkit.io.vasp.potcar import Potcar
-from fpctoolkit.io.vasp.poscar import Poscar
-from fpctoolkit.io.vasp.incar import Incar
 from fpctoolkit.structure.structure import Structure
 from fpctoolkit.io.vasp.outcar import Outcar
 from fpctoolkit.util.path import Path
-from fpctoolkit.util.queue_adapter import QueueAdapter, QueueStatus
-import fpctoolkit.util.string_util as su
 
 class VaspPolarizationRunSet(object):
 	"""
@@ -110,8 +104,8 @@ class VaspPolarizationRunSet(object):
 		cell_volume = self.reference_structure.get_volume() #in A^3
 		lattice = self.reference_structure.lattice.to_np_array() #in Angstroms
 
-		reference_polarization_vector = self.get_reference_polarization() #now holds reference ionic and electronic polarization in e*A
-		distorted_polarization_vector = self.get_distorted_polarization()
+		reference_polarization_vector = self.get_polarization(path=self.get_extended_path('reference_polarization')) #now holds reference ionic and electronic polarization in e*A
+		distorted_polarization_vector = self.get_polarization(path=self.get_extended_path('distorted_polarization'))
 
 
 
@@ -144,31 +138,12 @@ class VaspPolarizationRunSet(object):
 
 
 
-	def get_reference_polarization(self):
+	def get_reference_polarization(self, path):
 		"""
-		Returns the polarization vector in e for the reference structure calculation
-		"""
-
-		reference_polarization_path = self.get_extended_path('reference_polarization')
-
-		outcar = Outcar(Path.join(reference_polarization_path, 'OUTCAR'))
-
-		polarization_vectors_list = outcar.get_ionic_and_electronic_polarization_vectors()
-
-		ionic_polarization_vector = polarization_vectors_list[0]
-		electronic_polarization_vector = polarization_vectors_list[1]
-
-		return ionic_polarization_vector + electronic_polarization_vector
-
-
-	def get_distorted_polarization(self):
-		"""
-		Returns the polarization vector in e for the distorted structure calculation
+		Returns the polarization vector in e for the lcalcpol calculation at path
 		"""
 
-		distorted_polarization_path = self.get_extended_path('distorted_polarization')
-
-		outcar = Outcar(Path.join(distorted_polarization_path, 'OUTCAR'))
+		outcar = Outcar(Path.join(path, 'OUTCAR'))
 
 		polarization_vectors_list = outcar.get_ionic_and_electronic_polarization_vectors()
 
