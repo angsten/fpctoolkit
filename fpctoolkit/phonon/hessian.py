@@ -90,7 +90,7 @@ class Hessian(object):
 	def print_mode_effective_charge_vectors_to_file(self, file_path):
 		file = File()
 
-		for i, eigen_pair in enumerate(self.get_sorted_eigen_pairs_list()):
+		for i, eigen_pair in enumerate(self.get_sorted_hessian_eigen_pairs_list()):
 			file += "u_" + str(i+1) + str(self.get_mode_effective_charge_vector(eigen_pair.eigenvector))
 			file += ''
 
