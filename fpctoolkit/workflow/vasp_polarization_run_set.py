@@ -1,5 +1,7 @@
 #from fpctoolkit.workflow.vasp_polarization_run_set import VaspPolarizationRunSet
 
+import copy
+
 from fpctoolkit.io.file import File
 from fpctoolkit.structure.structure import Structure
 from fpctoolkit.io.vasp.outcar import Outcar
