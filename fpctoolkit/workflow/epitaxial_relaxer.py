@@ -137,8 +137,8 @@ class EpitaxialRelaxer(object):
 
 				relaxation.update()
 
-				if relaxation.complete:
-					self.update_polarization_run(relaxation)
+				#if relaxation.complete:
+				#	self.update_polarization_run(relaxation)
 
 	@property
 	def complete(self):
@@ -170,7 +170,7 @@ class EpitaxialRelaxer(object):
 			'kpoint_subdivisions_list': relaxation.kpoint_subdivisions_lists[100],
 			'encut': relaxation.incar_modifier_lists_dictionary['encut'][100],
 			'lreal': False,
-			'isym': 0
+			'isym': -1
 		}
 
 
