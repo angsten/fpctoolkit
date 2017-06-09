@@ -90,7 +90,7 @@ class VaspPolarizationRunSet(object):
 		kpoints = Kpoints(scheme_string=run_inputs.pop('kpoint_scheme'), subdivisions_list=run_inputs.pop('kpoint_subdivisions_list'))
 		incar = IncarMaker.get_lcalcpol_incar(run_inputs)
 
-		input_set = VaspInputSet(structure, kpoints, incar, auto_change_lreal=('lreal' not in run_inputs), auto_change_npar=False)
+		input_set = VaspInputSet(structure, kpoints, incar, auto_change_lreal=('lreal' not in run_inputs), auto_change_npar=(('isym' in run_inputs) and (run_inputs['isym'] == 0) and ('npar' not in run_inputs)))
 
 
 		if node_count != None:
