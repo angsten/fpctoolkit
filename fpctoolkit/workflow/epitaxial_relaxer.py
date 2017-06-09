@@ -168,7 +168,8 @@ class EpitaxialRelaxer(object):
 		vasp_run_inputs_dictionary = {
 			'kpoint_scheme': relaxation.kpoint_schemes[100],
 			'kpoint_subdivisions_list': relaxation.kpoint_subdivisions_lists[100],
-			'encut': relaxation.incar_modifier_lists_dictionary['encut'],
+			'encut': relaxation.incar_modifier_lists_dictionary['encut'][100],
+			'lreal': False,
 			'isym': 0
 		}
 
