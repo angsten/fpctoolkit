@@ -250,7 +250,7 @@ if __name__ == '__main__':
 
 
 
-	sys.exit('exiting before epitaxial relaxation')
+	sys.exit('\n\n**exiting before epitaxial relaxation**\n\n')
 
 	#for now, just arrange super list of [relaxation, chromosome] and print out energy and first few of chromosome - inspect these to see how diverse they are, sort by energy first
 
