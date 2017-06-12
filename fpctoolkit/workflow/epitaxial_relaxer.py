@@ -180,6 +180,8 @@ class EpitaxialRelaxer(object):
 
 		polarization_run = VaspPolarizationRunSet(path, reference_structure, distorted_structure, vasp_run_inputs_dictionary)
 
+		print 'before update call',  str(polarization_run.vasp_run_list)
+
 		polarization_run.update()
 
 		print 'before return pol call', str(polarization_run.vasp_run_list)
