@@ -227,10 +227,11 @@ class EpitaxialRelaxer(object):
 			data_dictionary['structure'] = structure
 			data_dictionary['energy'] = minimum_energy
 			data_dictionary['polarization_vector'] = polarization_vector
-			data_dictionary['spg_0.1'] = structure.get_spacegroup_string(0.1)
-			data_dictionary['spg_0.05'] = structure.get_spacegroup_string(0.05)
-			data_dictionary['spg_0.01'] = structure.get_spacegroup_string(0.01)
-			data_dictionary['spg_0.001'] = structure.get_spacegroup_string(0.001)
+
+			spg_symprecs = [0.1, 0.05, 0.04, 0.03, 0.02, 0.01, 0.001]
+
+			for symrpec in spg_symprecs:
+				data_dictionary['spg_' + str(symrpec)] = structure.get_spacegroup_string(symprec)
 
 			output_data_dictionaries.append(data_dictionary)
 
