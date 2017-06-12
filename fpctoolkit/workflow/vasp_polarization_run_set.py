@@ -59,6 +59,8 @@ class VaspPolarizationRunSet(object):
 
 		self.initialize_vasp_runs()
 
+		print 'after init', str(self.vasp_run_list)
+
 
 	def initialize_vasp_runs(self):
 		"""
@@ -70,6 +72,8 @@ class VaspPolarizationRunSet(object):
 
 		if not Path.exists(reference_polarization_path):
 			self.create_new_vasp_run(reference_polarization_path, self.reference_structure)
+
+
 
 		if not Path.exists(distorted_polarization_path):
 			self.create_new_vasp_run(distorted_polarization_path, self.distorted_structure)		
@@ -102,6 +106,8 @@ class VaspPolarizationRunSet(object):
 		vasp_run = VaspRun(path=path, input_set=input_set)
 
 		self.vasp_run_list.append(vasp_run)
+
+		print 'after create new vasp run call', str(self.vasp_run_list)
 
 	def update(self):
 		"""
