@@ -230,8 +230,8 @@ class EpitaxialRelaxer(object):
 
 			spg_symprecs = [0.1, 0.05, 0.04, 0.03, 0.02, 0.01, 0.001]
 
-			for symrpec in spg_symprecs:
-				data_dictionary['spg_' + str(symrpec)] = structure.get_spacegroup_string(symprec)
+			for symprec in spg_symprecs:
+				data_dictionary['spg_' + str(symrerc)] = structure.get_spacegroup_string(symprec)
 
 			output_data_dictionaries.append(data_dictionary)
 
