@@ -220,7 +220,7 @@ class Structure(object):
 
 		symmetry = phonon.get_symmetry()
 
-		return symmetry.get_international_table()
+		return str(symmetry.get_international_table())
 
 	def convert_structure_to_phonopy_atoms(self):
 		"""
