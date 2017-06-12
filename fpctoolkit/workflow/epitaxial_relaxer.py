@@ -224,8 +224,8 @@ class EpitaxialRelaxer(object):
 
 			print 
 			print "minimum E " + str(minimum_energy)
-			structure = copy.deepcopy(relaxation.final_structure)
-			polarization_vector = self.update_polarization_run(relaxation)
+			structure = copy.deepcopy(minimum_energy_relaxation.final_structure)
+			polarization_vector = self.update_polarization_run(minimum_energy_relaxation)
 
 			data_dictionary['structure'] = structure
 			data_dictionary['energy'] = minimum_energy
@@ -238,6 +238,6 @@ class EpitaxialRelaxer(object):
 
 			output_data_dictionaries.append(data_dictionary)
 
-			data_dictionary['path'] = Path.join(relaxation.path, 'static')
+			data_dictionary['path'] = Path.join(minimum_energy_relaxation.path, 'static')
 
 		return output_data_dictionaries
