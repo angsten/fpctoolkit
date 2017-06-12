@@ -278,6 +278,6 @@ if __name__ == '__main__':
 		epitaxial_relaxer.update()
 
 		for data_dictionary in epitaxial_relaxer.get_data_dictionaries_list():
-			for key in data_dictionary.get_keys():
+			for key in data_dictionary:
 				print data_dictionary[key]
 			print
