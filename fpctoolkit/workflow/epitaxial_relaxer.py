@@ -2,6 +2,7 @@
 
 import numpy as np
 import copy
+from collections import OrderedDict
 
 from fpctoolkit.util.path import Path
 from fpctoolkit.workflow.vasp_run import VaspRun
@@ -195,7 +196,7 @@ class EpitaxialRelaxer(object):
 		output_data_dictionaries = []
 
 		for misfit_strain in self.misfit_strains_list:
-			data_dictionary = {}
+			data_dictionary = OrderedDict()
 			data_dictionary['misfit_strain'] = misfit_strain
 
 			misfit_path = self.get_extended_path(str(misfit_strain).replace('-', 'n'))
