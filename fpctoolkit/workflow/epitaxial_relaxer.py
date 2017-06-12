@@ -235,4 +235,6 @@ class EpitaxialRelaxer(object):
 
 			output_data_dictionaries.append(data_dictionary)
 
+			data_dictionary['path'] = Path.join(relaxation.path, 'static')
+
 		return output_data_dictionaries
