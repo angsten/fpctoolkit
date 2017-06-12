@@ -209,7 +209,7 @@ class EpitaxialRelaxer(object):
 
 				relaxation = VaspRelaxation(path=relax_path)
 
-				if not relaxation.complete():
+				if not relaxation.complete:
 					continue
 
 				energy = relaxation.get_final_energy(per_atom=False)
