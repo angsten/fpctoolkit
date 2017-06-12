@@ -165,6 +165,7 @@ if __name__ == '__main__':
 	#controls which misfit strains to apply to the minima structures when constructing the final phase diagram
 	epitaxial_relaxations_misfit_strains_list = [-0.02, -0.015, -0.01, -0.005, 0.0, 0.005, 0.01, 0.015, 0.02]
 	calculate_polarizations = False
+	update_eptiaxy_only = False
 
 	#######################################################################################################
 
@@ -237,27 +238,28 @@ if __name__ == '__main__':
 
 	initial_epitaxial_structures_list = []
 
-	for misfit_strain in misfit_strains_list:
-		print "Misfit strain: " + str(misfit_strain)
+	if not update_eptiaxy_only:
+		for misfit_strain in misfit_strains_list:
+			print "Misfit strain: " + str(misfit_strain)
 
-		run_path = Path.join(expansion_path, str(misfit_strain).replace('-', 'n'))
-		
-		sorted_unique_triplets = run_misfit_strain(path=run_path, misfit_strain=misfit_strain, input_dictionary=input_dictionary, initial_relaxation_input_dictionary=initial_relaxation_input_dictionary,
-				  dfpt_incar_settings=dfpt_incar_settings, derivative_evaluation_vasp_run_inputs_dictionary=derivative_evaluation_vasp_run_inputs_dictionary,
-				  minima_relaxation_input_dictionary=minima_relaxation_input_dictionary, epitaxial_relaxation_input_dictionary=epitaxial_relaxation_input_dictionary)
+			run_path = Path.join(expansion_path, str(misfit_strain).replace('-', 'n'))
 			
-		if sorted_unique_triplets:
-			curtailed_sorted_triplets = [sorted_unique_triplets[0]] ##########################################################only selecting lowest energy for now		
-			initial_epitaxial_structures_list += [data_triplet[0].final_structure for data_triplet in curtailed_sorted_triplets]
+			sorted_unique_triplets = run_misfit_strain(path=run_path, misfit_strain=misfit_strain, input_dictionary=input_dictionary, initial_relaxation_input_dictionary=initial_relaxation_input_dictionary,
+					  dfpt_incar_settings=dfpt_incar_settings, derivative_evaluation_vasp_run_inputs_dictionary=derivative_evaluation_vasp_run_inputs_dictionary,
+					  minima_relaxation_input_dictionary=minima_relaxation_input_dictionary, epitaxial_relaxation_input_dictionary=epitaxial_relaxation_input_dictionary)
+				
+			if sorted_unique_triplets:
+				curtailed_sorted_triplets = [sorted_unique_triplets[0]] ##########################################################only selecting lowest energy for now		
+				initial_epitaxial_structures_list += [data_triplet[0].final_structure for data_triplet in curtailed_sorted_triplets]
 
 
 
-	sys.exit('\n\n**exiting before epitaxial relaxation**\n\n')
+		sys.exit('\n\n**exiting before epitaxial relaxation**\n\n')
 
 	#for now, just arrange super list of [relaxation, chromosome] and print out energy and first few of chromosome - inspect these to see how diverse they are, sort by energy first
 
 	#maybe don't run this until all structures have been determined
-	if len(initial_epitaxial_structures_list) > 0:
+	if (len(initial_epitaxial_structures_list) > 0) or update_eptiaxy_only:
 		print "Updating Epitaxial Relaxations"
 
 		Path.make(epitaxial_path)
