@@ -115,6 +115,7 @@ class VaspPolarizationRunSet(object):
 
 	def get_change_in_polarization(self):
 
+		print 'before complete call', str(self.vasp_run_list)
 		if not self.complete:
 			return None
 

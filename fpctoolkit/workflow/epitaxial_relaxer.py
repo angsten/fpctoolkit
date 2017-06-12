@@ -182,6 +182,8 @@ class EpitaxialRelaxer(object):
 
 		polarization_run.update()
 
+		print 'before return pol call', str(polarization_run.vasp_run_list)
+
 		return polarization_run.get_change_in_polarization()
 
 	def get_misfit_strain_minimum_energy_polarization_triplets_list(self):
