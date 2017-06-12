@@ -59,8 +59,6 @@ class VaspPolarizationRunSet(object):
 
 		self.initialize_vasp_runs()
 
-		print 'after init', str(self.vasp_run_list)
-
 
 	def initialize_vasp_runs(self):
 		"""
@@ -117,7 +115,6 @@ class VaspPolarizationRunSet(object):
 
 	def get_change_in_polarization(self):
 
-		print 'before complete call', str(self.vasp_run_list)
 		if not self.complete:
 			return None
 
@@ -176,11 +173,8 @@ class VaspPolarizationRunSet(object):
 
 	@property
 	def complete(self):
-		print 'in complete top. vasp run list looks like:' + str(self.vasp_run_list)
 		for vasp_run in self.vasp_run_list:
-			print 'in complete'
 			if not vasp_run.complete:
-				print 'returning false'
 				return False
 
 		return True
