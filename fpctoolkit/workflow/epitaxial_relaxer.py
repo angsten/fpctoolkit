@@ -196,6 +196,7 @@ class EpitaxialRelaxer(object):
 		output_data_dictionaries = []
 
 		for misfit_strain in self.misfit_strains_list:
+			print str(misfit_strain)
 			data_dictionary = OrderedDict()
 			data_dictionary['misfit_strain'] = misfit_strain
 
@@ -215,11 +216,11 @@ class EpitaxialRelaxer(object):
 					continue
 
 				energy = relaxation.get_final_energy(per_atom=False)
-				print energy
+				print 'structure_' + str(i), energy
 				
 				if energy < minimum_energy:
 					minimum_energy = energy
-					minimum_energy_relaxation = copy.deepcopy(relaxation)
+					minimum_energy_relaxation = relaxation
 
 			print 
 			print "minimum E " + str(minimum_energy)
