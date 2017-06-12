@@ -215,12 +215,14 @@ class EpitaxialRelaxer(object):
 					continue
 
 				energy = relaxation.get_final_energy(per_atom=False)
+				print energy
 				
 				if energy < minimum_energy:
 					minimum_energy = energy
 					minimum_energy_relaxation = relaxation
 
-
+			print 
+			print "minimum E " + str(minimum_energy)
 			structure = relaxation.final_structure
 			polarization_vector = self.update_polarization_run(relaxation)
 
