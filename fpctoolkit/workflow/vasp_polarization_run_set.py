@@ -173,7 +173,7 @@ class VaspPolarizationRunSet(object):
 
 	@property
 	def complete(self):
-		print 'in complete top'
+		print 'in complete top. vasp run list looks like:' + str(self.vasp_run_list)
 		for vasp_run in self.vasp_run_list:
 			print 'in complete'
 			if not vasp_run.complete:
