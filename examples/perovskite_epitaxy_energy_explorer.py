@@ -277,4 +277,7 @@ if __name__ == '__main__':
 		
 		epitaxial_relaxer.update()
 
-		print epitaxial_relaxer.get_misfit_strain_minimum_energy_polarization_triplets_list()
+		for data_dictionary in epitaxial_relaxer.get_data_dictionaries_list():
+			for key in data_dictionary.get_keys():
+				print data_dictionary[key]
+			print

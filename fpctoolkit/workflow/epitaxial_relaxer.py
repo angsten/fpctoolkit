@@ -184,7 +184,7 @@ class EpitaxialRelaxer(object):
 
 		return polarization_run.get_change_in_polarization()
 
-	def get_misfit_strain_minimum_energy_polarization_triplets_list(self):
+	def get_data_dictionaries_list(self):
 		"""
 		Starts at most negative misfit runs and goes to larger misfits finding the minimum energy data set. To encourage continuity, if two or more relaxations are within a small energy threshold of each other, the 
 		structure that is closest to the last chosen structure is chosen.
