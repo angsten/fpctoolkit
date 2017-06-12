@@ -69,7 +69,7 @@ class MinimaRelaxer(object):
 		final_pairs_list = []
 		energies_list = []
 		for eigen_chromosome_energy_pair in sorted_eigen_chromosome_energy_pairs_list:
-			if False:#eigen_chromosome_energy_pair[0] in energies_list:#########################################################################################change back
+			if False: #eigen_chromosome_energy_pair[0] in energies_list:#########################################################################################change back
 				continue
 			else:
 				energies_list.append(eigen_chromosome_energy_pair[0])

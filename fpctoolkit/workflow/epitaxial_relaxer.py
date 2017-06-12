@@ -20,7 +20,7 @@ class EpitaxialRelaxer(object):
 	Calculates the minimum energy structures across a series of (100) misfit strains.
 	"""
 
-	def __init__(self, path, initial_structures_list, reference_structure, vasp_relaxation_inputs_dictionary, reference_lattice_constant, misfit_strains_list, supercell_dimensions_list):
+	def __init__(self, path, initial_structures_list, reference_structure, vasp_relaxation_inputs_dictionary, reference_lattice_constant, misfit_strains_list, supercell_dimensions_list, calculate_polarizations=False):
 		"""
 		path should be the main path of the calculation set
 
@@ -62,6 +62,7 @@ class EpitaxialRelaxer(object):
 		self.reference_lattice_constant = reference_lattice_constant
 		self.misfit_strains_list = misfit_strains_list
 		self.supercell_dimensions_list = supercell_dimensions_list
+		self.calculate_polarizations = calculate_polarizations
 
 		Path.make(path)
 
@@ -137,21 +138,24 @@ class EpitaxialRelaxer(object):
 
 				relaxation.update()
 
-				#if relaxation.complete:
-				#	self.update_polarization_run(relaxation)
+				if self.calculate_polarizations and relaxation.complete:
+					self.update_polarization_run(relaxation)
 
 	@property
 	def complete(self):
-		for i in range(10000):
-			relax_path = Path.join(misfit_path, 'structure_' + str(i))
+		for misfit_strain in self.misfit_strains_list:
+			misfit_path = self.get_extended_path(str(misfit_strain).replace('-', 'n'))
 
-			if not Path.exists(relax_path):
-				return True
-			else:
-				relaxation = VaspRelaxation(path=relax_path)
+			for i in range(10000):
+				relax_path = Path.join(misfit_path, 'structure_' + str(i))
 
-				if not relaxation.complete:
-					return False
+				if not Path.exists(relax_path):
+					return True
+				else:
+					relaxation = VaspRelaxation(path=relax_path)
+
+					if not relaxation.complete:
+						return False
 
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)
@@ -177,3 +181,49 @@ class EpitaxialRelaxer(object):
 		polarization_run = VaspPolarizationRunSet(path, reference_structure, distorted_structure, vasp_run_inputs_dictionary)
 
 		polarization_run.update()
+
+		return polarization_run.get_change_in_polarization()
+
+	def get_misfit_strain_minimum_energy_polarization_triplets_list(self):
+		"""
+		Starts at most negative misfit runs and goes to larger misfits finding the minimum energy data set. To encourage continuity, if two or more relaxations are within a small energy threshold of each other, the 
+		structure that is closest to the last chosen structure is chosen.
+
+		The output of this function looks like [[-0.02, energy_1, [polarization_vector_1]], [-0.015, energy_2, [polarization_vector_2]], ...]
+		"""
+
+		output_triplets = []
+
+		for misfit_strain in self.misfit_strains_list:
+			triplet = [misfit_strain]
+
+			misfit_path = self.get_extended_path(str(misfit_strain).replace('-', 'n'))
+
+			minimum_energy = 10000000000
+			minimum_energy_relaxation = None
+			for i in range(10000):
+				relax_path = Path.join(misfit_path, 'structure_' + str(i))
+
+				if not Path.exists(relax_path):
+					break
+
+				relaxation = VaspRelaxation(path=relax_path)
+
+				if not relaxation.complete():
+					continue
+
+				energy = relaxation.get_final_energy(per_atom=False)
+				
+				if energy < minimum_energy:
+					minimum_energy = energy
+					minimum_energy_relaxation = relaxation
+
+
+			polarization_vector = self.update_polarization_run(relaxation)
+
+			triplet.append(minimum_energy)
+			triplet.append(polarization_vector)
+
+			output_triplets.append(triplet)
+
+		return output_triplets

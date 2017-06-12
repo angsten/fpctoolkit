@@ -65,7 +65,7 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 	
 	hessian = Hessian(dfpt_force_run.outcar)
 
-	if True:
+	if input_dictionary['write_hessian_data']:
 		hessian.print_eigenvalues_to_file(Path.join(path, 'output_eigen_values'))
 		hessian.print_eigen_components_to_file(Path.join(path, 'output_eigen_components'))
 		hessian.print_mode_effective_charge_vectors_to_file(Path.join(path, 'output_mode_effective_charge_vectors'), relaxed_structure)
@@ -160,9 +160,11 @@ if __name__ == '__main__':
 
 	#max number of minima relaxations to perform. Set to None to relax all guessed minima.
 	input_dictionary['max_minima'] = 6
+	input_dictionary['write_hessian_data'] = True
 
 	#controls which misfit strains to apply to the minima structures when constructing the final phase diagram
 	epitaxial_relaxations_misfit_strains_list = [-0.02, -0.015, -0.01, -0.005, 0.0, 0.005, 0.01, 0.015, 0.02]
+	calculate_polarizations = False
 
 	#######################################################################################################
 
@@ -268,6 +270,7 @@ if __name__ == '__main__':
 		reference_structure=Perovskite(supercell_dimensions=[Nx, Ny, Nz], lattice=[[a*Nx, 0.0, 0.0], [0.0, a*Ny, 0.0], [0.0, 0.0, a]], species_list=input_dictionary['species_list'])
 
 		epitaxial_relaxer = EpitaxialRelaxer(path=epitaxial_path, initial_structures_list=initial_epitaxial_structures_list, reference_structure=reference_structure, vasp_relaxation_inputs_dictionary=epitaxial_relaxation_input_dictionary, 
-			reference_lattice_constant=input_dictionary['reference_lattice_constant'], misfit_strains_list=epitaxial_relaxations_misfit_strains_list, supercell_dimensions_list=input_dictionary['supercell_dimensions_list'])
+			reference_lattice_constant=input_dictionary['reference_lattice_constant'], misfit_strains_list=epitaxial_relaxations_misfit_strains_list, supercell_dimensions_list=input_dictionary['supercell_dimensions_list'],
+			calculate_polarizations=calculate_polarizations)
 		
 		epitaxial_relaxer.update()
