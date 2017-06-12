@@ -192,10 +192,11 @@ class EpitaxialRelaxer(object):
 		The output of this function looks like [[-0.02, energy_1, [polarization_vector_1]], [-0.015, energy_2, [polarization_vector_2]], ...]
 		"""
 
-		output_triplets = []
+		output_data_dictionaries = []
 
 		for misfit_strain in self.misfit_strains_list:
-			triplet['misfit_strain'] = misfit_strain
+			data_dictionary = {}
+			data_dictionary['misfit_strain'] = misfit_strain
 
 			misfit_path = self.get_extended_path(str(misfit_strain).replace('-', 'n'))
 
@@ -222,12 +223,12 @@ class EpitaxialRelaxer(object):
 			structure = relaxation.final_structure
 			polarization_vector = self.update_polarization_run(relaxation)
 
-			triplet['structure'] = structure
-			triplet['energy'] = minimum_energy
-			triplet['polarization_vector'] = polarization_vector
-			triplet['spg_0.01'] = structure.get_spacegroup_string(0.01)
-			triplet['spg_0.001'] = structure.get_spacegroup_string(0.001)
+			data_dictionary['structure'] = structure
+			data_dictionary['energy'] = minimum_energy
+			data_dictionary['polarization_vector'] = polarization_vector
+			data_dictionary['spg_0.01'] = structure.get_spacegroup_string(0.01)
+			data_dictionary['spg_0.001'] = structure.get_spacegroup_string(0.001)
 
-			output_triplets.append(triplet)
+			output_data_dictionaries.append(data_dictionary)
 
-		return output_triplets
+		return output_data_dictionaries
