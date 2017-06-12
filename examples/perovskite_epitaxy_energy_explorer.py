@@ -276,3 +276,5 @@ if __name__ == '__main__':
 			calculate_polarizations=calculate_polarizations)
 		
 		epitaxial_relaxer.update()
+
+		print epitaxial_relaxer.get_misfit_strain_minimum_energy_polarization_triplets_list()
