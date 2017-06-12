@@ -278,6 +278,7 @@ if __name__ == '__main__':
 		epitaxial_relaxer.update()
 
 		for data_dictionary in epitaxial_relaxer.get_data_dictionaries_list():
-			for key in data_dictionary:
-				print data_dictionary[key]
+			for key, value in data_dictionary.items():
+				if not key == 'structure':
+					print key, value
 			print

@@ -226,6 +226,8 @@ class EpitaxialRelaxer(object):
 			data_dictionary['structure'] = structure
 			data_dictionary['energy'] = minimum_energy
 			data_dictionary['polarization_vector'] = polarization_vector
+			data_dictionary['spg_0.1'] = structure.get_spacegroup_string(0.1)
+			data_dictionary['spg_0.05'] = structure.get_spacegroup_string(0.05)
 			data_dictionary['spg_0.01'] = structure.get_spacegroup_string(0.01)
 			data_dictionary['spg_0.001'] = structure.get_spacegroup_string(0.001)
 
