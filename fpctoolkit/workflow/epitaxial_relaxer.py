@@ -195,7 +195,7 @@ class EpitaxialRelaxer(object):
 		output_triplets = []
 
 		for misfit_strain in self.misfit_strains_list:
-			triplet = [misfit_strain]
+			triplet['misfit_strain'] = misfit_strain
 
 			misfit_path = self.get_extended_path(str(misfit_strain).replace('-', 'n'))
 
@@ -219,10 +219,14 @@ class EpitaxialRelaxer(object):
 					minimum_energy_relaxation = relaxation
 
 
+			structure = relaxation.final_structure
 			polarization_vector = self.update_polarization_run(relaxation)
 
-			triplet.append(minimum_energy)
-			triplet.append(polarization_vector)
+			triplet['structure'] = structure
+			triplet['energy'] = minimum_energy
+			triplet['polarization_vector'] = polarization_vector
+			triplet['spg_0.01'] = structure.get_spacegroup_string(0.01)
+			triplet['spg_0.001'] = structure.get_spacegroup_string(0.001)
 
 			output_triplets.append(triplet)
 
