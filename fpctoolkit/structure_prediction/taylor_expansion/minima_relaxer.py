@@ -21,7 +21,7 @@ class MinimaRelaxer(object):
 	The relaxations are then sortable by energy, and one can see the change in the eigen_chromosomes in going from the guess to the relaxed structure
 	"""
 
-	def __init__(self, path, reference_structure, reference_completed_vasp_relaxation_run, hessian, vasp_relaxation_inputs_dictionary, eigen_chromosome_energy_pairs_file_path, guesses_log_path, max_minima=None):
+	def __init__(self, path, reference_structure, reference_completed_vasp_relaxation_run, hessian, vasp_relaxation_inputs_dictionary, eigen_chromosome_energy_pairs_file_path, log_base_path, max_minima=None):
 		"""
 		eigen_chromosome_energy_pairs_list should look like [[predicted energy change, guessed eigen_chromosome], [...],...]
 
@@ -67,7 +67,7 @@ class MinimaRelaxer(object):
 
 
 
-
+		guesses_log_path = Path.join(log_base_path, 'output_guesses_log')
 		if not Path.exists(guesses_log_path):
 			file = File()
 
@@ -92,11 +92,12 @@ class MinimaRelaxer(object):
 
 		full_guesses_list_file = File(guesses_log_path) #lines look like   -0.550084   [ 0.000  0.000 -0.009  0.000  0.000  0.000      0.605  0.605  0.000  0.000  0.000  0.000  0.000  0.000 ]  Amm2 (38)
 
+		unique_guesses_file = File()
+
 		final_pairs_list = []
 		energies_list = []
 		seen_before_dictionary = {}
 		for line in full_guesses_list_file:
-			print "analyzing line: " + line
 			energy = float(su.remove_extra_spaces(line.split('[')[0]))
 			chromosome = [float(x) for x in su.remove_extra_spaces(line[line.find('[')+1:line.find(']')]).split(' ')]
 			spg = su.remove_extra_spaces(line.split(']')[1])
@@ -106,12 +107,14 @@ class MinimaRelaxer(object):
 			if key in seen_before_dictionary:
 				continue
 			else:
-				print "found unique " + key
 				seen_before_dictionary[key] = True
 				eigen_chromosome_energy_pair = [energy, chromosome]
 				energies_list.append(eigen_chromosome_energy_pair[0])
 				final_pairs_list.append(eigen_chromosome_energy_pair)
 
+				unique_guesses_file += str(eigen_chromosome_energy_pair[0]) + '   ' + misc.get_formatted_chromosome_string(eigen_chromosome_energy_pair[1]) + '  ' + spg
+
+		unique_guesses_file.write_to_path(Path.join(log_base_path, 'output_unique_guesses_log'))
 
 
 

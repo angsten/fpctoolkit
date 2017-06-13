@@ -101,7 +101,7 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 		minima_path = Path.join(path, 'minima_relaxations')
 
 		minima_relaxer = MinimaRelaxer(path=minima_path, reference_structure=relaxed_structure, reference_completed_vasp_relaxation_run=relaxation, hessian=hessian, 
-					       vasp_relaxation_inputs_dictionary=minima_relaxation_input_dictionary, eigen_chromosome_energy_pairs_file_path=guessed_minima_data_path, guesses_log_path=Path.join(path, 'output_guesses_log'), 
+					       vasp_relaxation_inputs_dictionary=minima_relaxation_input_dictionary, eigen_chromosome_energy_pairs_file_path=guessed_minima_data_path, log_base_path=path, 
 					       max_minima=input_dictionary['max_minima'])
 		
 		minima_relaxer.update()
