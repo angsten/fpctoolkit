@@ -24,7 +24,7 @@ class DerivativeEvaluator(object):
 	"""
 
 	def __init__(self, path, reference_structure, hessian, reference_completed_vasp_relaxation_run, vasp_run_inputs_dictionary, 
-		perturbation_magnitudes_dictionary, displacement_finite_differences_step_size, status_file_path, variable_specialty_points_dictionary=None):
+		perturbation_magnitudes_dictionary, displacement_finite_differences_step_size, status_file_path, variable_specialty_points_dictionary=None, max_displacement_variables=6):
 		"""
 		
 		perturbation_magnitudes_dictionary should look like {'strain': 0.02, 'displacement': 0.01} with strain as fractional and displacement in angstroms
@@ -49,6 +49,7 @@ class DerivativeEvaluator(object):
 		self.eigen_pairs_list = hessian.get_sorted_hessian_eigen_pairs_list()
 		self.vasp_run_inputs_dictionary = copy.deepcopy(vasp_run_inputs_dictionary)
 		self.perturbation_magnitudes_dictionary = perturbation_magnitudes_dictionary
+		self.max_displacement_variables = max_displacement_variables
 
 		if not reference_completed_vasp_relaxation_run.complete:
 			raise Exception("Vasp relaxation for reference structure is not yet completed")
@@ -87,7 +88,7 @@ class DerivativeEvaluator(object):
 
 		for i, eigen_pair in enumerate(sorted_eigen_pair_list):
 			if eigen_pair.is_unstable():
-				if len(displacement_indices_list) < 6: ####################################hardcoded!
+				if len(displacement_indices_list) < self.max_displacement_variables: ####################################hardcoded!
 					displacement_indices_list.append(i)
 
 		return displacement_indices_list

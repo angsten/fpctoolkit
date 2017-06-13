@@ -92,7 +92,7 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 		derivative_evaluator = DerivativeEvaluator(path=derivative_evaluation_path, reference_structure=relaxed_structure, hessian=hessian, reference_completed_vasp_relaxation_run=relaxation,
 							   vasp_run_inputs_dictionary=derivative_evaluation_vasp_run_inputs_dictionary, perturbation_magnitudes_dictionary=perturbation_magnitudes_dictionary,
 							   displacement_finite_differences_step_size=displacement_finite_differences_step_size, status_file_path=Path.join(path, 'output_derivative_plot_data'),
-							   variable_specialty_points_dictionary=variable_specialty_points_dictionary)
+							   variable_specialty_points_dictionary=variable_specialty_points_dictionary, max_displacement_variables=input_dictionary['max_displacement_variables'])
 
 		derivative_evaluator.update()
 
@@ -157,6 +157,8 @@ if __name__ == '__main__':
 	encut = 600
 	kpoint_scheme = 'Monkhorst'
 	kpoint_subdivisions_list = [3, 3, 3]
+
+	input_dictionary['max_displacement_variables'] = 6
 
 	#max number of minima relaxations to perform. Set to None to relax all guessed minima.
 	input_dictionary['max_minima'] = 6
