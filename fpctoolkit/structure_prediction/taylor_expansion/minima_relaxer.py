@@ -144,7 +144,7 @@ class MinimaRelaxer(object):
 				self.completed_relaxations_data_list.append([vasp_relaxation, self.eigen_chromosomes_list[i], eigen_structure.get_list_representation()])
 
 				file += "DFT Energy Change        " + str(vasp_relaxation.get_final_energy(per_atom=False)-self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False))
-				file += "Space Group " + "  ".join([vasp_relaxation.final_structure.get_spacegroup_string(symprec) for symprec in spg_symprecs])
+				file += "Space Group " + " ".join([vasp_relaxation.final_structure.get_spacegroup_string(symprec) for symprec in spg_symprecs])
 				file += "Guessed Energy Change  " + str(self.predicted_energies_list[i])
 				file += "Guessed Chromosome"
 				file += misc.get_formatted_chromosome_string(self.eigen_chromosomes_list[i])
