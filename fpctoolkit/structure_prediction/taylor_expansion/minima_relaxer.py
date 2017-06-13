@@ -70,8 +70,9 @@ class MinimaRelaxer(object):
 
 		file = File()
 
+		sorted_hessian_eigen_pairs_list = hessian.get_sorted_hessian_eigen_pairs_list()
 		for eigen_chromosome_energy_pair in sorted_eigen_chromosome_energy_pairs_list:
-			eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
+			eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian, sorted_hessian_eigen_pairs_list=sorted_hessian_eigen_pairs_list)
 			eigen_structure.set_eigen_chromosome(eigen_chromosome_energy_pair[1])
 
 			initial_structure = eigen_structure.get_distorted_structure()

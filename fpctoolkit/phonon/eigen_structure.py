@@ -35,14 +35,17 @@ class EigenStructure(object):
 	Note: if exx = 0.0, these means no strain in xx direction.
 	"""
 
-	def __init__(self, reference_structure, hessian, distorted_structure=None):
+	def __init__(self, reference_structure, hessian, distorted_structure=None, sorted_hessian_eigen_pairs_list=None):
 		"""
 		If distorted_structure is inputted, then this will be used to seed the strain vector and eigen_component amplitudes.
 		"""
 
 		Structure.validate(reference_structure)
 
-		eigen_pairs = hessian.get_sorted_hessian_eigen_pairs_list()
+		if sorted_hessian_eigen_pairs_list == None:
+			eigen_pairs = hessian.get_sorted_hessian_eigen_pairs_list()
+		else:
+			eigen_pairs = sorted_hessian_eigen_pairs_list
 
 		# for eigen_pair in eigen_pairs:
 		# 	print eigen_pair
