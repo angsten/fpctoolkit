@@ -71,7 +71,7 @@ class MinimaRelaxer(object):
 		file = File()
 
 		sorted_hessian_eigen_pairs_list = hessian.get_sorted_hessian_eigen_pairs_list()
-		total = len(eigen_chromosome_energy_pair)
+		total = len(sorted_eigen_chromosome_energy_pairs_list)
 		eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
 
 		for i, eigen_chromosome_energy_pair in enumerate(sorted_eigen_chromosome_energy_pairs_list):
