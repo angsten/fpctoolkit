@@ -127,13 +127,13 @@ class VaspPolarizationRunSet(object):
 
 
 		e = -1.6021766209*10**-19 #in Coulombs, negative because vasp outputs in e, not abs value of e
-		angstroms_sq_per_meter_sq = 10**20
+		angstroms_sq_per_meter_sq = 10.0**20.0
 		conversion_factor = e*(1/cell_volume)*angstroms_sq_per_meter_sq
 
 		total_polarization_vector = (distorted_polarization_vector - reference_polarization_vector)*conversion_factor
 
-		search_range_minimum = -1
-		search_range_maximum = 1
+		search_range_minimum = -3
+		search_range_maximum = 3
 		minimum_polarization_magnitude = 1000000000
 		minimum_polarization_vector = None
 
@@ -151,7 +151,7 @@ class VaspPolarizationRunSet(object):
 						minimum_polarization_magnitude = polarization_magnitude
 						minimum_polarization_vector = shifted_total_polarization_vector
 
-		return minimum_polarization_vector
+		return total_polarization_vector #minimum_polarization_vector
 
 
 
