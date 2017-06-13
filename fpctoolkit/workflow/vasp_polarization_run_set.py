@@ -132,8 +132,8 @@ class VaspPolarizationRunSet(object):
 
 		total_polarization_vector = (distorted_polarization_vector - reference_polarization_vector)*conversion_factor
 
-		search_range_minimum = -3
-		search_range_maximum = 3
+		search_range_minimum = -6
+		search_range_maximum = 6
 		minimum_polarization_magnitude = 1000000000
 		minimum_polarization_vector = None
 
