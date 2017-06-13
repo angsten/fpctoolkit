@@ -79,7 +79,7 @@ class MinimaRelaxer(object):
 
 			spg = initial_structure.get_spacegroup_string()
 
-			file += str(eigen_chromosome_energy_pair[0]), '  ', misc.get_formatted_chromosome_string(eigen_chromosome_energy_pair[1]), '  ', spg
+			file += str(eigen_chromosome_energy_pair[0]) + '   ' + misc.get_formatted_chromosome_string(eigen_chromosome_energy_pair[1]) + '  ' + spg
 
 
 		file.write_to_path(guesses_log_path)
