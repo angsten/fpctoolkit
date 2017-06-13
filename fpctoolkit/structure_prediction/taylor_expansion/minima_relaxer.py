@@ -9,6 +9,7 @@ from fpctoolkit.phonon.eigen_structure import EigenStructure
 from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
 import fpctoolkit.util.misc as misc
 from fpctoolkit.io.file import File
+import fpctoolkit.util.string_util as su
 
 
 
@@ -67,39 +68,62 @@ class MinimaRelaxer(object):
 
 
 
+		if not path.exists(guesses_log_path):
+			file = File()
 
-		file = File()
+			sorted_hessian_eigen_pairs_list = hessian.get_sorted_hessian_eigen_pairs_list()
+			total = len(sorted_eigen_chromosome_energy_pairs_list)
+			eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
 
-		sorted_hessian_eigen_pairs_list = hessian.get_sorted_hessian_eigen_pairs_list()
-		total = len(sorted_eigen_chromosome_energy_pairs_list)
-		eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
+			for i, eigen_chromosome_energy_pair in enumerate(sorted_eigen_chromosome_energy_pairs_list):
+				print "Writing guess log " + str(i+1) + " of " + str(total)
+				eigen_structure.set_eigen_chromosome(eigen_chromosome_energy_pair[1])
 
-		for i, eigen_chromosome_energy_pair in enumerate(sorted_eigen_chromosome_energy_pairs_list):
-			print "Writing guess log " + str(i+1) + " of " + str(total)
-			eigen_structure.set_eigen_chromosome(eigen_chromosome_energy_pair[1])
+				initial_structure = eigen_structure.get_distorted_structure()
 
-			initial_structure = eigen_structure.get_distorted_structure()
+				spg = initial_structure.get_spacegroup_string(0.001)
 
-			spg = initial_structure.get_spacegroup_string(0.001)
-
-			file += str(eigen_chromosome_energy_pair[0]) + '   ' + misc.get_formatted_chromosome_string(eigen_chromosome_energy_pair[1]) + '  ' + spg
-
-
-		file.write_to_path(guesses_log_path)
+				file += str(eigen_chromosome_energy_pair[0]) + '   ' + misc.get_formatted_chromosome_string(eigen_chromosome_energy_pair[1]) + '  ' + spg
 
 
+			file.write_to_path(guesses_log_path)
 
 
 
-		#remove redundant energies from list
+		full_guesses_list_file = file(guesses_log_path) #lines look like   -0.550084   [ 0.000  0.000 -0.009  0.000  0.000  0.000      0.605  0.605  0.000  0.000  0.000  0.000  0.000  0.000 ]  Amm2 (38)
+
 		final_pairs_list = []
 		energies_list = []
-		for eigen_chromosome_energy_pair in sorted_eigen_chromosome_energy_pairs_list:
-			if eigen_chromosome_energy_pair[0] in energies_list:
+		seen_before_dictionary = {}
+		for line in full_guesses_list_file:
+			print "analyzing line: " + line
+			energy = float(su.remove_extra_spaces(line.split('[')[0]))
+			chromosome = [float(x) for x in su.remove_extra_spaces(line[line.find('['):line.find(']')]).split(' ')]
+			spg = su.remove_extra_spaces(line.split(']')[1])
+
+			key = str(energy) + '_' + spg
+
+			if key in seen_before_dictionary:
 				continue
 			else:
+				print "found unique " + key
+				seen_before_dictionary[key] = True
+				eigen_chromosome_energy_pair = [energy, chromosome]
 				energies_list.append(eigen_chromosome_energy_pair[0])
 				final_pairs_list.append(eigen_chromosome_energy_pair)
+
+
+
+
+		# #remove redundant energies from list
+		# final_pairs_list = []
+		# energies_list = []
+		# for eigen_chromosome_energy_pair in sorted_eigen_chromosome_energy_pairs_list:
+		# 	if eigen_chromosome_energy_pair[0] in energies_list:
+		# 		continue
+		# 	else:
+		# 		energies_list.append(eigen_chromosome_energy_pair[0])
+		# 		final_pairs_list.append(eigen_chromosome_energy_pair)
 
 
 		# print "Final pairs list: "
