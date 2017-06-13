@@ -128,7 +128,6 @@ class VaspPolarizationRunSet(object):
 
 		e = -1.6021766209*10**-19 #in Coulombs, negative because vasp outputs in e, not abs value of e
 		angstroms_sq_per_meter_sq = 10.0**20.0
-		print "Cell volume: " + str(cell_volume)
 		conversion_factor = e*(1/cell_volume)*angstroms_sq_per_meter_sq
 
 		total_polarization_vector = (distorted_polarization_vector - reference_polarization_vector)*conversion_factor
