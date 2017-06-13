@@ -90,7 +90,7 @@ class MinimaRelaxer(object):
 
 
 
-		full_guesses_list_file = file(guesses_log_path) #lines look like   -0.550084   [ 0.000  0.000 -0.009  0.000  0.000  0.000      0.605  0.605  0.000  0.000  0.000  0.000  0.000  0.000 ]  Amm2 (38)
+		full_guesses_list_file = File(guesses_log_path) #lines look like   -0.550084   [ 0.000  0.000 -0.009  0.000  0.000  0.000      0.605  0.605  0.000  0.000  0.000  0.000  0.000  0.000 ]  Amm2 (38)
 
 		final_pairs_list = []
 		energies_list = []
