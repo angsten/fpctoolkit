@@ -132,8 +132,8 @@ class VaspPolarizationRunSet(object):
 
 		total_polarization_vector = (distorted_polarization_vector - reference_polarization_vector)*conversion_factor
 
-		search_range_minimum = -9
-		search_range_maximum = 9
+		search_range_minimum = -3
+		search_range_maximum = 3
 		minimum_polarization_magnitude = 1000000000
 		minimum_polarization_vector = None
 
@@ -141,7 +141,7 @@ class VaspPolarizationRunSet(object):
 			for j in range(search_range_minimum, search_range_maximum):
 				for k in range(search_range_minimum,search_range_maximum):
 
-					shift_vector = (i*lattice[0] + j*lattice[1] + k*lattice[2])*conversion_factor #polarization defined within modulo eR/omega (factor of two works for non-spin-pol calcs only)
+					shift_vector = 2*(i*lattice[0] + j*lattice[1] + k*lattice[2])*conversion_factor #polarization defined within modulo eR/omega (factor of two works for non-spin-pol calcs only)
 
 					shifted_total_polarization_vector = total_polarization_vector + shift_vector
 
