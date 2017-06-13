@@ -77,7 +77,7 @@ class MinimaRelaxer(object):
 
 			initial_structure = eigen_structure.get_distorted_structure()
 
-			spg = initial_structure.get_spacegroup_string(0.1)
+			spg = initial_structure.get_spacegroup_string(0.001)
 
 			file += str(eigen_chromosome_energy_pair[0]) + '   ' + misc.get_formatted_chromosome_string(eigen_chromosome_energy_pair[1]) + '  ' + spg
 
