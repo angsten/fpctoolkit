@@ -20,7 +20,7 @@ class MinimaRelaxer(object):
 	The relaxations are then sortable by energy, and one can see the change in the eigen_chromosomes in going from the guess to the relaxed structure
 	"""
 
-	def __init__(self, path, reference_structure, reference_completed_vasp_relaxation_run, hessian, vasp_relaxation_inputs_dictionary, eigen_chromosome_energy_pairs_file_path, max_minima=None):
+	def __init__(self, path, reference_structure, reference_completed_vasp_relaxation_run, hessian, vasp_relaxation_inputs_dictionary, eigen_chromosome_energy_pairs_file_path, guesses_log_path, max_minima=None):
 		"""
 		eigen_chromosome_energy_pairs_list should look like [[predicted energy change, guessed eigen_chromosome], [...],...]
 
@@ -65,11 +65,33 @@ class MinimaRelaxer(object):
 		sorted_eigen_chromosome_energy_pairs_list = sorted(eigen_chromosome_energy_pairs_list, key=lambda x: x[0])
 
 
+
+
+
+		file = File()
+
+		for eigen_chromosome_energy_pair in sorted_eigen_chromosome_energy_pairs_list:
+			eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
+			eigen_structure.set_eigen_chromosome(eigen_chromosome_energy_pair[1])
+
+			initial_structure = eigen_structure.get_distorted_structure()
+
+			spg = initial_structure.get_spacegroup_string()
+
+			file += str(eigen_chromosome_energy_pair[0]), '  ', misc.get_formatted_chromosome_string(eigen_chromosome_energy_pair[1]), '  ', spg
+
+
+		file.write_to_path(guesses_log_path)
+
+
+
+
+
 		#remove redundant energies from list
 		final_pairs_list = []
 		energies_list = []
 		for eigen_chromosome_energy_pair in sorted_eigen_chromosome_energy_pairs_list:
-			if False: #eigen_chromosome_energy_pair[0] in energies_list:#########################################################################################change back
+			if eigen_chromosome_energy_pair[0] in energies_list:
 				continue
 			else:
 				energies_list.append(eigen_chromosome_energy_pair[0])
