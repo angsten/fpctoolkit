@@ -98,7 +98,7 @@ class MinimaRelaxer(object):
 		for line in full_guesses_list_file:
 			print "analyzing line: " + line
 			energy = float(su.remove_extra_spaces(line.split('[')[0]))
-			chromosome = [float(x) for x in su.remove_extra_spaces(line[line.find('['):line.find(']')]).split(' ')]
+			chromosome = [float(x) for x in su.remove_extra_spaces(line[line.find('[')+1:line.find(']')]).split(' ')]
 			spg = su.remove_extra_spaces(line.split(']')[1])
 
 			key = str(energy) + '_' + spg
