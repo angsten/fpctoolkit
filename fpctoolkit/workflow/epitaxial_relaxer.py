@@ -224,6 +224,8 @@ class EpitaxialRelaxer(object):
 
 			print 
 			print "minimum E " + str(minimum_energy)
+			print 
+			
 			structure = copy.deepcopy(minimum_energy_relaxation.final_structure)
 			polarization_vector = self.update_polarization_run(minimum_energy_relaxation)
 
