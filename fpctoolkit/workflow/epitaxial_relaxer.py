@@ -183,6 +183,7 @@ class EpitaxialRelaxer(object):
 
 		polarization_run.update()
 
+		print "calling get change for path " + relaxation.path
 		return polarization_run.get_change_in_polarization()
 
 	def get_data_dictionaries_list(self):
