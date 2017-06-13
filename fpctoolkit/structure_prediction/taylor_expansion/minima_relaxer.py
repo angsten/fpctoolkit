@@ -68,7 +68,7 @@ class MinimaRelaxer(object):
 
 
 
-		if not path.exists(guesses_log_path):
+		if not Path.exists(guesses_log_path):
 			file = File()
 
 			sorted_hessian_eigen_pairs_list = hessian.get_sorted_hessian_eigen_pairs_list()
