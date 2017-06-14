@@ -127,10 +127,13 @@ class EpitaxialRelaxer(object):
 	def update(self):
 
 		for misfit_strain in self.misfit_strains_list:
+
 			misfit_path = self.get_extended_path(str(misfit_strain).replace('-', 'n'))
 
 			for i in range(10000):
 				relax_path = Path.join(misfit_path, 'structure_' + str(i))
+
+				print "Updating Epitaxial Relax run at " + relax_path
 
 				if not Path.exists(relax_path):
 					break

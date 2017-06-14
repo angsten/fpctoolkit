@@ -144,7 +144,7 @@ class MinimaRelaxer(object):
 
 		Path.make(path)
 
-		print "Initializing minima relaxations run"
+		print "Initializing minima relaxation runs"
 		self.initialize_relaxation_list()
 
 
@@ -172,7 +172,7 @@ class MinimaRelaxer(object):
 		self.completed_relaxations_data_list = []
 
 		for i, vasp_relaxation in enumerate(self.vasp_relaxations_list):
-			print "Updating " + vasp_relaxation.path
+			print "Updating minima relaxation at " + vasp_relaxation.path
 			vasp_relaxation.update()
 
 			if vasp_relaxation.complete:
