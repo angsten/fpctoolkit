@@ -108,6 +108,7 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 		minima_relaxer.print_status_to_file(Path.join(path, 'output_minima_relaxations_status'))
 		
 		if minima_relaxer.complete:
+			print "Minima relaxer complete: sorting the relaxations to find the lowest energy structure."
 			#minima_relaxer.print_selected_uniques_to_file(file_path=Path.join(path, 'output_selected_unique_minima_relaxations'))
 			sorted_uniques = minima_relaxer.get_sorted_unique_relaxation_data_list()
 

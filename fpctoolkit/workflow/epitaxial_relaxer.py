@@ -101,6 +101,9 @@ class EpitaxialRelaxer(object):
 
 				relax_path = Path.join(misfit_path, 'structure_' + str(i))
 
+				if not Path.exists(relax_path):
+					print "Initializing relaxation at " + relax_path
+
 				relaxation = VaspRelaxation(path=relax_path, initial_structure=structure, input_dictionary=self.vasp_relaxation_inputs_dictionary)
 
 				initial_structure.to_poscar_file_path(Path.join(relax_path, 'original_initial_structure'))
@@ -133,10 +136,10 @@ class EpitaxialRelaxer(object):
 			for i in range(10000):
 				relax_path = Path.join(misfit_path, 'structure_' + str(i))
 
-				print "Updating Epitaxial Relax run at " + relax_path
-
 				if not Path.exists(relax_path):
 					break
+
+				print "Updating Epitaxial Relax run at " + relax_path
 
 				relaxation = VaspRelaxation(path=relax_path)
 
