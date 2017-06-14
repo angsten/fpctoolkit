@@ -191,7 +191,7 @@ class EpitaxialRelaxer(object):
 
 		return polarization_run.get_change_in_polarization()
 
-	def get_data_dictionaries_list(self):
+	def get_data_dictionaries_list(self, get_polarization=False):
 		"""
 		Starts at most negative misfit runs and goes to larger misfits finding the minimum energy data set. To encourage continuity, if two or more relaxations are within a small energy threshold of each other, the 
 		structure that is closest to the last chosen structure is chosen.
@@ -233,7 +233,11 @@ class EpitaxialRelaxer(object):
 			# print 
 			
 			structure = copy.deepcopy(minimum_energy_relaxation.final_structure)
-			polarization_vector = self.update_polarization_run(minimum_energy_relaxation)
+
+			if get_polarization:
+				polarization_vector = self.update_polarization_run(minimum_energy_relaxation)
+			else:
+				polarization_vector = None
 
 			data_dictionary['structure'] = structure
 			data_dictionary['energy'] = minimum_energy
