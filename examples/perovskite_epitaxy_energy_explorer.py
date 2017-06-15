@@ -76,12 +76,17 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 		mode_structures_path = Path.join(path, 'mode_rendered_structures')
 		Path.make(mode_structures_path)
 
+		mode_charge_file = File(Path.join(path, 'output_mode_effective_charge_vectors'))
+
 		sorted_eigen_pairs = hessian.get_sorted_hessian_eigen_pairs_list()
 		for i, structure in enumerate(eigen_structure.get_mode_distorted_structures_list(amplitude=0.6)):
 			if i > 30:
 				break
 			structure.to_poscar_file_path(Path.join(mode_structures_path, 'u'+str(i+1)+'_'+str(round(sorted_eigen_pairs[i].eigenvalue, 2))+'.vasp'))
 
+			mode_charge_file[i] += '    ' + structure.get_spacegroup_string(symprec=0.001)
+
+		mode_charge_file.write_to_path()
 	#sys.exit()
 
 	
