@@ -172,8 +172,10 @@ class MinimaRelaxer(object):
 		self.completed_relaxations_data_list = []
 
 		for i, vasp_relaxation in enumerate(self.vasp_relaxations_list):
-			print "Updating minima relaxation at " + vasp_relaxation.path
+
 			vasp_relaxation.update()
+			
+			print "Updating minima relaxation at " + vasp_relaxation.path + "  Status is " + vasp_relaxation.get_status_string()
 
 			if vasp_relaxation.complete:
 				eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian, distorted_structure=vasp_relaxation.final_structure)
