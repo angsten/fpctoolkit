@@ -133,6 +133,8 @@ class VaspRelaxation(VaspRunSet):
 
 		current_run = self.get_current_vasp_run()
 
+		print "cu run ", current_run
+
 		print str(current_run.queue_properties())
 
 
