@@ -133,7 +133,7 @@ class VaspRelaxation(VaspRunSet):
 
 		current_run = self.get_current_vasp_run()
 
-		print str(current_run.queue_properties)
+		return str(current_run.queue_properties)
 
 
 	def create_next_run(self):
