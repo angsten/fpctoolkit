@@ -1,3 +1,5 @@
+import sys
+
 from fpctoolkit.structure.perovskite import Perovskite
 from fpctoolkit.io.vasp.outcar import Outcar
 from fpctoolkit.phonon.eigen_structure import EigenStructure
@@ -16,7 +18,8 @@ from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 from fpctoolkit.structure_prediction.taylor_expansion.minima_relaxer import MinimaRelaxer
 from fpctoolkit.io.file import File
 from fpctoolkit.workflow.epitaxial_relaxer import EpitaxialRelaxer
-import sys
+from fpctoolkit.structure.lattice import Lattice
+
 
 
 def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_input_dictionary, dfpt_incar_settings, derivative_evaluation_vasp_run_inputs_dictionary, minima_relaxation_input_dictionary,
@@ -84,7 +87,9 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 				break
 			structure.to_poscar_file_path(Path.join(mode_structures_path, 'u'+str(i+1)+'_'+str(round(sorted_eigen_pairs[i].eigenvalue, 2))+'.vasp'))
 
-			mode_charge_file[i] += '    ' + structure.get_spacegroup_string(symprec=0.001)
+			structure.lattice = Lattice([[8.0, 0.0, 0.0], [0.0, 8.0, 0.0], [0.0, 0.0, 8.0]])
+
+			mode_charge_file[i] += '    ' + structure.get_spacegroup_string(symprec=0.2) + '  ' + structure.get_spacegroup_string(symprec=0.1) + '  ' + structure.get_spacegroup_string(symprec=0.001)
 
 		mode_charge_file.write_to_path()
 	#sys.exit()
