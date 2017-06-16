@@ -139,9 +139,10 @@ class EpitaxialRelaxer(object):
 				if not Path.exists(relax_path):
 					break
 
-				print "Updating Epitaxial Relax run at " + relax_path
-
+				
 				relaxation = VaspRelaxation(path=relax_path)
+
+				print "Updating Epitaxial Relax run at " + relax_path + "  Status is " + relaxation.get_status_string()
 
 				relaxation.update()
 
