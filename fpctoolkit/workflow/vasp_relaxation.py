@@ -133,7 +133,15 @@ class VaspRelaxation(VaspRunSet):
 
 		current_run = self.get_current_vasp_run()
 
-		return str(current_run.queue_properties)
+		queue_properties = current_run.queue_properties
+
+		if queue_properties == None:
+			if self.complete:
+				return "complete"
+			else:
+				return "incomplete, not on queue, halted on " + self.get_current_run_path_basename()
+		else:
+			return self.get_current_run_path_basename() + " " + str(current_run.queue_properties)
 
 
 	def create_next_run(self):
