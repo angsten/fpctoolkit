@@ -143,7 +143,8 @@ class Hessian(object):
 			if eigen_pair.is_translational_mode():
 				translational_count += 1
 
-		return None #############################################################################################################################
+		
+		#return None #############################################################################################################################
 		if not translational_count == 3:
 		 	raise Exception("Number of translational modes in eigen list must be exactly three.", translational_count)
 

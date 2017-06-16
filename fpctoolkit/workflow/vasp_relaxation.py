@@ -129,6 +129,12 @@ class VaspRelaxation(VaspRunSet):
 
 		return False
 
+	def get_status_string(self):
+
+		current_run = self.get_current_vasp_run()
+
+		print str(current_run.queue_properties())
+
 
 	def create_next_run(self):
 		run_path = self.get_next_run_path()
