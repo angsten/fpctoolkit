@@ -301,9 +301,6 @@ class VaspRelaxation(VaspRunSet):
 		returns static if self.run_count == self.external_relaxation_count
 		"""
 
-		print "Run count " + str(self.run_count)
-		print "ext relax count " + str(self.external_relaxation_count)
-
 		if self.run_count == self.external_relaxation_count:
 			return VaspRelaxation.static_basename_string
 		else:
@@ -314,8 +311,9 @@ class VaspRelaxation(VaspRunSet):
 
 
 	def get_current_run_path_basename(self):
-		#print "run count " + str(self.run_count)
-		#print "ext relax count " + str(self.external_relaxation_count)
+		print "run count " + str(self.run_count)
+		print "ext relax count " + str(self.external_relaxation_count)
+		
 		if self.run_count == self.external_relaxation_count:
 			return 'static'
 		else:
