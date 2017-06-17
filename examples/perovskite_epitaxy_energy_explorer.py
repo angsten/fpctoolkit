@@ -291,7 +291,7 @@ if __name__ == '__main__':
 		
 		epitaxial_relaxer.update()
 
-		for data_dictionary in epitaxial_relaxer.get_data_dictionaries_list():
+		for data_dictionary in epitaxial_relaxer.get_data_dictionaries_list(calculate_polarizations):
 			for key, value in data_dictionary.items():
 				if not key == 'structure':
 					print key, value
