@@ -220,6 +220,7 @@ class VaspRelaxation(VaspRunSet):
 
 	@property
 	def complete(self):
+		print "in complete" + str(self.get_current_vasp_run()) + str(self.get_current_vasp_run().complete)
 		return (self.run_count == self.external_relaxation_count + 1) and self.get_current_vasp_run().complete
 
 	@property
@@ -313,7 +314,7 @@ class VaspRelaxation(VaspRunSet):
 	def get_current_run_path_basename(self):
 		print "run count " + str(self.run_count)
 		print "ext relax count " + str(self.external_relaxation_count)
-		
+
 		if self.run_count == self.external_relaxation_count:
 			return 'static'
 		else:
