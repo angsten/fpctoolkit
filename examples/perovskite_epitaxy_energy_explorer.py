@@ -296,3 +296,6 @@ if __name__ == '__main__':
 				if not key == 'structure':
 					print key, value
 			print
+
+		print "titlelabel='"'" + "".join(input_dictionary['species_list']) + "3 (100)'"';"
+		print "referenceLatticeConstant=" + str(input_dictionary['reference_lattice_constant'])
