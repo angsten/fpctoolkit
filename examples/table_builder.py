@@ -9,9 +9,9 @@ import fpctoolkit.util.string_util as su
 def get_table_chunk(misfit_strain, mode_count):
 
 	output_string = ""
-	
 
-	output_string += "Misfit Strain &  Eigenmode & " + " & ".join(str(x) for x in range(1, mode_count+1)) + " \\\\ \hline"
+
+	output_string += "Misfit Strain &  Eigenmode & " + " & ".join(str(x) for x in range(1, mode_count+1)) + " \\\\ \hline\n"
 
 
 	file_path = Path.join(str(misfit_strain).replace('-', 'n'), "output_mode_effective_charge_vectors")
@@ -40,8 +40,9 @@ def get_table_chunk(misfit_strain, mode_count):
 		else:
 			eigen_values_list.append('*')
 
-	return " & ".join(eigen_values_list)
+ 	output_string += " & ".join(eigen_values_list)
 
+ 	return output_string
 
 
 # u_1     -0.4900       0.0000  0.0000  0.0000    I4/mcm (140)  I4/mcm (140)  I4/mcm (140)
