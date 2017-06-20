@@ -4,7 +4,13 @@ import fpctoolkit.util.string_util as su
 
 
 
+def round_string(string):
+	rnd = 2
 
+	if float(string) == 0.0:
+		return '0.0'
+
+	return str(round(float(string), rnd))
 
 def get_table_chunk(misfit_strain, mode_count):
 
@@ -49,8 +55,8 @@ def get_table_chunk(misfit_strain, mode_count):
 		spg_list.append(spg)
 
 		if not translational_mode:
-			eigen_values_list.append(str(eigen_value))
-			polarizations_list.append('(' + str(px) + ' ' + str(py) + ' ' + str(pz) + ')')
+			eigen_values_list.append(round_string(eigen_value))
+			polarizations_list.append('(' + round_string(px) + ' ' + round_string(py) + ' ' + round_string(pz) + ')')
 
 			if spg == 'P4mm':
 				if abs(float(px)) > 0.0:
