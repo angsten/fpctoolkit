@@ -81,7 +81,7 @@ def get_table_chunk(misfit_strain, mode_count):
 
 
 
- 	output_string += "         &  $\lambda_i$ & " + "      & ".join(eigen_values_list) + '\\\\\n'
+ 	output_string += "         &  $\lambda_i$      & " + " & ".join(eigen_values_list) + '\\\\\n'
  	output_string += mfit_str + "    &  $\\vec{Z}_i$      &" + " & ".join(polarizations_list) + ' \\\\\n'
  	output_string += "         &  Modified Glazer  & " + " & ".join(glazers_list) + "\\\\ \hline"
 
