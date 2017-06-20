@@ -11,10 +11,15 @@ def get_table_chunk(misfit_strain, mode_count):
 	output_string = ""
 
 
+	mfit_str = str(misfit_strain).replace('-', 'n')
+	if len(mfit_str) < 4:
+		mfit_str = " " + mfit_str
+
+
 	output_string += "Misfit Strain &  Eigenmode & " + " & ".join(str(x) for x in range(1, mode_count+1)) + " \\\\ \hline\n"
 
 
-	file_path = Path.join(str(misfit_strain).replace('-', 'n'), "output_mode_effective_charge_vectors")
+	file_path = Path.join(mfit_str, "output_mode_effective_charge_vectors")
 
 	file = File(file_path)
 
@@ -48,14 +53,12 @@ def get_table_chunk(misfit_strain, mode_count):
 			polarizations_list.append('(' + str(px) + ' ' + str(py) + ' ' + str(pz) + ')')
 
 			if spg == 'P4mm':
-				print "here"
-				print  abs(float(px))
 				if abs(float(px)) > 0.0:
-					glazers_list.append(glazers[0])
+					glazers_list[i] = glazers[0]
 				elif abs(float(py)) > 0.0:
-					glazers_list.append(glazers[1])
+					glazers_list[i] = glazers[1]
 				elif abs(float(pz)) > 0.0:
-					glazers_list.append(glazers[2])
+					glazers_list[i] = glazers[2]
 
 		else:
 			eigen_values_list.append('')
@@ -73,7 +76,7 @@ def get_table_chunk(misfit_strain, mode_count):
 
 
  	output_string += "         & $\lambda_i$ &" + " & ".join(eigen_values_list) + '\n'
- 	output_string += str(misfit_strain) + "    &  $\\vec{Z}_i$   &" + " & ".join(polarizations_list) + '\n'
+ 	output_string += mfit_str + "    &  $\\vec{Z}_i$   &" + " & ".join(polarizations_list) + '\n'
  	output_string += "         &  Modified Glazer  & " + " & ".join(glazers_list)
 
  	return output_string
