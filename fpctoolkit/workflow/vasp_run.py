@@ -261,9 +261,8 @@ class VaspRun(object):
 
 
 	def delete_wavecar_if_complete(self):
-		if self.complete:
-			if Path.exists(self.get_extended_path('WAVECAR')):
-				Path.remove(self.get_extended_path('WAVECAR'))
+		if Path.exists(self.get_extended_path('WAVECAR')) and self.complete:
+			Path.remove(self.get_extended_path('WAVECAR'))
 
 
 	def get_extended_path(self, relative_path):
