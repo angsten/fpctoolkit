@@ -43,8 +43,8 @@ def get_table_chunk(misfit_strain, mode_count):
 			eigen_values_list.append('')
 			polarizations_list.append('*')
 
- 	output_string += "& $\lambda_i$ &" + " & ".join(eigen_values_list) + '\n'
- 	output_string += str(misfit_strain) + "&  $\\vec{Z}_i$   &" + " & ".join(polarizations_list)
+ 	output_string += "    & $\lambda_i$ &" + " & ".join(eigen_values_list) + '\n'
+ 	output_string += "   " + str(misfit_strain) + "    &  $\\vec{Z}_i$   &" + " & ".join(polarizations_list)
 
  	return output_string
 
