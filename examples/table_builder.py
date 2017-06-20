@@ -63,7 +63,7 @@ def get_table_chunk(misfit_strain, mode_count):
 		else:
 			eigen_values_list.append('')
 			polarizations_list.append('*')
-			glazers_list.append('')
+			glazers_list[i] = ''
 
 	# for i in range(0, mode_count):
 	# 	glazer_string = ""
@@ -76,7 +76,7 @@ def get_table_chunk(misfit_strain, mode_count):
 
 
  	output_string += "         &  $\lambda_i$ &" + " & ".join(eigen_values_list) + '\\\\\n'
- 	output_string += mfit_str + "    &  $\\vec{Z}_i$   &" + " & ".join(polarizations_list) + '\\\\\n'
+ 	output_string += mfit_str + "    &  $\\vec{Z}_i$   &" + " & ".join(polarizations_list) + ' \\\\\n'
  	output_string += "         &  Modified Glazer  & " + " & ".join(glazers_list) + "\\\\ \hline"
 
  	return output_string
