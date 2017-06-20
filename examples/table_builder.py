@@ -48,6 +48,8 @@ def get_table_chunk(misfit_strain, mode_count):
 			polarizations_list.append('(' + str(px) + ' ' + str(py) + ' ' + str(pz) + ')')
 
 			if spg == 'P4mm':
+				print "here"
+				print  abs(float(px))
 				if abs(float(px)) > 0.0:
 					glazers_list.append(glazers[0])
 				elif abs(float(py)) > 0.0:
