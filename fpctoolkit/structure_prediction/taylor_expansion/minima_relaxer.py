@@ -160,9 +160,6 @@ class MinimaRelaxer(object):
 			if (self.max_minima != None) and (i >= self.max_minima):
 				break
 
-			if (i % (len(self.eigen_chromosomes_list)/10)) == 0:
-				print '-',
-
 			eigen_structure.set_eigen_chromosome(eigen_chromosome)
 
 			initial_structure = eigen_structure.get_distorted_structure()

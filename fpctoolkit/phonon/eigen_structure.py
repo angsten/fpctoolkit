@@ -42,7 +42,10 @@ class EigenStructure(object):
 
 		Structure.validate(reference_structure)
 
+		print "getting eigen pairs"
 		eigen_pairs = hessian.get_sorted_hessian_eigen_pairs_list()
+		print "after eigen pairs"
+		print
 
 		# for eigen_pair in eigen_pairs:
 		# 	print eigen_pair
