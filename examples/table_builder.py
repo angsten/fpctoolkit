@@ -126,7 +126,7 @@ if __name__ == "__main__":
 
 	print "\\begin{tabular}{" + 'c'*(mode_count+2) + "}"
 
-	print "Misfit Strain & Eigenmode & " + " & ".join(str(x) for x in range(1, mode_count+1)) + " \\\\ \hline\n"
+	print "Misfit Strain & Eigenmode & " + " & ".join(str(x) for x in range(1, mode_count+1)) + " \\\\ \hline"
 
 	for misfit in misfits:
 		print get_table_chunk(misfit, mode_count),
