@@ -24,8 +24,17 @@ def get_table_chunk(misfit_strain, mode_count):
 		parts = line.split(' ')
 
 		eigen_value = parts[1]
-		eigen_values_list.append(eigen_value)
+		px = parts[2]
+		py = parts[3]
+		pz = parts[4]
+		spg = parts[5]
 
+		translational_mode = bool(spg == 'Pm-3m')
+
+		if not translational_mode:
+			eigen_values_list.append(str(eigen_value))
+		else:
+			eigen_values_list.append('*')
 
 	return " & ".join(eigen_values_list)
 
