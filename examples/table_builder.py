@@ -30,6 +30,7 @@ def get_table_chunk(misfit_strain, mode_count):
 	polarizations_list = []
 	spg_list = []
 	glazers_list = ['N/A']*mode_count
+	glazer_tracker_dict = {}
 
 	glazers = ["$a^0_+b^0_0b^0_0$", "$a^0_0b^0_+a^0_0$", "$a^0_0a^0_0c^0_+$", "$a^-_0b^0_0b^0_0$", "$a^0_0b^-_0a^0_0$", "$a^0_0a^0_0c^-_0$", "$a^+_0b^0_0b^0_0$",  "$a^0_0b^+_0a^0_0$", "$a^0_0a^0_0c^+_0$"]
 
@@ -51,6 +52,11 @@ def get_table_chunk(misfit_strain, mode_count):
 
 		spg_list.append(spg)
 
+		if not spg in glazer_tracker_dict:
+			glazer_tracker_dict[spg] = [[i, eigen_value]]
+		else:
+			glazer_tracker_dict[spg].append([i, eigen_value])
+
 		if not translational_mode:
 			eigen_values_list.append(round_string(eigen_value))
 			polarizations_list.append('(' + round_string(px) + ' ' + round_string(py) + ' ' + round_string(pz) + ')')
@@ -68,13 +74,28 @@ def get_table_chunk(misfit_strain, mode_count):
 			polarizations_list.append('*')
 			glazers_list[i] = ''
 
-	# for i in range(0, mode_count):
-	# 	glazer_string = ""
+	for i in range(0, mode_count):
+		glazer_string = ""
 
+		spg = spg_list[i]
+		current_eig_val = eigen_values_list[i]
+		
+			for entry in glazer_tracker_dict[spg]:
+				index = entry[0]
+				eig_val = entry[1]
 
-	# 	if polarizations_list
+				if index != i and eig_val == current_eig_val:
+					if spg == 'I4/mcm':
+						glazers_list[i] = glazers[3] if glzers[3] not in glazers_list else glazers[4]
+					elif if spg == 'P4/mbm':
+						glazers_list[i] = glazers[6] if glzers[6] not in glazers_list else glazers[7]
+					break
 
-
+			if glazers_list[i] == 'N/A':
+				if spg == 'I4/mcm':
+					glazers_list[i] = glazers[5]
+				elif if spg == 'P4/mbm':
+					glazers_list[i] = glazers[8]
 
 
 
