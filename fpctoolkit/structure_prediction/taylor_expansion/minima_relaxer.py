@@ -191,8 +191,6 @@ class MinimaRelaxer(object):
 
 				self.completed_relaxations_data_list.append([vasp_relaxation, self.eigen_chromosomes_list[i], eigen_structure.get_list_representation()])
 
-		print "out of minima relax update"
-		print
 
 
 	def print_status_to_file(self, file_path):

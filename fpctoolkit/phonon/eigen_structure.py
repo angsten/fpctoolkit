@@ -42,10 +42,7 @@ class EigenStructure(object):
 
 		Structure.validate(reference_structure)
 
-		print "getting eigen pairs"
 		eigen_pairs = hessian.get_sorted_hessian_eigen_pairs_list()
-		print "after eigen pairs"
-		print
 
 		# for eigen_pair in eigen_pairs:
 		# 	print eigen_pair
@@ -137,7 +134,6 @@ class EigenStructure(object):
 		get_displaced_structure were called.
 		"""
 
-		print "in set_strains_and_amplitudes_from_distorted_structure"
 
 		displaced_structure = copy.deepcopy(input_displaced_structure)
 
@@ -177,8 +173,6 @@ class EigenStructure(object):
 
 
 		#self.set_translational_eigen_component_amplitudes_to_zero() #**do we want to do this always?**
-
-		print "out of set_strains_and_amplitudes_from_distorted_structure"
 
 	def get_mode_distorted_structures_list(self, amplitude=0.5):
 		"""
