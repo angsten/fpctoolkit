@@ -153,15 +153,16 @@ class MinimaRelaxer(object):
 
 		self.vasp_relaxations_list = []
 
+		eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
+
 		for i, eigen_chromosome in enumerate(self.eigen_chromosomes_list):
 
 			if (self.max_minima != None) and (i >= self.max_minima):
 				break
 
-			if (i % len(self.eigen_chromosomes_list)) == 3:
+			if (i % (len(self.eigen_chromosomes_list)/10)) == 0:
 				print '-',
 
-			eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
 			eigen_structure.set_eigen_chromosome(eigen_chromosome)
 
 			initial_structure = eigen_structure.get_distorted_structure()

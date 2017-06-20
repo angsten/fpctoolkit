@@ -169,7 +169,7 @@ class DisplacementVector(object):
 		"""
 		Returns a DisplacementVector instance made by comparing each atom in displaced_structure with those of reference_structure.
 		The atoms are mapped to each other based on their positions in the site collection lists.
-		The vector connecting two sites is the shorted one possible under periodic boundary conditions.
+		The vector connecting two sites is the shortest one possible under periodic boundary conditions.
 
 		The coordinate_mode argument determines whether direct fractional coordinates (unitless) or Cartesian coordinates (in Angstroms) are used to describe the displacements.
 		"""
@@ -206,7 +206,7 @@ class DisplacementVector(object):
 				raise Exception("Types of two structures do not align.", reference_site['type'], displaced_site['type'])
 
 			#if lattices of displaced and reference and not the same at this point, problems will arise here!!!!
-			shortest_pbc_vector_between_sites = Vector.get_minimum_distance_between_two_periodic_points(fractional_coordinate_1=reference_site['position'], 
+			shortest_pbc_vector_between_sites = Vector.get_minimum_distance_between_two_periodic_points(fractional_coordinate_1=reference_site['position'], ###############setting N_max to 2 - may need to be larger for heavily sheared systems!!!
 				fractional_coordinate_2=displaced_site['position'], lattice=reference_structure.lattice, N_max=2, return_vector=True)[1]
 
 			if coordinate_mode =='Cartesian':
