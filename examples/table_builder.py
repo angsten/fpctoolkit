@@ -47,7 +47,7 @@ def get_table_chunk(misfit_strain, mode_count):
 			eigen_values_list.append(str(eigen_value))
 			polarizations_list.append('(' + str(px) + ' ' + str(py) + ' ' + str(pz) + ')')
 
-			if spg == 'p4mm':
+			if spg == 'P4mm':
 				if abs(px) > 0.0:
 					glazers_list.append(glazers[0])
 				elif abs(py) > 0.0:
@@ -72,7 +72,7 @@ def get_table_chunk(misfit_strain, mode_count):
 
  	output_string += "         & $\lambda_i$ &" + " & ".join(eigen_values_list) + '\n'
  	output_string += str(misfit_strain) + "    &  $\\vec{Z}_i$   &" + " & ".join(polarizations_list) + '\n'
- 	output_string += "         &  Modified Glazer  &" + " & ".join(glazers_list)
+ 	output_string += "         &  Modified Glazer  & " + " & ".join(glazers_list)
 
  	return output_string
 
