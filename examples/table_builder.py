@@ -77,9 +77,6 @@ def get_table_chunk(misfit_strain, mode_count):
 
 		untouched_eig_vals_list.append(eigen_value)
 
-	
-	print "Glazer track 6000: " + str(glazer_tracker_dict)
-
 
 	for i in range(0, mode_count):
 		glazer_string = ""
