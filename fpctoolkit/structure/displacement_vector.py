@@ -206,14 +206,14 @@ class DisplacementVector(object):
 				raise Exception("Types of two structures do not align.", reference_site['type'], displaced_site['type'])
 
 			#if lattices of displaced and reference and not the same at this point, problems will arise here!!!!
-			shorted_pbc_vector_between_sites = Vector.get_minimum_distance_between_two_periodic_points(fractional_coordinate_1=reference_site['position'], 
-				fractional_coordinate_2=displaced_site['position'], lattice=reference_structure.lattice, N_max=3, return_vector=True)[1]
+			shortest_pbc_vector_between_sites = Vector.get_minimum_distance_between_two_periodic_points(fractional_coordinate_1=reference_site['position'], 
+				fractional_coordinate_2=displaced_site['position'], lattice=reference_structure.lattice, N_max=2, return_vector=True)[1]
 
 			if coordinate_mode =='Cartesian':
-				shorted_pbc_vector_between_sites = Vector.get_in_cartesian_coordinates(direct_vector=shorted_pbc_vector_between_sites, lattice=reference_structure.lattice)
+				shortest_pbc_vector_between_sites = Vector.get_in_cartesian_coordinates(direct_vector=shortest_pbc_vector_between_sites, lattice=reference_structure.lattice)
 
 			for i in range(3):
-				displacement_vector[site_index*3+i] = shorted_pbc_vector_between_sites[i]
+				displacement_vector[site_index*3+i] = shortest_pbc_vector_between_sites[i]
 
 
 		return displacement_vector
