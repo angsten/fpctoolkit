@@ -171,24 +171,23 @@ class MinimaRelaxer(object):
 			self.vasp_relaxations_list.append(VaspRelaxation(path=self.get_extended_path("rank_" + str(i) + "_" + "_".join(str(x) for x in eigen_chromosome)), initial_structure=initial_structure, input_dictionary=self.vasp_relaxation_inputs_dictionary))
 
 		print 
-		print "out of initialize_relaxation_list\n"
 
 	def update(self):
 		print "in minima relax update"
 
 		self.completed_relaxations_data_list = []
 
+
+		eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
 		for i, vasp_relaxation in enumerate(self.vasp_relaxations_list):
 
-			print "before relax class update"
 			vasp_relaxation.update()
-			print "after relax class update"
-			print
 			
 			print "Updating minima relaxation at " + vasp_relaxation.path + "  Status is " + vasp_relaxation.get_status_string()
 
 			if vasp_relaxation.complete:
-				eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian, distorted_structure=vasp_relaxation.final_structure)
+				# eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian, distorted_structure=vasp_relaxation.final_structure)
+				eigen_structure.set_strains_and_amplitudes_from_distorted_structure(vasp_relaxation.final_structure)
 
 				self.completed_relaxations_data_list.append([vasp_relaxation, self.eigen_chromosomes_list[i], eigen_structure.get_list_representation()])
 
