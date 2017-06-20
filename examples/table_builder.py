@@ -18,7 +18,8 @@ def get_table_chunk(misfit_strain, mode_count):
 
 	file = File(file_path)
 
-	eigen_values_list = []	
+	eigen_values_list = []
+	polarizations_list = []
 
 	for i in range(0, mode_count):
 		line = file[i]
@@ -37,10 +38,13 @@ def get_table_chunk(misfit_strain, mode_count):
 
 		if not translational_mode:
 			eigen_values_list.append(str(eigen_value))
+			polarizations_list.append('(' + str(px) + ' ' + str(py) + ' ' + str(pz) + ')')
 		else:
-			eigen_values_list.append('*')
+			eigen_values_list.append('')
+			polarizations_list.append('*')
 
- 	output_string += " & ".join(eigen_values_list)
+ 	output_string += "& $\lambda_i$ &" + " & ".join(eigen_values_list)
+ 	output_string += str(misfit_strain) + "&  $\vec{Z}_i$   &" + " & ".join(polarizations_list)
 
  	return output_string
 
