@@ -8,7 +8,7 @@ def round_string(string):
 	rnd = 2
 
 	if float(string) == 0.0:
-		return '0.0'
+		return '0'
 
 	return str(round(float(string), rnd))
 
@@ -82,7 +82,7 @@ def get_table_chunk(misfit_strain, mode_count):
 
 
  	output_string += "         &  $\lambda_i$      & " + " & ".join(eigen_values_list) + '\\\\\n'
- 	output_string += mfit_str + "    &  $\\vec{Z}_i$      &" + " & ".join(polarizations_list) + ' \\\\\n'
+ 	output_string += mfit_str + "    &  $\\vec{Z}_i$      & " + " & ".join(polarizations_list) + ' \\\\\n'
  	output_string += "         &  Modified Glazer  & " + " & ".join(glazers_list) + "\\\\ \hline"
 
  	return output_string
