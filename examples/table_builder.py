@@ -80,22 +80,22 @@ def get_table_chunk(misfit_strain, mode_count):
 		spg = spg_list[i]
 		current_eig_val = eigen_values_list[i]
 		
-			for entry in glazer_tracker_dict[spg]:
-				index = entry[0]
-				eig_val = entry[1]
+		for entry in glazer_tracker_dict[spg]:
+			index = entry[0]
+			eig_val = entry[1]
 
-				if index != i and eig_val == current_eig_val:
-					if spg == 'I4/mcm':
-						glazers_list[i] = glazers[3] if glzers[3] not in glazers_list else glazers[4]
-					elif if spg == 'P4/mbm':
-						glazers_list[i] = glazers[6] if glzers[6] not in glazers_list else glazers[7]
-					break
-
-			if glazers_list[i] == 'N/A':
+			if index != i and eig_val == current_eig_val:
 				if spg == 'I4/mcm':
-					glazers_list[i] = glazers[5]
+					glazers_list[i] = glazers[3] if glzers[3] not in glazers_list else glazers[4]
 				elif if spg == 'P4/mbm':
-					glazers_list[i] = glazers[8]
+					glazers_list[i] = glazers[6] if glzers[6] not in glazers_list else glazers[7]
+				break
+
+		if glazers_list[i] == 'N/A':
+			if spg == 'I4/mcm':
+				glazers_list[i] = glazers[5]
+			elif if spg == 'P4/mbm':
+				glazers_list[i] = glazers[8]
 
 
 
