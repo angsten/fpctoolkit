@@ -198,11 +198,12 @@ class MinimaRelaxer(object):
 
 		file = File()
 
-		spg_symprecs = [0.1, 0.05, 0.01, 0.001]
+		spg_symprecs = [0.1, 0.01, 0.001]
 
 		file += "Complete: " + str(self.complete)
 		file += ""
 
+		reference_energy = self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False)
 		eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
 		for i, vasp_relaxation in enumerate(self.vasp_relaxations_list):
 
@@ -217,16 +218,18 @@ class MinimaRelaxer(object):
 			if vasp_relaxation.complete:
 				eigen_structure.set_strains_and_amplitudes_from_distorted_structure(vasp_relaxation.final_structure)
 
-				self.completed_relaxations_data_list.append([vasp_relaxation, self.eigen_chromosomes_list[i], eigen_structure.get_list_representation()])
+				eigen_structure_list_representation = eigen_structure.get_list_representation()
 
-				file += "DFT Energy Change        " + str(vasp_relaxation.get_final_energy(per_atom=False)-self.reference_completed_vasp_relaxation_run.get_final_energy(per_atom=False))
+				self.completed_relaxations_data_list.append([vasp_relaxation, self.eigen_chromosomes_list[i], eigen_structure_list_representation])
+
+				file += "DFT Energy Change        " + str(vasp_relaxation.get_final_energy(per_atom=False)-reference_energy)
 				file += "Space Group " + " ".join([vasp_relaxation.final_structure.get_spacegroup_string(symprec) for symprec in spg_symprecs])
 				file += "Guessed Energy Change  " + str(self.predicted_energies_list[i])
 				file += "Guessed Chromosome"
 				file += misc.get_formatted_chromosome_string(self.eigen_chromosomes_list[i])
 				file += "Final Chromosome"
 
-				file += misc.get_formatted_chromosome_string(eigen_structure.get_list_representation())
+				file += misc.get_formatted_chromosome_string(eigen_structure_list_representation)
 
 
 			else:
