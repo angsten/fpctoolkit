@@ -20,6 +20,10 @@ def get_table_chunk(misfit_strain, mode_count):
 
 	eigen_values_list = []
 	polarizations_list = []
+	spg_list = []
+	glazers_list = ['N/A']*mode_count
+
+	glazers = ["$a^0_+b^0_0b^0_0$", "$a^0_0b^0_+a^0_0$", "$a^0_0a^0_0c^0_+$", "$a^-_0b^0_0b^0_0$", "$a^0_0b^-_0a^0_0$", "$a^0_0a^0_0c^-_0$", "$a^+_0b^0_0b^0_0$",  "$a^0_0b^+_0a^0_0$", "$a^0_0a^0_0c^+_0$"]
 
 	for i in range(0, mode_count):
 		line = file[i]
@@ -36,15 +40,39 @@ def get_table_chunk(misfit_strain, mode_count):
 
 		translational_mode = bool(spg == 'Pm-3m')
 
+
+		spg_list.append(spg)
+
 		if not translational_mode:
 			eigen_values_list.append(str(eigen_value))
 			polarizations_list.append('(' + str(px) + ' ' + str(py) + ' ' + str(pz) + ')')
+
+			if spg == 'p4mm':
+				if abs(px) > 0.0:
+					glazers_list.append(glazers[0])
+				elif abs(py) > 0.0:
+					glazers_list.append(glazers[1])
+				elif abs(pz) > 0.0:
+					glazers_list.append(glazers[2])
+
 		else:
 			eigen_values_list.append('')
 			polarizations_list.append('*')
+			glazers_list.append('')
 
- 	output_string += "    & $\lambda_i$ &" + " & ".join(eigen_values_list) + '\n'
- 	output_string += "   " + str(misfit_strain) + "    &  $\\vec{Z}_i$   &" + " & ".join(polarizations_list)
+	# for i in range(0, mode_count):
+	# 	glazer_string = ""
+
+
+	# 	if polarizations_list
+
+
+
+
+
+ 	output_string += "         & $\lambda_i$ &" + " & ".join(eigen_values_list) + '\n'
+ 	output_string += str(misfit_strain) + "    &  $\\vec{Z}_i$   &" + " & ".join(polarizations_list) + '\n'
+ 	output_string += "         &  Modified Glazer  &" + " & ".join(glazers_list)
 
  	return output_string
 
