@@ -137,6 +137,8 @@ class EigenStructure(object):
 		get_displaced_structure were called.
 		"""
 
+		print "in set_strains_and_amplitudes_from_distorted_structure"
+
 		displaced_structure = copy.deepcopy(input_displaced_structure)
 
 		strain_tensor = displaced_structure.lattice.get_strain_tensor_relative_to_reference(reference_lattice=self.reference_structure.lattice)
@@ -176,6 +178,7 @@ class EigenStructure(object):
 
 		#self.set_translational_eigen_component_amplitudes_to_zero() #**do we want to do this always?**
 
+		print "out of set_strains_and_amplitudes_from_distorted_structure"
 
 	def get_mode_distorted_structures_list(self, amplitude=0.5):
 		"""
