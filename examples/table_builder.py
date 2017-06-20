@@ -74,12 +74,16 @@ def get_table_chunk(misfit_strain, mode_count):
 			polarizations_list.append('*')
 			glazers_list[i] = ''
 
+	
+	print "Glazer track 6000: " + str(glazer_tracker_dict)
+
+
 	for i in range(0, mode_count):
 		glazer_string = ""
 
 		spg = spg_list[i]
 		current_eig_val = eigen_values_list[i]
-		
+
 		for entry in glazer_tracker_dict[spg]:
 			index = entry[0]
 			eig_val = entry[1]
