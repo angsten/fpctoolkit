@@ -205,6 +205,12 @@ class MinimaRelaxer(object):
 
 		eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
 		for i, vasp_relaxation in enumerate(self.vasp_relaxations_list):
+
+			mx = len(self.vasp_relaxations_list)
+			if (i % (mx/10) == 0):
+				mx = self.max_minima if self.max_minima else len(self.eigen_chromosomes_list)
+				print str(i) + "/" + str(mx)
+
 			file += '-'*38 + " Structure Guess " + str(i) + ' ' + '-'*38
 			file += ''
 
