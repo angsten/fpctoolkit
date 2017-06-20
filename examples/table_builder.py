@@ -89,7 +89,9 @@ def get_table_chunk(misfit_strain, mode_count):
 			eig_val = entry[1]
 
 			if index != i and eig_val == current_eig_val:
+				print "here"
 				if spg == 'I4/mcm':
+					print "herehre"
 					glazers_list[i] = glazers[3] if glzers[3] not in glazers_list else glazers[4]
 				elif spg == 'P4/mbm':
 					glazers_list[i] = glazers[6] if glzers[6] not in glazers_list else glazers[7]
