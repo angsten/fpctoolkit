@@ -194,6 +194,8 @@ class MinimaRelaxer(object):
 
 
 	def print_status_to_file(self, file_path):
+		print "in print_status_to_file"
+
 		file = File()
 
 		spg_symprecs = [0.1, 0.05, 0.01, 0.001]
@@ -201,13 +203,13 @@ class MinimaRelaxer(object):
 		file += "Complete: " + str(self.complete)
 		file += ""
 
-
+		eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
 		for i, vasp_relaxation in enumerate(self.vasp_relaxations_list):
 			file += '-'*38 + " Structure Guess " + str(i) + ' ' + '-'*38
 			file += ''
 
 			if vasp_relaxation.complete:
-				eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian, distorted_structure=vasp_relaxation.final_structure)
+				eigen_structure.set_strains_and_amplitudes_from_distorted_structure(vasp_relaxation.final_structure)
 
 				self.completed_relaxations_data_list.append([vasp_relaxation, self.eigen_chromosomes_list[i], eigen_structure.get_list_representation()])
 
@@ -229,6 +231,8 @@ class MinimaRelaxer(object):
 			file += ''
 
 		file.write_to_path(file_path)
+
+		print "out of print_status_to_file\n"
 
 	def print_selected_uniques_to_file(self, file_path):
 		file = File()
