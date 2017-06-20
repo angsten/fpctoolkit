@@ -1,5 +1,6 @@
 from fpctoolkit.io.file import File
 from fpctoolkit.util.path import Path
+import fpctoolkit.util.string_util as su
 
 
 
@@ -13,13 +14,20 @@ def get_table_chunk(misfit_strain, mode_count):
 
 	file = File(file_path)
 
+	eigen_values_list = []	
+
 	for i in range(0, mode_count):
-		output_string += file[i]
+		line = file[i]
+
+		line = su.remove_extra_spaces(line)
+
+		parts = line.split(' ')
+
+		eigen_value = parts[1]
+		eigen_values_list.append(eigen_value)
 
 
-
-
-	return output_string
+	return " & ".join(eigen_values_list)
 
 
 
