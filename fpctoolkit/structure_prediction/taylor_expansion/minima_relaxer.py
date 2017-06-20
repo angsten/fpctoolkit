@@ -168,12 +168,16 @@ class MinimaRelaxer(object):
 
 
 	def update(self):
+		print "in minima relax update"
 
 		self.completed_relaxations_data_list = []
 
 		for i, vasp_relaxation in enumerate(self.vasp_relaxations_list):
 
+			print "before relax class update"
 			vasp_relaxation.update()
+			print "after relax class update"
+			print
 			
 			print "Updating minima relaxation at " + vasp_relaxation.path + "  Status is " + vasp_relaxation.get_status_string()
 
@@ -181,6 +185,9 @@ class MinimaRelaxer(object):
 				eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian, distorted_structure=vasp_relaxation.final_structure)
 
 				self.completed_relaxations_data_list.append([vasp_relaxation, self.eigen_chromosomes_list[i], eigen_structure.get_list_representation()])
+
+		print "out of minima relax update"
+		print
 
 
 	def print_status_to_file(self, file_path):
