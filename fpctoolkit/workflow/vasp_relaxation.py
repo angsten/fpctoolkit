@@ -118,14 +118,17 @@ class VaspRelaxation(VaspRunSet):
 
 
 	def update(self):
-
+		print "****in relax update call"
 		if self.complete:
 			self.delete_non_static_wavecars()
+			print "***leaving relax update call"
 			return True
 		elif self.run_count == 0 or self.get_current_vasp_run().complete:
 			self.create_next_run()
 
 		self.get_current_vasp_run().update()
+
+
 
 		return False
 
