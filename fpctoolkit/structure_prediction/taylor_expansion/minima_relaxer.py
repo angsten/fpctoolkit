@@ -160,14 +160,16 @@ class MinimaRelaxer(object):
 			if (self.max_minima != None) and (i >= self.max_minima):
 				break
 
+			if (i % (len(self.eigen_chromosomes_list)/10) == 0):
+				print '-',
+
 			eigen_structure.set_eigen_chromosome(eigen_chromosome)
 
-			print "before init structure creation"
 			initial_structure = eigen_structure.get_distorted_structure()
-			print "after init structure creation\n"
 
 			self.vasp_relaxations_list.append(VaspRelaxation(path=self.get_extended_path("rank_" + str(i) + "_" + "_".join(str(x) for x in eigen_chromosome)), initial_structure=initial_structure, input_dictionary=self.vasp_relaxation_inputs_dictionary))
 
+		print 
 		print "out of initialize_relaxation_list\n"
 
 	def update(self):
