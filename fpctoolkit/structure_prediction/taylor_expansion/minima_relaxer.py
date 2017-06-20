@@ -161,7 +161,7 @@ class MinimaRelaxer(object):
 				break
 
 			if (i % (len(self.eigen_chromosomes_list)/10) == 0):
-				print str(i) + "/" + len(self.eigen_chromosomes_list)
+				print str(i) + "/" + str(len(self.eigen_chromosomes_list))
 
 			eigen_structure.set_eigen_chromosome(eigen_chromosome)
 
