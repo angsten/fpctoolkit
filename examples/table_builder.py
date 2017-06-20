@@ -61,7 +61,7 @@ if __name__ == "__main__":
 	mode_count = 8
 	misfits = [-0.02, -0.01, 0.0, 0.01, 0.02]
 
-	print "\\begin{tabular}{" + c*(mode_count+2) + "}"
+	print "\\begin{tabular}{" + 'c'*(mode_count+2) + "}"
 
 	for misfit in misfits:
 		print get_table_chunk(misfit, mode_count)
