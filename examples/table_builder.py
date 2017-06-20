@@ -11,8 +11,8 @@ def get_table_chunk(misfit_strain, mode_count):
 	output_string = ""
 
 
-	mfit_str = str(misfit_strain).replace('-', 'n')
-	while len(mfit_str) < 4:
+	mfit_str = str(misfit_strain)
+	while len(mfit_str) < 5:
 		mfit_str += " "
 
 
