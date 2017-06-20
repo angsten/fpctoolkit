@@ -12,8 +12,8 @@ def get_table_chunk(misfit_strain, mode_count):
 
 
 	mfit_str = str(misfit_strain).replace('-', 'n')
-	if len(mfit_str) < 4:
-		mfit_str = " " + mfit_str
+	while len(mfit_str) < 4:
+		mfit_str += " "
 
 
 	output_string += "Misfit Strain &  Eigenmode & " + " & ".join(str(x) for x in range(1, mode_count+1)) + " \\\\ \hline\n"
