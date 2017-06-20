@@ -158,6 +158,8 @@ class MinimaRelaxer(object):
 			if (self.max_minima != None) and (i >= self.max_minima):
 				break
 
+			if i % len(self.eigen_chromosomes_list) == 10:
+				print '-',
 
 			eigen_structure = EigenStructure(reference_structure=self.reference_structure, hessian=self.hessian)
 			eigen_structure.set_eigen_chromosome(eigen_chromosome)
