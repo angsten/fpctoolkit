@@ -19,7 +19,7 @@ def get_table_chunk(misfit_strain, mode_count):
 	output_string += "Misfit Strain &  Eigenmode & " + " & ".join(str(x) for x in range(1, mode_count+1)) + " \\\\ \hline\n"
 
 
-	file_path = Path.join(mfit_str, "output_mode_effective_charge_vectors")
+	file_path = Path.join(str(misfit_strain).replace('-', 'n'), "output_mode_effective_charge_vectors")
 
 	file = File(file_path)
 
