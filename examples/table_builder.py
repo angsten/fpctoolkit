@@ -48,6 +48,9 @@ def get_table_chunk(misfit_strain, mode_count):
 		pz = parts[4]
 		spg = parts[5]
 
+		if spg == 'I4/mmm': ####################################################
+			spg = 'P4/mbm'
+
 		translational_mode = bool(spg == 'Pm-3m')
 
 
