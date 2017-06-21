@@ -233,24 +233,35 @@ class EpitaxialRelaxer(object):
 			# print "minimum E " + str(minimum_energy)
 			# print 
 			
-			structure = copy.deepcopy(minimum_energy_relaxation.final_structure)
+			if minimum_energy_relaxation == None:
+				data_dictionary['structure'] = None
+				data_dictionary['energy'] = None
+				data_dictionary['polarization_vector'] = None
 
-			if get_polarization:
-				polarization_vector = self.update_polarization_run(minimum_energy_relaxation)
-			else:
-				polarization_vector = None
+				for symprec in spg_symprecs:
+					data_dictionary['spg_' + str(symprec)] = None
 
-			data_dictionary['structure'] = structure
-			data_dictionary['energy'] = minimum_energy
-			data_dictionary['polarization_vector'] = polarization_vector
+				data_dictionary['path'] = None
+			else:				
 
-			spg_symprecs = [0.1, 0.05, 0.04, 0.03, 0.02, 0.01, 0.001]
+				structure = copy.deepcopy(minimum_energy_relaxation.final_structure)
 
-			for symprec in spg_symprecs:
-				data_dictionary['spg_' + str(symprec)] = structure.get_spacegroup_string(symprec)
+				if get_polarization:
+					polarization_vector = self.update_polarization_run(minimum_energy_relaxation)
+				else:
+					polarization_vector = None
+
+				data_dictionary['structure'] = structure
+				data_dictionary['energy'] = minimum_energy
+				data_dictionary['polarization_vector'] = polarization_vector
+
+				spg_symprecs = [0.1, 0.05, 0.04, 0.03, 0.02, 0.01, 0.001]
+
+				for symprec in spg_symprecs:
+					data_dictionary['spg_' + str(symprec)] = structure.get_spacegroup_string(symprec)
+
+				data_dictionary['path'] = Path.join(minimum_energy_relaxation.path, 'static')
 
 			output_data_dictionaries.append(data_dictionary)
-
-			data_dictionary['path'] = Path.join(minimum_energy_relaxation.path, 'static')
 
 		return output_data_dictionaries
