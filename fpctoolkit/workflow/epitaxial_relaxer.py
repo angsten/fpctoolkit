@@ -201,6 +201,7 @@ class EpitaxialRelaxer(object):
 		"""
 
 		output_data_dictionaries = []
+		spg_symprecs = [0.1, 0.05, 0.04, 0.03, 0.02, 0.01, 0.001]
 
 		for misfit_strain in self.misfit_strains_list:
 			# print str(misfit_strain)
@@ -254,8 +255,6 @@ class EpitaxialRelaxer(object):
 				data_dictionary['structure'] = structure
 				data_dictionary['energy'] = minimum_energy
 				data_dictionary['polarization_vector'] = polarization_vector
-
-				spg_symprecs = [0.1, 0.05, 0.04, 0.03, 0.02, 0.01, 0.001]
 
 				for symprec in spg_symprecs:
 					data_dictionary['spg_' + str(symprec)] = structure.get_spacegroup_string(symprec)
