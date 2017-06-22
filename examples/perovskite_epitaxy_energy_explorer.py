@@ -94,6 +94,33 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 		mode_charge_file.write_to_path()
 	#sys.exit()
 
+
+	################################################### random structure searcher
+	rand_path = Path.join(path, 'random_trials')
+	Path.make(rand_path)
+
+	num_guesses = 1
+	num_modes = 12
+	max_amplitude = 0.6
+
+	if misfit_strain == 0.02:
+		eigen_structure = EigenStructure(reference_structure=relaxed_structure, hessian=hessian)
+
+		for i in range(num_guesses):
+			trial_path = Path.join(rand_path, str(i))
+
+			if not Path.exists(trial_path):
+				initial_structure_trial = eigen_structure.get_random_structure(mode_count_cutoff=num_modes, max_amplitude=max_amplitude)
+				trial_relaxation = VaspRelaxation(path=trial_path, initial_structure=initial_structure_trial, input_dictionary=minima_relaxation_input_dictionary)
+			else:
+				trial_relaxation = VaspRelaxation(path=trial_path)
+
+			print "Updating random trial relaxation at " + trial_relaxation.path + "  Status is " + trial_relaxation.get_status_string()
+			trial_relaxation.update()
+
+	return None
+	###################################################
+
 	
 	if not Path.exists(guessed_minima_data_path):
 		variable_specialty_points_dictionary = input_dictionary['variable_specialty_points_dictionary_set'][misfit_strain] if input_dictionary.has_key(misfit_strain) else {}
@@ -291,11 +318,32 @@ if __name__ == '__main__':
 		
 		epitaxial_relaxer.update()
 
-		for data_dictionary in epitaxial_relaxer.get_data_dictionaries_list(calculate_polarizations):
+		data_dictionaries_list = epitaxial_relaxer.get_data_dictionaries_list(calculate_polarizations)
+		for data_dictionary in data_dictionaries_list:
 			for key, value in data_dictionary.items():
 				if not key == 'structure':
 					print key, value
 			print
 
-		print "titlelabel='"'" + "".join(input_dictionary['species_list']) + "3 (100)'"';"
-		print "referenceLatticeConstant=" + str(input_dictionary['reference_lattice_constant'])
+		print 'titlelabel="' + "".join(input_dictionary['species_list']) + '3 (100)";'
+		print "referenceLatticeConstant=" + str(input_dictionary['reference_lattice_constant']) + ';'
+		print "dftenergydata={",
+
+		en_string = ""
+		for data_dictionary in data_dictionaries_list:
+			en_string += "{" + str(data_dictionary['misfit_strain']) + "," + str(data_dictionary['energy']) + "},"
+
+		print en_string[:-1] + "};"
+
+
+		print "dftpoldata ={",
+
+		pol_string = ""
+		for data_dictionary in data_dictionaries_list:
+
+			pol_vec = data_dictionary['polarization_vector']
+			pol_mag = (pol_vec[0]**2.0 + pol_vec[1]**2.0 + pol_vec[2]**2.0)**0.5
+
+			pol_string += "{" + str(data_dictionary['misfit_strain']) + "," + str(pol_vec[0]) + "," + str(pol_vec[1]) + "," + str(pol_vec[2]) + "," + str(pol_mag) + "},"
+
+		print pol_string[:-1] + "};"

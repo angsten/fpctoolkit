@@ -2,6 +2,7 @@
 
 import numpy as np
 import copy
+import random
 
 import fpctoolkit.util.basic_validators as basic_validators
 from fpctoolkit.phonon.hessian import Hessian
@@ -203,7 +204,23 @@ class EigenStructure(object):
 		return self.voigt_strains_list + [eigen_component.amplitude for eigen_component in self.eigen_components_list]
 
 
+	def get_random_structure(self, mode_count_cutoff, max_amplitude):
+		"""
+		Returns a random structure with chromosome that looks like [0.0 0.0 rand 0.0 0.0 0.0    rand(-max_amplitude, max_amplitude) rand rand rand rand ... up to mode_count_cutoff of these]
+		"""
 
+		chromosome = [0.0, 0.0, random.uniform(-0.04, 0.04), 0.0, 0.0, 0.0] + [0.0]*mode_count_cutoff
+
+		for i in range(max_amplitude):
+			if not self.eigen_components_list[i].is_translational_mode():
+				chromosome[i] = random.uniform(-1.0*max_amplitude, 1.0*max_amplitude)
+
+
+		print "Random chromosome is " + str(chromosome)
+
+		self.set_eigen_chromosome(chromosome)
+
+		return self.get_distorted_structure()
 
 
 	def print_eigen_components(self):
