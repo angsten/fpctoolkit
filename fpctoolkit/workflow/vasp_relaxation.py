@@ -291,6 +291,7 @@ class VaspRelaxation(VaspRunSet):
 		data_dictionary['run_final_energy_list'] = [run.get_final_energy(per_atom=False) for run in self.vasp_run_list]
 		data_dictionary['run_final_energy_per_atom_list'] = [run.get_final_energy(per_atom=True) for run in self.vasp_run_list]
 		data_dictionary['run_total_time_list'] = [run.total_time for run in self.vasp_run_list]
+		data_dictionary['final_spacegroups_list'] = [run.final_structure.get_spacegroup_string(symprec=symprec) for symprec in [0.1, 0.01, 0.001]]
 
 		return data_dictionary
 

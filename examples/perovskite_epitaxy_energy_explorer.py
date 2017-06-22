@@ -96,29 +96,34 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 
 
 	################################################### random structure searcher
-	rand_path = Path.join(path, 'random_trials')
-	Path.make(rand_path)
+	if True:
+		rand_path = Path.join(path, 'random_trials')
+		Path.make(rand_path)
 
-	num_guesses = 1
-	num_modes = 12
-	max_amplitude = 0.6
+		num_guesses = 1
+		num_modes = 12
+		max_amplitude = 0.6
 
-	if misfit_strain == 0.02:
-		eigen_structure = EigenStructure(reference_structure=relaxed_structure, hessian=hessian)
+		if misfit_strain == 0.02:
+			eigen_structure = EigenStructure(reference_structure=relaxed_structure, hessian=hessian)
 
-		for i in range(num_guesses):
-			trial_path = Path.join(rand_path, str(i))
+			for i in range(num_guesses):
+				trial_path = Path.join(rand_path, str(i))
 
-			if not Path.exists(trial_path):
-				initial_structure_trial = eigen_structure.get_random_structure(mode_count_cutoff=num_modes, max_amplitude=max_amplitude)
-				trial_relaxation = VaspRelaxation(path=trial_path, initial_structure=initial_structure_trial, input_dictionary=minima_relaxation_input_dictionary)
-			else:
-				trial_relaxation = VaspRelaxation(path=trial_path)
+				if not Path.exists(trial_path):
+					initial_structure_trial = eigen_structure.get_random_structure(mode_count_cutoff=num_modes, max_amplitude=max_amplitude)
+					trial_relaxation = VaspRelaxation(path=trial_path, initial_structure=initial_structure_trial, input_dictionary=minima_relaxation_input_dictionary)
+				else:
+					trial_relaxation = VaspRelaxation(path=trial_path)
 
-			print "Updating random trial relaxation at " + trial_relaxation.path + "  Status is " + trial_relaxation.get_status_string()
-			trial_relaxation.update()
+				print "Updating random trial relaxation at " + trial_relaxation.path + "  Status is " + trial_relaxation.get_status_string()
+				trial_relaxation.update()
 
-	return None
+				if trial_relaxation.complete:
+					print "Trial " + str(i)
+					print trial_relaxation.get_data_dictionary()
+
+		return None
 	###################################################
 
 	
