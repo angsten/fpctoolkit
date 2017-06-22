@@ -146,7 +146,11 @@ class Hessian(object):
 		
 		#return None #############################################################################################################################
 		if not translational_count == 3:
-		 	raise Exception("Number of translational modes in eigen list must be exactly three.", translational_count)
+		 	#raise Exception("Number of translational modes in eigen list must be exactly three.", translational_count)
+		 	print "*"*300
+		 	print "Number of translational modes in eigen list must be exactly three. "*100
+		 	print "*"*300
+
 
 	@staticmethod
 	def validate_eigen_pairs_are_orthonormal(eigen_pairs_list):
