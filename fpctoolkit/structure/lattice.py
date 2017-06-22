@@ -2,6 +2,7 @@
 
 import copy
 import numpy as np
+import random
 
 from fpctoolkit.util.math.tensor import Tensor
 from fpctoolkit.util.math.vector import Vector
@@ -200,6 +201,14 @@ class Lattice(object):
 		strained_lattice = np.dot(original_lattice_matrix, strain_tensor.T)
 
 		self.from_2D_array(strained_lattice)
+
+	def randomly_strain_uniformly(self, max_strain):
+		def r():
+			return random.uniform(-1.0*max_strain, max_strain)
+
+		strain_tensor = [[1.0+r(), r()/4.0, r()/4.0], [r()/4.0, 1.0+r(), r()/4.0], [r()/4.0, r()/4.0, 1.0+r()]]
+
+		self.strain(strain_tensor)
 
 
 	def randomly_strain(self, distribution_array):
