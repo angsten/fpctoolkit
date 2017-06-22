@@ -213,7 +213,7 @@ class EigenStructure(object):
 
 		for i in range(mode_count_cutoff):
 			if not self.eigen_components_list[i].is_translational_mode():
-				chromosome[i] = random.uniform(-1.0*max_amplitude, 1.0*max_amplitude)
+				chromosome[i+6] = random.uniform(-1.0*max_amplitude, 1.0*max_amplitude)
 
 
 		print "Random chromosome is " + str(chromosome)
