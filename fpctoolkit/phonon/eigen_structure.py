@@ -4,6 +4,7 @@ import numpy as np
 import copy
 import random
 
+from fpctoolkit.util.path import Path
 import fpctoolkit.util.basic_validators as basic_validators
 from fpctoolkit.phonon.hessian import Hessian
 from fpctoolkit.structure.structure import Structure
