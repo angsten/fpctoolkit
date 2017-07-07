@@ -139,7 +139,7 @@ class EigenStructure(object):
 
 				decomposed_structures_list.append(new_structure)
 
-				mode_index_list.append(i+1)
+				mode_index_list.append(i-6)
 
 		return decomposed_structures_list, mode_index_list
 
