@@ -118,6 +118,7 @@ class EigenStructure(object):
 		"""
 
 		decomposed_structures_list = []
+		mode_index_list = []
 
 		self.set_strains_and_amplitudes_from_distorted_structure(distorted_structure)
 
@@ -138,7 +139,9 @@ class EigenStructure(object):
 
 				decomposed_structures_list.append(new_structure)
 
-		return decomposed_structures_list
+				mode_index_list.append(i+1)
+
+		return decomposed_structures_list, mode_index_list
 
 
 
