@@ -111,6 +111,40 @@ class EigenStructure(object):
 
 		return distorted_structure
 
+	def get_decomposed_structures(self, distorted_structure, threshold=0.1):
+		"""
+		Finds all active modes in distorted_structure and separates them out into the consituent mode distorted structures. The list of such structures is returned
+		"""
+
+		decomposed_structures_list = []
+
+		self.set_strains_and_amplitudes_from_distorted_structure(distorted_structure)
+
+		full_eigen_chromosome = self.get_list_representation()
+
+		for i in range(6, len(full_eigen_chromosome)):
+
+			structure_file_path = Path.join(output_directory_path, 'structure_with_mode_' + str(i-5))
+
+			if abs(full_eigen_chromosome[i]) > threshold:
+				new_chromosome = [0.0]*len(full_eigen_chromosome)
+
+				new_chromosome[:6] = full_eigen_chromosome[:6]
+
+				new_chromosome[i] = full_eigen_chromosome[i]
+
+				self.set_eigen_chromosome(new_chromosome)
+
+				new_structure = self.get_distorted_structure()
+
+				decomposed_structures_list.append(new_structure)
+
+		return decomposed_structures_list
+
+
+
+
+
 
 	def get_strain_tensor(self):
 		"""

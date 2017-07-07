@@ -4,577 +4,523 @@
 		"selected_items":
 		[
 			[
-				"basis",
-				"basis_vector_np_array"
+				"trial",
+				"trial_relaxation"
 			],
 			[
-				"disp",
-				"displacement_vector_np_array"
+				"misf",
+				"misfit_strain"
 			],
 			[
-				"displacement",
-				"displacement_vector"
+				"minm",
+				"minimum_energy_relaxation"
 			],
 			[
-				"projecti",
-				"projection_component"
+				"glazer",
+				"glazer_tracker_dict"
 			],
 			[
-				"displacem",
-				"displacement_vector"
-			],
-			[
-				"ref",
-				"reference_site"
-			],
-			[
-				"disto",
-				"distorted_site"
-			],
-			[
-				"refer",
-				"reference_site"
-			],
-			[
-				"site",
-				"site_index"
-			],
-			[
-				"val",
-				"validate"
-			],
-			[
-				"va",
-				"validate"
-			],
-			[
-				"translat",
-				"translational_vectors_in_basis_count"
-			],
-			[
-				"coo",
-				"coordinate_index"
-			],
-			[
-				"no",
-				"normal_coordinates_list"
+				"glazers",
+				"glazers_list"
 			],
 			[
 				"eig",
-				"eigenvalue"
-			],
-			[
-				"ei",
-				"eigen_displacements_list"
-			],
-			[
-				"eign",
-				"eigen_displacements_list"
-			],
-			[
-				"nor",
-				"normal_mode"
-			],
-			[
-				"q_",
-				"q_point_fractional_coordinates"
-			],
-			[
-				"q_p",
-				"q_point_fractional_coordinates"
-			],
-			[
-				"Phono",
-				"PhononSuperDisplacementVector"
-			],
-			[
-				"sorte",
-				"sorted_superfluous_basis"
+				"eigen_values_list"
 			],
 			[
 				"eigen",
-				"eigenvalue"
+				"eigen_value"
 			],
 			[
-				"superflu",
-				"superfluous_basis"
+				"gla",
+				"glazers"
 			],
 			[
-				"bas",
-				"basis_phonon_displacment_vector"
+				"eigen_chromosomes",
+				"eigen_chromosomes_list"
 			],
 			[
-				"dis",
-				"displacement_vector_instance"
+				"max",
+				"max_minima"
 			],
 			[
-				"tot",
-				"total_vector_set"
+				"eigen_chromo",
+				"eigen_chromosomes_list"
 			],
 			[
-				"poss",
-				"possible_basis_vector"
+				"eigen_ch",
+				"eigen_chromosomes_list"
 			],
 			[
-				"vecto",
-				"vector_list"
+				"exter",
+				"external_relaxation_count"
 			],
 			[
-				"vec",
-				"vector_count"
+				"ex",
+				"external_relaxation_count"
 			],
 			[
-				"basis_v",
-				"basis_vector_matrix"
+				"queu",
+				"queue_properties"
 			],
 			[
-				"ne",
-				"negative_projection_of_possible_basis_vector_onto_basis_vector"
+				"curr",
+				"current_run"
 			],
 			[
-				"pro",
-				"projection_of_possible_basis_vector_onto_basis_vector"
+				"cur",
+				"current_run"
 			],
 			[
-				"ini",
-				"initialize_displacement_basis_vectors"
-			],
-			[
-				"normal",
-				"normal_mode_displacement_vector"
-			],
-			[
-				"zer",
-				"zero_vector_magnitude_tolerance"
-			],
-			[
-				"new",
-				"new_magnitude"
-			],
-			[
-				"zero",
-				"zero_tolerance"
-			],
-			[
-				"magn",
-				"magnitude"
-			],
-			[
-				"phono",
-				"phonon_displacement_vector_instance"
-			],
-			[
-				"mu",
-				"multiplied_displacement_vector"
-			],
-			[
-				"vali",
-				"validate_real_number"
-			],
-			[
-				"norm",
-				"normal_coordinate"
-			],
-			[
-				"aut",
-				"auto_change_npar"
-			],
-			[
-				"spec",
-				"species_count_list"
-			],
-			[
-				"input",
-				"input_dictionary"
-			],
-			[
-				"atom",
-				"atomic_displacement"
-			],
-			[
-				"or",
-				"original_reference_coordinate_mode"
-			],
-			[
-				"refere",
-				"reference_supercell_structure"
-			],
-			[
-				"add",
-				"added_displacement_vector"
-			],
-			[
-				"sit",
-				"sites_list"
-			],
-			[
-				"Sit",
-				"SiteCollection"
-			],
-			[
-				"reference_up",
-				"reference_supercell_structure"
-			],
-			[
-				"REFER",
-				"reference_supercell_structure"
-			],
-			[
-				"Phon",
-				"PhononSuperDisplacementVector"
-			],
-			[
-				"lambd",
-				"lambda_index"
-			],
-			[
-				"ph",
-				"phonon_super_displacement_vector_instance"
-			],
-			[
-				"lamb",
-				"lambda_index"
-			],
-			[
-				"Disp",
-				"DisplacementVector"
-			],
-			[
-				"displace",
-				"displacement_vector"
-			],
-			[
-				"conv",
-				"convert_to_cartesian_coordinates"
-			],
-			[
-				"conver",
-				"convert_sites_to_direct_coordinates"
-			],
-			[
-				"coordinate",
-				"coordinate_mode"
-			],
-			[
-				"inp",
-				"input_reference_structure"
-			],
-			[
-				"reference",
-				"reference_structure"
-			],
-			[
-				"normal_coo",
-				"normal_coordinate_complex_coefficient"
-			],
-			[
-				"normal_co",
-				"normal_coordinate"
-			],
-			[
-				"co",
-				"coordinate_index"
-			],
-			[
-				"real",
-				"real_cartesian_displacement_vector"
-			],
-			[
-				"car",
-				"cartesian_displacement"
-			],
-			[
-				"eige",
-				"eigen_displacements_vector"
-			],
-			[
-				"norma",
-				"normal_coordinates_list"
-			],
-			[
-				"primi",
-				"primitive_cell_structure"
-			],
-			[
-				"comp",
-				"complex_coefficient"
-			],
-			[
-				"Phonon",
-				"PhononStructure"
-			],
-			[
-				"q",
-				"q_points"
-			],
-			[
-				"q_v",
-				"q_vector"
-			],
-			[
-				"phonon",
-				"phonon_band_structure"
-			],
-			[
-				"permit",
-				"permitted_q_vectors_list"
-			],
-			[
-				"perm",
-				"permitted_q_vectors_list"
-			],
-			[
-				"per",
-				"permitted_q_vectors_list"
-			],
-			[
-				"superce",
-				"supercell_dimensions_list"
-			],
-			[
-				"phon",
-				"phonon_band_structure"
-			],
-			[
-				"return",
-				"return_string"
-			],
-			[
-				"band",
-				"band_index"
-			],
-			[
-				"pri",
-				"primitive_structure"
-			],
-			[
-				"phonopy",
-				"phonopy_instance"
-			],
-			[
-				"q_poin",
-				"q_point_instance"
-			],
-			[
-				"q_po",
-				"q_points_list"
-			],
-			[
-				"prim",
-				"primitive_cell_structure"
-			],
-			[
-				"prii",
-				"primitive_cell_structure"
-			],
-			[
-				"vector",
-				"vector_magnitude"
-			],
-			[
-				"atomic",
-				"atomic_masses_list"
+				"mode",
+				"mode_charge_file"
 			],
 			[
 				"rel",
-				"relaxation_path"
+				"relax_path"
 			],
 			[
-				"relax",
-				"relax_input_dictionary"
+				"cell",
+				"cell_volume"
 			],
 			[
-				"ind",
-				"ind_equal_count"
+				"tot",
+				"total_polarization_vector"
 			],
 			[
-				"mod",
-				"mod_struct_path"
+				"uni",
+				"unique_guesses_file"
 			],
 			[
-				"pr",
-				"primitive_cell"
+				"log",
+				"log_base_path"
 			],
 			[
-				"round",
-				"rounded_number"
+				"ful",
+				"full_guesses_list_file"
 			],
 			[
-				"roun",
-				"rounded_number"
+				"guesses",
+				"guesses_log_path"
+			],
+			[
+				"voig",
+				"voigt_strains_list"
+			],
+			[
+				"eigen_pa",
+				"eigen_pairs"
+			],
+			[
+				"init",
+				"initial_structure"
+			],
+			[
+				"sor",
+				"sorted_eigen_chromosome_energy_pairs_list"
+			],
+			[
+				"fin",
+				"final_structure"
+			],
+			[
+				"data",
+				"data_dictionary"
+			],
+			[
+				"spg",
+				"spg_symprecs"
+			],
+			[
+				"get_m",
+				"get_misfit_strain_minimum_energy_polarization_triplets_list"
+			],
+			[
+				"vasp_run",
+				"vasp_run_list"
+			],
+			[
+				"epita",
+				"epitaxial_relaxer"
+			],
+			[
+				"update",
+				"update_eptiaxy_only"
+			],
+			[
+				"mi",
+				"minimum_energy"
+			],
+			[
+				"minin",
+				"minimum_energy_relaxation"
+			],
+			[
+				"minim",
+				"minimum_energy"
+			],
+			[
+				"mini",
+				"minimum_energy"
+			],
+			[
+				"outpu",
+				"output_triplets"
+			],
+			[
+				"calcu",
+				"calculate_polarizations"
+			],
+			[
+				"referene",
+				"reference_structure"
+			],
+			[
+				"polari",
+				"polarization_run"
+			],
+			[
+				"ele",
+				"electronic_polarization_vector"
+			],
+			[
+				"ionic_",
+				"ionic_polarization_vector"
+			],
+			[
+				"comp",
+				"components_string"
+			],
+			[
+				"ionic_po",
+				"ionic_polarization_indices"
+			],
+			[
+				"ion",
+				"ionic_polarization_indices"
+			],
+			[
+				"shif",
+				"shifted_total_polarization_vector"
+			],
+			[
+				"shift",
+				"shift_vector"
+			],
+			[
+				"dis",
+				"distorted_polarization_vector"
+			],
+			[
+				"conver",
+				"conversion_factor"
+			],
+			[
+				"refere",
+				"reference_polarization"
+			],
+			[
+				"distor",
+				"distorted_polarization"
+			],
+			[
+				"pola",
+				"polarization_vector"
+			],
+			[
+				"pol",
+				"polarization_direction_index"
+			],
+			[
+				"disp",
+				"displacement_mode_vector"
+			],
+			[
+				"ca",
+				"cartesian_direction_index"
+			],
+			[
+				"atom",
+				"atom_index"
+			],
+			[
+				"ref",
+				"reference_polarization_path"
+			],
+			[
+				"disto",
+				"distorted_structure"
+			],
+			[
+				"get",
+				"get_displaced_structure"
 			],
 			[
 				"str",
-				"str_rep"
-			],
-			[
-				"phoo",
-				"phonopy_inputs"
-			],
-			[
-				"force",
-				"force_constants_path"
-			],
-			[
-				"ran",
-				"random_digit_string"
-			],
-			[
-				"born",
-				"born_effective_charge_tensor"
-			],
-			[
-				"pho",
-				"phonopy_inputs"
-			],
-			[
-				"temporar",
-				"temporary_directory_path"
-			],
-			[
-				"has",
-				"has_nac"
-			],
-			[
-				"get_force_con",
-				"get_forces_constants_path"
-			],
-			[
-				"for",
-				"forces_run_set"
-			],
-			[
-				"get_di",
-				"get_distorted_structures_list"
-			],
-			[
-				"structure",
 				"structures_list"
+			],
+			[
+				"eigen_com",
+				"eigen_component"
+			],
+			[
+				"eigen_comp",
+				"eigen_components_list"
+			],
+			[
+				"ma",
+				"max_minima"
+			],
+			[
+				"latt",
+				"lattice_constants_dictionary"
+			],
+			[
+				"fit",
+				"fitting_parameters"
+			],
+			[
+				"y_",
+				"y_label_string"
+			],
+			[
+				"misfit",
+				"misfit_strain"
 			],
 			[
 				"stru",
+				"structure"
+			],
+			[
+				"ini",
+				"initial_structure"
+			],
+			[
+				"j",
+				"j"
+			],
+			[
+				"lattice",
+				"lattice_vector"
+			],
+			[
+				"variab",
+				"variable_specialty_points_dictionary"
+			],
+			[
+				"typ",
+				"type_string"
+			],
+			[
+				"perturbation_magn",
+				"perturbation_magnitude_lists_dictionary"
+			],
+			[
+				"strain_var",
+				"strain_variables_list"
+			],
+			[
+				"energies",
+				"energies_list"
+			],
+			[
+				"displacement",
+				"displacement_magnitudes_list"
+			],
+			[
+				"displacement_magn",
+				"displacement_magnitudes_list"
+			],
+			[
+				"sp",
+				"variable_specialty_points_dictionary"
+			],
+			[
+				"vari",
+				"variable_specialty_points_dictionary"
+			],
+			[
+				"get_sorte",
+				"get_sorted_unique_relaxation_data_list"
+			],
+			[
+				"stat",
+				"status_file_path"
+			],
+			[
+				"displacement_in",
+				"displacement_indices_list"
+			],
+			[
+				"displace",
+				"displacement_variables_list"
+			],
+			[
+				"strain_v",
+				"strain_variables_list"
+			],
+			[
+				"strain_variable_in",
+				"strain_variable_indices_list"
+			],
+			[
+				"differ",
+				"difference_magnitude"
+			],
+			[
+				"diff",
+				"difference_magnitude"
+			],
+			[
+				"sorted",
+				"sorted_relaxation_data_list"
+			],
+			[
+				"sorte",
+				"sorted_relaxation_data_list"
+			],
+			[
+				"vasp",
+				"vasp_relaxation"
+			],
+			[
+				"convert_site",
+				"convert_sites_to_coordinate_mode"
+			],
+			[
+				"lat",
+				"lattice"
+			],
+			[
+				"msif",
+				"misfit_strains_list"
+			],
+			[
+				"mis",
+				"misfit_strain"
+			],
+			[
+				"valid",
+				"validate_real_number"
+			],
+			[
+				"misfi",
+				"misfit_strains_list"
+			],
+			[
+				"displacem",
+				"displacement_variables_dictionary"
+			],
+			[
+				"fina",
+				"final_pairs_list"
+			],
+			[
+				"eigen_chrom",
+				"eigen_chromosome_energy_pair"
+			],
+			[
+				"min",
+				"minima_path"
+			],
+			[
+				"gue",
+				"guessed_minima_data_path"
+			],
+			[
+				"displacement_var",
+				"displacement_variable_2"
+			],
+			[
+				"displa",
+				"displacement_variable_index"
+			],
+			[
+				"header",
+				"header_data"
+			],
+			[
+				"out",
+				"out_string"
+			],
+			[
+				"specie",
+				"species_count_string"
+			],
+			[
+				"speci",
+				"species_count"
+			],
+			[
+				"fi",
+				"fitting_parameters"
+			],
+			[
+				"x_",
+				"x_label_string"
+			],
+			[
+				"right",
+				"right_title_string"
+			],
+			[
+				"tite",
+				"title_string"
+			],
+			[
+				"head",
+				"header_line"
+			],
+			[
+				"file",
+				"file_lines"
+			],
+			[
+				"strain",
+				"strain_variable"
+			],
+			[
+				"stra",
+				"strain_variable"
+			],
+			[
+				"struct",
 				"structures_list"
 			],
 			[
-				"ro",
-				"row_number_list"
+				"struc",
+				"structures_list"
 			],
 			[
-				"get_num",
-				"get_number_of_atoms"
+				"perturbat",
+				"perturbation_magnitude"
 			],
 			[
-				"lep",
-				"lepsilon_calculation"
+				"central",
+				"central_difference_coefficients_dictionary"
 			],
 			[
-				"diel",
-				"dielectric_tensor"
+				"perturbation",
+				"perturbation_magnitudes_dictionary"
 			],
 			[
-				"num",
-				"number_string"
+				"displacemen",
+				"displacement_magnitudes_list"
 			],
 			[
-				"number",
-				"number_list"
+				"dist",
+				"distorted_structures_list"
 			],
 			[
-				"string_r",
-				"string_represents_float"
-			],
-			[
-				"string",
-				"string_represents_integer"
-			],
-			[
-				"number_st",
-				"number_strings_list"
-			],
-			[
-				"strin",
-				"string_of_numbers"
-			],
-			[
-				"tensor",
-				"tensor_start_index"
-			],
-			[
-				"ten",
-				"tensor_start_indices"
-			],
-			[
-				"le",
-				"lepsilon_calculation"
-			],
-			[
-				"get_le",
-				"get_lepsion_calculation_path"
-			],
-			[
-				"auto",
-				"auto_change_npar"
+				"get_ene",
+				"get_final_energies_list"
 			]
 		]
 	},
 	"buffers":
 	[
-		{
-			"file": "fpctoolkit/fpc_sketcher.py",
-			"settings":
-			{
-				"buffer_size": 19281,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/phonon/phonon_structure.py",
-			"settings":
-			{
-				"buffer_size": 11374,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/phonon/normal_coordinate.py",
-			"settings":
-			{
-				"buffer_size": 2403,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/phonon/phonon_super_displacement_vector.py",
-			"settings":
-			{
-				"buffer_size": 3755,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/structure/displacement_vector.py",
-			"settings":
-			{
-				"buffer_size": 8651,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/phonon/normal_mode.py",
-			"settings":
-			{
-				"buffer_size": 6398,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		}
 	],
-	"build_system": "Packages/Python/Python.sublime-build",
+	"build_system": "",
 	"build_system_choices":
 	[
 		[
@@ -613,10 +559,26 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 150.0,
-		"last_filter": "git push",
+		"height": 104.0,
+		"last_filter": "Package Control: remove",
 		"selected_items":
 		[
+			[
+				"Package Control: remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"anaconda",
+				"Anaconda: Disable linting on this file"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
 			[
 				"git push",
 				"Git: Push"
@@ -664,10 +626,6 @@
 			[
 				"git st",
 				"Git: Status"
-			],
-			[
-				"Package Control: ",
-				"Package Control: Install Package"
 			],
 			[
 				"git rest ",
@@ -726,7 +684,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 400.0
+		"width": 408.0
 	},
 	"console":
 	{
@@ -755,39 +713,103 @@
 	"expanded_folders":
 	[
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expansion",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/phonopy_interface",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow"
 	],
 	"file_history":
 	[
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/derivative_plotter.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/data/derivative_plot_data",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/table_builder.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_polarization_run_set.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/epitaxial_relaxer.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expansion/minima_relaxer.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/lattice.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/hessian.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/eigen_structure.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/perovskite_epitaxy_energy_explorer.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/string_util.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expansion/derivative_evaluator.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/displacement_vector.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/file.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar_maker.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/eigen_component.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_static_run_set.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/outcar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/derivative_evaluation_2.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/phonopy_interface/phonopy_utility.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/hessian_eigen_pair.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/fpc_sketcher.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/queue_adapter.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/misc.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expansion/variable.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_forces_run_set.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_collection.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expansion/taylor_expansion.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_manipulator.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_generator.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/ga_structure_predictor.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expansion/expansion_term.py",
+		"/C/Users/Tom/Documents/Coding/python_work/investment_simulator.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/derivative_evaluation_converger.py",
+		"/C/Python27/tcl/tcl8.5/init.tcl",
+		"/C/Users/Tom/Documents/Berkeley/research/my_papers/Epitaxial Phase Validation Paper/Files/scratch.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Outcar/outcar",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/path.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/normal_mode.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/force_calculation.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/simple_vasp_relaxation.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/eigen_structure_relax_test.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/phonon_normal_mode_energy_tester.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/taylor_expander.py",
+		"/C/Users/Tom/AppData/Roaming/Sublime Text 3/Packages/User/Anaconda.sublime-settings",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run_set.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expansion/finite_differences_run_set.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expansion/__init__.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expander/variable.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/vector.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/basic_validators.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/eigen_normal_mode_energy_tester.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/epitaxial_100_ga_global_structure_finder.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/ediff_relax_convergence.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/tensor.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/phonon_structure.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/normal_coordinate.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/basic_checks.py",
+		"/C/Users/Tom/Documents/Berkeley/research/my_papers/Epitaxial Phase Validation Paper/phonon_work/OUTCAR",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/relax_then_phonon.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/vasp_input_set.py",
+		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/parse.py",
+		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/qha_rhombohedral_BaTiO3_2_2_2/qha_rhombohedral_BaTiO3_2_2_2_copy/helmholtz-volume.dat",
+		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/qha_rhombohedral_BaTiO3_2_2_2/qha_rhombohedral_BaTiO3_2_2_2_copy/volume-temperature.dat",
+		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/qha_rhombohedral_BaTiO3_2_2_2/qha_rhombohedral_BaTiO3_2_2_2_copy/Cp-temperature_polyfit.dat",
+		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/qha_rhombohedral_BaTiO3_2_2_2/qha_rhombohedral_BaTiO3_2_2_2_copy/Cp-temperature.dat",
+		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/qha_rhombohedral_BaTiO3_2_2_2/qha_rhombohedral_BaTiO3_2_2_2_copy/dsdv-temperature.dat",
+		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/qha_rhombohedral_BaTiO3_2_2_2/qha_rhombohedral_BaTiO3_2_2_2_copy/entropy-volume.dat",
+		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/qha_rhombohedral_BaTiO3_2_2_2/qha_rhombohedral_BaTiO3_2_2_2_copy/gruneisen-temperature.dat",
+		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/qha_rhombohedral_BaTiO3_2_2_2/qha_rhombohedral_BaTiO3_2_2_2_copy/volume_expansion.dat",
+		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/qha_rhombohedral_BaTiO3_2_2_2/qha_rhombohedral_BaTiO3_2_2_2_copy/thermal_expansion.dat",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/phonon_super_displacement_vector.py",
 		"/C/Users/Tom/Anaconda2/sip/__init__.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/phonon_band_structure.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/basic_checks.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/vasp_input_set.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/basic_validators.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/file.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_forces_run_set.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar_maker.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/phonon_normal_mode_energy_tester.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/poscar.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_manipulator.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/q_point.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_collection.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_phonon.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop/dead_code_drop.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/displacement_vector.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/phonopy_interface/phonopy_utility.py",
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/rhombohedral_2_2_2/settings.conf",
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/rhombohedral_2_2_2/BORN",
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/rhombohedral_2_2_2/FORCE_CONSTANTS",
@@ -799,23 +821,13 @@
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/cubic_3_3_3/settings.conf",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/perovskite.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/converger.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/relax_then_phonon.py",
 		"/C/Users/Tom/.bashrc",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relax_phonon.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_generator.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/lattice.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run_set.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/path.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/string_util.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/outcar.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/misc.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/phonopy_interface/phonopy_inputs.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/data_structures/input_dictionary.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/data_structures/parameter_list.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/phonopy_interface/__init__.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/distribution.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/tensor.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/fpc_sketcher.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/distribution_array.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/distribution_generator.py",
 		"/C/Users/Tom/Documents/Coding/Web Development/Udemy Bootcamp/selectors.css",
@@ -827,7 +839,6 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_mapping_collection.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_mapping.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop/ga_driver_100_perovskite_epitaxy.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/vector.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/selector.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/vector_distribution.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/vector_distribution.py",
@@ -840,60 +851,10 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/ga_driver_100_perovskite_epitaxy.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/vector.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/individual.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/ga_structure_predictor.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/population_collection.py",
 		"/C/Users/Tom/Documents/Coding/Web Development/Udemy Bootcamp/first.html",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/tensor.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/constrained_lattice.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/queue_adapter.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/population.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/npar_tester.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar_element_mapping.json",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/epitaxial_100_ga_global_structure_finder.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/ediff_relax_convergence.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/vector_distribution.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/simple_vasp_relaxation.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/encut_kpoints_converger.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/__init__.py",
-		"/C/Users/Tom/Documents/Berkeley/courses/ME C237 (Stat Mech for Engineers)/hw1_simulation.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar/poscar_small",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/kpoints.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Outcar/outcar",
-		"/C/Users/Tom/Documents/Coding/python_work/workflow_test/INCAR",
-		"/C/Users/Tom/Documents/Coding/python_work/workflow_test/POSCAR",
-		"/C/Users/Tom/Documents/Coding/python_work/workflow_test/KPOINTS",
-		"/C/Users/Tom/Documents/Coding/python_work/workflow_test/POTCAR",
-		"/C/Users/Tom/.bash_profile",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/test_Kpoints.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/__init__.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/tests/test_Structure.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/tests/data_structure/big_posc",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/test_Poscar.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/__init__.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/tests/data_structure/poscar_small",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar/poscar_small_rewritten",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/tests/__init__.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/Site.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar/poscar_1",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Incar/incar_1",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/test_Incar.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Poscar/Poscar_bad_2",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Incar/incar_0",
-		"/C/Users/Tom/Downloads/t.py",
-		"/C/Users/Tom/Documents/Berkeley/research/my_papers/Epitaxial Phase Validation Paper/backups/phase_validation/vaspio.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Incar/test_made_incar",
-		"/C/Users/Tom/Documents/Coding/python_work/t.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/test_File.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Kpoints/kpt_1",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Kpoints/new_kpt_1",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/test_Potcar.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/__init__.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/data_File/small_file.txt",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/data_File/small_file_ammended.txt",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/data_File/small_file_2.txt",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/data_File/file1.txt",
-		"/C/Users/Tom/Documents/Coding/python_work/ttttt.txt",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/tests/data_File/ttttt.txt"
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/constrained_lattice.py"
 	],
 	"find":
 	{
@@ -912,134 +873,134 @@
 		"case_sensitive": true,
 		"find_history":
 		[
-			"basis_phonon_displacement_vector_list",
-			"translational_vectors_in_basis",
-			"superfluous_basis",
-			"self.basis",
-			"possible_basis_vector",
-			"total_vector_set",
-			"vector_list",
-			"basis_vector_matrix",
-			"a_new",
+			"relaxation",
+			"initial_structure",
+			"delete_non_static_wavecars",
+			"set_strains_and_amplitudes_from_distorted_structure",
+			"shorted_pbc_vector_between_sites",
 			"self",
-			"***",
+			"get_data_dictionaries_list",
+			"get_current_run_path_basename",
+			"calling",
+			"get_current_run_path_basename",
+			"get_current_vasp_run",
+			"get_change_in_polarization",
+			"data_dictionary",
+			"triplet",
+			"print",
+			"kpoint_subdivisions_lists",
+			"get_line_indices_containing_string",
+			"self",
+			"su.",
+			"ionic",
+			"reference",
 			"magnitude",
-			"displacement_vector",
-			"DisplacementVector",
-			"reference_supercell",
-			"validate_lines",
-			"displacement_vector",
-			"original_coordinate_mode",
-			"site",
-			"normal_mode_displacement_vector",
-			"displacement_vector",
-			"-",
-			"number_of_normal_coordinates",
-			"permitted",
-			"NormalCoordinate",
-			"band_index",
-			"self.",
-			"l_1",
-			"self.supercell_dimensions_list",
-			"eigen_vector",
-			"normalized_eigen_displacements",
-			"eigen_displacements_list",
-			"freq_str",
-			"\"-\"*dash_spread",
-			"10",
-			"real",
-			"should_be_a_real_number",
-			"q_point",
-			"eig_vecs",
-			"convert_phonopy_atoms_to_structure",
-			"round",
-			"round_to_fixed_character_length",
-			"round_to_fixed_character_count",
-			"real",
-			"temporary_directory_path",
-			"phonopy_utility",
-			"_util",
-			"parse_set_of_forces",
-			"write_vasp",
-			"read_vasp",
-			"Phonopy",
-			"self.",
-			"self.phonopy_inputs",
-			"vasp_run_inputs_dictionary",
-			"forces_run_set",
-			"get_force_calculation_run_paths_list",
-			"initialize_vasp_runs",
-			"force_calculation_run_path",
-			"force_calculation_run_paths_list",
-			"get_force_calculation_run_paths_list",
-			"distorted_structure",
-			"distorted_structures_list",
-			"initialize_vasp_runs",
-			"independent_atom_indices",
-			"primitive",
-			"atom_tensor",
-			"lepsilon_run",
-			"indices",
-			"lepsilon_calculation",
-			"initialize_vasp_dfpt_run",
-			"get_force_calculation_run_paths",
+			"reference_polarization",
+			"min_mag",
+			"search_range_max",
+			"search_range_min",
+			"structure",
+			"volume",
+			"reference",
+			"VaspRun",
+			"output_selected",
+			"symmetry",
+			"get_initialized_phononopy_instance",
+			"symmetry",
+			"static",
 			"vasp_run_list",
-			"distorted_structure_poscar_file",
-			"structure_path",
-			"distorted_structure_path",
-			"custom_parameters",
-			"dictionary",
-			"dictonary",
-			"get_extended_path",
-			"should_be_an_integer",
-			"distribution_or_number",
-			"should_be_a_real_number",
-			"Distribution.point_count",
-			"point_count",
-			"ticks",
-			"should_be_a_positive_or_zero_integer",
-			"should_be_tuple_of_positive_or_zero_integers",
-			"validate_real_number_is_positive",
-			"should_be_a_positive_integer",
-			"should_be_positive_or_zero",
-			"should_be_an_integer",
-			"should_be_tuple_of_integers",
-			"validate_tuple_of_positive_integers",
-			"validate_tuple_of_integers",
-			"original_lattice_matrix",
-			"isintance",
+			"wavecar",
+			"differrence",
+			"displacement_finite_differrences_step_size",
+			"path.make",
+			"get_force_sums",
+			"delete_wavecars_of_completed_runs",
+			"get_displacement_second_derivative",
+			"get_distorted_structure_from_eigen_chromosome",
+			"displacement_magnitude",
+			"pure_displacement_magnitudes_list",
+			"displacement_variable",
+			"displacement_magnitudes_list",
+			"get_distorted_structure_from_eigen_chromosome",
+			"kpoint_subdivisions_list",
+			"print",
+			"get_pure_displacement_vasp_static_run_set",
+			"get_pure_eigen_chromosome_components_from_distorted_structures_list",
+			"taylor",
+			"displacement_variable_terms_list",
+			"strain",
+			"eigen_chromosome_energy_pairs_fil",
+			"print",
+			"def get_ex",
+			"max_magnitude",
+			"VaspForcesRunSet",
+			"displacement_variables_set",
+			"final_pair_list",
+			"MinimaRelaxer",
+			"get_final_energ",
+			"get_displacement_second_derivative",
+			"displacement_count",
+			"strain_count",
+			"desktop",
+			"perturbation_magnitudes_dictionary",
+			"exp_line",
+			"complete()",
+			"perturbations_list",
+			"get_displacement_second_derivative",
+			"get_distorted_structure_from_eigen_chromosome",
+			"displacement_mode_index",
+			"get_force_sums",
+			"vasp_static_run",
+			"structures_list",
+			"get_distorted_structure_from_eigen_chromosome",
+			"displacement",
+			"get_distorted_structure_from_eigen_chromosome",
+			"used_variable",
+			"n",
+			"percent_daily_inflation",
+			"percent_inflation",
+			"vasp_run_inputs_dictionary",
+			"kpoints_subdivisions_list",
+			"relaxation_input_dictionary",
+			"vasp_run_inputs_dictionary",
+			"delete_wavecar",
 			"index",
-			"should_be_positive",
-			"should_be_a_real_number",
-			"get_random_value",
-			"distribution",
-			"outputs",
-			"value_2",
-			"value_1",
-			"should_be_a_number",
-			"number",
-			"get_index_from_x_value",
-			"distribution_function",
-			".log",
-			"from fpctoolkit.util.vector import Vector",
-			"from fpctoolkit.util.tensor import Tensor",
-			"from fpctoolkit.util.distribution import Distribution",
-			"from fpctoolkit.util.vector_distribution import VectorDistribution",
-			"from fpctoolkit.workflow.parameter_list import ParameterList",
-			"A_type",
-			"Perovskite",
-			"self",
-			"parent_paths_list",
-			"individuals_list",
-			"self.ga_input_dictionary['supercell_dimensions_list']",
-			"unit_cell_a",
-			"self.ga_input_dictionary['epitaxial_lattice_constant']",
-			"self.ga_input_dictionary['supercell_dimensions_list']",
-			"self.ga_input_dictionary['species_list']",
-			"Site",
-			"structure.site_pair_is_too_close(",
-			"self",
-			"displace_site_positions_with_minimum_distance_constraints"
+			"eigen_vector",
+			"total-force",
+			"outcar",
+			"tensor_start_index",
+			"tensor_start_indices",
+			"get_sorted_hessian_eigen_pairs_list",
+			"energies_list",
+			"expansion_term",
+			"vasp_run_inputs",
+			"reference_structure",
+			"set_taylor_coefficient",
+			"structure",
+			"self.vasp_run_inputs",
+			"input_dictionary",
+			"variables_list",
+			"relaxation_run",
+			"get_taylor_coefficient",
+			"coefficients_dictionary",
+			"get_perturbation_np_derivative_array",
+			"multiply_chromosome_components_by",
+			"np_derivative_array",
+			"ExpansionTerm",
+			"np_derivative_array",
+			"initialize_calculation",
+			"variables",
+			"variable_index",
+			"self.expansion_terms_list",
+			"get_order",
+			"order",
+			"variable_type",
+			"derivative_indices",
+			"mode",
+			"centrosymmetry",
+			"DerivativeTerm",
+			"Derivative",
+			"deriv_array"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1073,195 +1034,14 @@
 	"groups":
 	[
 		{
-			"selected": 3,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "fpctoolkit/fpc_sketcher.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 19281,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4771,
-								4771
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1327.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "fpctoolkit/phonon/phonon_structure.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 11374,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3376,
-								3376
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1092.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "fpctoolkit/phonon/normal_coordinate.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2403,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1531,
-								1531
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 42.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "fpctoolkit/phonon/phonon_super_displacement_vector.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3755,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1202,
-								1202
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 462.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "fpctoolkit/structure/displacement_vector.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8651,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5816,
-								5816
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2016.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "fpctoolkit/phonon/normal_mode.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6398,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3162,
-								3162
-							]
-						],
-						"settings":
-						{
-							"git_gutter_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 42.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 22.0
+		"height": 34.0
 	},
 	"input":
 	{
@@ -1296,7 +1076,7 @@
 	},
 	"output.exec":
 	{
-		"height": 360.0
+		"height": 501.0
 	},
 	"output.find_results":
 	{
@@ -1314,7 +1094,7 @@
 	"project": "research_scripts.sublime-project",
 	"replace":
 	{
-		"height": 40.0
+		"height": 38.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1323,6 +1103,30 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"lati",
+				"fpctoolkit\\structure\\lattice.py"
+			],
+			[
+				"vasp_rel",
+				"fpctoolkit\\workflow\\vasp_relaxation.py"
+			],
+			[
+				"la",
+				"fpctoolkit\\structure\\lattice.py"
+			],
+			[
+				"lattice",
+				"fpctoolkit\\structure\\lattice.py"
+			],
+			[
+				"file",
+				"fpctoolkit\\io\\file.py"
+			],
+			[
+				"struc",
+				"fpctoolkit\\structure\\structure.py"
+			],
 			[
 				"",
 				"fpctoolkit\\io\\tests\\data_File\\file1.txt"
@@ -1356,7 +1160,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 308.0,
+	"side_bar_width": 266.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
