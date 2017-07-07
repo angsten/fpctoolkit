@@ -111,6 +111,7 @@ class EigenStructure(object):
 		distorted_structure.lattice.strain(self.get_strain_tensor())
 
 		return distorted_structure
+		
 
 	def get_decomposed_structures(self, distorted_structure, threshold=0.1):
 		"""
@@ -139,7 +140,7 @@ class EigenStructure(object):
 
 				decomposed_structures_list.append(new_structure)
 
-				mode_index_list.append(i-6)
+				mode_index_list.append(i-5)
 
 		return decomposed_structures_list, mode_index_list
 

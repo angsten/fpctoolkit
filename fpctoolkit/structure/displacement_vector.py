@@ -207,7 +207,7 @@ class DisplacementVector(object):
 
 			#if lattices of displaced and reference and not the same at this point, problems will arise here!!!!
 			shortest_pbc_vector_between_sites = Vector.get_minimum_distance_between_two_periodic_points(fractional_coordinate_1=reference_site['position'], ###############setting N_max to 2 - may need to be larger for heavily sheared systems!!!
-				fractional_coordinate_2=displaced_site['position'], lattice=reference_structure.lattice, N_max=2, return_vector=True)[1]
+				fractional_coordinate_2=displaced_site['position'], lattice=reference_structure.lattice, N_max=4, return_vector=True)[1]
 
 			if coordinate_mode =='Cartesian':
 				shortest_pbc_vector_between_sites = Vector.get_in_cartesian_coordinates(direct_vector=shortest_pbc_vector_between_sites, lattice=reference_structure.lattice)
