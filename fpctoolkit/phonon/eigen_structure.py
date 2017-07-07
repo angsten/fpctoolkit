@@ -125,8 +125,6 @@ class EigenStructure(object):
 
 		for i in range(6, len(full_eigen_chromosome)):
 
-			structure_file_path = Path.join(output_directory_path, 'structure_with_mode_' + str(i-5))
-
 			if abs(full_eigen_chromosome[i]) > threshold:
 				new_chromosome = [0.0]*len(full_eigen_chromosome)
 
