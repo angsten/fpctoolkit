@@ -182,6 +182,7 @@ class EpitaxialRelaxer(object):
 			'kpoint_subdivisions_list': relaxation.kpoint_subdivisions_lists[100],
 			'encut': relaxation.incar_modifier_lists_dictionary['encut'][100],
 			'lreal': False,
+			'ediff': 1e-8,
 			'isym': 0
 		}
 
