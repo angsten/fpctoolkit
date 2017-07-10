@@ -197,8 +197,8 @@ class EigenStructure(object):
 
 		total_displacement_vector = total_displacement_vector_instance.to_numpy_array()
 
-		print "total disp vec: "
-		print str(total_displacement_vector)
+		#print "total disp vec: "
+		#print str(total_displacement_vector)
 
 		for eigen_component in self.eigen_components_list:
 			basis_vector = eigen_component.eigenvector
