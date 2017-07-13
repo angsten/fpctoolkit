@@ -6,6 +6,7 @@ from fpctoolkit.phonon.hessian import Hessian
 from fpctoolkit.structure.structure import Structure
 from fpctoolkit.structure.displacement_vector import DisplacementVector
 from fpctoolkit.structure.lattice import Lattice
+from fpctoolkit.structure.perovskite import Perovskite
 
 import sys
 import numpy as np
@@ -482,10 +483,10 @@ def print_labels():
 	print "a-      b-       c-       a+      b+       c+     FEx      FEy      FEz"
 
 
-def get_nine_common_amplitudes(reference_structure, distorted_structure):
+def get_nine_common_amplitudes(distorted_structure):
 
 
-	distorted_structure.lattice = copy.deepcopy(reference_structure.lattice)
+	reference_structure = Perovskite(supercell_dimensions=[2, 2, 2], lattice = distorted_structure.lattice, species_list=distorted_structure.get_species_list())
 
 	total_displacement_vector_instance = DisplacementVector.get_instance_from_displaced_structure_relative_to_reference_structure(reference_structure=reference_structure, 
 			displaced_structure=distorted_structure, coordinate_mode='Cartesian')
