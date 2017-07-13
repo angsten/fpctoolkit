@@ -1,21 +1,9 @@
-from fpctoolkit.structure.perovskite import Perovskite
-from fpctoolkit.io.vasp.outcar import Outcar
+#import fpctoolkit.examples.eigen_decomposer
+
 from fpctoolkit.phonon.eigen_structure import EigenStructure
-from fpctoolkit.structure_prediction.taylor_expansion.variable import Variable
-from fpctoolkit.structure_prediction.taylor_expansion.expansion_term import ExpansionTerm
-from fpctoolkit.structure_prediction.taylor_expansion.taylor_expansion import TaylorExpansion
-from fpctoolkit.structure_prediction.taylor_expansion.derivative_evaluator import DerivativeEvaluator
-from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
 from fpctoolkit.util.path import Path
 from fpctoolkit.phonon.hessian import Hessian
 from fpctoolkit.structure.structure import Structure
-from fpctoolkit.workflow.vasp_run import VaspRun
-from fpctoolkit.io.vasp.incar_maker import IncarMaker
-from fpctoolkit.io.vasp.kpoints import Kpoints
-from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
-from fpctoolkit.structure_prediction.taylor_expansion.minima_relaxer import MinimaRelaxer
-from fpctoolkit.io.file import File
-from fpctoolkit.workflow.epitaxial_relaxer import EpitaxialRelaxer
 from fpctoolkit.structure.displacement_vector import DisplacementVector
 from fpctoolkit.structure.lattice import Lattice
 
@@ -492,7 +480,7 @@ if __name__ == '__main__':
 
 def print_labels():
 	print "a-      b-       c-       a+      b+       c+     FEx      FEy      FEz"
-	
+
 
 def get_nine_common_amplitudes(reference_structure, distorted_structure):
 
