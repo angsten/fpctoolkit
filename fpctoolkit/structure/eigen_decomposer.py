@@ -441,17 +441,17 @@ eigen_basis_vectors_list = [aminus, bminus, cminus, aplus, bplus, cplus, fex, fe
 
 
 
-print np.dot(fex, bplus)
+# print np.dot(fex, bplus)
 
-print
-print "magnitudes"
+# print
+# print "magnitudes"
 
-for eig in eigen_basis_vectors_list:
-	print "magnitude: ", np.linalg.norm(eig)
+# for eig in eigen_basis_vectors_list:
+# 	print "magnitude: ", np.linalg.norm(eig)
 
-	for other_eig in eigen_basis_vectors_list:
+# 	for other_eig in eigen_basis_vectors_list:
 
-		print "dot:", np.dot(eig, other_eig)
+# 		print "dot:", np.dot(eig, other_eig)
 
 
 
@@ -524,11 +524,11 @@ def get_nine_common_amplitudes(distorted_structure):
 
 
 
-def get_eigen_values(reference_structure):
+def get_eigen_values(base_path, reference_structure):
 
 	eigen_index = 0
 
-	print get_displacement_second_derivative('./'+str(eigen_index), reference_structure, eigen_index)
+	print get_displacement_second_derivative(Path.join(base_path, 'eigen_index_' + str(eigen_index)), reference_structure, eigen_index)
 
 
 
@@ -590,13 +590,13 @@ def get_displacement_second_derivative(path, reference_structure, eigen_index):
 		return None
 
 
-def get_force_sums(vasp_static_run_set, first_displacement_index):
+def get_force_sums(vasp_static_run_set, eigen_index):
 	"""
 	Returns a list of weighted force sums for each static calculation. Basically, this takes -1.0*eigenvector of the first displacement expansion term and dots
 	it with the force set of the run. This gives dE/dA
 	"""
 
-	basis_vector = np.array(self.eigen_pairs_list[first_displacement_index].eigenvector)
+	basis_vector = eigen_basis_vectors_list[eigen_index]
 
 	forces_sums_list = []
 
