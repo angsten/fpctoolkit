@@ -7,6 +7,7 @@ from fpctoolkit.structure.structure import Structure
 from fpctoolkit.structure.displacement_vector import DisplacementVector
 from fpctoolkit.structure.lattice import Lattice
 from fpctoolkit.structure.perovskite import Perovskite
+from fpctoolkit.workflow.vasp_static_run_set import VaspStaticRunSet
 
 import sys
 import numpy as np
@@ -521,3 +522,85 @@ def get_nine_common_amplitudes(distorted_structure):
 
 
 
+
+
+def get_eigen_values(reference_structure):
+
+	eigen_index = 0
+
+	print get_displacement_second_derivative('./'+str(eigen_index), reference_structure, eigen_index)
+
+
+
+
+def get_displacement_second_derivative(path, reference_structure, eigen_index):
+	"""
+	Determines the second derivative of the energy w.r.t. the given displacement variable for structure.
+
+	Returns None if not done yet
+	"""
+
+	vasp_run_inputs_dictionary = {
+			'kpoint_scheme': 'Monkhorst',
+			'kpoint_subdivisions_list': [2, 2, 2],
+			'encut': 400,
+			'ediff': 1e-4
+		}
+
+	displacement_factor = 0.1
+
+	central_difference_coefficients_dictionary = {}
+
+	central_difference_coefficients_dictionary['1'] =  {'factors':[0.0, 1.0, -1.0], 'perturbations_list': [[1.0]]} #NOTE!! assumes centrosymmetry - only works if atoms are at ideal perov positions
+
+
+	perturbed_structures_list = []
+
+	for perturbation_magnitude in central_difference_coefficients_dictionary['1']['perturbations_list']:
+
+		displacement_vector = eigen_basis_vectors_list[eigen_index]*perturbation_magnitude*displacement_factor
+
+		distorted_structure = DisplacementVector.displace_structure(reference_structure, displacement_vector, displacement_coordinate_mode='Cartesian')
+
+		perturbed_structures_list.append(distorted_structure)
+
+	vasp_static_run_set = VaspStaticRunSet(path=path, structures_list=perturbed_structures_list, vasp_run_inputs_dictionary=vasp_run_inputs_dictionary)
+
+
+	if vasp_static_run_set.complete:
+
+		vasp_static_run_set.delete_wavecars_of_completed_runs()
+
+		term_factors_list = central_difference_coefficients_dictionary['1']['factors']
+
+
+		force_sum = self.get_force_sums(vasp_static_run_set, displacement_variable_2_index)[0] #THIS ASSUMES CENTROSYMMETRY AND ONLY ONE ELEMENT IN FORCE SUMS LIST
+
+		force_sums_list = [0.0, force_sum, -1.0*force_sum] ################assumes centrosymmetry and one element in force sumes list
+
+		numerator = sum(map(lambda x, y: -x*y, term_factors_list, force_sums_list))
+		#denominator = 12.0*displacement_factor
+		denominator = 2.0*displacement_factor
+
+		return numerator/denominator
+
+	else:
+		vasp_static_run_set.update()
+
+		return None
+
+
+def get_force_sums(vasp_static_run_set, first_displacement_index):
+	"""
+	Returns a list of weighted force sums for each static calculation. Basically, this takes -1.0*eigenvector of the first displacement expansion term and dots
+	it with the force set of the run. This gives dE/dA
+	"""
+
+	basis_vector = np.array(self.eigen_pairs_list[first_displacement_index].eigenvector)
+
+	forces_sums_list = []
+
+	forces_lists = vasp_static_run_set.get_forces_lists()
+
+
+	return [np.dot(np.array(forces_list), basis_vector) for forces_list in forces_lists]
