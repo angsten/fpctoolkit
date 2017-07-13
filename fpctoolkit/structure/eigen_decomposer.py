@@ -14,141 +14,133 @@ import copy
 
 
 fex = np.array([
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.11823, 0.0, 0.0, 
-	0.11823, 0.0, 0.0, 
-	0.11823, 0.0, 0.0, 
-	0.11823, 0.0, 0.0, 
-	0.11823, 0.0, 0.0, 
-	0.11823, 0.0, 0.0, 
-	0.11823, 0.0, 0.0, 
-	0.11823, 0.0, 0.0, 
-	-0.26651, 0.0, 0.0, 
-	-0.22606, 0.0, 0.0, 
-	-0.26651, 0.0, 0.0, 
-	-0.26651, 0.0, 0.0, 
-	-0.22606, 0.0, 0.0, 
-	-0.26651, 0.0, 0.0, 
-	-0.26651, 0.0, 0.0, 
-	-0.22606, 0.0, 0.0, 
-	-0.26651, 0.0, 0.0, 
-	-0.26651, 0.0, 0.0, 
-	-0.22606, 0.0, 0.0, 
-	-0.26651, 0.0, 0.0, 
-	-0.26651, 0.0, 0.0, 
-	-0.22606, 0.0, 0.0, 
-	-0.26651, 0.0, 0.0, 
-	-0.26651, 0.0, 0.0, 
-	-0.22606, 0.0, 0.0, 
-	-0.26651, 0.0, 0.0, 
-	-0.26651, 0.0, 0.0, 
-	-0.22606, 0.0, 0.0, 
-	-0.26651, 0.0, 0.0, 
-	-0.26651, 0.0, 0.0, 
-	-0.22606, 0.0, 0.0, 
-	-0.26651, 0.0, 0.0
-	])
+	 0.12796, 0.00000, 0.00000,
+	 0.12796, 0.00000, 0.00000,
+	 0.12796, 0.00000, 0.00000,
+	 0.12796, 0.00000, 0.00000,
+	 0.12796, 0.00000, 0.00000,
+	 0.12796, 0.00000, 0.00000,
+	 0.12796, 0.00000, 0.00000,
+	 0.12796, 0.00000, 0.00000,
+	 0.24619, 0.00000, 0.00000,
+	 0.24619, 0.00000, 0.00000,
+	 0.24619, 0.00000, 0.00000,
+	 0.24619, 0.00000, 0.00000,
+	 0.24619, 0.00000, 0.00000,
+	 0.24619, 0.00000, 0.00000,
+	 0.24619, 0.00000, 0.00000,
+	 0.24619, 0.00000, 0.00000,
+	 -0.13855, 0.00000, 0.00000,
+	 -0.09810, 0.00000, 0.00000,
+	 -0.13855, 0.00000, 0.00000,
+	 -0.13855, 0.00000, 0.00000,
+	 -0.09810, 0.00000, 0.00000,
+	 -0.13855, 0.00000, 0.00000,
+	 -0.13855, 0.00000, 0.00000,
+	 -0.09810, 0.00000, 0.00000,
+	 -0.13855, 0.00000, 0.00000,
+	 -0.13855, 0.00000, 0.00000,
+	 -0.09810, 0.00000, 0.00000,
+	 -0.13855, 0.00000, 0.00000,
+	 -0.13855, 0.00000, 0.00000,
+	 -0.09810, 0.00000, 0.00000,
+	 -0.13855, 0.00000, 0.00000,
+	 -0.13855, 0.00000, 0.00000,
+	 -0.09810, 0.00000, 0.00000,
+	 -0.13855, 0.00000, 0.00000,
+	 -0.13855, 0.00000, 0.00000,
+	 -0.09810, 0.00000, 0.00000,
+	 -0.13855, 0.00000, 0.00000,
+	 -0.13855, 0.00000, 0.00000,
+	 -0.09810, 0.00000, 0.00000,
+	 -0.13855, 0.00000, 0.00000
+	 ])
 
 fey = np.array([
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.11823, 0.0, 
-	0.0, 0.11823, 0.0, 
-	0.0, 0.11823, 0.0, 
-	0.0, 0.11823, 0.0, 
-	0.0, 0.11823, 0.0, 
-	0.0, 0.11823, 0.0, 
-	0.0, 0.11823, 0.0, 
-	0.0, 0.11823, 0.0, 
-	0.0, -0.26651, 0.0, 
-	0.0, -0.22606, 0.0, 
-	0.0, -0.26651, 0.0, 
-	0.0, -0.26651, 0.0, 
-	0.0, -0.22606, 0.0, 
-	0.0, -0.26651, 0.0, 
-	0.0, -0.26651, 0.0, 
-	0.0, -0.22606, 0.0, 
-	0.0, -0.26651, 0.0, 
-	0.0, -0.26651, 0.0, 
-	0.0, -0.22606, 0.0, 
-	0.0, -0.26651, 0.0, 
-	0.0, -0.26651, 0.0, 
-	0.0, -0.22606, 0.0, 
-	0.0, -0.26651, 0.0, 
-	0.0, -0.26651, 0.0, 
-	0.0, -0.22606, 0.0, 
-	0.0, -0.26651, 0.0, 
-	0.0, -0.26651, 0.0, 
-	0.0, -0.22606, 0.0, 
-	0.0, -0.26651, 0.0, 
-	0.0, -0.26651, 0.0, 
-	0.0, -0.22606, 0.0, 
-	0.0, -0.26651, 0.0
+	0.00000,  0.12796, 0.00000,
+	0.00000,  0.12796, 0.00000,
+	0.00000,  0.12796, 0.00000,
+	0.00000,  0.12796, 0.00000,
+	0.00000,  0.12796, 0.00000,
+	0.00000,  0.12796, 0.00000,
+	0.00000,  0.12796, 0.00000,
+	0.00000,  0.12796, 0.00000,
+	0.00000,  0.24619, 0.00000,
+	0.00000,  0.24619, 0.00000,
+	0.00000,  0.24619, 0.00000,
+	0.00000,  0.24619, 0.00000,
+	0.00000,  0.24619, 0.00000,
+	0.00000,  0.24619, 0.00000,
+	0.00000,  0.24619, 0.00000,
+	0.00000,  0.24619, 0.00000,
+	0.00000,  -0.13855, 0.00000,
+	0.00000,  -0.09810, 0.00000,
+	0.00000,  -0.13855, 0.00000,
+	0.00000,  -0.13855, 0.00000,
+	0.00000,  -0.09810, 0.00000,
+	0.00000,  -0.13855, 0.00000,
+	0.00000,  -0.13855, 0.00000,
+	0.00000,  -0.09810, 0.00000,
+	0.00000,  -0.13855, 0.00000,
+	0.00000,  -0.13855, 0.00000,
+	0.00000,  -0.09810, 0.00000,
+	0.00000,  -0.13855, 0.00000,
+	0.00000,  -0.13855, 0.00000,
+	0.00000,  -0.09810, 0.00000,
+	0.00000,  -0.13855, 0.00000,
+	0.00000,  -0.13855, 0.00000,
+	0.00000,  -0.09810, 0.00000,
+	0.00000,  -0.13855, 0.00000,
+	0.00000,  -0.13855, 0.00000,
+	0.00000,  -0.09810, 0.00000,
+	0.00000,  -0.13855, 0.00000,
+	0.00000,  -0.13855, 0.00000,
+	0.00000,  -0.09810, 0.00000,
+	0.00000,  -0.13855, 0.00000
 	])
-
 
 fez = np.array([
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.0, 
-	0.0, 0.0, 0.11823, 
-	0.0, 0.0, 0.11823, 
-	0.0, 0.0, 0.11823, 
-	0.0, 0.0, 0.11823, 
-	0.0, 0.0, 0.11823, 
-	0.0, 0.0, 0.11823, 
-	0.0, 0.0, 0.11823, 
-	0.0, 0.0, 0.11823, 
-	0.0, 0.0, -0.26651, 
-	0.0, 0.0, -0.22606, 
-	0.0, 0.0, -0.26651, 
-	0.0, 0.0, -0.26651, 
-	0.0, 0.0, -0.22606, 
-	0.0, 0.0, -0.26651, 
-	0.0, 0.0, -0.26651, 
-	0.0, 0.0, -0.22606, 
-	0.0, 0.0, -0.26651, 
-	0.0, 0.0, -0.26651, 
-	0.0, 0.0, -0.22606, 
-	0.0, 0.0, -0.26651, 
-	0.0, 0.0, -0.26651, 
-	0.0, 0.0, -0.22606, 
-	0.0, 0.0, -0.26651, 
-	0.0, 0.0, -0.26651, 
-	0.0, 0.0, -0.22606, 
-	0.0, 0.0, -0.26651, 
-	0.0, 0.0, -0.26651, 
-	0.0, 0.0, -0.22606, 
-	0.0, 0.0, -0.26651, 
-	0.0, 0.0, -0.26651, 
-	0.0, 0.0, -0.22606, 
-	0.0, 0.0, -0.26651
+	0.00000,  0.00000,  0.12796,
+	0.00000,  0.00000,  0.12796,
+	0.00000,  0.00000,  0.12796,
+	0.00000,  0.00000,  0.12796,
+	0.00000,  0.00000,  0.12796,
+	0.00000,  0.00000,  0.12796,
+	0.00000,  0.00000,  0.12796,
+	0.00000,  0.00000,  0.12796,
+	0.00000,  0.00000,  0.24619,
+	0.00000,  0.00000,  0.24619,
+	0.00000,  0.00000,  0.24619,
+	0.00000,  0.00000,  0.24619,
+	0.00000,  0.00000,  0.24619,
+	0.00000,  0.00000,  0.24619,
+	0.00000,  0.00000,  0.24619,
+	0.00000,  0.00000,  0.24619,
+	0.00000,  0.00000,  -0.13855,
+	0.00000,  0.00000,  -0.09810,
+	0.00000,  0.00000,  -0.13855,
+	0.00000,  0.00000,  -0.13855,
+	0.00000,  0.00000,  -0.09810,
+	0.00000,  0.00000,  -0.13855,
+	0.00000,  0.00000,  -0.13855,
+	0.00000,  0.00000,  -0.09810,
+	0.00000,  0.00000,  -0.13855,
+	0.00000,  0.00000,  -0.13855,
+	0.00000,  0.00000,  -0.09810,
+	0.00000,  0.00000,  -0.13855,
+	0.00000,  0.00000,  -0.13855,
+	0.00000,  0.00000,  -0.09810,
+	0.00000,  0.00000,  -0.13855,
+	0.00000,  0.00000,  -0.13855,
+	0.00000,  0.00000,  -0.09810,
+	0.00000,  0.00000,  -0.13855,
+	0.00000,  0.00000,  -0.13855,
+	0.00000,  0.00000,  -0.09810,
+	0.00000,  0.00000,  -0.13855,
+	0.00000,  0.00000,  -0.13855,
+	0.00000,  0.00000,  -0.09810,
+	0.00000,  0.00000,  -0.13855
 	])
-
-
-# for i in range(len(fez)):
-# 	if i%3 == 2:
-# 		fez[i] -= 0.12796
-
-# 		print str(fez[i-2]) + ', ' + str(fez[i-1]) + ', ' + str(fez[i]) + ', '
 
 aminus = np.array([
 	  0.00000,  0.00000,  0.00000,
@@ -415,31 +407,59 @@ fez *= 1.0/(np.linalg.norm(fez))
 cplus *= -1.0
 
 
-eigen_basis_vectors_list = [aminus, bminus, cminus, aplus, bplus, cplus, fex, fey, fez]
+translational_vector_x = []
+translational_vector_y = []
+translational_vector_z = []
+
+
+for i in range(120):
+	if i%3 == 0:
+		translational_vector_x.append(1.0)
+		translational_vector_y.append(0.0)
+		translational_vector_z.append(0.0)
+	if i%3 == 0:
+		translational_vector_x.append(0.0)
+		translational_vector_y.append(1.0)
+		translational_vector_z.append(0.0)
+	if i%3 == 0:
+		translational_vector_x.append(0.0)
+		translational_vector_y.append(0.0)
+		translational_vector_z.append(1.0)
+
+translational_vector_x = np.array(translational_vector_x)
+translational_vector_y = np.array(translational_vector_y)
+translational_vector_z = np.array(translational_vector_z)
+
+translational_vector_x /= np.linalg.norm(translational_vector_x)
+translational_vector_y /= np.linalg.norm(translational_vector_y)
+translational_vector_z /= np.linalg.norm(translational_vector_z)
+
+
+eigen_basis_vectors_list = [aminus, bminus, cminus, aplus, bplus, cplus, fex, fey, fez]#, translational_vector_x, translational_vector_y, translational_vector_z]
 
 
 
 
-# print np.dot(fex, bplus)
+print np.dot(fex, bplus)
 
-# print
-# print "magnitudes"
+print
+print "magnitudes"
 
-# for eig in eigs_list:
-# 	print "magnitude: ", np.linalg.norm(eig)
+for eig in eigen_basis_vectors_list:
+	print "magnitude: ", np.linalg.norm(eig)
 
-# 	for other_eig in eigs_list:
+	for other_eig in eigen_basis_vectors_list:
 
-# 		print "dot:", np.dot(eig, other_eig)
+		print "dot:", np.dot(eig, other_eig)
 
 
 
 if __name__ == '__main__':
+	pass
+	# reference_structure_path = '../data/reference_structure.vasp'
 
-	reference_structure_path = '../data/reference_structure.vasp'
 
-
-	reference_structure = Structure(reference_structure_path)
+	# reference_structure = Structure(reference_structure_path)
 
 
 	# displacement_vector = cplus
@@ -451,22 +471,22 @@ if __name__ == '__main__':
 	# distorted_structure.to_poscar_file_path('../data/cplus.vasp')
 
 
-	relaxed_structure = Structure('../data/relaxed_structure.vasp')
+	# relaxed_structure = Structure('../data/relaxed_structure.vasp')
 
 
-	relaxed_structure.lattice = copy.deepcopy(reference_structure.lattice)
+	# relaxed_structure.lattice = copy.deepcopy(reference_structure.lattice)
 
-	total_displacement_vector_instance = DisplacementVector.get_instance_from_displaced_structure_relative_to_reference_structure(reference_structure=reference_structure, 
-			displaced_structure=relaxed_structure, coordinate_mode='Cartesian')
+	# total_displacement_vector_instance = DisplacementVector.get_instance_from_displaced_structure_relative_to_reference_structure(reference_structure=reference_structure, 
+	# 		displaced_structure=relaxed_structure, coordinate_mode='Cartesian')
 
-	total_displacement_vector = total_displacement_vector_instance.to_numpy_array()
+	# total_displacement_vector = total_displacement_vector_instance.to_numpy_array()
 
-	print "a-      b-       c-       a+      b+       c+     FEx      FEy      FEz"
+	# print "a-      b-       c-       a+      b+       c+     FEx      FEy      FEz"
 
-	for basis_vector in eigen_basis_vectors_list:
-		projection = np.dot(basis_vector, total_displacement_vector)
+	# for basis_vector in eigen_basis_vectors_list:
+	# 	projection = np.dot(basis_vector, total_displacement_vector)
 
-		print str(round(projection,4)) + '   ',
+	# 	print str(round(projection,4)) + '   ',
 
 	#eigen_amplitude_analysis_hessian = Hessian(outcar=Outcar("./dfpt_outcar"))
 	#eigen_amplitude_analysis_reference_structure = Structure("./reference_structure")
@@ -498,3 +518,6 @@ def get_nine_common_amplitudes(distorted_structure):
 		projection = np.dot(basis_vector, total_displacement_vector)
 
 		print str(round(projection,4)) + '   ',
+
+
+
