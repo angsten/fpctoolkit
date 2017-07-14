@@ -438,7 +438,7 @@ translational_vector_z /= np.linalg.norm(translational_vector_z)
 
 eigen_basis_vectors_list = [aminus, bminus, cminus, aplus, bplus, cplus, fex, fey, fez]#, translational_vector_x, translational_vector_y, translational_vector_z]
 
-
+labels_list = ['a-', 'b-', 'c-', 'a+', 'b+', 'c+', 'FEx', 'FEy', 'FEz']
 
 
 # print np.dot(fex, bplus)
@@ -501,8 +501,7 @@ if __name__ == '__main__':
 
 
 def print_labels():
-	print "a-      b-       c-       a+      b+       c+     FEx      FEy      FEz"
-
+	print "      ".join(labels_list)
 
 def get_nine_common_amplitudes(distorted_structure):
 
@@ -528,7 +527,7 @@ def get_eigen_values(base_path, reference_structure):
 
 	for eigen_index in range(9):
 
-		print get_displacement_second_derivative(Path.join(base_path, 'eigen_index_' + str(eigen_index)), reference_structure, eigen_index), " "
+		print labels_list[eigen_index], get_displacement_second_derivative(Path.join(base_path, 'eigen_index_' + str(eigen_index)), reference_structure, eigen_index), " "
 
 
 
