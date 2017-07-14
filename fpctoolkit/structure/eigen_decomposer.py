@@ -523,16 +523,16 @@ def get_nine_common_amplitudes(distorted_structure):
 
 
 
-def get_eigen_values(base_path, reference_structure, eigen_indices_list=range(9), vasp_run_inputs_dictionary):
+def get_eigen_values(base_path, reference_structure, eigen_indices_list=range(9), vasp_run_inputs_dictionary, displacement_magnitude_factor):
 
 	for eigen_index in eigen_indices_list:
 
-		print labels_list[eigen_index], get_displacement_second_derivative(Path.join(base_path, 'eigen_index_' + str(eigen_index)), reference_structure, eigen_index), " "
+		print labels_list[eigen_index], get_displacement_second_derivative(Path.join(base_path, 'eigen_index_' + str(eigen_index)), reference_structure, eigen_index, displacement_magnitude_factor), " "
 
 
 
 
-def get_displacement_second_derivative(path, reference_structure, eigen_index, vasp_run_inputs_dictionary):
+def get_displacement_second_derivative(path, reference_structure, eigen_index, vasp_run_inputs_dictionary, displacement_magnitude_factor):
 	"""
 	Determines the second derivative of the energy w.r.t. the given displacement variable for structure.
 
@@ -548,8 +548,6 @@ def get_displacement_second_derivative(path, reference_structure, eigen_index, v
 	# 		'lreal': False
 	# 	}
 
-	displacement_factor = 0.01
-
 	central_difference_coefficients_dictionary = {}
 
 	central_difference_coefficients_dictionary['1'] =  {'factors':[0.0, 1.0, -1.0], 'perturbations_list': [[1.0]]} #NOTE!! assumes centrosymmetry - only works if atoms are at ideal perov positions
@@ -559,7 +557,7 @@ def get_displacement_second_derivative(path, reference_structure, eigen_index, v
 
 	for perturbation_magnitude in central_difference_coefficients_dictionary['1']['perturbations_list']:
 
-		displacement_vector = eigen_basis_vectors_list[eigen_index]*perturbation_magnitude*displacement_factor
+		displacement_vector = eigen_basis_vectors_list[eigen_index]*perturbation_magnitude*displacement_magnitude_factor
 
 		distorted_structure = DisplacementVector.displace_structure(reference_structure, displacement_vector, displacement_coordinate_mode='Cartesian')
 
@@ -580,7 +578,6 @@ def get_displacement_second_derivative(path, reference_structure, eigen_index, v
 		force_sums_list = [0.0, force_sum, -1.0*force_sum] ################assumes centrosymmetry and one element in force sumes list
 
 		numerator = sum(map(lambda x, y: -x*y, term_factors_list, force_sums_list))
-		#denominator = 12.0*displacement_factor
 		denominator = 2.0*displacement_factor
 
 		return numerator/denominator
