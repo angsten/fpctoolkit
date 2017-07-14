@@ -544,7 +544,9 @@ def get_displacement_second_derivative(path, reference_structure, eigen_index):
 			'kpoint_scheme': 'Monkhorst',
 			'kpoint_subdivisions_list': [3, 3, 3],
 			'encut': 600,
-			'ediff': 1e-6
+			'ediff': 1e-7,
+			'addgrid': True,
+			'lreal': False
 		}
 
 	displacement_factor = 0.01
