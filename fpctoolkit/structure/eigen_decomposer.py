@@ -523,30 +523,30 @@ def get_nine_common_amplitudes(distorted_structure):
 
 
 
-def get_eigen_values(base_path, reference_structure):
+def get_eigen_values(base_path, reference_structure, eigen_indices_list=range(9), vasp_run_inputs_dictionary):
 
-	for eigen_index in range(9):
+	for eigen_index in eigen_indices_list:
 
 		print labels_list[eigen_index], get_displacement_second_derivative(Path.join(base_path, 'eigen_index_' + str(eigen_index)), reference_structure, eigen_index), " "
 
 
 
 
-def get_displacement_second_derivative(path, reference_structure, eigen_index):
+def get_displacement_second_derivative(path, reference_structure, eigen_index, vasp_run_inputs_dictionary):
 	"""
 	Determines the second derivative of the energy w.r.t. the given displacement variable for structure.
 
 	Returns None if not done yet
 	"""
 
-	vasp_run_inputs_dictionary = {
-			'kpoint_scheme': 'Monkhorst',
-			'kpoint_subdivisions_list': [3, 3, 3],
-			'encut': 600,
-			'ediff': 1e-7,
-			'addgrid': True,
-			'lreal': False
-		}
+	# vasp_run_inputs_dictionary = {
+	# 		'kpoint_scheme': 'Monkhorst',
+	# 		'kpoint_subdivisions_list': [3, 3, 3],
+	# 		'encut': 600,
+	# 		'ediff': 1e-7,
+	# 		'addgrid': True,
+	# 		'lreal': False
+	# 	}
 
 	displacement_factor = 0.01
 
