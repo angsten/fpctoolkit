@@ -542,12 +542,12 @@ def get_displacement_second_derivative(path, reference_structure, eigen_index):
 
 	vasp_run_inputs_dictionary = {
 			'kpoint_scheme': 'Monkhorst',
-			'kpoint_subdivisions_list': [2, 2, 2],
-			'encut': 400,
-			'ediff': 1e-4
+			'kpoint_subdivisions_list': [3, 3, 3],
+			'encut': 600,
+			'ediff': 1e-6
 		}
 
-	displacement_factor = 0.1
+	displacement_factor = 0.01
 
 	central_difference_coefficients_dictionary = {}
 
