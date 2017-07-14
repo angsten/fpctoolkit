@@ -523,7 +523,7 @@ def get_nine_common_amplitudes(distorted_structure):
 
 
 
-def get_eigen_values(base_path, reference_structure, eigen_indices_list=range(9), vasp_run_inputs_dictionary, displacement_magnitude_factor):
+def get_eigen_values(base_path, reference_structure, eigen_indices_list, vasp_run_inputs_dictionary, displacement_magnitude_factor):
 
 	for eigen_index in eigen_indices_list:
 
