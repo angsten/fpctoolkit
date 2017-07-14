@@ -527,7 +527,9 @@ def get_eigen_values(base_path, reference_structure, eigen_indices_list, vasp_ru
 
 	for eigen_index in eigen_indices_list:
 
-		print labels_list[eigen_index], get_displacement_second_derivative(Path.join(base_path, 'eigen_index_' + str(eigen_index)), reference_structure, eigen_index, displacement_magnitude_factor), " "
+		second_derivative = get_displacement_second_derivative(Path.join(base_path, 'eigen_index_' + str(eigen_index)), reference_structure, eigen_index, vasp_run_inputs_dictionary, displacement_magnitude_factor)
+
+		print labels_list[eigen_index], second_derivative, " "
 
 
 
