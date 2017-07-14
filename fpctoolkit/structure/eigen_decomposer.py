@@ -526,9 +526,9 @@ def get_nine_common_amplitudes(distorted_structure):
 
 def get_eigen_values(base_path, reference_structure):
 
-	eigen_index = 0
+	for eigen_index in range(9):
 
-	print get_displacement_second_derivative(Path.join(base_path, 'eigen_index_' + str(eigen_index)), reference_structure, eigen_index)
+		print get_displacement_second_derivative(Path.join(base_path, 'eigen_index_' + str(eigen_index)), reference_structure, eigen_index), " "
 
 
 
