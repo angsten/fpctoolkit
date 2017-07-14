@@ -574,7 +574,7 @@ def get_displacement_second_derivative(path, reference_structure, eigen_index):
 		term_factors_list = central_difference_coefficients_dictionary['1']['factors']
 
 
-		force_sum = self.get_force_sums(vasp_static_run_set, displacement_variable_2_index)[0] #THIS ASSUMES CENTROSYMMETRY AND ONLY ONE ELEMENT IN FORCE SUMS LIST
+		force_sum = get_force_sums(vasp_static_run_set, eigen_index)[0] #THIS ASSUMES CENTROSYMMETRY AND ONLY ONE ELEMENT IN FORCE SUMS LIST
 
 		force_sums_list = [0.0, force_sum, -1.0*force_sum] ################assumes centrosymmetry and one element in force sumes list
 
