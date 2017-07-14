@@ -580,7 +580,7 @@ def get_displacement_second_derivative(path, reference_structure, eigen_index, v
 		force_sums_list = [0.0, force_sum, -1.0*force_sum] ################assumes centrosymmetry and one element in force sumes list
 
 		numerator = sum(map(lambda x, y: -x*y, term_factors_list, force_sums_list))
-		denominator = 2.0*displacement_factor
+		denominator = 2.0*displacement_magnitude_factor
 
 		return numerator/denominator
 
