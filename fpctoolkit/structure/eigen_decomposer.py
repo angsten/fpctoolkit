@@ -487,15 +487,15 @@ labels_list = ['a-', 'b-', 'c-', 'a+', 'b+', 'c+', 'FEx', 'FEy', 'FEz']
 
 # print np.dot(fex, bplus)
 
-print
-print "magnitudes"
+# print
+# print "magnitudes"
 
-for eig in eigen_basis_vectors_list:
-	print "magnitude: ", np.linalg.norm(eig)
+# for eig in eigen_basis_vectors_list:
+# 	print "magnitude: ", np.linalg.norm(eig)
 
-	for other_eig in eigen_basis_vectors_list:
+# 	for other_eig in eigen_basis_vectors_list:
 
-		print "dot:", np.dot(eig, other_eig)
+# 		print "dot:", np.dot(eig, other_eig)
 
 
 
