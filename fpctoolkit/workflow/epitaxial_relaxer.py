@@ -12,6 +12,7 @@ from fpctoolkit.io.vasp.incar_maker import IncarMaker
 from fpctoolkit.io.vasp.kpoints import Kpoints
 from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 from fpctoolkit.structure.structure import Structure
+from fpctoolkit.structure.perovskite import Perovskite
 from fpctoolkit.io.file import File
 import fpctoolkit.util.basic_validators as basic_validators
 from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
@@ -22,7 +23,7 @@ class EpitaxialRelaxer(object):
 	Calculates the minimum energy structures across a series of (100) misfit strains.
 	"""
 
-	def __init__(self, path, initial_structures_directory_path, inputs_dictionaries, polarization_reference_structure, calculate_polarizations=False):
+	def __init__(self, path, inputs_dictionaries, calculate_polarizations=False):
 		"""
 		path should be the main path of the calculation set
 
@@ -33,6 +34,13 @@ class EpitaxialRelaxer(object):
 		inputs_dictionaries should look something like:
 		value for tag: ['structure_afm'] = 
 		{
+			'supercell_dimensions_list': [2, 2, 1],
+			'misfit_strains_list': [-0.04, -0.03, ...],
+			'reference_lattice_constant': 3.91,
+			'number_of_trials': 3,
+			'max_displacement_magnitude': 0.1, #in angstroms
+			'max_strain_magnitude': 0.01, #unitless, out-of-plane only when applied
+			 #any other incar parameters with value as a list
 			'external_relaxation_count': 4,
 			'kpoint_schemes_list': ['Gamma'],
 			'kpoint_subdivisions_lists': [[1, 1, 1], [1, 1, 2], [2, 2, 4]],
@@ -40,14 +48,7 @@ class EpitaxialRelaxer(object):
 			'submission_node_count_list': [1, 2],
 			'ediff': [0.001, 0.00001, 0.0000001],
 			'encut': [200, 400, 600, 800],
-			'isif' : [5, 2, 3],
-			'supercell_dimensions_list': [2, 2, 1],
-			'misfit_strains_list': [-0.04, -0.03, ...],
-			'reference_lattice_constant': 3.91,
-			'number_of_trials': 3,
-			'max_displacement_magnitude': 0.1 #in angstroms
-			'max_strain_magnitude': 0.01 #unitless, out-of-plane only when applied
-			#any other incar parameters with value as a list
+			'isif' : [5, 2, 3]
 		}
 		value for tag: ['structure_fm'] = ...
 
@@ -58,8 +59,6 @@ class EpitaxialRelaxer(object):
 
 		self.path = path
 		self.input_dictionaries = input_dictionaries
-
-		self.polarization_reference_structure = polarization_reference_structure
 		self.calculate_polarizations = calculate_polarizations
 
 		Path.make(path)
@@ -138,18 +137,23 @@ class EpitaxialRelaxer(object):
 					print "Updating Epitaxial Relax run at " + relaxation_path + "  Status is " + relaxation.get_status_string()
 
 					if self.calculate_polarizations and relaxation.complete:
-						self.update_polarization_run(relaxation)
+						self.update_polarization_run(relaxation, structure_tag)
 
 
-	def update_polarization_run(self, relaxation):
+	def update_polarization_run(self, relaxation, structure_tag):
 
 		if not relaxation.complete:
 			return
 
 		path = relaxation.path
-		polarization_reference_structure = self.polarization_reference_structure
+
+		supercell_dimensions = input_dictionaries[structure_tag]['supercell_dimensions_list']
+
+		polarization_reference_structure=Perovskite(supercell_dimensions=supercell_dimensions, lattice=[[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]], species_list=relaxation.final_structure.get_species_list())
+
 		distorted_structure = relaxation.final_structure
 		polarization_reference_structure.lattice = copy.deepcopy(distorted_structure.lattice)
+		
 		vasp_run_inputs_dictionary = {
 			'kpoint_scheme': relaxation.kpoint_schemes[100],
 			'kpoint_subdivisions_list': relaxation.kpoint_subdivisions_lists[100],
