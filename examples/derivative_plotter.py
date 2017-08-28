@@ -9,7 +9,8 @@ from fpctoolkit.io.file import File
 
 
 
-def get_plot(file_lines, header_data):
+
+def get_plot(file_lines, header_data, out_dict):
 	x_data = []
 	y_data = []
 
@@ -91,14 +92,23 @@ def get_plot(file_lines, header_data):
 
 		print 'u' + ulbl + 'o2 = ' + str(round(fitting_parameters[2], rnd)) + ';'
 		print 'u' + ulbl + 'o4 = ' + str(round(fitting_parameters[0], rnd)) + ';'
+
+		out_dict['u' + ulbl + 'o2'] = str(round(fitting_parameters[2], rnd))
+		out_dict['u' + ulbl + 'o4'] = str(round(fitting_parameters[0], rnd))		
 	elif x_label_string[0] == 'e':
 		if y_label_string == 'Energy':
 			if x_label_string[2] == '3':
 				print 'e' + x_label_string[2] + 'o2 = ' + str(round(fitting_parameters[2], rnd)) + ';'
 				print 'e' + x_label_string[2] + 'o3 = ' + str(round(fitting_parameters[1], rnd)) + ';'
 				print 'e' + x_label_string[2] + 'o4 = ' + str(round(fitting_parameters[0], rnd)) + ';'
+
+				out_dict['e' + x_label_string[2] + 'o2'] = str(round(fitting_parameters[2], rnd))
+				out_dict['e' + x_label_string[2] + 'o3'] = str(round(fitting_parameters[1], rnd))
+				out_dict['e' + x_label_string[2] + 'o4'] = str(round(fitting_parameters[0], rnd))
+	
 			else:
 				print 'e' + x_label_string[2] + 'o2 = ' + str(round(fitting_parameters[0], rnd)) + ';'
+				out_dict['e' + x_label_string[2] + 'o2'] = str(round(fitting_parameters[0], rnd))
 		else:
 			if y_label_string[-3] == '_':
 				ulbl = y_label_string[-2:]
@@ -107,6 +117,7 @@ def get_plot(file_lines, header_data):
 
 
 			print 'e' + x_label_string[2] + 'u' + ulbl + 'o2 = ' + str(round(fitting_parameters[1], rnd)) + ';'
+			out_dict['e' + x_label_string[2] + 'u' + ulbl + 'o2'] = str(round(fitting_parameters[1]*0.5, rnd))
 
 	# plt.show()
 
@@ -149,6 +160,8 @@ pp = PdfPages('C:\Users\Tom\Desktop\derivative_fits/' + header_data[0] + "/" + h
 start_index = 1
 end_index = None
 
+out_dict = {}
+
 for i, line in enumerate(data_file):
 
 	if line.strip() == '':
@@ -156,9 +169,34 @@ for i, line in enumerate(data_file):
 
 
 
-		get_plot(data_file[start_index:end_index], header_data)
+		get_plot(data_file[start_index:end_index], header_data, out_dict)
 
 		start_index = end_index+1
 
 
 pp.close()
+
+sep = ' & '
+
+keys = ['e3o2', 'e3o3', 'e3o4']
+
+for i in range(1, 10):
+	# keys.append('u' + str(i) + 'o2')
+	keys.append('u' + str(i) + 'o4')
+
+for i in range(1, 10):
+	keys.append('e3u' + str(i) + 'o2')
+
+outstr = ''
+for key in keys:
+	try:
+		outstr += sep + out_dict[key]
+	except KeyError as e:
+		outstr += sep + '*'
+
+print outstr + ' \\\\'
+
+
+
+#& $\epsilon_3u^2_1$ & $\epsilon_3u^2_2$ & $\epsilon_3u^2_3$ & $\epsilon_3u^2_4$ & $\epsilon_3u^2_5$ & $\epsilon_3u^2_6$ & $\epsilon_3u^2_7$ & $\epsilon_3u^2_8$  \\ \hline
+#-0.02 & 516 & -1726 & 4875 & 179 & 179 & -.88 & 7.4 & -.55 & .26 & -.34 & .24 & -.23 & .25 & -.23 & .25 & * & * & * & * & * & * & -175 & -8.7 & -13.4 & 9.7 & 9.8 & * & * & * \\

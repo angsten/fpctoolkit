@@ -53,12 +53,13 @@ def run_misfit_strain(path, misfit_strain, input_dictionary, initial_relaxation_
 
 
 
-	
 	force_calculation_path = Path.join(path, 'dfpt_force_calculation')
+
 
 	kpoints = Kpoints(scheme_string=kpoint_scheme, subdivisions_list=kpoint_subdivisions_list)
 	incar = IncarMaker.get_dfpt_hessian_incar(dfpt_incar_settings)
 	input_set = VaspInputSet(relaxed_structure, kpoints, incar, auto_change_lreal=False, auto_change_npar=False)
+	input_set.incar['lepsilon'] = True
 	
 	dfpt_force_run = VaspRun(path=force_calculation_path, input_set=input_set)
 

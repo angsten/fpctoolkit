@@ -13,6 +13,8 @@ from fpctoolkit.io.vasp.incar_maker import IncarMaker
 from fpctoolkit.io.vasp.kpoints import Kpoints
 from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 from fpctoolkit.structure.structure import Structure
+from fpctoolkit.structure.displacement_vector import DisplacementVector
+
 
 
 
@@ -377,7 +379,17 @@ class DerivativeEvaluator(object):
 		it with the force set of the run. This gives dE/dA
 		"""
 
-		basis_vector = np.array(self.eigen_pairs_list[first_displacement_index].eigenvector)
+		distorted_structure = vasp_static_run_set.get_final_structures_list()[0]
+
+		 distorted_structure.lattice = self.reference_structure.lattice
+
+		basis_vector = DisplacementVector.get_instance_from_displaced_structure_relative_to_reference_structure(reference_structure=self.reference_structure, 
+			displaced_structure=distorted_structure, coordinate_mode='Cartesian')
+
+		basis_vector = basis_vector.to_numpy_array()
+
+		size = np.linalg.norm(basis_vector)
+		basis_vector /= size
 
 		forces_sums_list = []
 
