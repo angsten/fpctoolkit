@@ -107,7 +107,7 @@ class EpitaxialRelaxer(object):
 
 					random_out_of_plane_strain_tensor = [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.5*random.uniform(-1.0*max_strain_magnitude, max_strain_magnitude), 0.5*random.uniform(-1.0*max_strain_magnitude, max_strain_magnitude), 1.0 + random.uniform(-1.0*max_strain_magnitude, max_strain_magnitude)]]
 
-					initial_structure.strain(strain_tensor=random_out_of_plane_strain_tensor)
+					initial_structure.lattice.strain(strain_tensor=random_out_of_plane_strain_tensor)
 
 					if not Path.exists(relaxation_path):
 						print "Initializing epitaxial relaxation at " + relaxation_path
