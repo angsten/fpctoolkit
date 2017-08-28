@@ -21,15 +21,16 @@ class EpitaxialRelaxer(object):
 	Calculates the minimum energy structures across a series of (100) misfit strains.
 	"""
 
-	def __init__(self, path, initial_structures_list, reference_structure, vasp_relaxation_inputs_dictionary, reference_lattice_constant, misfit_strains_list, supercell_dimensions_list, calculate_polarizations=False):
+	def __init__(self, path, initial_structures_directory_path, inputs_dictionaries, polarization_reference_structure, calculate_polarizations=False):
 		"""
 		path should be the main path of the calculation set
 
-		initial_structures_list should be the set of structures that are relaxed at each misfit strain
+		initial_structures should be in path/initial_structures, each named according to its structure tag
 
 		reference structure can have any lattice but its atom positions must be in direct coords as the positions to compare polarizations to (choose a centrosymmetric structure if possible)
 
-		vasp_relaxation_inputs_dictionary should look something like:
+		inputs_dictionaries should look something like:
+		value for tag: ['structure_afm'] = 
 		{
 			'external_relaxation_count': 4,
 			'kpoint_schemes_list': ['Gamma'],
@@ -38,31 +39,25 @@ class EpitaxialRelaxer(object):
 			'submission_node_count_list': [1, 2],
 			'ediff': [0.001, 0.00001, 0.0000001],
 			'encut': [200, 400, 600, 800],
-			'isif' : [5, 2, 3]
+			'isif' : [5, 2, 3],
+			'supercell_dimensions_list': [2, 2, 1],
+			'misfit_strains_list': [-0.04, -0.03, ...],
+			'reference_lattice_constant': 3.91,
+			'number_of_trials': 3,
+			'max_displacement_magnitude': 0.1 #in angstroms
 			#any other incar parameters with value as a list
 		}
+		value for tag: ['structure_fm'] = ...
 
 		reference_lattice_constant should be the lattice constant a0 which, when multiplied by the list of misfit strains, generates the new in-plane lattice constant at those strains.
 
 		For each lattice constant and each structure, a relaxation is performed. Then, the lowest energy structures at each misfit strain can be determined, and a convex hull results.
 		"""
 
-		for structure in initial_structures_list:
-			Structure.validate(structure)
-
-		basic_validators.validate_real_number(reference_lattice_constant)
-
-		for misfit_strain in misfit_strains_list:
-			basic_validators.validate_real_number(misfit_strain)
-
-
 		self.path = path
-		self.initial_structures_list = initial_structures_list
-		self.reference_structure = reference_structure
-		self.vasp_relaxation_inputs_dictionary = vasp_relaxation_inputs_dictionary
-		self.reference_lattice_constant = reference_lattice_constant
-		self.misfit_strains_list = misfit_strains_list
-		self.supercell_dimensions_list = supercell_dimensions_list
+		self.input_dictionaries = input_dictionaries
+
+		self.polarization_reference_structure = polarization_reference_structure
 		self.calculate_polarizations = calculate_polarizations
 
 		Path.make(path)
@@ -74,12 +69,38 @@ class EpitaxialRelaxer(object):
 		"""
 		"""
 
-		for misfit_strain in self.misfit_strains_list:
-			lattice_constant = self.reference_lattice_constant*(1.0+misfit_strain)
+		for structure_tag, input_dictionary in self.input_dictionaries.items():
+			misfit_strains_list = input_dictionary.pop('misfit_strains_list')
+			reference_lattice_constant = input_dictionary.pop('reference_lattice_constant')
+			number_of_trials = input_dictionary.pop('number_of_trials')
+			supercell_dimensions_list = input_dictionary.pop('supercell_dimensions_list')
+			max_displacement_magnitude = input_dictionary.pop('max_displacement_magnitude')
 
-			misfit_path = self.get_extended_path(str(misfit_strain).replace('-', 'n'))
+			for misfit_strain in misfit_strains_list:
+				misfit_path = Path.join(self.path, str(misfit_strain).replace('-', 'n'))
+				Path.make(misfit_path)
 
-			Path.make(misfit_path)
+				relaxations_set_path = Path.join(misfit_path, structure_tag)
+				Path.make(relaxations_set_path)
+
+				lattice_constant = reference_lattice_constant*(1.0+misfit_strain)
+
+				for i in range(number_of_trials):
+					relaxation_path = Path.join(relaxations_set_path, 'trial_' + str(i))
+
+					initial_structure_path = Path.join(self.path, 'initial_structures', structure_tag)
+					initial_structure = Structure(initial_structure_path)
+
+					if abs(initial_structure.lattice[0][1]) > 0.0 or abs(initial_structure.lattice[0][2]) > 0.0 or abs(initial_structure.lattice[1][0]) > 0.0 or abs(initial_structure.lattice[1][2]) > 0.0:
+						raise Exception("Current lattice is incompatible with (100) epitaxy: ", str(initial_structure.lattice))
+
+					initial_structure.lattice[0][0] = lattice_constant*supercell_dimensions_list[0]
+					initial_structure.lattice[1][1] = lattice_constant*supercell_dimensions_list[1]
+
+					initial_structure.randomly_displace_sites(max_displacement_magnitude=max_displacement_magnitude)
+
+					
+
 
 			for i, initial_structure in enumerate(self.initial_structures_list):
 
@@ -174,9 +195,9 @@ class EpitaxialRelaxer(object):
 			return
 
 		path = relaxation.path
-		reference_structure = self.reference_structure
+		polarization_reference_structure = self.polarization_reference_structure
 		distorted_structure = relaxation.final_structure
-		reference_structure.lattice = copy.deepcopy(distorted_structure.lattice)
+		polarization_reference_structure.lattice = copy.deepcopy(distorted_structure.lattice)
 		vasp_run_inputs_dictionary = {
 			'kpoint_scheme': relaxation.kpoint_schemes[100],
 			'kpoint_subdivisions_list': relaxation.kpoint_subdivisions_lists[100],
@@ -187,7 +208,7 @@ class EpitaxialRelaxer(object):
 		}
 
 
-		polarization_run = VaspPolarizationRunSet(path, reference_structure, distorted_structure, vasp_run_inputs_dictionary)
+		polarization_run = VaspPolarizationRunSet(path, polarization_reference_structure, distorted_structure, vasp_run_inputs_dictionary)
 
 		polarization_run.update()
 
