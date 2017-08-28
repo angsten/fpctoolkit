@@ -58,7 +58,7 @@ class EpitaxialRelaxer(object):
 		"""
 
 		self.path = path
-		self.input_dictionaries = input_dictionaries
+		self.inputs_dictionaries = inputs_dictionaries
 		self.calculate_polarizations = calculate_polarizations
 
 		Path.make(path)
@@ -70,9 +70,9 @@ class EpitaxialRelaxer(object):
 		"""
 		"""
 
-		input_dictionaries = copy.deepcopy(self.input_dictionaries)
+		inputs_dictionaries = copy.deepcopy(self.inputs_dictionaries)
 
-		for structure_tag, input_dictionary in input_dictionaries.items():
+		for structure_tag, input_dictionary in inputs_dictionaries.items():
 			misfit_strains_list = input_dictionary.pop('misfit_strains_list')
 			reference_lattice_constant = input_dictionary.pop('reference_lattice_constant')
 			number_of_trials = input_dictionary.pop('number_of_trials')
@@ -119,7 +119,7 @@ class EpitaxialRelaxer(object):
 
 	def update(self):
 
-		for structure_tag, input_dictionary in self.input_dictionaries.items():
+		for structure_tag, input_dictionary in self.inputs_dictionaries.items():
 			misfit_strains_list = input_dictionary['misfit_strains_list']
 			number_of_trials = input_dictionary['number_of_trials']
 
@@ -147,13 +147,13 @@ class EpitaxialRelaxer(object):
 
 		path = relaxation.path
 
-		supercell_dimensions = input_dictionaries[structure_tag]['supercell_dimensions_list']
+		supercell_dimensions = inputs_dictionaries[structure_tag]['supercell_dimensions_list']
 
 		polarization_reference_structure=Perovskite(supercell_dimensions=supercell_dimensions, lattice=[[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]], species_list=relaxation.final_structure.get_species_list())
 
 		distorted_structure = relaxation.final_structure
 		polarization_reference_structure.lattice = copy.deepcopy(distorted_structure.lattice)
-		
+
 		vasp_run_inputs_dictionary = {
 			'kpoint_scheme': relaxation.kpoint_schemes[100],
 			'kpoint_subdivisions_list': relaxation.kpoint_subdivisions_lists[100],
