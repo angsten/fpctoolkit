@@ -14,11 +14,12 @@ class VaspInputSet(object):
 
 	"""
 
-	def __init__(self, structure=None, kpoints=None, incar=None, potcar=None, submission_script_file=None, auto_change_lreal=True, auto_change_npar=True):
+	def __init__(self, structure=None, kpoints=None, incar=None, potcar=None, submission_script_file=None, auto_change_lreal=True, auto_change_npar=True, calculation_type='lda'):
 		self.structure = structure
 		self.incar = incar
 		self.kpoints = kpoints
 		self.potcar = potcar
+		self.calculation_type = calculation_type
 		self.submission_script_file = submission_script_file
 
 		if 'lreal' in incar:
@@ -48,7 +49,7 @@ class VaspInputSet(object):
 		if not self.structure:
 			raise Exception("Structure must be defined in order to make potcar")
 		else:
-			self.potcar = Potcar(elements_list=self.structure.get_species_list())
+			self.potcar = Potcar(elements_list=self.structure.get_species_list(), calculation_type=self.calculation_type)
 
 	def check_potcar_structure_consistency(self):
 		if not self.potcar.get_elements_list() == self.structure.get_species_list():

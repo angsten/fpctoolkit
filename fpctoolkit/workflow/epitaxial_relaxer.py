@@ -2,6 +2,7 @@
 
 import numpy as np
 import copy
+import random
 from collections import OrderedDict
 
 from fpctoolkit.util.path import Path
@@ -45,6 +46,7 @@ class EpitaxialRelaxer(object):
 			'reference_lattice_constant': 3.91,
 			'number_of_trials': 3,
 			'max_displacement_magnitude': 0.1 #in angstroms
+			'max_strain_magnitude': 0.01 #unitless, out-of-plane only when applied
 			#any other incar parameters with value as a list
 		}
 		value for tag: ['structure_fm'] = ...
@@ -69,12 +71,15 @@ class EpitaxialRelaxer(object):
 		"""
 		"""
 
-		for structure_tag, input_dictionary in self.input_dictionaries.items():
+		input_dictionaries = copy.deepcopy(self.input_dictionaries)
+
+		for structure_tag, input_dictionary in input_dictionaries.items():
 			misfit_strains_list = input_dictionary.pop('misfit_strains_list')
 			reference_lattice_constant = input_dictionary.pop('reference_lattice_constant')
 			number_of_trials = input_dictionary.pop('number_of_trials')
 			supercell_dimensions_list = input_dictionary.pop('supercell_dimensions_list')
 			max_displacement_magnitude = input_dictionary.pop('max_displacement_magnitude')
+			max_strain_magnitude = input_dictionary.pop('max_strain_magnitude')
 
 			for misfit_strain in misfit_strains_list:
 				misfit_path = Path.join(self.path, str(misfit_strain).replace('-', 'n'))
@@ -91,6 +96,8 @@ class EpitaxialRelaxer(object):
 					initial_structure_path = Path.join(self.path, 'initial_structures', structure_tag)
 					initial_structure = Structure(initial_structure_path)
 
+					saved_initial_structure = copy.deepcopy(initial_structure)
+
 					if abs(initial_structure.lattice[0][1]) > 0.0 or abs(initial_structure.lattice[0][2]) > 0.0 or abs(initial_structure.lattice[1][0]) > 0.0 or abs(initial_structure.lattice[1][2]) > 0.0:
 						raise Exception("Current lattice is incompatible with (100) epitaxy: ", str(initial_structure.lattice))
 
@@ -99,95 +106,40 @@ class EpitaxialRelaxer(object):
 
 					initial_structure.randomly_displace_sites(max_displacement_magnitude=max_displacement_magnitude)
 
-					
+					random_out_of_plane_strain_tensor = [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.5*random.uniform(-1.0*max_strain_magnitude, max_strain_magnitude), 0.5*random.uniform(-1.0*max_strain_magnitude, max_strain_magnitude), 1.0 + random.uniform(-1.0*max_strain_magnitude, max_strain_magnitude)]]
 
+					initial_structure.strain(strain_tensor=random_out_of_plane_strain_tensor)
 
-			for i, initial_structure in enumerate(self.initial_structures_list):
+					if not Path.exists(relaxation_path):
+						print "Initializing epitaxial relaxation at " + relaxation_path
 
-				#if self.structure_is_duplicate(initial_structure, misfit_path): #####################FIX THIS AND PUT BACK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				#	print "Duplicate structure found - skipping"
-				#	continue
+					relaxation = VaspRelaxation(path=relaxation_path, initial_structure=initial_structure, input_dictionary=input_dictionary)
 
-				structure = copy.deepcopy(initial_structure)
-
-				if abs(structure.lattice[0][1]) > 0.0 or abs(structure.lattice[0][2]) > 0.0 or abs(structure.lattice[1][0]) > 0.0 or abs(structure.lattice[1][2]) > 0.0:
-					raise Exception("Current lattice is incompatible with (100) epitaxy: ", str(structure.lattice))
-
-				structure.lattice[0][0] = lattice_constant*self.supercell_dimensions_list[0]
-				structure.lattice[1][1] = lattice_constant*self.supercell_dimensions_list[1]
-
-				#break symmetry
-				structure.randomly_displace_sites(max_displacement_magnitude=0.01)
-
-
-				relax_path = Path.join(misfit_path, 'structure_' + str(i))
-
-				if not Path.exists(relax_path):
-					print "Initializing epitaxial relaxation at " + relax_path
-
-				relaxation = VaspRelaxation(path=relax_path, initial_structure=structure, input_dictionary=self.vasp_relaxation_inputs_dictionary)
-
-				initial_structure.to_poscar_file_path(Path.join(relax_path, 'original_initial_structure'))
-
-
-	def structure_is_duplicate(self, structure, misfit_path):
-		"""
-		Returns true if this has been the initial structure for any previous relaxation
-		"""
-
-		for i in range(10000):
-			relax_path = Path.join(misfit_path, 'structure_' + str(i))
-
-			if not Path.exists(relax_path):
-				return False
-			else:
-				comparison_structure = Structure(file_path=Path.join(relax_path, 'original_initial_structure'))
-
-				if structure.is_equivalent_to_structure(comparison_structure):
-					print "FOUND DUPLICATE in epitaxial_relaxer.py"
-					return True
+					saved_initial_structure.to_poscar_file_path(Path.join(relax_path, 'original_initial_structure'))					
 
 
 	def update(self):
 
-		for misfit_strain in self.misfit_strains_list:
+		for structure_tag, input_dictionary in self.input_dictionaries.items():
+			misfit_strains_list = input_dictionary['misfit_strains_list']
+			number_of_trials = input_dictionary['number_of_trials']
 
-			misfit_path = self.get_extended_path(str(misfit_strain).replace('-', 'n'))
+			for misfit_strain in misfit_strains_list:
+				misfit_path = Path.join(self.path, str(misfit_strain).replace('-', 'n'))
+				relaxations_set_path = Path.join(misfit_path, structure_tag)	
 
-			for i in range(10000):
-				relax_path = Path.join(misfit_path, 'structure_' + str(i))
+				for i in range(number_of_trials):
+					relaxation_path = Path.join(relaxations_set_path, 'trial_' + str(i))
 
-				if not Path.exists(relax_path):
-					break
+					relaxation = VaspRelaxation(path=relaxation_path)
 
-				
-				relaxation = VaspRelaxation(path=relax_path)
+					relaxation.update()
 
-				relaxation.update()
+					print "Updating Epitaxial Relax run at " + relaxation_path + "  Status is " + relaxation.get_status_string()
 
-				print "Updating Epitaxial Relax run at " + relax_path + "  Status is " + relaxation.get_status_string()
+					if self.calculate_polarizations and relaxation.complete:
+						self.update_polarization_run(relaxation)
 
-				if self.calculate_polarizations and relaxation.complete:
-					self.update_polarization_run(relaxation)
-
-	@property
-	def complete(self):
-		for misfit_strain in self.misfit_strains_list:
-			misfit_path = self.get_extended_path(str(misfit_strain).replace('-', 'n'))
-
-			for i in range(10000):
-				relax_path = Path.join(misfit_path, 'structure_' + str(i))
-
-				if not Path.exists(relax_path):
-					return True
-				else:
-					relaxation = VaspRelaxation(path=relax_path)
-
-					if not relaxation.complete:
-						return False
-
-	def get_extended_path(self, relative_path):
-		return Path.join(self.path, relative_path)
 
 	def update_polarization_run(self, relaxation):
 
@@ -213,6 +165,27 @@ class EpitaxialRelaxer(object):
 		polarization_run.update()
 
 		return polarization_run.get_change_in_polarization()
+
+
+	@property
+	def complete(self):
+		for misfit_strain in self.misfit_strains_list:
+			misfit_path = self.get_extended_path(str(misfit_strain).replace('-', 'n'))
+
+			for i in range(10000):
+				relax_path = Path.join(misfit_path, 'structure_' + str(i))
+
+				if not Path.exists(relax_path):
+					return True
+				else:
+					relaxation = VaspRelaxation(path=relax_path)
+
+					if not relaxation.complete:
+						return False
+
+	def get_extended_path(self, relative_path):
+		return Path.join(self.path, relative_path)
+
 
 	def get_data_dictionaries_list(self, get_polarization=False):
 		"""
