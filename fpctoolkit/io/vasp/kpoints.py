@@ -34,7 +34,10 @@ class Kpoints(File):
 
 	@scheme.setter
 	def scheme(self, value):
+		print "**** parsing scheme " + str(value)
 		self[2] = Kpoints.parse_scheme(value)
+
+		print "*** ended up with " + self[2]
 
 	@property
 	def subdivisions_list(self):
