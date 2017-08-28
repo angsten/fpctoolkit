@@ -11,12 +11,16 @@ class Kpoints(File):
 
 	def __init__(self, file_path=None, scheme_string=None, subdivisions_list=None, kspacing=None, lattice=None):
 
+		print "Init called with scheme " + scheme_string
+
 		super(Kpoints, self).__init__(file_path)
 
 		if file_path:
+			print "running scheme as validation"
 			self.scheme #running these lines validates properties
 			self.subdivisions_list
 		elif not kspacing:
+			print "running scheme as creation of file"
 			self[0] = "Kpoints File"
 			self[1] = "0"
 			self.scheme = scheme_string
