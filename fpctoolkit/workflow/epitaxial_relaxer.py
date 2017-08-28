@@ -114,7 +114,7 @@ class EpitaxialRelaxer(object):
 
 					relaxation = VaspRelaxation(path=relaxation_path, initial_structure=initial_structure, input_dictionary=input_dictionary)
 
-					saved_initial_structure.to_poscar_file_path(Path.join(relax_path, 'original_initial_structure'))					
+					saved_initial_structure.to_poscar_file_path(Path.join(relaxation_path, 'original_initial_structure'))					
 
 
 	def update(self):
