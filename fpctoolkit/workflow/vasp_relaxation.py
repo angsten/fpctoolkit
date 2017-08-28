@@ -148,7 +148,6 @@ class VaspRelaxation(VaspRunSet):
 
 
 		structure = self.get_next_structure()
-		print "*************KPOINT SCHEME: " + str(self.kpoint_schemes[self.run_count])
 		kpoints = Kpoints(scheme_string=self.kpoint_schemes[self.run_count], subdivisions_list=self.kpoint_subdivisions_lists[self.run_count])
 		incar = self.get_next_incar()
 
