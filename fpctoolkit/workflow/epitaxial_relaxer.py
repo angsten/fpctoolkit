@@ -105,7 +105,7 @@ class EpitaxialRelaxer(object):
 
 					initial_structure.randomly_displace_sites(max_displacement_magnitude=max_displacement_magnitude)
 
-					random_out_of_plane_strain_tensor = [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.5*random.uniform(-1.0*max_strain_magnitude, max_strain_magnitude), 0.5*random.uniform(-1.0*max_strain_magnitude, max_strain_magnitude), 1.0 + random.uniform(-1.0*max_strain_magnitude, max_strain_magnitude)]]
+					random_out_of_plane_strain_tensor = [[1.0, 0.0, 0.5*random.uniform(-1.0*max_strain_magnitude, max_strain_magnitude)], [0.0, 1.0, 0.5*random.uniform(-1.0*max_strain_magnitude, max_strain_magnitude)], [0.0, 0.0, 1.0 + random.uniform(-1.0*max_strain_magnitude, max_strain_magnitude)]]
 
 					initial_structure.lattice.strain(strain_tensor=random_out_of_plane_strain_tensor)
 

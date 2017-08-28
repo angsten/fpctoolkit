@@ -189,6 +189,8 @@ class Lattice(object):
 		Another example: if e12 (a shear applied to the y-plane in the x direction) is 0.1, and if b was originally [0.0, 10.0, 0.0], the new b vector after shearing will be [1.0, 10.0, 0.0]
 
 		If the strain tensor is the identity matrix, the lattice will not change.
+
+		For out of plane only, specify e13, e23, and e33 as non-zero.
 		"""
 
 		original_lattice_matrix = self.to_np_array()
