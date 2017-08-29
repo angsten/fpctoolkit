@@ -70,6 +70,9 @@ class EpitaxialRelaxer(object):
 		"""
 		"""
 
+		epitaxial_path = Path.join(self.path, 'epitaxial_runs')
+		Path.make(epitaxial_path)
+
 		inputs_dictionaries = copy.deepcopy(self.inputs_dictionaries)
 
 		for structure_tag, input_dictionary in inputs_dictionaries.items():
@@ -81,7 +84,7 @@ class EpitaxialRelaxer(object):
 			max_strain_magnitude = input_dictionary.pop('max_strain_magnitude')
 
 			for misfit_strain in misfit_strains_list:
-				misfit_path = Path.join(self.path, str(misfit_strain).replace('-', 'n'))
+				misfit_path = Path.join(epitaxial_path, str(misfit_strain).replace('-', 'n'))
 				Path.make(misfit_path)
 
 				relaxations_set_path = Path.join(misfit_path, structure_tag)
@@ -119,12 +122,14 @@ class EpitaxialRelaxer(object):
 
 	def update(self):
 
+		epitaxial_path = Path.join(self.path, 'epitaxial_runs')
+
 		for structure_tag, input_dictionary in self.inputs_dictionaries.items():
 			misfit_strains_list = input_dictionary['misfit_strains_list']
 			number_of_trials = input_dictionary['number_of_trials']
 
 			for misfit_strain in misfit_strains_list:
-				misfit_path = Path.join(self.path, str(misfit_strain).replace('-', 'n'))
+				misfit_path = Path.join(epitaxial_path, str(misfit_strain).replace('-', 'n'))
 				relaxations_set_path = Path.join(misfit_path, structure_tag)	
 
 				for i in range(number_of_trials):
