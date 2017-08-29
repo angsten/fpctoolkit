@@ -13,7 +13,7 @@ from fpctoolkit.io.vasp.kpoints import Kpoints
 from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
 from fpctoolkit.workflow.vasp_run import VaspRun
 
-class VaspPolarizationRunSet(object):
+class VaspPolarizationRunSet(VaspRunSet):
 	"""
 	Class wrapper for vasp polarization calculations.
 
@@ -24,7 +24,7 @@ class VaspPolarizationRunSet(object):
 	may not give the correct polarization vector if the true vector exceeds this fundamental vector in length (but this is rare).
 	"""
 
-	def __init__(self, path, reference_structure, distorted_structure, vasp_run_inputs_dictionary):
+	def __init__(self, path, reference_structure=None, distorted_structure=None, vasp_run_inputs_dictionary=None):
 		"""
 		reference_structure should be a Structure instance with the same lattice as distorted structure. Usually this reference is chosen to be centrosymmetry (like ideal perovskite) so that 
 		absolute polarizations of the distorted structure can be caluclated.
@@ -41,23 +41,31 @@ class VaspPolarizationRunSet(object):
 
 		"""
 
-		Structure.validate(reference_structure)
-		Structure.validate(distorted_structure)
+		self.path = Path.expand(path)
+
+		if (reference_structure == None) or (distorted_structure == None) or (vasp_run_inputs_dictionary == None):
+			self.load()
+		else:
+
+			Structure.validate(reference_structure)
+			Structure.validate(distorted_structure)
+
+			if not reference_structure.lattice.equals(distorted_structure.lattice):
+				raise Exception("Warning: It's very difficult to interpret polarization results when the lattices of the reference and distorted structures are not equal. This is likely an error.", reference_structure.lattice, distorted_structure.lattice)
 
 
-		if not reference_structure.lattice.equals(distorted_structure.lattice):
-			raise Exception("Warning: It's very difficult to interpret polarization results when the lattices of the reference and distorted structures are not equal. This is likely an error.", reference_structure.lattice, distorted_structure.lattice)
+			self.reference_structure = reference_structure
+			self.distorted_structure = distorted_structure
+			self.vasp_run_inputs = copy.deepcopy(vasp_run_inputs_dictionary)
+			self.vasp_run_list = []
 
-
-		self.path = path
-		self.reference_structure = reference_structure
-		self.distorted_structure = distorted_structure
-		self.vasp_run_inputs = copy.deepcopy(vasp_run_inputs_dictionary)
-		self.vasp_run_list = []
+			self.save()
 
 		Path.make(path)
 
 		self.initialize_vasp_runs()
+
+		
 
 
 	def initialize_vasp_runs(self):

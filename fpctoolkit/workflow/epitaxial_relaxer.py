@@ -172,6 +172,11 @@ class EpitaxialRelaxer(object):
 
 			if not relaxation.complete:
 				return False
+			elif self.calculate_polarizations:
+				polarization_run = VaspPolarizationRunSet(path=relaxation.path)
+
+				if not polarization_run.complete:
+					return False
 
 		return True
 
