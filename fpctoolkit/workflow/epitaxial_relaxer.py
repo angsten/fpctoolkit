@@ -122,27 +122,16 @@ class EpitaxialRelaxer(object):
 
 	def update(self):
 
-		epitaxial_path = Path.join(self.path, 'epitaxial_runs')
+		for relaxation_path in self.get_relaxation_paths():
 
-		for structure_tag, input_dictionary in self.inputs_dictionaries.items():
-			misfit_strains_list = input_dictionary['misfit_strains_list']
-			number_of_trials = input_dictionary['number_of_trials']
+			relaxation = VaspRelaxation(path=relaxation_path)
 
-			for misfit_strain in misfit_strains_list:
-				misfit_path = Path.join(epitaxial_path, str(misfit_strain).replace('-', 'n'))
-				relaxations_set_path = Path.join(misfit_path, structure_tag)	
+			relaxation.update()
 
-				for i in range(number_of_trials):
-					relaxation_path = Path.join(relaxations_set_path, 'trial_' + str(i))
+			print "Updating Epitaxial Relax run at " + relaxation_path + "  Status is " + relaxation.get_status_string()
 
-					relaxation = VaspRelaxation(path=relaxation_path)
-
-					relaxation.update()
-
-					print "Updating Epitaxial Relax run at " + relaxation_path + "  Status is " + relaxation.get_status_string()
-
-					if self.calculate_polarizations and relaxation.complete:
-						self.update_polarization_run(relaxation, structure_tag)
+			if self.calculate_polarizations and relaxation.complete:
+				self.update_polarization_run(relaxation, structure_tag)
 
 
 	def update_polarization_run(self, relaxation, structure_tag):
@@ -178,22 +167,36 @@ class EpitaxialRelaxer(object):
 
 	@property
 	def complete(self):
-		for misfit_strain in self.misfit_strains_list:
-			misfit_path = self.get_extended_path(str(misfit_strain).replace('-', 'n'))
+		for relaxation_path in self.get_relaxation_paths():
+			relaxation = VaspRelaxation(path=relaxation_path)
 
-			for i in range(10000):
-				relax_path = Path.join(misfit_path, 'structure_' + str(i))
+			if not relaxation.complete:
+				return False
 
-				if not Path.exists(relax_path):
-					return True
-				else:
-					relaxation = VaspRelaxation(path=relax_path)
-
-					if not relaxation.complete:
-						return False
+		return True
 
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)
+
+	def get_relaxation_paths(self):
+		relaxation_paths = []
+
+		epitaxial_path = Path.join(self.path, 'epitaxial_runs')
+
+		for structure_tag, input_dictionary in self.inputs_dictionaries.items():
+			misfit_strains_list = input_dictionary['misfit_strains_list']
+			number_of_trials = input_dictionary['number_of_trials']
+
+			for misfit_strain in misfit_strains_list:
+				misfit_path = Path.join(epitaxial_path, str(misfit_strain).replace('-', 'n'))
+				relaxations_set_path = Path.join(misfit_path, structure_tag)	
+
+				for i in range(number_of_trials):
+					relaxation_path = Path.join(relaxations_set_path, 'trial_' + str(i))
+
+					relaxation_paths.append(relaxation_path)
+
+		return relaxation_paths
 
 
 	def get_data_dictionaries_list(self, get_polarization=False):
