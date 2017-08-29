@@ -139,14 +139,13 @@ class IncarMaker(object):
 		Generates an incar to be used for getting the electronic and ionic contributions to macroscopic polarization using the Berry phase formalism.
 		"""
 
-		incar = IncarMaker.get_static_incar()
+		incar = IncarMaker.get_static_incar(custom_parameters_dictionary)
 		del incar['ibrion']
 		del incar['nsw']
 		del incar['npar'] #lcalcpol runs are not parallelizable when symmetry is on
 
 		incar['lcalcpol'] = True
 		incar['dipol'] = '0.125 0.125 0.125' #this should be a point of minimum polarization in the cell ########################
-
-		incar.modify_from_dictionary(custom_parameters_dictionary)
+		incar['isif'] = 2
 
 		return incar

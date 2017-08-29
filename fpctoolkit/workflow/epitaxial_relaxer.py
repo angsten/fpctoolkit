@@ -151,11 +151,11 @@ class EpitaxialRelaxer(object):
 		vasp_run_inputs_dictionary = {
 			'kpoint_scheme': relaxation.kpoint_schemes[100],
 			'kpoint_subdivisions_list': relaxation.kpoint_subdivisions_lists[100],
-			'encut': relaxation.incar_modifier_lists_dictionary['encut'][100],
-			'lreal': False,
-			'ediff': 1e-8,
 			'isym': 0
 		}
+
+		for key, value_list in relaxation.incar_modifier_lists_dictionary:
+			vasp_run_inputs_dictionary[key] = value_list[1000]
 
 
 		polarization_run = VaspPolarizationRunSet(path, polarization_reference_structure, distorted_structure, vasp_run_inputs_dictionary)
