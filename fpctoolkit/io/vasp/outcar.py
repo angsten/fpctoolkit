@@ -344,26 +344,6 @@ class Outcar(File):
 		 ion    3
 			...
 
-
-		BORN EFFECTIVE CHARGES (in e, cummulative output)
-		 -------------------------------------------------
-		 ion    1
-		    1     2.55248     0.00000     0.00001
-		    2     0.00000     2.55247     0.00000
-		    3     0.00001     0.00000     2.59358   <---- this last component is indexed by [0][2][2] and represents the change in the z-component of polarization with z-displacement of atom 1
-		 ion    2
-		    1     7.24494     0.00000     0.00009
-		    2     0.00000     7.24494     0.00001
-		    3     0.00010     0.00001     6.01323
-		 ion    3
-		    1    -5.77788     0.00000    -0.00004
-		    2     0.00000    -2.00260     0.00000
-		    3    -0.00009     0.00000    -1.89826
-		    				.
-		    				.
-		    				.
-		ion     N
-
 		"""
 
 		if not self.complete:
