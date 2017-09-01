@@ -120,9 +120,8 @@ class VaspHybridDosRunSet(VaspRunSet):
 			incar['hfscreen'] = 0.2
 			incar['lorbit'] = 11
 
+			chargecar_path = None
 
-			if dos_runs_count >= 1:
-				self.dos_runs_list[-1].update()
 
 			if dos_runs_count == 0:
 				run_path = path.join(self.dos_path, 'hybrid_electronic_optimization_1')
@@ -138,10 +137,6 @@ class VaspHybridDosRunSet(VaspRunSet):
 				incar['sigma'] = 0.02
 				incar['lwave'] = True
 
-				input_set = VaspInputSet(structure, kpoints, incar)
-
-				self.dos_runs_list.append(VaspRun(path=run_path, input_set=input_set, wavecar_path=wavecar_path))
-
 			elif dos_runs_count == 1 and self.dos_runs_list[-1].complete:
 				run_path = path.join(self.dos_path, 'hybrid_electronic_optimization_2')
 				Path.make(run_path)
@@ -155,17 +150,6 @@ class VaspHybridDosRunSet(VaspRunSet):
 				incar['sigma'] = 0.02
 				incar['lwave'] = True
 				incar['lcharg'] = True
-
-
-				for key, value in self.extra_dos_inputs.items():
-					incar[key] = value
-
-				if node_count != None:
-					input_set.set_node_count(node_count)
-
-				input_set = VaspInputSet(structure, kpoints, incar)
-
-				self.dos_runs_list.append(VaspRun(path=run_path, input_set=input_set, wavecar_path=wavecar_path))
 
 			elif dos_runs_count == 2 and self.dos_runs_list[-1].complete:
 				run_path = path.join(self.dos_path, 'hybrid_electronic_optimization_3')
@@ -183,14 +167,13 @@ class VaspHybridDosRunSet(VaspRunSet):
 				incar['lcharg'] = True
 				incar['icharge'] = 11
 
+	
 
-				for key, value in self.extra_dos_inputs.items():
-					incar[key] = value
+			input_set = VaspInputSet(structure, kpoints, incar)
 
-				if node_count != None:
-					input_set.set_node_count(node_count)
+			current_dos_run = VaspRun(path=run_path, input_set=input_set, wavecar_path=wavecar_path, chargecar_path = None)
 
-
+			current_dos_run.update()
 
 
 

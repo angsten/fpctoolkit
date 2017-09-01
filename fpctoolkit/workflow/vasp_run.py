@@ -28,7 +28,7 @@ class VaspRun(object):
 
 	"""
 
-	def __init__(self, path, structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None, input_set=None, wavecar_path=None):
+	def __init__(self, path, structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None, input_set=None, wavecar_path=None, chargecar_path=None):
 		"""
 		Cases for __init__:
 		1. path does not exist or is empty => make the directory, enforce input file arguments all exists, write out input files to directory
@@ -57,7 +57,7 @@ class VaspRun(object):
 			else:
 				Path.make(self.path)
 
-				self.write_input_files_to_path(structure, incar, kpoints, potcar, submission_script_file, wavecar_path) 
+				self.write_input_files_to_path(structure, incar, kpoints, potcar, submission_script_file, wavecar_path, chargecar_path) 
 		else:
 			if self.job_id_string:
 				pass
@@ -65,7 +65,7 @@ class VaspRun(object):
 
 				if self.all_input_files_are_present(): #all input files are written to directory
 					if all_essential_input_parameters_exist: #overwrite what's there
-						self.write_input_files_to_path(structure, incar, kpoints, potcar, submission_script_file, wavecar_path)
+						self.write_input_files_to_path(structure, incar, kpoints, potcar, submission_script_file, wavecar_path, chargecar_path)
 					else:
 
 						pass #do nothing - don't have the necessary inputs to start a run
@@ -77,7 +77,7 @@ class VaspRun(object):
 			
 		
 
-	def write_input_files_to_path(self, structure, incar, kpoints, potcar, submission_script_file, wavecar_path):
+	def write_input_files_to_path(self, structure, incar, kpoints, potcar, submission_script_file, wavecar_path, chargecar_path):
 		"""
 		Simply write files to path
 		"""
@@ -90,6 +90,9 @@ class VaspRun(object):
 
 		if wavecar_path and Path.exists(wavecar_path):
 			Path.copy(wavecar_path, self.get_extended_path('WAVECAR'))
+
+		if chargecar_path and Path.exists(chargecar_path):
+			Path.copy(chargecar_path, self.get_extended_path('CHARGECAR'))
 
 	def all_input_files_are_present(self):
 		"""Returns true if incar, poscar, potcar, kpoints, and submit script are all written out at path"""
