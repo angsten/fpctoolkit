@@ -50,7 +50,8 @@ class VaspRelaxation(VaspRunSet):
 			'ediff': [0.001, 0.00001, 0.0000001],
 			'encut': [200, 400, 600, 800],
 			'isif' : [5, 2, 3],
-			'calculation_type': 'gga' #not needed - defaults to 'lda'
+			'calculation_type': 'gga' #not needed - defaults to 'lda',
+			'static_lwave': True #if set, lwave is left on for static run
 			#any other incar parameters with value as a list
 		}
 
@@ -86,11 +87,15 @@ class VaspRelaxation(VaspRunSet):
 		self.kpoint_schemes = ParameterList(input_dictionary.pop('kpoint_schemes_list'))
 		self.kpoint_subdivisions_lists = ParameterList(input_dictionary.pop('kpoint_subdivisions_lists'))
 
+
 		#optional keys
 		self.submission_script_modification_keys_list = ParameterList(input_dictionary.pop('submission_script_modification_keys_list')) if 'submission_script_modification_keys_list' in input_dictionary else None
 		self.submission_node_count_list = ParameterList(input_dictionary.pop('submission_node_count_list')) if 'submission_node_count_list' in input_dictionary else None
 
 		self.calculation_type = input_dictionary.pop('calculation_type') if 'calculation_type' in input_dictionary else 'lda'
+		self.static_lwave = input_dictionary.pop('static_lwave') if 'static_lwave' in input_dictionary else False
+
+
 
 		if self.external_relaxation_count < 0:
 			raise Exception("Must have one or more external relaxations")
@@ -188,6 +193,9 @@ class VaspRelaxation(VaspRunSet):
 			incar = IncarMaker.get_external_relaxation_incar(incar_modifications_dict)
 		else:
 			incar = IncarMaker.get_static_incar(incar_modifications_dict)
+
+			if self.static_lwave:
+				incar['lwave'] = True
 
 		return incar
 	

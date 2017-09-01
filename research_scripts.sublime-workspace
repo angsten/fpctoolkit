@@ -4,12 +4,112 @@
 		"selected_items":
 		[
 			[
-				"total",
-				"total_account_value_excess"
+				"init",
+				"init_price"
+			],
+			[
+				"retu",
+				"returns_file"
+			],
+			[
+				"even",
+				"event_dictionary"
+			],
+			[
+				"sell_p",
+				"sell_prices"
+			],
+			[
+				"spread",
+				"spread_factor"
+			],
+			[
+				"seconds",
+				"seconds_passed"
+			],
+			[
+				"last",
+				"last_time"
+			],
+			[
+				"curr",
+				"current_time"
+			],
+			[
+				"sp",
+				"spring_coefficient"
+			],
+			[
+				"price",
+				"price_coefficient_duples"
+			],
+			[
+				"coin",
+				"coin_deviation_percent_magnitude"
+			],
+			[
+				"buy_bu",
+				"buy_buffer_add"
 			],
 			[
 				"buy_pr",
-				"buy_price"
+				"buy_prices_dictionary"
+			],
+			[
+				"sell",
+				"sell_buffer_add"
+			],
+			[
+				"buffer",
+				"buffer_init"
+			],
+			[
+				"buy_b",
+				"buy_buffer_add"
+			],
+			[
+				"target",
+				"target_coin_holding"
+			],
+			[
+				"valu",
+				"value_list"
+			],
+			[
+				"vasp_run",
+				"vasp_run_inputs_dictionary"
+			],
+			[
+				"polarizat",
+				"polarization_run"
+			],
+			[
+				"vasp",
+				"vasp_run_inputs_dictionary"
+			],
+			[
+				"refere",
+				"reference_structure"
+			],
+			[
+				"calc",
+				"calculate_polarizations"
+			],
+			[
+				"relax",
+				"relaxation_path"
+			],
+			[
+				"relaxat",
+				"relaxation_paths"
+			],
+			[
+				"epit",
+				"epitaxial_path"
+			],
+			[
+				"total",
+				"total_account_value_excess"
 			],
 			[
 				"order",
@@ -164,10 +264,6 @@
 				"queue_properties"
 			],
 			[
-				"curr",
-				"current_run"
-			],
-			[
 				"cur",
 				"current_run"
 			],
@@ -212,10 +308,6 @@
 				"eigen_pairs"
 			],
 			[
-				"init",
-				"initial_structure"
-			],
-			[
 				"sor",
 				"sorted_eigen_chromosome_energy_pairs_list"
 			],
@@ -234,10 +326,6 @@
 			[
 				"get_m",
 				"get_misfit_strain_minimum_energy_polarization_triplets_list"
-			],
-			[
-				"vasp_run",
-				"vasp_run_list"
 			],
 			[
 				"epita",
@@ -310,10 +398,6 @@
 			[
 				"conver",
 				"conversion_factor"
-			],
-			[
-				"refere",
-				"reference_polarization"
 			],
 			[
 				"distor",
@@ -428,129 +512,28 @@
 				"displacement_magnitudes_list"
 			],
 			[
-				"sp",
-				"variable_specialty_points_dictionary"
-			],
-			[
 				"vari",
 				"variable_specialty_points_dictionary"
-			],
-			[
-				"get_sorte",
-				"get_sorted_unique_relaxation_data_list"
-			],
-			[
-				"stat",
-				"status_file_path"
-			],
-			[
-				"displacement_in",
-				"displacement_indices_list"
-			],
-			[
-				"displace",
-				"displacement_variables_list"
-			],
-			[
-				"strain_v",
-				"strain_variables_list"
-			],
-			[
-				"strain_variable_in",
-				"strain_variable_indices_list"
-			],
-			[
-				"differ",
-				"difference_magnitude"
-			],
-			[
-				"diff",
-				"difference_magnitude"
-			],
-			[
-				"sorted",
-				"sorted_relaxation_data_list"
-			],
-			[
-				"sorte",
-				"sorted_relaxation_data_list"
-			],
-			[
-				"vasp",
-				"vasp_relaxation"
-			],
-			[
-				"convert_site",
-				"convert_sites_to_coordinate_mode"
-			],
-			[
-				"lat",
-				"lattice"
-			],
-			[
-				"msif",
-				"misfit_strains_list"
-			],
-			[
-				"mis",
-				"misfit_strain"
-			],
-			[
-				"valid",
-				"validate_real_number"
-			],
-			[
-				"misfi",
-				"misfit_strains_list"
-			],
-			[
-				"displacem",
-				"displacement_variables_dictionary"
-			],
-			[
-				"fina",
-				"final_pairs_list"
-			],
-			[
-				"eigen_chrom",
-				"eigen_chromosome_energy_pair"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/rob.py",
+			"file": "/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/responsive_bot/rob.py",
 			"settings":
 			{
-				"buffer_size": 19901,
+				"buffer_size": 24901,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/C/Users/Tom/.bashrc",
+			"file": "/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/responsive_bot/session.py",
 			"settings":
 			{
-				"buffer_size": 1132,
+				"buffer_size": 8661,
 				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/utility.py",
-			"settings":
-			{
-				"buffer_size": 31982,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/open_orders_dictionary.py",
-			"settings":
-			{
-				"buffer_size": 4489,
 				"line_ending": "Windows"
 			}
 		}
@@ -747,7 +730,6 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io",
@@ -762,11 +744,19 @@
 	],
 	"file_history":
 	[
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/test.py",
+		"/C/Users/Tom/.bashrc",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run_set.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar_maker.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_polarization_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/epitaxial_relaxer.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/rob.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/open_orders_dictionary.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/utility.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/test.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/vasp_input_set.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/lattice.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/perovskite.py",
@@ -779,7 +769,6 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/derivative_plotter.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/data/derivative_plot_data",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/table_builder.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_polarization_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expansion/minima_relaxer.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/hessian.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/eigen_structure.py",
@@ -787,9 +776,7 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/string_util.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/displacement_vector.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/file.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar_maker.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/eigen_component.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_static_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/outcar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/derivative_evaluation_2.py",
@@ -819,7 +806,6 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/phonon_normal_mode_energy_tester.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/taylor_expander.py",
 		"/C/Users/Tom/AppData/Roaming/Sublime Text 3/Packages/User/Anaconda.sublime-settings",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expansion/finite_differences_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expansion/__init__.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expander/variable.py",
@@ -861,7 +847,6 @@
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/cubic_2_2_2/settings.conf",
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/cubic_3_3_3/settings.conf",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/converger.py",
-		"/C/Users/Tom/.bashrc",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relax_phonon.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/phonopy_interface/phonopy_inputs.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/data_structures/input_dictionary.py",
@@ -886,10 +871,7 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/__init__.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/parameter_list.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/data_structures/__init__.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/random_selector.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/ga_driver_100_perovskite_epitaxy.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/vector.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/individual.py"
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/random_selector.py"
 	],
 	"find":
 	{
@@ -908,6 +890,16 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"buy",
+			"sell",
+			"spread_factor",
+			"last_spread_event",
+			"make_trades",
+			"case = 'a'",
+			"(last_spread_event == None) or ",
+			"price_coefficient_duples",
+			"buy",
+			"self.path",
 			"Buy",
 			"buy",
 			"target_coin_holding",
@@ -1025,17 +1017,7 @@
 			"vasp_run_inputs_dictionary",
 			"delete_wavecar",
 			"index",
-			"eigen_vector",
-			"total-force",
-			"outcar",
-			"tensor_start_index",
-			"tensor_start_indices",
-			"get_sorted_hessian_eigen_pairs_list",
-			"energies_list",
-			"expansion_term",
-			"vasp_run_inputs",
-			"reference_structure",
-			"set_taylor_coefficient"
+			"eigen_vector"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1074,28 +1056,29 @@
 			[
 				{
 					"buffer": 0,
-					"file": "/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/rob.py",
+					"file": "/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/responsive_bot/rob.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 19901,
+						"buffer_size": 24901,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								18905,
-								18905
+								12610,
+								12610
 							]
 						],
 						"settings":
 						{
 							"git_gutter_is_enabled": false,
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 7477.0,
+						"translation.y": 4920.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -1103,92 +1086,32 @@
 				},
 				{
 					"buffer": 1,
-					"file": "/C/Users/Tom/.bashrc",
+					"file": "/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/responsive_bot/session.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1132,
+						"buffer_size": 8661,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								867,
-								867
+								4112,
+								4112
 							]
 						],
 						"settings":
 						{
 							"git_gutter_is_enabled": false,
-							"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax",
+							"syntax": "Packages/Python/Python.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 924.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/utility.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 31982,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								31982,
-								31982
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": false,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 15624.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/open_orders_dictionary.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4489,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": false,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1848.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -1231,7 +1154,7 @@
 	},
 	"output.exec":
 	{
-		"height": 200.0
+		"height": 305.0
 	},
 	"output.find_results":
 	{
@@ -1259,6 +1182,34 @@
 		"selected_items":
 		[
 			[
+				"incar",
+				"fpctoolkit\\io\\vasp\\incar.py"
+			],
+			[
+				"incar_m",
+				"fpctoolkit\\io\\vasp\\incar_maker.py"
+			],
+			[
+				"vasp_run",
+				"fpctoolkit\\workflow\\vasp_run_set.py"
+			],
+			[
+				"relax",
+				"fpctoolkit\\workflow\\vasp_relaxation.py"
+			],
+			[
+				"",
+				"fpctoolkit\\workflow\\epitaxial_relaxer.py"
+			],
+			[
+				"vasp_pola",
+				"fpctoolkit\\workflow\\vasp_polarization_run_set.py"
+			],
+			[
+				"epit",
+				"fpctoolkit\\workflow\\epitaxial_relaxer.py"
+			],
+			[
 				"perov",
 				"fpctoolkit\\structure\\perovskite.py"
 			],
@@ -1269,10 +1220,6 @@
 			[
 				"vasp_inp",
 				"fpctoolkit\\io\\vasp\\vasp_input_set.py"
-			],
-			[
-				"vasp_run",
-				"fpctoolkit\\workflow\\vasp_run.py"
 			],
 			[
 				"epita",
@@ -1325,10 +1272,6 @@
 			[
 				"struc",
 				"fpctoolkit\\structure\\structure.py"
-			],
-			[
-				"",
-				"fpctoolkit\\io\\tests\\data_File\\file1.txt"
 			]
 		],
 		"width": 0.0
@@ -1359,7 +1302,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 186.0,
+	"side_bar_width": 236.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
