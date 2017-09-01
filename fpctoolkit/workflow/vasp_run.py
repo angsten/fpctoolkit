@@ -49,7 +49,7 @@ class VaspRun(object):
 			potcar = input_set.potcar
 			submission_script_file = input_set.submission_script_file
 
-		all_essential_input_parameters_exist = not bool(filter(lambda x: x == None, [structure, incar, kpoints, potcar, submission_script_file]))
+		all_essential_input_parameters_exist = not bool(filter(lambda x: x == None, [structure, incar, potcar, submission_script_file]))
 
 		if not Path.exists(self.path) or Path.is_empty(self.path):
 			if not all_essential_input_parameters_exist:
@@ -84,7 +84,11 @@ class VaspRun(object):
 
 		structure.to_poscar_file_path(Path.clean(self.path, 'POSCAR'))
 		incar.write_to_path(Path.clean(self.path, 'INCAR'))
-		kpoints.write_to_path(Path.clean(self.path, 'KPOINTS'))
+		if kpoints: 
+			kpoints.write_to_path(Path.clean(self.path, 'KPOINTS'))
+		elif 'kspacing' not in incar:
+			raise Exception("If no kpoints is provided, must have kspacing parameter in incar set")
+			
 		potcar.write_to_path(Path.clean(self.path, 'POTCAR'))
 		submission_script_file.write_to_path(Path.clean(self.path, 'submit.sh'))
 

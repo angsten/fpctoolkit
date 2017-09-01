@@ -56,7 +56,7 @@ class Kpoints(File):
 
 	def set_subdivisions_list_from_kspacing(kspacing=None, lattice=None):
 		"""kspacing is given in inverse angstroms"""
-		pass
+		return None
 
 
 	@staticmethod

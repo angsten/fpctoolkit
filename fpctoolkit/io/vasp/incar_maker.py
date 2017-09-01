@@ -11,7 +11,21 @@ class IncarMaker(object):
 	"""
 
 
+	@staticmethod
+	def get_nmr_incar(custom_parameters_dictionary=None):
 
+		incar = IncarMaker.get_static_incar(custom_parameters_dictionary)
+		del incar['ibrion']
+		del incar['nsw']
+		del incar['npar'] #lcalcpol runs are not parallelizable when symmetry is on
+
+		incar['lchimag'] = True
+		incar['ediff'] = 1e-10
+		incar['dq'] = 0.001
+		incar['ichibare'] = 1
+		incar['lnmr_sym_red'] = True
+
+		return incar
 
 	@staticmethod
 	def get_static_incar(custom_parameters_dictionary=None):

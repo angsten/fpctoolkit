@@ -6,7 +6,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 from fpctoolkit.io.file import File
 import fpctoolkit.util.string_util as su
 
-file_path = 'C:\Users\Tom\Desktop\pvo_hse_5_atom_doscar'
+file_path = 'C:\Users\Tom\Desktop\pvodosrefined666M'
 file = File(file_path)
 
 
@@ -125,7 +125,7 @@ energy_min = -10
 energy_max = 10
 state_count_max = 10
 
-title = 'PVO3 5-atom Ferromagnetic GGA HSE06 With Spin Polarization 0.035 misfit 600eV encut 6x6x6M Kpoints'
+title = 'PVO3 5-atom Ferromagnetic GGA HSE06 With Spin Polarization bulk 600eV encut 6x6x6M Kpoints precfock=normal no nkred'
 labels = ['Total', 'V d-states', 'O1 p-states', 'O2 p-states']
 
 # plt.suptitle('DOS')

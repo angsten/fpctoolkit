@@ -169,7 +169,7 @@ class VaspHybridDosRunSet(VaspRunSet):
 
 	
 
-			input_set = VaspInputSet(structure, kpoints, incar)
+			input_set = VaspInputSet(structure, kpoints, incar, calculation_type='gga')
 
 			current_dos_run = VaspRun(path=run_path, input_set=input_set, wavecar_path=wavecar_path, chargecar_path = None)
 

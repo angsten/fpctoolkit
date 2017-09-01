@@ -43,7 +43,8 @@ class VaspInputSet(object):
 				if auto_change_npar:
 					self.set_npar_from_number_of_cores()
 					
-				self.check_incar_kpoints_consistent()
+				if kpoints:
+					self.check_incar_kpoints_consistent()
 
 	def auto_generate_potcar(self):
 		if not self.structure:
