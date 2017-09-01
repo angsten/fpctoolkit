@@ -143,7 +143,10 @@ class Poscar(File):
 	def get_coordinate_from_line(line_string):
 		line_string = su.remove_extra_spaces(line_string).strip()
 		component_strings = line_string.split(' ')
-		print "here " + str(component_strings)
+
+		if len(component_strings) == 4:
+			component_strings = component_strings[0:3]
+
 		if len(component_strings) != 3:
 			return False
 
