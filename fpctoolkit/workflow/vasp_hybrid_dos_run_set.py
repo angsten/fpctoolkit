@@ -76,14 +76,23 @@ class VaspHybridDosRunSet(VaspRunSet):
 			self.save()
 
 	def get_current_dos_count(self):
-		if Path.exists(Path.join(self.dos_path, 'hybrid_electronic_optimization_3')):
-			return 3 
-		elif Path.exists(Path.join(self.dos_path, 'hybrid_electronic_optimization_2')):
-			return 2
-		elif Path.exists(Path.join(self.dos_path, 'hybrid_electronic_optimization_1')):
-			return 1
-		else:
+		pre = 'hybrid_electronic_optimization_'
+
+		current = 0
+		while Path.exists(Path.join(self.dos_path, pre + str(current+1))):
+			current += 1
+
+		if current == 0:
 			return 0
+		else:
+			run_path = Path.join(self.dos_path, pre + str(current))
+
+			current_dos_run = VaspRun(path=run_path)
+
+			if current_dos_run.complete:
+				return current + 1
+			else:
+				return current
 
 	def update(self):
 		if not self.relaxation.complete:
@@ -153,7 +162,7 @@ class VaspHybridDosRunSet(VaspRunSet):
 				incar['lwave'] = True
 				incar['lcharg'] = True
 
-			elif dos_runs_count == 2:
+			elif dos_runs_count >= 2:
 				run_path = Path.join(self.dos_path, 'hybrid_electronic_optimization_3')
 				Path.make(run_path)
 
