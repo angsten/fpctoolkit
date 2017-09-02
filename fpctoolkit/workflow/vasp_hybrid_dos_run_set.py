@@ -94,7 +94,7 @@ class VaspHybridDosRunSet(VaspRunSet):
 			dos_runs_count = self.get_current_dos_count()
 
 			incar_modifications = {}
-			for key, value_list in self.relaxation.incar_modifier_lists_dictionary:
+			for key, value_list in self.relaxation.incar_modifier_lists_dictionary.items():
 				incar_modifications[key] = value_list[1000]
 
 			incar = IncarMaker.get_static_incar(incar_modifications)
