@@ -334,7 +334,7 @@ class QueueAdapter(object):
 
 		elif QueueAdapter.host in ['Asathor']:
 			if node_count == 1:
-				return 1
+				return 4
 			if node_count == 2:
 				return 4
 			if node_count == 3:
