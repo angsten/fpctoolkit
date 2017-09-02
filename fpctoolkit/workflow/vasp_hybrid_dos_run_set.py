@@ -145,7 +145,8 @@ class VaspHybridDosRunSet(VaspRunSet):
 
 				incar['ialgo'] = 53
 				incar['time'] = 0.4
-				incar['precfock'] = 'Normal'
+				incar['precfock'] = 'Fast'
+				incar['nkred'] = 2
 				incar['ismear'] = -5
 				incar['sigma'] = 0.02
 				incar['lwave'] = True
@@ -160,7 +161,8 @@ class VaspHybridDosRunSet(VaspRunSet):
 
 				incar['ialgo'] = 53
 				incar['time'] = 0.4
-				incar['precfock'] = 'Normal'
+				incar['precfock'] = 'Fast'
+				incar['nkred'] = 2
 				incar['ismear'] = -5
 				incar['sigma'] = 0.02
 				incar['lwave'] = True
