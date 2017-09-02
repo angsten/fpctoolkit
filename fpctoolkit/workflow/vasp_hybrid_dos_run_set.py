@@ -125,7 +125,7 @@ class VaspHybridDosRunSet(VaspRunSet):
 
 
 			if dos_runs_count == 0:
-				run_path = path.join(self.dos_path, 'hybrid_electronic_optimization_1')
+				run_path = Path.join(self.dos_path, 'hybrid_electronic_optimization_1')
 				Path.make(run_path)
 
 				wavecar_path = Path.join(self.relaxation.path, 'static', 'WAVECAR')
@@ -139,7 +139,7 @@ class VaspHybridDosRunSet(VaspRunSet):
 				incar['lwave'] = True
 
 			elif dos_runs_count == 1 and self.dos_runs_list[-1].complete:
-				run_path = path.join(self.dos_path, 'hybrid_electronic_optimization_2')
+				run_path = Path.join(self.dos_path, 'hybrid_electronic_optimization_2')
 				Path.make(run_path)
 
 				wavecar_path = Path.join(self.dos_path, 'hybrid_electronic_optimization_1', 'WAVECAR')
@@ -154,7 +154,7 @@ class VaspHybridDosRunSet(VaspRunSet):
 				incar['lcharg'] = True
 
 			elif dos_runs_count == 2 and self.dos_runs_list[-1].complete:
-				run_path = path.join(self.dos_path, 'hybrid_electronic_optimization_3')
+				run_path = Path.join(self.dos_path, 'hybrid_electronic_optimization_3')
 				Path.make(run_path)
 
 				wavecar_path = Path.join(self.dos_path, 'hybrid_electronic_optimization_2', 'WAVECAR')
