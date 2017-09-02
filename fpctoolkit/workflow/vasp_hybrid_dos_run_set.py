@@ -138,7 +138,7 @@ class VaspHybridDosRunSet(VaspRunSet):
 				incar['sigma'] = 0.02
 				incar['lwave'] = True
 
-			elif dos_runs_count == 1 and self.dos_runs_list[-1].complete:
+			elif dos_runs_count == 1:
 				run_path = Path.join(self.dos_path, 'hybrid_electronic_optimization_2')
 				Path.make(run_path)
 
@@ -153,7 +153,7 @@ class VaspHybridDosRunSet(VaspRunSet):
 				incar['lwave'] = True
 				incar['lcharg'] = True
 
-			elif dos_runs_count == 2 and self.dos_runs_list[-1].complete:
+			elif dos_runs_count == 2:
 				run_path = Path.join(self.dos_path, 'hybrid_electronic_optimization_3')
 				Path.make(run_path)
 
