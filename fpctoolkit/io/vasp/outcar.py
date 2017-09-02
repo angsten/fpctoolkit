@@ -13,6 +13,7 @@ class Outcar(File):
 	hessian_string = "SECOND DERIVATIVES (NOT SYMMETRIZED)"
 	forces_string = "POSITION                                       TOTAL-FORCE (eV/Angst)"
 	chemical_shift_string = "SYMMETRIZED TENSORS"
+	isotropic_chemical_shift_string = "(absolute, valence and core)"
 
 	def __init__(self, file_path=None):
 		super(Outcar, self).__init__(file_path)
@@ -374,3 +375,64 @@ class Outcar(File):
 			chemical_shift_tensor.append(atomic_tensor)			
 
 		return chemical_shift_tensor
+
+	def get_isotropic_chemical_shifts(self):
+		"""
+		Returns a list of isotropic chemical shifts, one for each atomic species in the poscar.
+
+		 ---------------------------------------------------------------------------------
+		  CSA tensor (J. Mason, Solid State Nucl. Magn. Reson. 2, 285 (1993))
+		 ---------------------------------------------------------------------------------
+		             EXCLUDING G=0 CONTRIBUTION             INCLUDING G=0 CONTRIBUTION
+		         -----------------------------------   -----------------------------------
+		  ATOM    ISO_SHIFT        SPAN        SKEW     ISO_SHIFT        SPAN        SKEW
+		 ---------------------------------------------------------------------------------
+		  (absolute, valence only)
+		     1     548.0290      0.0000      0.0000      434.1470      0.0000      0.0000
+		     2     548.0290      0.0000      0.0000      434.1470      0.0000      0.0000
+		     3     548.0290      0.0000      0.0000      434.1470      0.0000      0.0000
+		     4     548.0290      0.0000      0.0000      434.1470      0.0000      0.0000
+		     5     548.0290      0.0000      0.0000      434.1470      0.0000      0.0000
+		     6     548.0290      0.0000      0.0000      434.1470      0.0000      0.0000
+		     7     548.0290      0.0000      0.0000      434.1470      0.0000      0.0000
+		     8     548.0290      0.0000      0.0000      434.1470      0.0000      0.0000
+		 ---------------------------------------------------------------------------------
+		  (absolute, valence and core)			   ***this is the column*** <-------------------------------
+		     1    -289.8550      0.0000      0.0000     -405.3448      0.0000      0.0000
+		     2    -289.8550      0.0000      0.0000     -405.3448      0.0000      0.0000
+		     3    -289.8550      0.0000      0.0000     -405.3448      0.0000      0.0000
+		     4    -289.8550      0.0000      0.0000     -405.3448      0.0000      0.0000
+		     5    -289.8550      0.0000      0.0000     -405.3448      0.0000      0.0000
+		     6    -289.8550      0.0000      0.0000     -405.3448      0.0000      0.0000
+		     7    -289.8550      0.0000      0.0000     -405.3448      0.0000      0.0000
+		     8    -289.8550      0.0000      0.0000     -405.3448      0.0000      0.0000
+		 ---------------------------------------------------------------------------------
+		  IF SPAN.EQ.0, THEN SKEW IS ILL-DEFINED
+		 ---------------------------------------------------------------------------------
+
+		"""
+
+		if not self.complete:
+			raise Exception("Run does not yet have chemical shift information - not completed")
+
+		tensor_start_indices = self.get_line_indices_containing_string(Outcar.isotropic_chemical_shift_string)
+
+		if len(tensor_start_indices) == 0:
+			raise Exception("No chemical shift information found in completed outcar file")
+
+		tensor_start_index = tensor_start_indices[-1]
+
+		chemical_shift_values = []
+
+		for N in range(self.get_number_of_atoms()):
+			atomic_tensor = []
+
+			tensor_start_index += 1
+
+			line = self.lines[tensor_start_index]
+			row_number_list = su.get_number_list_from_string(line)
+			iso_shift = row_number_list[4]
+
+			chemical_shift_values. append(iso_shift)	
+
+		return chemical_shift_values
