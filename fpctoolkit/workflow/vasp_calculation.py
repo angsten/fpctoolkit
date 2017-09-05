@@ -22,15 +22,15 @@ class VaspCalculation(object):
 
 	"""
 
-	def __init__(self, path, initial_structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None, contcar_path=None, wavecar_path=None, chargecar_path=None):
+	def __init__(self, path, iinitial_structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None, contcar_path=None, wavecar_path=None, chargecar_path=None):
 		"""
 		"""
 
-		if initial_structure and contcar_path:
-			raise Exception("Both an initial initial_structure and a contcar path is given. Only one is allowed.")
+		if iinitial_structure and contcar_path:
+			raise Exception("Both an initial iinitial_structure and a contcar path is given. Only one is allowed.")
 
 		self.path = path
-		self.initial_structure = initial_structure
+		self.iinitial_structure = iinitial_structure
 		self.incar = incar
 		self.kpoints = kpoints
 		self.potcar = potcar
