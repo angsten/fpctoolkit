@@ -1,7 +1,9 @@
 #from fpctoolkit.workflow.vasp_calculation_set import VaspCalculationSet
 
+import collections
 
 from fpctoolkit.util.path import Path
+
 
 class VaspCalculationSet(object):
 	"""
@@ -24,8 +26,10 @@ class VaspCalculationSet(object):
 		self.path = path
 		self.vasp_calculations_list = vasp_calculations_list
 
-
-
+		#Turn lone elements into a parallel group of calculations (with only one calculation)
+		for i in range(len(self.vasp_calculations_list)):
+			if not isinstance(self.vasp_calculations_list[i], collections.Sequence):
+				self.vasp_calculations_list[i] = [self.vasp_calculations_list[i]]
 
 	def update(self):
 		Path.make(self.path)
@@ -43,9 +47,10 @@ class VaspCalculationSet(object):
 
 
 	def complete(self):
-		for vasp_calculation in self.vasp_calculations_list:
-			if not vasp_calculation.complete:
-				return False
+		for vasp_calculation_parallel_group in self.vasp_calculations_list:
+			for vasp_calculation in vasp_calculation_parallel_group:
+				if not vasp_calculation.complete:
+					return False
 
 		return True
 

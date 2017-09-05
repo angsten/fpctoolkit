@@ -53,7 +53,6 @@ class IncarMaker(object):
 		return incar
 
 
-
 	@staticmethod
 	def get_accurate_forces_incar(custom_parameters_dictionary=None):
 		"""

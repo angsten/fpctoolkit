@@ -16,15 +16,15 @@ class Potcar(File):
 
 	element_mapping_path = Path.clean(os.path.dirname(__file__),'potcar_element_mapping.json')
 
-	def __init__(self, file_path=None, elements_list=None, basenames_list=None, calculation_type='lda', minimal_form=None):
+	def __init__(self, file_path=None, elements_list=None, basenames_list=None, calculation_type='lda_paw', minimal_form=None):
 
 		super(Potcar, self).__init__(file_path)
 
 		if file_path:
 			if self.get_lines_containing_string("PAW_PBE"): #be careful if potcars different than used to in future
-				self.calculation_type = 'gga'
+				self.calculation_type = 'gga_paw_pbe'
 			else:
-				self.calculation_type = 'lda'
+				self.calculation_type = 'lda_paw'
 
 		if minimal_form:
 			calculation_type = minimal_form['calculation_type']

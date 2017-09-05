@@ -1,5 +1,5 @@
 {
-	"lda": {
+	"lda_paw": {
 		"path":"~/potcars/LDA/",
 		"B":"B",
 		"C":"C",
@@ -63,7 +63,7 @@
 		"Po":"Po",
 		"At":"At_d"
 	},
-	"gga": {
+	"gga_paw_pbe": {
 		"path":"~/potcars/PBE/",
 		"B":"B",
 		"C":"C",
