@@ -31,6 +31,7 @@ class VaspCalculation(object):
 
 		self.path = path
 		print initial_structure
+		self.iinitial_structure = initial_structure
 		self.initial_structure = initial_structure
 		self.incar = incar
 		self.kpoints = kpoints
