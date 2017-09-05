@@ -36,11 +36,7 @@ class VaspCalculationGenerator(VaspCalculation):
 		'npar': 4,          #must be 4 regardless of system size or:
 		'npar': None, #npar will not be in incar no matter what or:
 		#npar key not present (auto-set based on system size and host)
-		.
-		.
-		any other incar modifiers
-		.
-		.
+		#any other incar modifiers
 	}
 	"""
 
