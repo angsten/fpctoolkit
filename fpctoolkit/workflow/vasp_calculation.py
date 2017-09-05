@@ -85,7 +85,7 @@ class VaspCalculation(object):
 	def start(self):
 		"""Submit the calculation at self.path"""
 
-		print "Starting job at " + self.path
+		print "Starting calculation at " + self.path
 
 		self.write_input_files_to_path()
 

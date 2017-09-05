@@ -28,7 +28,7 @@ class VaspCalculationGenerator(VaspCalculation):
 		'vasp_code_type': 'standard',   #or '100' for out-of-plane only relaxation
 		'node_count': 2,                 #auto-set based on system size and host if not present
 
-		'incar_template': 'static',      #if key not there, just creates a custom incar
+		'incar_template': 'static',      #if key not there, just creates a custom incar, can be 'static' or 'external_relaxation'
 		'encut': 600,
 		'ediff': 1e-6,
 		'kspacing': 0.5,    #if this is specified, don't need kpoints info below
@@ -71,6 +71,8 @@ class VaspCalculationGenerator(VaspCalculation):
 			kpoints = Kpoints(scheme_string=kpoints_scheme, subdivisions_list=kpoints_list)
 		elif 'kspacing' not in vasp_calculation_input_dictionary:
 			raise Exception("If kpoints aren't explicitly defined through a scheme and a list, the kspacing tag must be present in the incar.")
+		else:
+			kpoints = None
 
 		potcar = Potcar(elements_list=information_structure.get_species_list(), calculation_type=potcar_type)
 
