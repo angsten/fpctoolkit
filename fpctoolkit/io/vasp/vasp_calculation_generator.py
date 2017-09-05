@@ -48,11 +48,11 @@ class VaspCalculationGenerator(VaspCalculation):
 
 		information_structure = None #used for number of nodes and potcar
 		if isinstance(vasp_calculation_input_dictionary['structure'], Structure):
-			initial_structure = vasp_calculation_input_dictionary.pop('structure')
-			information_structure = initial_structure
+			iinitial_structure = vasp_calculation_input_dictionary.pop('structure')
+			information_structure = iinitial_structure
 			contcar_path = None
 		else:
-			initial_structure = None
+			iinitial_structure = None
 			contcar_path = vasp_calculation_input_dictionary.pop('structure')
 			information_structure = Structure(contcar_path)
 
@@ -105,5 +105,5 @@ class VaspCalculationGenerator(VaspCalculation):
 			del incar['npar']
 
 
-		super(VaspCalculationGenerator, self).__init__(path=path, iinitial_structure=initial_structure, incar=incar, kpoints=kpoints, potcar=potcar, 
+		super(VaspCalculationGenerator, self).__init__(path=path, initial_structure=iinitial_structure, incar=incar, kpoints=kpoints, potcar=potcar, 
 			submission_script_file=submission_script_file, contcar_path=contcar_path, wavecar_path=wavecar_path, chargecar_path=chargecar_path)
