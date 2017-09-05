@@ -52,6 +52,7 @@ class VaspCalculation(object):
 
 		#check if run is complete
 		if self.complete:
+			print "Job at " + str(self.path) + " is complete."
 			return True
 
 		#check status on queue:
@@ -76,6 +77,8 @@ class VaspCalculation(object):
 			#Run is not active on queue ('C', 'E', or absent) but still isn't complete. An error must have occured. Use handler to check for errors here
 			pass
 
+		print "Job at " + str(self.path) + " is " + str(queue_properties)
+
 		return False
 
 
@@ -84,7 +87,6 @@ class VaspCalculation(object):
 
 		self.write_input_files_to_path()
 
-		print "Path is " + self.path
 		QueueAdapter.submit_job(self.path) #call auto saves id to .job_id in path
 
 		if not self.job_id_string:
