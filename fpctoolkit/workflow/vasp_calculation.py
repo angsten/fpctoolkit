@@ -52,7 +52,7 @@ class VaspCalculation(object):
 
 		#check if run is complete
 		if self.complete:
-			print "Job at " + str(self.path) + " is complete."
+			print "Calculation at " + str(self.path) + ": complete"
 			return True
 
 		#check status on queue:
@@ -77,7 +77,7 @@ class VaspCalculation(object):
 			#Run is not active on queue ('C', 'E', or absent) but still isn't complete. An error must have occured. Use handler to check for errors here
 			pass
 
-		print "Job at " + str(self.path) + " is " + str(queue_properties)
+		print "Calculation at " + str(self.path) + ": " + str(queue_properties)
 
 		return False
 
