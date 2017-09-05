@@ -105,5 +105,5 @@ class VaspCalculationGenerator(VaspCalculation):
 			del incar['npar']
 
 
-		super(VaspCalculationGenerator, self).__init__(path=path, initial_structure=initial_structure, incar=incar, kpoints=kpoints, potcar=potcar, 
+		super(VaspCalculationGenerator, self).__init__(path=path, iinitial_structure=initial_structure, incar=incar, kpoints=kpoints, potcar=potcar, 
 			submission_script_file=submission_script_file, contcar_path=contcar_path, wavecar_path=wavecar_path, chargecar_path=chargecar_path)
