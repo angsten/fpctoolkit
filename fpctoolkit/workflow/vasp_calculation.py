@@ -22,18 +22,18 @@ class VaspCalculation(object):
 
 	"""
 
-	def __init__(self, path, iinitial_structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None, contcar_path=None, wavecar_path=None, chargecar_path=None):
+	def __init__(self, path, initial_structure=None, incar=None, kpoints=None, potcar=None, submission_script_file=None, contcar_path=None, wavecar_path=None, chargecar_path=None):
 		"""
 		"""
 
-		if iinitial_structure and contcar_path:
-			raise Exception("Both an initial iinitial_structure and a contcar path is given. Only one is allowed.")
+		if initial_structure and contcar_path:
+			raise Exception("Both an initial initial_structure and a contcar path is given. Only one is allowed.")
 
 		self.path = path
-		self.iinitial_structure = iinitial_structure
-		self.incar = incar
-		self.kpoints = kpoints
-		self.potcar = potcar
+		self.initial_structure = initial_structure
+		self.initial_incar = incar
+		self.initial_kpoints = kpoints
+		self.initial_potcar = potcar
 		self.submission_script_file = submission_script_file
 		self.contcar_path = contcar_path
 		self.wavecar_path = wavecar_path
@@ -110,15 +110,15 @@ class VaspCalculation(object):
 			if Path.exists(file_path):
 				Path.copy(file_path, self.path)
 
-		incar.write_to_path(Path.join(self.path, 'INCAR'))
+		self.initial_incar.write_to_path(Path.join(self.path, 'INCAR'))
 
-		if kpoints: 
-			kpoints.write_to_path(Path.join(self.path, 'KPOINTS'))
+		if self.initial_kpoints: 
+			self.initial_kpoints.write_to_path(Path.join(self.path, 'KPOINTS'))
 		elif 'kspacing' not in incar:
 			raise Exception("If no kpoints is provided, must have kspacing parameter in incar set")
 			
-		potcar.write_to_path(Path.join(self.path, 'POTCAR'))
-		submission_script_file.write_to_path(Path.join(self.path, 'submit.sh'))
+		self.initial_potcar.write_to_path(Path.join(self.path, 'POTCAR'))
+		self.submission_script_file.write_to_path(Path.join(self.path, 'submit.sh'))
 
 	@property
 	def complete(self):
@@ -143,7 +143,7 @@ class VaspCalculation(object):
 		return QueueAdapter.get_job_id_at_path(self.path) #returns None if no .job_id file	
 
 	@property
-	def initial_structure(self):
+	def poscar(self):
 		if Path.exists(self.get_extended_path('./POSCAR')):
 			return Structure(self.get_extended_path('./POSCAR'))
 		else:
