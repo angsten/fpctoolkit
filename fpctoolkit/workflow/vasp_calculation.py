@@ -29,7 +29,7 @@ class VaspCalculation(object):
 		if initial_structure and contcar_path:
 			raise Exception("Both an initial initial_structure and a contcar path is given. Only one is allowed.")
 
-		self.path = path
+		self.path = Path.clean(path)
 		self.initial_structure = initial_structure
 		self.initial_incar = incar
 		self.initial_kpoints = kpoints

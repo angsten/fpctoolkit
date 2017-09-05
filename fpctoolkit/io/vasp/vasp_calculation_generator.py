@@ -44,7 +44,7 @@ class VaspCalculationGenerator(VaspCalculation):
 
 		vasp_calculation_input_dictionary = copy.deepcopy(vasp_calculation_input_dictionary)
 
-		path = vasp_calculation_input_dictionary.pop('path')
+		path = Path.clean(vasp_calculation_input_dictionary.pop('path'))
 
 		information_structure = None #used for number of nodes and potcar
 		if isinstance(vasp_calculation_input_dictionary['structure'], Structure):
