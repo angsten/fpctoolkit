@@ -84,6 +84,7 @@ class VaspCalculation(object):
 
 		self.write_input_files_to_path()
 
+		print "Path is " + self.path
 		QueueAdapter.submit_job(self.path) #call auto saves id to .job_id in path
 
 		if not self.job_id_string:
