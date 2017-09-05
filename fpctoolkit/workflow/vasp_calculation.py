@@ -119,7 +119,7 @@ class VaspCalculation(object):
 
 		if self.initial_kpoints: 
 			self.initial_kpoints.write_to_path(Path.join(self.path, 'KPOINTS'))
-		elif 'kspacing' not in incar:
+		elif 'kspacing' not in self.incar:
 			raise Exception("If no kpoints is provided, must have kspacing parameter in incar set")
 			
 		self.initial_potcar.write_to_path(Path.join(self.path, 'POTCAR'))
