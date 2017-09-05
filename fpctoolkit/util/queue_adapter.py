@@ -153,9 +153,9 @@ class QueueAdapter(object):
 
 		job_property_dictionary = QueueAdapter.get_job_property_dictionary()
 
-		job_property_dictionary['job_id'] = id_string
-
 		if id_string in job_property_dictionary:
+			output_dictionary = job_property_dictionary[id_string]
+			output_dictionary['job_id'] = id_string
 			return job_property_dictionary[id_string]
 		else:
 			return None
