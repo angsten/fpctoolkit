@@ -11,6 +11,7 @@ from fpctoolkit.io.vasp.incar import Incar
 from fpctoolkit.structure.structure import Structure
 from fpctoolkit.io.vasp.incar_maker import IncarMaker
 from fpctoolkit.workflow.vasp_calculation import VaspCalculation
+from fpctoolkit.util.path import Path
 
 class VaspCalculationGenerator(VaspCalculation):
 	"""
