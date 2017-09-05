@@ -104,7 +104,7 @@ class VaspCalculation(object):
 		elif not Path.exists(self.contcar_path):
 			raise Exception("Neither an initial structure nor an existing contcar path have been provided. Nowhere to get the structure.")
 		else:
-			Path.copy(self.contcar_path, self.get_extended_path(self.path, 'CONTCAR'))
+			Path.copy(self.contcar_path, self.get_extended_path('CONTCAR'))
 
 		for file_path in [self.chargecar_path, self.wavecar_path]:
 			if Path.exists(file_path):
