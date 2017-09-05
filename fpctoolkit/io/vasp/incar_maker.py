@@ -10,25 +10,6 @@ class IncarMaker(object):
 
 	"""
 
-
-	@staticmethod
-	def get_nmr_incar(custom_parameters_dictionary=None):
-
-		incar = IncarMaker.get_static_incar()
-		del incar['ibrion']
-		del incar['nsw']
-		del incar['npar'] #lcalcpol runs are not parallelizable when symmetry is on
-
-		incar['lchimag'] = True
-		incar['ediff'] = 1e-10
-		incar['dq'] = 0.001
-		incar['ichibare'] = 1
-		incar['lnmr_sym_red'] = True
-
-		incar.modify_from_dictionary(custom_parameters_dictionary)
-
-		return incar
-
 	@staticmethod
 	def get_static_incar(custom_parameters_dictionary=None):
 		incar = Incar()
@@ -39,26 +20,14 @@ class IncarMaker(object):
 		incar['nelmin'] = 6 #helps with force accuracy
 		incar['isif'] = 2 #by default, calculate the stress tensor (atoms won't move still)
 		incar['ismear'] = 0
-		incar['sigma'] = 0.01
+		incar['sigma'] = 0.02
 		incar['prec'] = 'Accurate'
 		incar['ediff'] = 1.0e-6
 		incar['encut'] = 600
-		#incar['lreal'] = False
 		incar['lwave'] = False
 		incar['lcharg'] = False
 
 		incar.modify_from_dictionary(custom_parameters_dictionary)
-
-
-		incar['ibrion'] = -1
-		incar['nsw'] = 0
-		# if not incar['ibrion'] == -1:
-		# 	raise Exception("IBRION must be -1 in a static calculation")
-
-		# if not incar['nsw'] == 0:
-		# 	raise Exception("NSW must be 0 in a static calculation")
-
-		del incar['ediffg'] #ediffg controls ionic loop convergence - no sense having in static calculation
 
 		return incar
 
@@ -68,28 +37,18 @@ class IncarMaker(object):
 
 		#optional parameters that can be overwritten by the user
 		incar['ibrion'] = 2
-		incar['nsw'] = 191
+		incar['nsw'] = 151
 		incar['nelmin'] = 6 #helps with force accuracy
 		incar['isif'] = 3 #by default, calculate the stress tensor (atoms won't move still)
 		incar['ismear'] = 0
-		incar['sigma'] = 0.01
+		incar['sigma'] = 0.02
 		incar['prec'] = 'Accurate'
 		incar['ediff'] = 1.0e-6
 		incar['encut'] = 600
-		#incar['lreal'] = False
 		incar['lwave'] = True
 		incar['lcharg'] = False
 
 		incar.modify_from_dictionary(custom_parameters_dictionary)
-
-		if incar['ibrion'] not in [1, 2, 3]:
-			raise Exception("IBRION must be 1, 2, or 3 in an external relaxation")
-
-		if incar['nsw'] <= 0:
-			raise Exception("NSW must be > 0 in an external relaxation")
-
-		# if incar['isif'] != 3:
-		# 	raise Exception("ISIF must be 3 in an external relaxation")
 
 		return incar
 
@@ -163,5 +122,23 @@ class IncarMaker(object):
 		incar['lcalcpol'] = True
 		incar['dipol'] = '0.125 0.125 0.125' #this should be a point of minimum polarization in the cell ########################
 		incar['isif'] = 2
+
+		return incar
+
+	@staticmethod
+	def get_nmr_incar(custom_parameters_dictionary=None):
+
+		incar = IncarMaker.get_static_incar()
+		del incar['ibrion']
+		del incar['nsw']
+		del incar['npar'] #lcalcpol runs are not parallelizable when symmetry is on
+
+		incar['lchimag'] = True
+		incar['ediff'] = 1e-10
+		incar['dq'] = 0.001
+		incar['ichibare'] = 1
+		incar['lnmr_sym_red'] = True
+
+		incar.modify_from_dictionary(custom_parameters_dictionary)
 
 		return incar

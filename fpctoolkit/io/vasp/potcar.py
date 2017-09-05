@@ -7,9 +7,9 @@ from fpctoolkit.util.path import Path
 class Potcar(File):
 	"""
 	Can initialize from an existing potcar file (Potcar('./POTCAR'))
-	Can initialize from a string of elements and whether or not to use LDA or GGA (Potcar(['Ba','Ti','O'],lda=False))
+	Can initialize from a string of elements and whether or not to use LDA or GGA (Potcar(['Ba','Ti','O'], lda=False))
 		In this case, set of predefined potcars will be used
-		Assumes lda = True
+		Assumes lda = True if calculation type is not specified
 	Can initialize from a list of basenames which might look like ['Ba_sv', 'Ti_sv', 'O']
 	Can initialize from a minimal_form which looks like {'basenames':['Ba_sv', 'Ti_sv', 'O'], 'calculation_type':'lda'}
 	"""
