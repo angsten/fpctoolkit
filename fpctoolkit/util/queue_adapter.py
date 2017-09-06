@@ -426,6 +426,8 @@ class QueueAdapter(object):
 				submission_file[program_line_indices[0]] = 'MYMPIPROG="${HOME}/bin/vasp_5.4.1_standard"'
 			elif modification_key == '100':
 				submission_file[program_line_indices[0]] = 'MYMPIPROG="${HOME}/bin/vasp_5.4.1_100_constrained"'
+			else:
+				raise Exception("Modification key " + str(modification_key) + " not valid.")
 
 		elif QueueAdapter.host == 'Tom_hp':
 			return 1
