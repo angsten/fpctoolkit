@@ -15,6 +15,10 @@ class VaspCalculationSet(object):
 
 	self.vasp_calculations_list = [vasp_calc_1, vasp_calc_2, [vcalc_3, vcalc_3_2], vcalc_4] ...]
 
+	The inputs take the same form:
+
+	list_of_vasp_calculation_input_dictionaries = [inputs_dict_1, [inputs_dict_2, inputs...], ...] - see vasp_calculation_generator for how these inputs should look
+
 	vcalc_2 waits for 1 to finish, but vcalc 3 and 3_2 both go at the same time.
 	vcalc_4 waits for both previous two to finish.
 
@@ -26,7 +30,6 @@ class VaspCalculationSet(object):
 
 	def __init__(self, list_of_vasp_calculation_input_dictionaries=None):
 		# self.path = Path.clean(path)
-		self.vasp_calculations_list = []
 
 		self.list_of_vasp_calculation_input_dictionaries = copy.deepcopy(list_of_vasp_calculation_input_dictionaries)
 
@@ -70,7 +73,7 @@ class VaspCalculationSet(object):
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)
 
-	def __iadd__(self, new_vasp_calcualtions_list):
-		self.vasp_calculations_list = self.vasp_calculations_list + new_vasp_calcualtions_list
-		return self
+	# def __iadd__(self, new_vasp_calcualtions_list):
+	# 	self.vasp_calculations_list = self.vasp_calculations_list + new_vasp_calcualtions_list
+	# 	return self
 

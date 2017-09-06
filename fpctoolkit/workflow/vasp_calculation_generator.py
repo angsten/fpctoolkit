@@ -1,4 +1,4 @@
-#from fpctoolkit.io.vasp.vasp_calculation_generator import VaspCalculationGenerator
+#from fpctoolkit.workflow.vasp_calculation_generator import VaspCalculationGenerator
 
 import copy
 
@@ -22,7 +22,7 @@ class VaspCalculationGenerator(VaspCalculation):
 		'structure': Structure('./poscar'), #could also be a path like './poscar', in which case it become the contcar_path for the first run
 		'wavecar_path': './wavecar', #if not present, no wavecar is used
 		'chargecar_path': './chargecar', #if not present, not chargecar is used
-		'kpoints_scheme': 'Gamma',      #not essential if kspacing in incar is set
+		'kpoints_scheme': 'Gamma',      #not essential if kspacing in incar is set - can be None or left out in this case
 		'kpoints_list': [6, 6, 4],
 		'potcar_type': 'lda_paw',       #'lda_paw'  or 'gga_paw_pbe',
 		'vasp_code_type': 'standard',   #'standard' or '100' for out-of-plane only relaxation
@@ -33,10 +33,10 @@ class VaspCalculationGenerator(VaspCalculation):
 		'ediff': 1e-6,
 		'kspacing': 0.5,    #if this is specified, don't need kpoints info below
 		'kgamma': True,
-		'lreal': False,     #set based on system size if lreal key is not present,
+		'lreal': False,     #set based on system size if lreal key is not present or value is None,
 		'npar': 4,          #will be 4 regardless of system size or:
-		'npar': None, #npar will not be in incar no matter what or:
-		#npar key not present (auto-set based on system size and host)
+		'npar': 'Remove', #npar will not be in incar no matter what or:
+		#npar key not present or value is None (auto-set based on system size and host)
 		#any other incar modifiers
 	}
 	"""
@@ -44,6 +44,8 @@ class VaspCalculationGenerator(VaspCalculation):
 	def __init__(self, vasp_calculation_input_dictionary):
 
 		vasp_calculation_input_dictionary = copy.deepcopy(vasp_calculation_input_dictionary)
+
+		vasp_calculation_input_dictionary = {k.lower(): v for k, v in vasp_calculation_input_dictionary.items()} #enforce all keys lowercase
 
 		path = Path.clean(vasp_calculation_input_dictionary.pop('path'))
 
@@ -94,6 +96,10 @@ class VaspCalculationGenerator(VaspCalculation):
 
 		incar_modifiers = vasp_calculation_input_dictionary #whatever is left should only be incar modifiers - we popped all other keys
 
+		for key, value in incar_modifiers.items(): #make sure there are no None values - these should not be put in INCAR
+			if value in [None, 'None']:
+				del incar_modifiers[key]
+
 		if incar_template == 'static':
 			incar = IncarMaker.get_static_incar(custom_parameters_dictionary=incar_modifiers)
 		elif incar_template == 'external_relaxation':
@@ -112,7 +118,7 @@ class VaspCalculationGenerator(VaspCalculation):
 
 		if 'npar' not in incar:
 			incar['npar'] = QueueAdapter.get_optimal_npar(submission_script_file)
-		elif incar['npar'] in [None, 'None']:
+		elif incar['npar'] in ['Remove', 'remove']:
 			del incar['npar']
 
 
