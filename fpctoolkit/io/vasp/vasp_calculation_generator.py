@@ -66,6 +66,9 @@ class VaspCalculationGenerator(VaspCalculation):
 		vasp_code_type = vasp_calculation_input_dictionary.pop('vasp_code_type') if 'vasp_code_type' in vasp_calculation_input_dictionary else 'standard'
 		node_count = vasp_calculation_input_dictionary.pop('node_count') if 'node_count' in vasp_calculation_input_dictionary else None
 
+		for file_path in [wavecar_path, chargecar_path]:
+			if file_path != None and not Path.exists(file_path):
+				raise Exception("Path " + str(file_path) + " specified does not exist.")
 
 		if kpoints_scheme != None and kpoints_list != None:
 			kpoints = Kpoints(scheme_string=kpoints_scheme, subdivisions_list=kpoints_list)
