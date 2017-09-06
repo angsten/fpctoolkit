@@ -70,7 +70,7 @@ class ConvenientVaspCalculationSetGenerator(VaspCalculationSetGenerator):
 
 
 
-		for key in ['structure', 'wavecar_path', 'chargecar_path']
+		for key in ['structure', 'wavecar_path', 'chargecar_path']:
 			data = vasp_calculation_set_input_dictionary[key]
 
 			for i in range(1, len(data)):
