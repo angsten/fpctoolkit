@@ -80,7 +80,7 @@ class ConvenientVaspCalculationSetGenerator(VaspCalculationSetGenerator):
 			for i in range(1, len(data)):
 				value_set = data[i]
 
-				print 'data is ' + value_set
+				print 'data is ' + str(value_set)
 
 				if (not isinstance(value_set, collections.Sequence)) or (isinstance(value_set, basestring)):
 					vasp_calculation_set_input_dictionary[key][i] = [value_set]
