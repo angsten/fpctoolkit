@@ -110,14 +110,9 @@ class VaspCalculationGenerator(VaspCalculation):
 			else:
 				incar['lreal'] = False
 
-		print incar
-		print 
-		print incar['npar']
-		print type(incar['npar'])
 		if 'npar' not in incar:
 			incar['npar'] = QueueAdapter.get_optimal_npar(submission_script_file)
-		elif incar['npar'] == None:
-			print 'heyyyyyyyyyyy'
+		elif incar['npar'] in [None, 'None']:
 			del incar['npar']
 
 
