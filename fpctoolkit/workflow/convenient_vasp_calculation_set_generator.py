@@ -79,6 +79,7 @@ class ConvenientVaspCalculationSetGenerator(VaspCalculationSetGenerator):
 
 			for i in range(1, len(data)):
 				value = data[i]
+				print 'value is ' + str(value)
 
 				if (not isinstance(value, collections.Sequence)) or (isinstance(value, basestring)):
 					if value == 'use_last':
