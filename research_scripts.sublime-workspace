@@ -4,6 +4,86 @@
 		"selected_items":
 		[
 			[
+				"Vas",
+				"VaspCalculationGenerator"
+			],
+			[
+				"list",
+				"list_of_vasp_calculation_input_dictionaries"
+			],
+			[
+				"out",
+				"output_dictionary"
+			],
+			[
+				"id",
+				"id_string"
+			],
+			[
+				"job",
+				"job_property_dictionary"
+			],
+			[
+				"info",
+				"information_structure"
+			],
+			[
+				"cu",
+				"custom_parameters_dictionary"
+			],
+			[
+				"INcar",
+				"IncarMaker"
+			],
+			[
+				"inc",
+				"incar_modifiers"
+			],
+			[
+				"In",
+				"IncarMaker"
+			],
+			[
+				"incar",
+				"incar_template"
+			],
+			[
+				"vasp",
+				"vasp_calculation_input_dictionary"
+			],
+			[
+				"kp",
+				"kpoints_list"
+			],
+			[
+				"collec",
+				"collections"
+			],
+			[
+				"vas",
+				"vasp_calculation_list"
+			],
+			[
+				"file",
+				"file_path"
+			],
+			[
+				"initial",
+				"initial_structure"
+			],
+			[
+				"con",
+				"contcar_path"
+			],
+			[
+				"sub",
+				"submission_script_file"
+			],
+			[
+				"str",
+				"structure"
+			],
+			[
 				"get_num",
 				"get_number_list_from_string"
 			],
@@ -164,10 +244,6 @@
 				"polarization_run"
 			],
 			[
-				"vasp",
-				"vasp_run_inputs_dictionary"
-			],
-			[
 				"refere",
 				"reference_structure"
 			],
@@ -242,10 +318,6 @@
 			[
 				"initia",
 				"initial_structure"
-			],
-			[
-				"initial",
-				"initial_structure_path"
 			],
 			[
 				"relaxations",
@@ -442,209 +514,34 @@
 			[
 				"ion",
 				"ionic_polarization_indices"
-			],
-			[
-				"shif",
-				"shifted_total_polarization_vector"
-			],
-			[
-				"shift",
-				"shift_vector"
-			],
-			[
-				"dis",
-				"distorted_polarization_vector"
-			],
-			[
-				"conver",
-				"conversion_factor"
-			],
-			[
-				"distor",
-				"distorted_polarization"
-			],
-			[
-				"pola",
-				"polarization_vector"
-			],
-			[
-				"pol",
-				"polarization_direction_index"
-			],
-			[
-				"disp",
-				"displacement_mode_vector"
-			],
-			[
-				"ca",
-				"cartesian_direction_index"
-			],
-			[
-				"atom",
-				"atom_index"
-			],
-			[
-				"ref",
-				"reference_polarization_path"
-			],
-			[
-				"disto",
-				"distorted_structure"
-			],
-			[
-				"str",
-				"structures_list"
-			],
-			[
-				"eigen_com",
-				"eigen_component"
-			],
-			[
-				"eigen_comp",
-				"eigen_components_list"
-			],
-			[
-				"ma",
-				"max_minima"
-			],
-			[
-				"latt",
-				"lattice_constants_dictionary"
-			],
-			[
-				"fit",
-				"fitting_parameters"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "fpctoolkit/workflow/vasp_hybrid_dos_run_set.py",
+			"file": "fpctoolkit/workflow/vasp_calculation.py",
 			"settings":
 			{
-				"buffer_size": 6984,
+				"buffer_size": 6851,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/io/vasp/vasp_input_set.py",
+			"file": "fpctoolkit/io/vasp/vasp_calculation_generator.py",
 			"settings":
 			{
-				"buffer_size": 2833,
+				"buffer_size": 6171,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/util/queue_adapter.py",
+			"file": "fpctoolkit/workflow/vasp_calculation_set.py",
 			"settings":
 			{
-				"buffer_size": 14899,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/workflow/vasp_relaxation.py",
-			"settings":
-			{
-				"buffer_size": 14220,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/workflow/vasp_run.py",
-			"settings":
-			{
-				"buffer_size": 11510,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/workflow/epitaxial_relaxer.py",
-			"settings":
-			{
-				"buffer_size": 10516,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/io/vasp/incar_maker.py",
-			"settings":
-			{
-				"buffer_size": 4756,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/io/vasp/kpoints.py",
-			"settings":
-			{
-				"buffer_size": 1767,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/workflow/vasp_polarization_run_set.py",
-			"settings":
-			{
-				"buffer_size": 7048,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "examples/doscar_plotter_5_atom_with_spin.py",
-			"settings":
-			{
-				"buffer_size": 5812,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/io/vasp/outcar.py",
-			"settings":
-			{
-				"buffer_size": 16399,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/structure/structure.py",
-			"settings":
-			{
-				"buffer_size": 7471,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/structure/site.py",
-			"settings":
-			{
-				"buffer_size": 5889,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/util/path.py",
-			"settings":
-			{
-				"buffer_size": 7156,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/io/vasp/poscar.py",
-			"settings":
-			{
-				"buffer_size": 5260,
+				"buffer_size": 3006,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -856,31 +753,41 @@
 	],
 	"file_history":
 	[
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/vasp_input_set.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/queue_adapter.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar_maker.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar_element_mapping.json",
+		"/C/Users/Tom/Documents/Berkeley/research/my_papers/Vanadates Paper/files/fpcnotes",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_calculation_set.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/kpoints.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/file.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/path.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/poscar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/outcar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/doscar_plotter_5_atom_with_spin.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_polarization_run_set.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/epitaxial_relaxer.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_hybrid_dos_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/responsive_bot/rob.py",
 		"/C/Users/Tom/Anaconda2/lib/site-packages/matplotlib/axes/_base.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/doscar_plotter_20_atom_no_spin.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/responsive_bot/session.py",
 		"/C/Users/Tom/.bashrc",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run_set.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar_maker.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_polarization_run_set.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/epitaxial_relaxer.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/rob.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/open_orders_dictionary.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/utility.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/test.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/vasp_input_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/lattice.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/perovskite.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar_element_mapping.json",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop/dead_code_drop.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expansion/derivative_evaluator.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/kpoints.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop/derivative_evaluator.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/derivative_plotter.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/data/derivative_plot_data",
@@ -891,15 +798,12 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/perovskite_epitaxy_energy_explorer.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/string_util.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/displacement_vector.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/file.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/eigen_component.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_static_run_set.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/outcar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/derivative_evaluation_2.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/phonopy_interface/phonopy_utility.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/hessian_eigen_pair.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/fpc_sketcher.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/queue_adapter.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/misc.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expansion/variable.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_forces_run_set.py",
@@ -914,7 +818,6 @@
 		"/C/Python27/tcl/tcl8.5/init.tcl",
 		"/C/Users/Tom/Documents/Berkeley/research/my_papers/Epitaxial Phase Validation Paper/Files/scratch.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/tests/data_Outcar/outcar",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/path.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/normal_mode.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/force_calculation.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/simple_vasp_relaxation.py",
@@ -925,7 +828,6 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expansion/finite_differences_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expansion/__init__.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expander/variable.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/vector.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/basic_validators.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/eigen_normal_mode_energy_tester.py",
@@ -950,7 +852,6 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/phonon_super_displacement_vector.py",
 		"/C/Users/Tom/Anaconda2/sip/__init__.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/phonon_band_structure.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/poscar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/q_point.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_phonon.py",
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/rhombohedral_2_2_2/settings.conf",
@@ -979,11 +880,7 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_mapping_collection.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_mapping.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop/ga_driver_100_perovskite_epitaxy.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/selector.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/math/vector_distribution.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/vector_distribution.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/distribution.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/ga_driver.py"
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/selector.py"
 	],
 	"find":
 	{
@@ -1002,6 +899,31 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"vasp_calculations_list",
+			"incar_template",
+			"Job",
+			"write_id_string_to_path",
+			"get_extended",
+			"kpoints",
+			"iinitial_structure",
+			"initial_structure",
+			"iinitial_structure",
+			"initial_structure",
+			"iinitial_structure",
+			"initial_structure",
+			"potcar_tyep",
+			"vasp_code_type",
+			"kpoints_scheme",
+			"incar_template",
+			"wavecar_path",
+			"wave",
+			"vasp_calculation_list",
+			"run",
+			"all_input_files_are_present",
+			"clean",
+			"Path.clean(",
+			"structure",
+			"queue_properties",
 			"npar",
 			"born_effective_charge_tensor",
 			"1.15",
@@ -1104,32 +1026,7 @@
 			"get_pure_eigen_chromosome_components_from_distorted_structures_list",
 			"taylor",
 			"displacement_variable_terms_list",
-			"strain",
-			"eigen_chromosome_energy_pairs_fil",
-			"print",
-			"def get_ex",
-			"max_magnitude",
-			"VaspForcesRunSet",
-			"displacement_variables_set",
-			"final_pair_list",
-			"MinimaRelaxer",
-			"get_final_energ",
-			"get_displacement_second_derivative",
-			"displacement_count",
-			"strain_count",
-			"desktop",
-			"perturbation_magnitudes_dictionary",
-			"exp_line",
-			"complete()",
-			"perturbations_list",
-			"get_displacement_second_derivative",
-			"get_distorted_structure_from_eigen_chromosome",
-			"displacement_mode_index",
-			"get_force_sums",
-			"vasp_static_run",
-			"structures_list",
-			"get_distorted_structure_from_eigen_chromosome",
-			"displacement"
+			"strain"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1163,24 +1060,24 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "fpctoolkit/workflow/vasp_hybrid_dos_run_set.py",
+					"file": "fpctoolkit/workflow/vasp_calculation.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6984,
+						"buffer_size": 6851,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5798,
-								5798
+								2760,
+								2760
 							]
 						],
 						"settings":
@@ -1190,57 +1087,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 798.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "fpctoolkit/io/vasp/vasp_input_set.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2833,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1303,
-								1332
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 294.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "fpctoolkit/util/queue_adapter.py",
+					"buffer": 1,
+					"file": "fpctoolkit/io/vasp/vasp_calculation_generator.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14899,
+						"buffer_size": 6171,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								10577,
-								10577
+								2002,
+								729
 							]
 						],
 						"settings":
@@ -1250,27 +1117,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 5349.0,
+						"translation.y": 126.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "fpctoolkit/workflow/vasp_relaxation.py",
+					"buffer": 2,
+					"file": "fpctoolkit/workflow/vasp_calculation_set.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14220,
+						"buffer_size": 3006,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								63,
-								1
+								1942,
+								1942
 							]
 						],
 						"settings":
@@ -1280,340 +1147,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 352.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "fpctoolkit/workflow/vasp_run.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 11510,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3786,
-								3786
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2604.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "fpctoolkit/workflow/epitaxial_relaxer.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 10516,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6744,
-								6744
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1721.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 14,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "fpctoolkit/io/vasp/incar_maker.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4756,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								757,
-								757
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "fpctoolkit/io/vasp/kpoints.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1767,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1499,
-								1499
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 84.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 13,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "fpctoolkit/workflow/vasp_polarization_run_set.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7048,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4414,
-								3641
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 840.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "examples/doscar_plotter_5_atom_with_spin.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5812,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4047,
-								4047
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1325.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "fpctoolkit/io/vasp/outcar.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 16399,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								13405,
-								13405
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 5379.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "fpctoolkit/structure/structure.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7471,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1367,
-								1388
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 630.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "fpctoolkit/structure/site.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5889,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 13,
-					"file": "fpctoolkit/util/path.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7156,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2840,
-								2865
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1302.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 14,
-					"file": "fpctoolkit/io/vasp/poscar.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5260,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4694,
-								4694
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1512.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1684,6 +1221,42 @@
 		"selected_items":
 		[
 			[
+				"pot",
+				"fpctoolkit\\io\\vasp\\potcar.py"
+			],
+			[
+				"incar",
+				"fpctoolkit\\io\\vasp\\incar.py"
+			],
+			[
+				"inc",
+				"fpctoolkit\\io\\vasp\\incar_maker.py"
+			],
+			[
+				"kp",
+				"fpctoolkit\\io\\vasp\\kpoints.py"
+			],
+			[
+				"file",
+				"fpctoolkit\\io\\file.py"
+			],
+			[
+				"vasp_run",
+				"fpctoolkit\\workflow\\vasp_run_set.py"
+			],
+			[
+				"que",
+				"fpctoolkit\\util\\queue_adapter.py"
+			],
+			[
+				"input_set",
+				"fpctoolkit\\io\\vasp\\vasp_input_set.py"
+			],
+			[
+				"potcar",
+				"fpctoolkit\\io\\vasp\\potcar.py"
+			],
+			[
 				"qu",
 				"fpctoolkit\\util\\queue_adapter.py"
 			],
@@ -1704,16 +1277,8 @@
 				"fpctoolkit\\structure\\site.py"
 			],
 			[
-				"kp",
-				"fpctoolkit\\io\\vasp\\kpoints.py"
-			],
-			[
 				"vasp_inpu",
 				"fpctoolkit\\io\\vasp\\vasp_input_set.py"
-			],
-			[
-				"vasp_run",
-				"fpctoolkit\\workflow\\vasp_run.py"
 			],
 			[
 				"vasp_p",
@@ -1722,10 +1287,6 @@
 			[
 				"incar_m",
 				"fpctoolkit\\io\\vasp\\incar_maker.py"
-			],
-			[
-				"incar",
-				"fpctoolkit\\io\\vasp\\incar.py"
 			],
 			[
 				"relax",
@@ -1746,10 +1307,6 @@
 			[
 				"perov",
 				"fpctoolkit\\structure\\perovskite.py"
-			],
-			[
-				"potcar",
-				"fpctoolkit\\io\\vasp\\potcar.py"
 			],
 			[
 				"vasp_inp",
@@ -1798,10 +1355,6 @@
 			[
 				"lattice",
 				"fpctoolkit\\structure\\lattice.py"
-			],
-			[
-				"file",
-				"fpctoolkit\\io\\file.py"
 			],
 			[
 				"struc",

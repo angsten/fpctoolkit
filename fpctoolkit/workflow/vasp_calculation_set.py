@@ -24,8 +24,8 @@ class VaspCalculationSet(object):
 	v_set_total += v_nmr_set #keeps same path as v_set_total, adds on new runs
 	"""
 
-	def __init__(self, path, list_of_vasp_calculation_input_dictionaries=None):
-		self.path = Path.clean(path)
+	def __init__(self, list_of_vasp_calculation_input_dictionaries=None):
+		# self.path = Path.clean(path)
 		self.vasp_calculations_list = []
 
 		self.list_of_vasp_calculation_input_dictionaries = copy.deepcopy(list_of_vasp_calculation_input_dictionaries)
@@ -35,18 +35,14 @@ class VaspCalculationSet(object):
 			if not isinstance(self.list_of_vasp_calculation_input_dictionaries[i], collections.Sequence):
 				self.list_of_vasp_calculation_input_dictionaries[i] = [self.list_of_vasp_calculation_input_dictionaries[i]]
 		
-		for vasp_calculation_input_dictionary_parallel_group in self.list_of_vasp_calculation_input_dictionaries:
-			for vasp_calculation_input_dictionary in vasp_calculation_input_dictionary_parallel_group:
-				vasp_calculation_input_dictionary['path'] = Path.join(self.path, vasp_calculation_input_dictionary['path'])
+		# for vasp_calculation_input_dictionary_parallel_group in self.list_of_vasp_calculation_input_dictionaries:
+		# 	for vasp_calculation_input_dictionary in vasp_calculation_input_dictionary_parallel_group:
+		# 		vasp_calculation_input_dictionary['path'] = Path.join(self.path, vasp_calculation_input_dictionary['path'])
 
 	def update(self):
-		Path.make(self.path)
+		# Path.make(self.path)
 
 		print "\nUpdating vasp calculation set at " + str(self.path) + '\n'
-
-		print "heeeeeeeeeeee"
-		print  self.list_of_vasp_calculation_input_dictionaries
-		print 'OHHHH'
 		
 		complete = True
 		for vasp_calculation_input_dictionary_parallel_group in self.list_of_vasp_calculation_input_dictionaries:

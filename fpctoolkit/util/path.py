@@ -32,8 +32,17 @@ class Path(object):
 	@staticmethod
 	def make(path):
 		path = Path.clean(path)
-		if not Path.exists(path):
-			os.mkdir(path)
+
+		components_list = Path.split_into_components(path)
+
+		sub_path = ''
+
+		for component in components_list:
+			sub_path = Path.join(sub_path, component)
+
+			if not Path.exists(sub_path):
+				os.mkdir(path)
+
 
 	@staticmethod
 	def remove(path):
