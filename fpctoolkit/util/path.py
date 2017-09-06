@@ -40,7 +40,9 @@ class Path(object):
 		for component in components_list:
 			sub_path = Path.join(sub_path, component)
 
+			print "subpath is " + str(sub_path)
 			if not Path.exists(sub_path):
+				print "making"
 				os.mkdir(path)
 
 
