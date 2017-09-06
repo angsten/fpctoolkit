@@ -37,7 +37,10 @@ class Path(object):
 
 		sub_path = ''
 
+		print "compon list " + str(components_list)
+
 		for component in components_list:
+			print "comp is " + str(component)
 			sub_path = Path.join(sub_path, component)
 
 			print "subpath is " + str(sub_path)
