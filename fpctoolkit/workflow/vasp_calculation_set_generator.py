@@ -39,6 +39,8 @@ class VaspCalculationSetGenerator(VaspCalculationSet):
 		# self.path = Path.clean(path)
 		
 		vasp_calculation_set_input_dictionary = copy.deepcopy(vasp_calculation_set_input_dictionary)
+		vasp_calculation_set_input_dictionary = {k.lower(): v for k, v in vasp_calculation_set_input_dictionary.items()} #enforce all keys lowercase
+
 
 		keys = vasp_calculation_set_input_dictionary.keys()
 

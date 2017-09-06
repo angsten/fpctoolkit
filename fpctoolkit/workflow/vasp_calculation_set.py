@@ -32,6 +32,7 @@ class VaspCalculationSet(object):
 		# self.path = Path.clean(path)
 
 		self.list_of_vasp_calculation_input_dictionaries = copy.deepcopy(list_of_vasp_calculation_input_dictionaries)
+		self.list_of_vasp_calculation_input_dictionaries = {k.lower(): v for k, v in self.list_of_vasp_calculation_input_dictionaries.items()} #enforce all keys lowercase
 
 		#Turn lone elements into a parallel group of calculations (with only one calculation)
 		for i in range(len(self.list_of_vasp_calculation_input_dictionaries)):
