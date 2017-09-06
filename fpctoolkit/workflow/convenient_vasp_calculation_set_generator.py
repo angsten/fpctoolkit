@@ -4,7 +4,7 @@ import collections
 import copy
 
 from fpctoolkit.util.path import Path
-from fpctoolkit.workflow.vasp_calculation_set import VaspCalculationSet
+from fpctoolkit.workflow.vasp_calculation_set_generator import VaspCalculationSetGenerator
 
 
 class ConvenientVaspCalculationSetGenerator(VaspCalculationSetGenerator):
