@@ -25,7 +25,7 @@ class VaspCalculationSet(object):
 	"""
 
 	def __init__(self, path, list_of_vasp_calculation_input_dictionaries=None):
-		self.path = path
+		self.path = Path.clean(path)
 		self.vasp_calculations_list = []
 
 		self.list_of_vasp_calculation_input_dictionaries = copy.deepcopy(list_of_vasp_calculation_input_dictionaries)
@@ -43,6 +43,10 @@ class VaspCalculationSet(object):
 		Path.make(self.path)
 
 		print "\nUpdating vasp calculation set at " + str(self.path) + '\n'
+
+		print "heeeeeeeeeeee"
+		print  self.list_of_vasp_calculation_input_dictionaries
+		print 'OHHHH'
 		
 		complete = True
 		for vasp_calculation_input_dictionary_parallel_group in self.list_of_vasp_calculation_input_dictionaries:
