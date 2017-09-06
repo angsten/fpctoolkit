@@ -49,7 +49,7 @@ class VaspCalculationSetGenerator(VaspCalculationSet):
 			data_list = vasp_calculation_set_input_dictionary[key]
 
 			for i in range(len(data_list)):
-				if not isinstance(data_list[i], collections.Sequence):
+				if (not isinstance(data_list[i], collections.Sequence)) and (not isinstance(data_list[i], basestring)):
 					data_list[i] = [data_list[i]]
 
 
