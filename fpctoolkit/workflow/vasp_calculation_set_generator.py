@@ -53,8 +53,6 @@ class VaspCalculationSetGenerator(VaspCalculationSet):
 					data_list[i] = [data_list[i]]
 
 
-		print vasp_calculation_set_input_dictionary
-
 		#now we need to make sure all of the data_lists have the same shape
 		paths_data_list = vasp_calculation_set_input_dictionary['path']
 
