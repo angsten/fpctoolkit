@@ -87,7 +87,7 @@ class ConvenientVaspCalculationSetGenerator(VaspCalculationSetGenerator):
 
 				for j, value in enumerate(vasp_calculation_set_input_dictionary[key][i]):
 					
-					print 'value is ' + value
+					print 'value is ' + str(value)
 
 					if value == 'use_last':
 						last_path = vasp_calculation_set_input_dictionary['path'][i-1]
