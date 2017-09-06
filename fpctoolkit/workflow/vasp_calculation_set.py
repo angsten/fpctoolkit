@@ -40,9 +40,6 @@ class VaspCalculationSet(object):
 		# 		vasp_calculation_input_dictionary['path'] = Path.join(self.path, vasp_calculation_input_dictionary['path'])
 
 	def update(self):
-		# Path.make(self.path)
-
-		print "\nUpdating vasp calculation set at " + str(self.path) + '\n'
 		
 		complete = True
 		for vasp_calculation_input_dictionary_parallel_group in self.list_of_vasp_calculation_input_dictionaries:
