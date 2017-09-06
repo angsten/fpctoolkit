@@ -59,7 +59,6 @@ class VaspCalculationSetGenerator(VaspCalculationSet):
 		paths_data_list = vasp_calculation_set_input_dictionary['path']
 
 		for key in keys:
-			print "testing key " + str(key)
 			data_list = vasp_calculation_set_input_dictionary[key]
 
 			if len(data_list) != len(paths_data_list):
@@ -89,4 +88,4 @@ class VaspCalculationSetGenerator(VaspCalculationSet):
 			list_of_vasp_calculation_input_dictionaries.append(vasp_calculation_input_group)
 
 
-		super(VaspCalculationGenerator, self).__init__(list_of_vasp_calculation_input_dictionaries=list_of_vasp_calculation_input_dictionaries)
+		super(VaspCalculationSet, self).__init__(list_of_vasp_calculation_input_dictionaries=list_of_vasp_calculation_input_dictionaries)
