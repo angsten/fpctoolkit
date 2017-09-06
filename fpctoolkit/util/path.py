@@ -37,16 +37,11 @@ class Path(object):
 
 		sub_path = '/'
 
-		print "compon list " + str(components_list)
-
 		for i, component in enumerate(components_list):
 
-			print "comp is " + str(component)
 			sub_path = Path.join(sub_path, component)
 
-			print "subpath is " + str(sub_path)
 			if not Path.exists(sub_path):
-				print "making"
 				os.mkdir(sub_path)
 
 
