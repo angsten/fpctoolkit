@@ -74,6 +74,7 @@ class ConvenientVaspCalculationSetGenerator(VaspCalculationSetGenerator):
 
 
 		for key in ['structure', 'wavecar_path', 'chargecar_path']:
+			print 'key is ' + key
 			data = vasp_calculation_set_input_dictionary[key]
 
 			for i in range(1, len(data)):
@@ -81,6 +82,8 @@ class ConvenientVaspCalculationSetGenerator(VaspCalculationSetGenerator):
 
 				if (not isinstance(value, collections.Sequence)) or (isinstance(value, basestring)):
 					if value == 'use_last':
+						print 'found use last'
+
 						last_path = vasp_calculation_set_input_dictionary['path'][i-1]
 
 						if isinstance(last_path, collections.Sequence) and (not isinstance(last_path, basestring)):
@@ -93,6 +96,7 @@ class ConvenientVaspCalculationSetGenerator(VaspCalculationSetGenerator):
 							elif key == 'chargecar_path':
 								append = 'CHGCAR'
 
+							print 'set'
 							vasp_calculation_set_input_dictionary[key][i] = Path.join(vasp_calculation_set_input_dictionary['path'][i-1], append)
 	
 
