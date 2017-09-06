@@ -17,7 +17,7 @@ class VaspCalculationSetGenerator(VaspCalculationSet):
 	    'wavecar_path': [None, ['./relaxation/relax_1/WAVECAR', './relaxation/relax_1/WAVECAR']], #if not present, no wavecar is used
 	    'chargecar_path': [None, [None, None]], #if not present, not chargecar is used
 	    'kpoints_scheme': ['Gamma', ['Monkhorst', 'Gamma']],      #not essential if kspacing in incar is set
-	    'kpoints_list': [[4, 4, 4], [[4, 4, 4], [6, 6, 6]]],
+	    'kpoints_list': ['4 4 4', ['4 4 4', '6 6 6']],
 	    'potcar_type': ['lda_paw', ['lda_paw', 'lda_paw']],       #'lda_paw'  or 'gga_paw_pbe',
 	    'vasp_code_type': ['standard', ['standard', 'standard']],   #'standard' or '100' for out-of-plane only relaxation
 	    'node_count': [1, [2, 4]],                 #auto-set based on system size and host if not present

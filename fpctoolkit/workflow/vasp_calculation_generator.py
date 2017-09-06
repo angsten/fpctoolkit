@@ -23,7 +23,7 @@ class VaspCalculationGenerator(VaspCalculation):
 		'wavecar_path': './wavecar', #if not present, no wavecar is used
 		'chargecar_path': './chargecar', #if not present, not chargecar is used
 		'kpoints_scheme': 'Gamma',      #not essential if kspacing in incar is set - can be None or left out in this case
-		'kpoints_list': [6, 6, 4],
+		'kpoints_list': '6 6 4',
 		'potcar_type': 'lda_paw',       #'lda_paw'  or 'gga_paw_pbe',
 		'vasp_code_type': 'standard',   #'standard' or '100' for out-of-plane only relaxation
 		'node_count': 2,                 #auto-set based on system size and host if not present
@@ -63,7 +63,7 @@ class VaspCalculationGenerator(VaspCalculation):
 		chargecar_path = vasp_calculation_input_dictionary.pop('chargecar_path') if 'chargecar_path' in vasp_calculation_input_dictionary else None
 		incar_template = vasp_calculation_input_dictionary.pop('incar_template') if 'incar_template' in vasp_calculation_input_dictionary else None
 		kpoints_scheme = vasp_calculation_input_dictionary.pop('kpoints_scheme') if 'kpoints_scheme' in vasp_calculation_input_dictionary else None
-		kpoints_list = vasp_calculation_input_dictionary.pop('kpoints_list') if 'kpoints_list' in vasp_calculation_input_dictionary else None
+		kpoints_list = vasp_calculation_input_dictionary.pop('kpoints_list').split(' ') if 'kpoints_list' in vasp_calculation_input_dictionary else None
 		potcar_type = vasp_calculation_input_dictionary.pop('potcar_type') if 'potcar_type' in vasp_calculation_input_dictionary else 'lda_paw'
 		vasp_code_type = vasp_calculation_input_dictionary.pop('vasp_code_type') if 'vasp_code_type' in vasp_calculation_input_dictionary else 'standard'
 		node_count = vasp_calculation_input_dictionary.pop('node_count') if 'node_count' in vasp_calculation_input_dictionary else None
