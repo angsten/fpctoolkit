@@ -1,6 +1,7 @@
 #from fpctoolkit.workflow.vasp_calculation_set import VaspCalculationSet
 
 import collections
+import copy
 
 from fpctoolkit.util.path import Path
 from fpctoolkit.io.vasp.vasp_calculation_generator import VaspCalculationGenerator
@@ -27,12 +28,16 @@ class VaspCalculationSet(object):
 		self.path = path
 		self.vasp_calculations_list = []
 
-		self.list_of_vasp_calculation_input_dictionaries = list_of_vasp_calculation_input_dictionaries
+		self.list_of_vasp_calculation_input_dictionaries = copy.deepcopy(list_of_vasp_calculation_input_dictionaries)
 
 		#Turn lone elements into a parallel group of calculations (with only one calculation)
 		for i in range(len(self.list_of_vasp_calculation_input_dictionaries)):
 			if not isinstance(self.list_of_vasp_calculation_input_dictionaries[i], collections.Sequence):
 				self.list_of_vasp_calculation_input_dictionaries[i] = [self.list_of_vasp_calculation_input_dictionaries[i]]
+		
+		for vasp_calculation_input_dictionary_parallel_group in self.list_of_vasp_calculation_input_dictionaries:
+			for vasp_calculation_input_dictionary in vasp_calculation_input_dictionary_parallel_group:
+				vasp_calculation_input_dictionary['path'] = Path.join(self.path, vasp_calculation_input_dictionary['path'])
 
 	def update(self):
 		Path.make(self.path)
