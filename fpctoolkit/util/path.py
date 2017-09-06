@@ -35,14 +35,11 @@ class Path(object):
 
 		components_list = Path.split_into_components(path)
 
-		sub_path = components_list[0]
+		sub_path = '/'
 
 		print "compon list " + str(components_list)
 
 		for i, component in enumerate(components_list):
-
-			if i == 0:
-				continue
 
 			print "comp is " + str(component)
 			sub_path = Path.join(sub_path, component)
