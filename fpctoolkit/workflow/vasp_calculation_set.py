@@ -3,6 +3,7 @@
 import collections
 
 from fpctoolkit.util.path import Path
+from fpctoolkit.io.vasp.vasp_calculation_generator import VaspCalculationGenerator
 
 
 class VaspCalculationSet(object):
@@ -11,7 +12,7 @@ class VaspCalculationSet(object):
 
 	These runs operate in paralell/series like so:
 
-	vasp_calculations_list = [vasp_calc_1, vasp_calc_2, [vcalc_3, vcalc_3_2], vcalc_4] ...]
+	self.vasp_calculations_list = [vasp_calc_1, vasp_calc_2, [vcalc_3, vcalc_3_2], vcalc_4] ...]
 
 	vcalc_2 waits for 1 to finish, but vcalc 3 and 3_2 both go at the same time.
 	vcalc_4 waits for both previous two to finish.
@@ -22,21 +23,28 @@ class VaspCalculationSet(object):
 	v_set_total += v_nmr_set #keeps same path as v_set_total, adds on new runs
 	"""
 
-	def __init__(self, path, vasp_calculations_list=None):
+	def __init__(self, path, list_of_vasp_calculation_input_dictionaries=None):
 		self.path = path
-		self.vasp_calculations_list = vasp_calculations_list
+		self.vasp_calculations_list = []
+
+		self.list_of_vasp_calculation_input_dictionaries = list_of_vasp_calculation_input_dictionaries
 
 		#Turn lone elements into a parallel group of calculations (with only one calculation)
-		for i in range(len(self.vasp_calculations_list)):
-			if not isinstance(self.vasp_calculations_list[i], collections.Sequence):
-				self.vasp_calculations_list[i] = [self.vasp_calculations_list[i]]
+		for i in range(len(self.list_of_vasp_calculation_input_dictionaries)):
+			if not isinstance(self.list_of_vasp_calculation_input_dictionaries[i], collections.Sequence):
+				self.list_of_vasp_calculation_input_dictionaries[i] = [self.list_of_vasp_calculation_input_dictionaries[i]]
 
 	def update(self):
 		Path.make(self.path)
+
+		print "\nUpdating vasp calculation set at " + str(self.path) + '\n'
 		
 		complete = True
-		for vasp_calculation_parallel_group in self.vasp_calculations_list:
-			for vasp_calculation in vasp_calculation_parallel_group:
+		for vasp_calculation_input_dictionary_parallel_group in self.list_of_vasp_calculation_input_dictionaries:
+			for vasp_calculation_input_dictionary in vasp_calculation_input_dictionary_parallel_group:
+
+				vasp_calculation = VaspCalculationGenerator(vasp_calculation_input_dictionary)
+
 				if not vasp_calculation.update():
 					complete = False
 
@@ -47,8 +55,11 @@ class VaspCalculationSet(object):
 
 
 	def complete(self):
-		for vasp_calculation_parallel_group in self.vasp_calculations_list:
-			for vasp_calculation in vasp_calculation_parallel_group:
+		for vasp_calculation_input_dictionary_parallel_group in self.list_of_vasp_calculation_input_dictionaries:
+			for vasp_calculation_input_dictionary in vasp_calculation_input_dictionary_parallel_group:
+
+				vasp_calculation = VaspCalculationGenerator(vasp_calculation_input_dictionary)
+
 				if not vasp_calculation.complete:
 					return False
 
