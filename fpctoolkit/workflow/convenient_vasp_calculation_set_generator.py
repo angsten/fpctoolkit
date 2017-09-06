@@ -60,6 +60,9 @@ class ConvenientVaspCalculationSetGenerator(VaspCalculationSetGenerator):
 
 				for i, path_group in enumerate(paths_data_list):
 
+					if (not isinstance(path_group, collections.Sequence)) or isinstance(path_group, basestring):
+						path_group = [path_group]
+
 					new_data_group = []
 					for j, path in enumerate(path_group):
 						print 'path is ' + path
