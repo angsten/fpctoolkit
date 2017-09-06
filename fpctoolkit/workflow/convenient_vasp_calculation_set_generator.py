@@ -65,7 +65,6 @@ class ConvenientVaspCalculationSetGenerator(VaspCalculationSetGenerator):
 
 					new_data_group = []
 					for j, path in enumerate(path_group):
-						print 'path is ' + path
 						new_data_group.append(value)
 
 					new_data_list.append(new_data_group)
