@@ -98,6 +98,8 @@ class VaspCalculationGenerator(VaspCalculation):
 			incar = IncarMaker.get_static_incar(custom_parameters_dictionary=incar_modifiers)
 		elif incar_template == 'external_relaxation':
 			incar = IncarMaker.get_external_relaxation_incar(custom_parameters_dictionary=incar_modifiers)
+		elif incar_template != None:
+			raise Exception("Incar template " + str(incar_template) + " not valid")
 		else:
 			incar = Incar()
 			incar.modify_from_dictionary(incar_modifiers)
