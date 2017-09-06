@@ -22,10 +22,10 @@ class VaspCalculationGenerator(VaspCalculation):
 		'structure': Structure('./poscar'), #could also be a path like './poscar', in which case it become the contcar_path for the first run
 		'wavecar_path': './wavecar', #if not present, no wavecar is used
 		'chargecar_path': './chargecar', #if not present, not chargecar is used
-		'kpoints_scheme': 'Gamma',
+		'kpoints_scheme': 'Gamma',      #not essential if kspacing in incar is set
 		'kpoints_list': [6, 6, 4],
-		'potcar_type': 'lda_paw',       #or 'gga_paw_pbe',
-		'vasp_code_type': 'standard',   #or '100' for out-of-plane only relaxation
+		'potcar_type': 'lda_paw',       #'lda_paw'  or 'gga_paw_pbe',
+		'vasp_code_type': 'standard',   #'standard' or '100' for out-of-plane only relaxation
 		'node_count': 2,                 #auto-set based on system size and host if not present
 
 		'incar_template': 'static',      #if key not there, just creates a custom incar, can be 'static' or 'external_relaxation'
@@ -34,7 +34,7 @@ class VaspCalculationGenerator(VaspCalculation):
 		'kspacing': 0.5,    #if this is specified, don't need kpoints info below
 		'kgamma': True,
 		'lreal': False,     #set based on system size if lreal key is not present,
-		'npar': 4,          #must be 4 regardless of system size or:
+		'npar': 4,          #will be 4 regardless of system size or:
 		'npar': None, #npar will not be in incar no matter what or:
 		#npar key not present (auto-set based on system size and host)
 		#any other incar modifiers

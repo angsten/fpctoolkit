@@ -45,7 +45,7 @@ class VaspCalculation(object):
 
 		Path.make(self.path)
 
-		#only if there is not job_id_string associated with this run should we start the run
+		#only if there is no job_id_string associated with this run should we start the run
 		if not self.job_id_string:
 			self.start()
 			return False
@@ -77,7 +77,8 @@ class VaspCalculation(object):
 			#Run is not active on queue ('C', 'E', or absent) but still isn't complete. An error must have occured. Use handler to check for errors here
 			pass
 
-		print "Calculation at " + str(self.path) + ": " + str(queue_properties)
+		queue_properties_string = str(queue_properties) if queue_properties else 'Failed'
+		print "Calculation at " + str(self.path) + ": " + queue_properties_string
 
 		return False
 
