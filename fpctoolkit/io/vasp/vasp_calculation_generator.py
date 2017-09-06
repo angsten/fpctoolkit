@@ -69,6 +69,9 @@ class VaspCalculationGenerator(VaspCalculation):
 
 		if kpoints_scheme != None and kpoints_list != None:
 			kpoints = Kpoints(scheme_string=kpoints_scheme, subdivisions_list=kpoints_list)
+
+			if 'kspacing' in vasp_calculation_input_dictionary:
+				raise Exception("kpoints are being specified by more than one method.")
 		elif 'kspacing' not in vasp_calculation_input_dictionary:
 			raise Exception("If kpoints aren't explicitly defined through a scheme and a list, the kspacing tag must be present in the incar.")
 		else:
