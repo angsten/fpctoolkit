@@ -63,7 +63,7 @@ class VaspCalculationGenerator(VaspCalculation):
 		chargecar_path = vasp_calculation_input_dictionary.pop('chargecar_path') if 'chargecar_path' in vasp_calculation_input_dictionary else None
 		incar_template = vasp_calculation_input_dictionary.pop('incar_template') if 'incar_template' in vasp_calculation_input_dictionary else None
 		kpoints_scheme = vasp_calculation_input_dictionary.pop('kpoints_scheme') if 'kpoints_scheme' in vasp_calculation_input_dictionary else None
-		kpoints_list = vasp_calculation_input_dictionary.pop('kpoints_list').split(' ') if 'kpoints_list' in vasp_calculation_input_dictionary else None
+		kpoints_list = [int(x) for x in vasp_calculation_input_dictionary.pop('kpoints_list').split(' ')] if 'kpoints_list' in vasp_calculation_input_dictionary else None
 		potcar_type = vasp_calculation_input_dictionary.pop('potcar_type') if 'potcar_type' in vasp_calculation_input_dictionary else 'lda_paw'
 		vasp_code_type = vasp_calculation_input_dictionary.pop('vasp_code_type') if 'vasp_code_type' in vasp_calculation_input_dictionary else 'standard'
 		node_count = vasp_calculation_input_dictionary.pop('node_count') if 'node_count' in vasp_calculation_input_dictionary else None
