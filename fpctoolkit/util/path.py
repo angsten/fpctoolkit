@@ -47,7 +47,7 @@ class Path(object):
 			print "subpath is " + str(sub_path)
 			if not Path.exists(sub_path):
 				print "making"
-				os.mkdir(path)
+				os.mkdir(sub_path)
 
 
 	@staticmethod
