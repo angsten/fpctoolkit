@@ -169,6 +169,12 @@ class VaspCalculation(object):
 		else:
 			return None
 
+	def get_final_structure(self):
+		if Path.exists(self.get_extended_path('./CONTCAR')) and self.complete:
+			return Structure(self.get_extended_path('./CONTCAR'))
+		else:
+			return None
+
 	@property
 	def incar(self):
 		incar_path = Path.clean(self.path, 'INCAR')
