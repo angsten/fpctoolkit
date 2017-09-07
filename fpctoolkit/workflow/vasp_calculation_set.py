@@ -112,7 +112,7 @@ class VaspCalculationSet(object):
 		elif len(energies_list[-1]) > 1:
 			raise Exception("Final energy is ambibuous - multiple ending runs.")
 		else:
-			return energies_list[-1]
+			return energies_list[-1][0]
 
 	def get_final_structure(self):
 		structures_list = self.get_final_structures_list()
@@ -122,7 +122,7 @@ class VaspCalculationSet(object):
 		elif len(structures_list[-1]) > 1:
 			raise Exception("Final structure is ambibuous - multiple ending runs.")
 		else:
-			return structures_list[-1]
+			return structures_list[-1][0]
 
 
 	def get_extended_path(self, relative_path):
