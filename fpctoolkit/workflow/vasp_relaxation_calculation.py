@@ -3,16 +3,9 @@
 import collections
 import copy
 
-from fpctoolkit.workflow.vasp_run import VaspRun
-from fpctoolkit.workflow.vasp_run_set import VaspRunSet
 from fpctoolkit.data_structures.parameter_list import ParameterList
-from fpctoolkit.io.vasp.kpoints import Kpoints
-from fpctoolkit.io.vasp.incar_maker import IncarMaker
-from fpctoolkit.structure.structure import Structure
-from fpctoolkit.util.path import Path
-from fpctoolkit.io.vasp.vasp_input_set import VaspInputSet
-from fpctoolkit.util.queue_adapter import QueueAdapter, QueueStatus
-from fpctoolkit.io.file import File
+from fpctoolkit.workflow.convenient_vasp_calculation_set_generator import ConvenientVaspCalculationSetGenerator
+
 
 class VaspRelaxationCalculation(ConvenientVaspCalculationSetGenerator):
 	"""
