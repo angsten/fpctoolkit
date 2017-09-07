@@ -96,7 +96,7 @@ class VaspCalculationSet(object):
 	def get_final_energy(self, per_atom):
 		energies_list = self.get_energies_list(per_atom=per_atom)
 
-		if not self.complete():
+		if not self.complete:
 			return None
 		elif len(energies_list[-1]) > 1:
 			raise Exception("Final energy is ambibuous - multiple ending runs.")
