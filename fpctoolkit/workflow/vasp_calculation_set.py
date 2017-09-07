@@ -115,7 +115,7 @@ class VaspCalculationSet(object):
 			return energies_list[-1]
 
 	def get_final_structure(self):
-		structures_list = self.get_structures_list()
+		structures_list = self.get_final_structures_list()
 
 		if not self.complete:
 			return None
