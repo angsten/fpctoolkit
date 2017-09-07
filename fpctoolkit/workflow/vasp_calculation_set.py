@@ -43,7 +43,7 @@ class VaspCalculationSet(object):
 		# 		vasp_calculation_input_dictionary['path'] = Path.join(self.path, vasp_calculation_input_dictionary['path'])
 
 	def update(self):
-		
+
 		complete = True
 		for vasp_calculation_input_dictionary_parallel_group in self.list_of_vasp_calculation_input_dictionaries:
 			for vasp_calculation_input_dictionary in vasp_calculation_input_dictionary_parallel_group:
@@ -58,10 +58,24 @@ class VaspCalculationSet(object):
 
 		return True
 
-
-	def complete(self):
+	@property
+	def calculations_list(self):
+		calculations_list = []
 		for vasp_calculation_input_dictionary_parallel_group in self.list_of_vasp_calculation_input_dictionaries:
+			sub_list = []
 			for vasp_calculation_input_dictionary in vasp_calculation_input_dictionary_parallel_group:
+
+				vasp_calculation = VaspCalculationGenerator(vasp_calculation_input_dictionary)		
+				sub_list.append(vasp_calculation)
+
+			calculations_list.append(sub_list)
+
+		return calculations_list
+
+	@property
+	def complete(self):
+		for vasp_calculation_parallel_group in self.calculations_list:
+			for vasp_calculation in vasp_calculation_parallel_group:
 
 				vasp_calculation = VaspCalculationGenerator(vasp_calculation_input_dictionary)
 
@@ -69,6 +83,28 @@ class VaspCalculationSet(object):
 					return False
 
 		return True
+
+	def get_energies_list(self, per_atom=False):
+		energies_list = []
+		for vasp_calculation_parallel_group in self.calculations_list:
+			sub_list = []
+			for vasp_calculation in vasp_calculation_parallel_group:
+				sub_list.append(vasp_calculation.get_final_energy(per_atom=per_atom))
+
+			energies_list.append(sub_list)
+				
+		return energies_list
+
+	def get_final_energy(self, per_atom):
+		energies_list = self.get_energies_list(per_atom=per_atom)
+
+		if not self.complete():
+			return None
+		elif len(energies_list[-1]) > 1:
+			raise Exception("Final energy is ambibuous - multiple ending runs.")
+		else:
+			return energies_list[-1]
+
 
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)

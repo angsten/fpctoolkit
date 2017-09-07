@@ -69,6 +69,7 @@ class EpitaxialRelaxer(object):
 		self.inputs_dictionaries = copy.deepcopy(inputs_dictionaries)
 		self.relaxation_inputs_dictionaries = copy.deepcopy(relaxation_inputs_dictionaries)
 		self.calculate_polarizations = calculate_polarizations
+		self.data_dictionaries = {}
 
 
 	def update(self):
@@ -90,7 +91,13 @@ class EpitaxialRelaxer(object):
 			max_displacement_magnitude = input_dictionary.pop('max_displacement_magnitude')
 			max_strain_magnitude = input_dictionary.pop('max_strain_magnitude')
 
+			self.data_dictionaries[structure_tag] = {}
+
 			for misfit_strain in misfit_strains_list:
+
+				self.data_dictionaries[structure_tag][misfit_strain] = []
+
+
 				print "Misfit strain: " + str(misfit_strain)
 
 				misfit_path = Path.join(epitaxial_path, str(misfit_strain).replace('-', 'n'))
@@ -127,7 +134,13 @@ class EpitaxialRelaxer(object):
 					# if self.calculate_polarizations and relaxation.complete:
 						# self.update_polarization_run(relaxation, structure_tag)
 
-					saved_initial_structure.to_poscar_file_path(Path.join(relaxation_path, 'original_initial_structure'))	
+					saved_initial_structure.to_poscar_file_path(Path.join(relaxation_path, 'original_initial_structure'))
+
+					if relaxation.complete:
+
+						energy = relaxation.get_final_energy(per_atom=True)
+
+						self.data_dictionaries[structure_tag][misfit_strain].append([energy])
 
 				print 
 
@@ -163,43 +176,8 @@ class EpitaxialRelaxer(object):
 		return polarization_run.get_change_in_polarization()
 
 
-	@property
-	def complete(self):
-		for relaxation_path in self.get_relaxation_paths():
-			relaxation = VaspRelaxation(path=relaxation_path)
-
-			if not relaxation.complete:
-				return False
-			elif self.calculate_polarizations:
-				polarization_run = VaspPolarizationRunSet(path=relaxation.path)
-
-				if not polarization_run.complete:
-					return False
-
-		return True
-
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)
-
-	def get_relaxation_paths(self):
-		relaxation_paths = []
-
-		epitaxial_path = Path.join(self.path, 'epitaxial_runs')
-
-		for structure_tag, input_dictionary in self.inputs_dictionaries.items():
-			misfit_strains_list = input_dictionary['misfit_strains_list']
-			number_of_trials = input_dictionary['number_of_trials']
-
-			for misfit_strain in misfit_strains_list:
-				misfit_path = Path.join(epitaxial_path, str(misfit_strain).replace('-', 'n'))
-				relaxations_set_path = Path.join(misfit_path, structure_tag)	
-
-				for i in range(number_of_trials):
-					relaxation_path = Path.join(relaxations_set_path, 'trial_' + str(i))
-
-					relaxation_paths.append(relaxation_path)
-
-		return relaxation_paths
 
 
 	def get_data_dictionaries_list(self, get_polarization=False):
@@ -209,9 +187,27 @@ class EpitaxialRelaxer(object):
 
 		The output of this function looks like [[-0.02, energy_1, [polarization_vector_1]], [-0.015, energy_2, [polarization_vector_2]], ...]
 		"""
-
-		output_data_dictionaries = []
+		output_data_dictionaries = {}
 		spg_symprecs = [0.1, 0.05, 0.04, 0.03, 0.02, 0.01, 0.001]
+
+		for structure_tag, input_dictionary in self.inputs_dictionaries.items():
+
+			output_data_dictionaries[structure_tag] = []
+
+			print "\nUpdating Epitaxial Workflow for " + structure_tag + "\n"
+
+			misfit_strains_list = input_dictionary.pop('misfit_strains_list')
+			reference_lattice_constant = input_dictionary.pop('reference_lattice_constant')
+			number_of_trials = input_dictionary.pop('number_of_trials')
+
+			for misfit_strain in misfit_strains_list:
+				lattice_constant = reference_lattice_constant*(1.0+misfit_strain)
+
+				for i in range(number_of_trials):
+
+
+
+
 
 		for misfit_strain in self.misfit_strains_list:
 			# print str(misfit_strain)
