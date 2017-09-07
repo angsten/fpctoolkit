@@ -77,8 +77,6 @@ class VaspCalculationSet(object):
 		for vasp_calculation_parallel_group in self.calculations_list:
 			for vasp_calculation in vasp_calculation_parallel_group:
 
-				vasp_calculation = VaspCalculationGenerator(vasp_calculation_input_dictionary)
-
 				if not vasp_calculation.complete:
 					return False
 
