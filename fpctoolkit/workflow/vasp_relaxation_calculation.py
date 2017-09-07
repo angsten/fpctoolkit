@@ -30,7 +30,7 @@ class VaspRelaxationCalculation(ConvenientVaspCalculationSetGenerator):
 		initial_structure can be a Structure instance or a path to a poscar
 
 		Input dicitonary should look something like:
-		{
+		input_dictioanry = {
 			'external_relaxation_count': 4, #number of relaxation calculations before static
 			'kpoints_scheme': 'Gamma', #or ['Gamma', 'Monkhorst'] #in latter example, would use gamma for first, monkhorst for rest, in first example, gamma for all
 			'kpoints_list': ['2 2 2', '4 4 4', '4 4 4', '6 6 6', '8 8 8'],
@@ -39,7 +39,9 @@ class VaspRelaxationCalculation(ConvenientVaspCalculationSetGenerator):
 			'potcar_type': 'gga_paw_pbe', #not needed - defaults to 'lda_paw',
 			'ediff': [0.001, 0.00001, 0.0000001],
 			'encut': [200, 400, 600, 800],
-			'isif' : [5, 2, 3],
+			'potim': [0.1, 0.2, 0.4],
+			'nsw': [21, 41, 91],
+			#'isif' : [5, 2, 3],
 			#any other incar parameters with value as a list
 		}
 
@@ -77,6 +79,13 @@ class VaspRelaxationCalculation(ConvenientVaspCalculationSetGenerator):
 			for key, value in input_dictionary.items():
 				vasp_calculation_set_input_dictionary[key].append(value[i])
 
+
+		#enforce essential static parameters for last run
+		if 'nsw' in vasp_calculation_set_input_dictionary:
+			vasp_calculation_set_input_dictionary['nsw'][-1] = 0
+
+		if 'ibrion' in vasp_calculation_set_input_dictionary:
+			vasp_calculation_set_input_dictionary['ibrion'][-1] = -1
 
 		print '\n\n'
 		print vasp_calculation_set_input_dictionary
