@@ -73,7 +73,7 @@ class VaspRelaxationCalculation(ConvenientVaspCalculationSetGenerator):
 
 		
 			
-		for key, value in input_dictionary.items():
+		for key, value in parameter_listed_input_dictionary.items():
 			vasp_calculation_set_input_dictionary[key] = []
 
 			for i in range(0, external_relaxation_count+1):
