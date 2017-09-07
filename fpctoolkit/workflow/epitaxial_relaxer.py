@@ -119,7 +119,7 @@ class EpitaxialRelaxer(object):
 					print "Updating Epitaxial Relax run at " + relaxation_path
 
 					relaxation = VaspRelaxationCalculation(path=relaxation_path, initial_structure=initial_structure, input_dictionary=self.relaxation_inputs_dictionaries[structure_tag])
-					relaxatoin.update()
+					relaxation.update()
 
 					# if self.calculate_polarizations and relaxation.complete:
 						# self.update_polarization_run(relaxation, structure_tag)
