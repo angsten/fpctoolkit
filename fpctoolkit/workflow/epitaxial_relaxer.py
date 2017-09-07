@@ -81,7 +81,7 @@ class EpitaxialRelaxer(object):
 
 		for structure_tag, input_dictionary in inputs_dictionaries.items():
 
-			print "Updating Epitaxial Workflow for " + structure_tag + "\n"
+			print "\nUpdating Epitaxial Workflow for " + structure_tag + "\n"
 
 			misfit_strains_list = input_dictionary.pop('misfit_strains_list')
 			reference_lattice_constant = input_dictionary.pop('reference_lattice_constant')
@@ -92,7 +92,7 @@ class EpitaxialRelaxer(object):
 
 			for misfit_strain in misfit_strains_list:
 				print "Misfit strain: " + str(misfit_strain)
-				
+
 				misfit_path = Path.join(epitaxial_path, str(misfit_strain).replace('-', 'n'))
 				Path.make(misfit_path)
 
@@ -128,6 +128,8 @@ class EpitaxialRelaxer(object):
 						# self.update_polarization_run(relaxation, structure_tag)
 
 					saved_initial_structure.to_poscar_file_path(Path.join(relaxation_path, 'original_initial_structure'))	
+
+				print '\n'
 
 
 
