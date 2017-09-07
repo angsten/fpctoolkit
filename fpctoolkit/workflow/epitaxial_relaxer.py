@@ -138,7 +138,6 @@ class EpitaxialRelaxer(object):
 
 					if relaxation.complete:
 
-
 						spg_symprecs = [0.1, 0.01, 0.001]
 						final_structure = relaxation.get_final_structure()
 

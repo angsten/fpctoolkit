@@ -65,7 +65,13 @@ class VaspCalculationSet(object):
 			sub_list = []
 			for vasp_calculation_input_dictionary in vasp_calculation_input_dictionary_parallel_group:
 
-				vasp_calculation = VaspCalculationGenerator(vasp_calculation_input_dictionary)		
+				calculation_path = vasp_calculation_input_dictionary['path']
+
+				if not Path.exists(calculation_path):
+					vasp_calculation = None
+				else:
+					vasp_calculation = VaspCalculationGenerator(vasp_calculation_input_dictionary)
+					
 				sub_list.append(vasp_calculation)
 
 			calculations_list.append(sub_list)
@@ -77,7 +83,7 @@ class VaspCalculationSet(object):
 		for vasp_calculation_parallel_group in self.calculations_list:
 			for vasp_calculation in vasp_calculation_parallel_group:
 
-				if not vasp_calculation.complete:
+				if (vasp_calculation == None) or (not vasp_calculation.complete):
 					return False
 
 		return True
@@ -87,7 +93,11 @@ class VaspCalculationSet(object):
 		for vasp_calculation_parallel_group in self.calculations_list:
 			sub_list = []
 			for vasp_calculation in vasp_calculation_parallel_group:
-				sub_list.append(vasp_calculation.get_final_energy(per_atom=per_atom))
+
+				if not vasp_calculation == None:
+					sub_list.append(vasp_calculation.get_final_energy(per_atom=per_atom))
+				else:
+					sub_list.append(None)
 
 			energies_list.append(sub_list)
 				
@@ -98,7 +108,12 @@ class VaspCalculationSet(object):
 		for vasp_calculation_parallel_group in self.calculations_list:
 			sub_list = []
 			for vasp_calculation in vasp_calculation_parallel_group:
-				sub_list.append(vasp_calculation.get_final_structure())
+
+				if not vasp_calculation == None:
+					sub_list.append(vasp_calculation.get_final_structure())
+				else:
+					sub_list.append(None)
+				
 
 			final_structures_list.append(sub_list)
 				
