@@ -180,93 +180,93 @@ class EpitaxialRelaxer(object):
 		return Path.join(self.path, relative_path)
 
 
-	def get_data_dictionaries_list(self, get_polarization=False):
-		"""
-		Starts at most negative misfit runs and goes to larger misfits finding the minimum energy data set. To encourage continuity, if two or more relaxations are within a small energy threshold of each other, the 
-		structure that is closest to the last chosen structure is chosen.
+	# def get_data_dictionaries_list(self, get_polarization=False):
+	# 	"""
+	# 	Starts at most negative misfit runs and goes to larger misfits finding the minimum energy data set. To encourage continuity, if two or more relaxations are within a small energy threshold of each other, the 
+	# 	structure that is closest to the last chosen structure is chosen.
 
-		The output of this function looks like [[-0.02, energy_1, [polarization_vector_1]], [-0.015, energy_2, [polarization_vector_2]], ...]
-		"""
-		output_data_dictionaries = {}
-		spg_symprecs = [0.1, 0.05, 0.04, 0.03, 0.02, 0.01, 0.001]
+	# 	The output of this function looks like [[-0.02, energy_1, [polarization_vector_1]], [-0.015, energy_2, [polarization_vector_2]], ...]
+	# 	"""
+	# 	output_data_dictionaries = {}
+	# 	spg_symprecs = [0.1, 0.05, 0.04, 0.03, 0.02, 0.01, 0.001]
 
-		for structure_tag, input_dictionary in self.inputs_dictionaries.items():
+	# 	for structure_tag, input_dictionary in self.inputs_dictionaries.items():
 
-			output_data_dictionaries[structure_tag] = []
+	# 		output_data_dictionaries[structure_tag] = []
 
-			print "\nUpdating Epitaxial Workflow for " + structure_tag + "\n"
+	# 		print "\nUpdating Epitaxial Workflow for " + structure_tag + "\n"
 
-			misfit_strains_list = input_dictionary.pop('misfit_strains_list')
-			reference_lattice_constant = input_dictionary.pop('reference_lattice_constant')
-			number_of_trials = input_dictionary.pop('number_of_trials')
+	# 		misfit_strains_list = input_dictionary.pop('misfit_strains_list')
+	# 		reference_lattice_constant = input_dictionary.pop('reference_lattice_constant')
+	# 		number_of_trials = input_dictionary.pop('number_of_trials')
 
-			for misfit_strain in misfit_strains_list:
-				lattice_constant = reference_lattice_constant*(1.0+misfit_strain)
+	# 		for misfit_strain in misfit_strains_list:
+	# 			lattice_constant = reference_lattice_constant*(1.0+misfit_strain)
 
-				for i in range(number_of_trials):
-
-
+	# 			for i in range(number_of_trials):
 
 
 
-		for misfit_strain in self.misfit_strains_list:
-			# print str(misfit_strain)
-			data_dictionary = OrderedDict()
-			data_dictionary['misfit_strain'] = misfit_strain
 
-			misfit_path = self.get_extended_path(str(misfit_strain).replace('-', 'n'))
 
-			minimum_energy = 10000000000
-			minimum_energy_relaxation = None
-			for i in range(10000):
-				relax_path = Path.join(misfit_path, 'structure_' + str(i))
+	# 	for misfit_strain in self.misfit_strains_list:
+	# 		# print str(misfit_strain)
+	# 		data_dictionary = OrderedDict()
+	# 		data_dictionary['misfit_strain'] = misfit_strain
 
-				if not Path.exists(relax_path):
-					break
+	# 		misfit_path = self.get_extended_path(str(misfit_strain).replace('-', 'n'))
 
-				relaxation = VaspRelaxation(path=relax_path)
+	# 		minimum_energy = 10000000000
+	# 		minimum_energy_relaxation = None
+	# 		for i in range(10000):
+	# 			relax_path = Path.join(misfit_path, 'structure_' + str(i))
 
-				if not relaxation.complete:
-					continue
+	# 			if not Path.exists(relax_path):
+	# 				break
 
-				energy = relaxation.get_final_energy(per_atom=False)
-				# print 'structure_' + str(i), energy
+	# 			relaxation = VaspRelaxation(path=relax_path)
+
+	# 			if not relaxation.complete:
+	# 				continue
+
+	# 			energy = relaxation.get_final_energy(per_atom=False)
+	# 			# print 'structure_' + str(i), energy
 				
-				if energy < minimum_energy:
-					minimum_energy = energy
-					minimum_energy_relaxation = relaxation
+	# 			if energy < minimum_energy:
+	# 				minimum_energy = energy
+	# 				minimum_energy_relaxation = relaxation
 
-			# print 
-			# print "minimum E " + str(minimum_energy)
-			# print 
+	# 		# print 
+	# 		# print "minimum E " + str(minimum_energy)
+	# 		# print 
 			
-			if minimum_energy_relaxation == None:
-				data_dictionary['structure'] = None
-				data_dictionary['energy'] = None
-				data_dictionary['polarization_vector'] = None
+	# 		if minimum_energy_relaxation == None:
+	# 			data_dictionary['structure'] = None
+	# 			data_dictionary['energy'] = None
+	# 			data_dictionary['polarization_vector'] = None
 
-				for symprec in spg_symprecs:
-					data_dictionary['spg_' + str(symprec)] = None
+	# 			for symprec in spg_symprecs:
+	# 				data_dictionary['spg_' + str(symprec)] = None
 
-				data_dictionary['path'] = None
-			else:				
+	# 			data_dictionary['path'] = None
+	# 		else:				
 
-				structure = copy.deepcopy(minimum_energy_relaxation.final_structure)
+	# 			structure = copy.deepcopy(minimum_energy_relaxation.final_structure)
 
-				if get_polarization:
-					polarization_vector = self.update_polarization_run(minimum_energy_relaxation)
-				else:
-					polarization_vector = None
+	# 			if get_polarization:
+	# 				polarization_vector = self.update_polarization_run(minimum_energy_relaxation)
+	# 			else:
+	# 				polarization_vector = None
 
-				data_dictionary['structure'] = structure
-				data_dictionary['energy'] = minimum_energy
-				data_dictionary['polarization_vector'] = polarization_vector
+	# 			data_dictionary['structure'] = structure
+	# 			data_dictionary['energy'] = minimum_energy
+	# 			data_dictionary['polarization_vector'] = polarization_vector
 
-				for symprec in spg_symprecs:
-					data_dictionary['spg_' + str(symprec)] = structure.get_spacegroup_string(symprec)
+	# 			for symprec in spg_symprecs:
+	# 				data_dictionary['spg_' + str(symprec)] = structure.get_spacegroup_string(symprec)
 
-				data_dictionary['path'] = Path.join(minimum_energy_relaxation.path, 'static')
+	# 			data_dictionary['path'] = Path.join(minimum_energy_relaxation.path, 'static')
 
-			output_data_dictionaries.append(data_dictionary)
+	# 		output_data_dictionaries.append(data_dictionary)
 
-		return output_data_dictionaries
+	# 	return output_data_dictionaries
