@@ -31,8 +31,8 @@ class VaspRelaxationCalculation(ConvenientVaspCalculationSetGenerator):
 			'vasp_code_type': 'standard', #optional, 'standard' (default) or '100'
 			'node_count': [1, 2], #optional, set by system size if ever None
 			'potcar_type': 'gga_paw_pbe', #not needed - defaults to 'lda_paw',
-			'ediff': [0.001, 0.00001, 0.0000001],
-			'encut': [200, 400, 600, 800],
+			'ediff': [1e-4, 1e-5, 1e-6],
+			'encut': [400, 600, 800],
 			'potim': [0.1, 0.2, 0.4],
 			'nsw': [21, 41, 91],
 			#'isif' : [5, 2, 3],
@@ -87,8 +87,9 @@ class VaspRelaxationCalculation(ConvenientVaspCalculationSetGenerator):
 		if 'ibrion' in vasp_calculation_set_input_dictionary:
 			vasp_calculation_set_input_dictionary['ibrion'][-1] = -1
 
-		print '\n\n'
-		print vasp_calculation_set_input_dictionary
+		# print '\n\n'
+		# print vasp_calculation_set_input_dictionary
+		# print '\n\n'
 
 
 		super(VaspRelaxationCalculation, self).__init__(vasp_calculation_set_input_dictionary=vasp_calculation_set_input_dictionary)

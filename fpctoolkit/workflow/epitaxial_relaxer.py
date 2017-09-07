@@ -17,22 +17,21 @@ from fpctoolkit.io.file import File
 import fpctoolkit.util.basic_validators as basic_validators
 from fpctoolkit.workflow.vasp_relaxation import VaspRelaxation
 from fpctoolkit.workflow.vasp_polarization_run_set import VaspPolarizationRunSet
+from fpctoolkit.workflow.vasp_relaxation_calculation import VaspRelaxationCalculation
 
 class EpitaxialRelaxer(object):
 	"""
 	Calculates the minimum energy structures across a series of (100) misfit strains.
 	"""
 
-	def __init__(self, path, inputs_dictionaries, calculate_polarizations=False):
+	def __init__(self, path, inputs_dictionaries, relaxation_inputs_dictionaries, calculate_polarizations=False):
 		"""
 		path should be the main path of the calculation set
 
 		initial_structures should be in path/initial_structures, each named according to its structure tag
 
-		reference structure can have any lattice but its atom positions must be in direct coords as the positions to compare polarizations to (choose a centrosymmetric structure if possible)
-
 		inputs_dictionaries should look something like:
-		value for tag: ['structure_afm'] = 
+		value for tag: inputs_dictionaries['structure_afm'] = 
 		{
 			'supercell_dimensions_list': [2, 2, 1],
 			'misfit_strains_list': [-0.04, -0.03, ...],
@@ -40,17 +39,26 @@ class EpitaxialRelaxer(object):
 			'number_of_trials': 3,
 			'max_displacement_magnitude': 0.1, #in angstroms
 			'max_strain_magnitude': 0.01, #unitless, out-of-plane only when applied
-			 #any other incar parameters with value as a list
-			'external_relaxation_count': 4,
-			'kpoint_schemes_list': ['Gamma'],
-			'kpoint_subdivisions_lists': [[1, 1, 1], [1, 1, 2], [2, 2, 4]],
-			'submission_script_modification_keys_list': ['100', 'standard', 'standard_gamma'], #optional - will default to whatever queue adapter gives
-			'submission_node_count_list': [1, 2],
-			'ediff': [0.001, 0.00001, 0.0000001],
-			'encut': [200, 400, 600, 800],
-			'isif' : [5, 2, 3]
 		}
-		value for tag: ['structure_fm'] = ...
+		value for tag: inputs_dictionaries['structure_fm'] = ...
+
+
+		relaxation_inputs_dictionaries['structure_afm'] = 
+		{
+			'external_relaxation_count': 4, #number of relaxation calculations before static
+			'kpoints_scheme': 'Gamma', #or ['Gamma', 'Monkhorst'] #in latter example, would use gamma for first, monkhorst for rest, in first example, gamma for all
+			'kpoints_list': ['2 2 2', '4 4 4', '4 4 4', '6 6 6', '8 8 8'],
+			'vasp_code_type': '100', #optional, 'standard' (default) or '100'
+			'node_count': [1, 2], #optional, set by system size if ever None
+			'potcar_type': 'gga_paw_pbe', #not needed - defaults to 'lda_paw',
+			'ediff': [1e-4, 1e-5, 1e-6],
+			'encut': [400, 600, 800],
+			'potim': [0.1, 0.2, 0.4],
+			'nsw': [21, 41, 91],
+			#'isif' : [5, 2, 3],
+			#any other incar parameters with value as a list
+		}
+		...one for each structure tag
 
 		reference_lattice_constant should be the lattice constant a0 which, when multiplied by the list of misfit strains, generates the new in-plane lattice constant at those strains.
 
@@ -58,20 +66,16 @@ class EpitaxialRelaxer(object):
 		"""
 
 		self.path = path
-		self.inputs_dictionaries = inputs_dictionaries
+		self.inputs_dictionaries = copy.deepcopy(inputs_dictionaries)
+		self.relaxation_inputs_dictionaries = copy.deepcopy(relaxation_inputs_dictionaries)
 		self.calculate_polarizations = calculate_polarizations
 
-		Path.make(path)
 
-		self.initialize_vasp_relaxations()
-
-
-	def initialize_vasp_relaxations(self):
+	def update(self):
 		"""
 		"""
 
 		epitaxial_path = Path.join(self.path, 'epitaxial_runs')
-		Path.make(epitaxial_path)
 
 		inputs_dictionaries = copy.deepcopy(self.inputs_dictionaries)
 
@@ -112,26 +116,16 @@ class EpitaxialRelaxer(object):
 
 					initial_structure.lattice.strain(strain_tensor=random_out_of_plane_strain_tensor)
 
-					if not Path.exists(relaxation_path):
-						print "Initializing epitaxial relaxation at " + relaxation_path
+					print "Updating Epitaxial Relax run at " + relaxation_path
 
-					relaxation = VaspRelaxation(path=relaxation_path, initial_structure=initial_structure, input_dictionary=input_dictionary)
+					relaxation = VaspRelaxationCalculation(path=relaxation_path, initial_structure=initial_structure, input_dictionary=self.relaxation_inputs_dictionaries[structure_tag])
+					relaxatoin.update()
 
-					saved_initial_structure.to_poscar_file_path(Path.join(relaxation_path, 'original_initial_structure'))					
+					# if self.calculate_polarizations and relaxation.complete:
+						# self.update_polarization_run(relaxation, structure_tag)
 
+					saved_initial_structure.to_poscar_file_path(Path.join(relaxation_path, 'original_initial_structure'))	
 
-	def update(self):
-
-		for relaxation_path in self.get_relaxation_paths():
-
-			relaxation = VaspRelaxation(path=relaxation_path)
-
-			relaxation.update()
-
-			print "Updating Epitaxial Relax run at " + relaxation_path + "  Status is " + relaxation.get_status_string()
-
-			if self.calculate_polarizations and relaxation.complete:
-				self.update_polarization_run(relaxation, structure_tag)
 
 
 	def update_polarization_run(self, relaxation, structure_tag):
