@@ -95,7 +95,7 @@ class EpitaxialRelaxer(object):
 
 			for misfit_strain in misfit_strains_list:
 
-				self.data_dictionaries[structure_tag][misfit_strain] = []
+				self.data_dictionaries[structure_tag][misfit_strain] = {}
 
 
 				print "Misfit strain: " + str(misfit_strain)
@@ -138,9 +138,16 @@ class EpitaxialRelaxer(object):
 
 					if relaxation.complete:
 
-						energy = relaxation.get_final_energy(per_atom=True)
 
-						self.data_dictionaries[structure_tag][misfit_strain].append([energy])
+						spg_symprecs = [0.1, 0.01, 0.001]
+						final_structure = relaxation.final_structure
+
+						self.data_dictionaries[structure_tag][misfit_strain]['energy_per_atom'] = relaxation.get_final_energy(per_atom=True)
+						self.data_dictionaries[structure_tag][misfit_strain]['energy'] = relaxation.get_final_energy(per_atom=False)
+						self.data_dictionaries[structure_tag][misfit_strain]['final_structure'] = relaxation.get_final_structure()
+
+						for symprec in spg_symprecs:
+							self.data_dictionaries[structure_tag][misfit_strain]['spg_' + str(symprec)] = final_structure.get_spacegroup_string(symprec)
 
 				print 
 
