@@ -129,8 +129,7 @@ class EpitaxialRelaxer(object):
 
 					saved_initial_structure.to_poscar_file_path(Path.join(relaxation_path, 'original_initial_structure'))	
 
-				print '\n'
-
+				print 
 
 
 	def update_polarization_run(self, relaxation, structure_tag):
