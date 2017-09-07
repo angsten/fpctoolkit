@@ -40,6 +40,9 @@ class VaspRelaxationCalculation(ConvenientVaspCalculationSetGenerator):
 
 		Any parameters normally in the vaspcalculationset input dictionary can be overwritten above.
 		"""
+
+		input_dictionary = copy.deepcopy(input_dictionary)
+
 		vasp_calculation_set_input_dictionary = {}
 		external_relaxation_count = input_dictionary.pop('external_relaxation_count')
 
