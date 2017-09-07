@@ -71,9 +71,12 @@ class VaspRelaxationCalculation(ConvenientVaspCalculationSetGenerator):
 		vasp_calculation_set_input_dictionary['incar_template'] = ['external_relaxation']*external_relaxation_count + ['static']
 
 
-		for i in range(0, external_relaxation_count):
+		
+			
+		for key, value in input_dictionary.items():
 			vasp_calculation_set_input_dictionary[key] = []
-			for key, value in input_dictionary.items():
+
+			for i in range(0, external_relaxation_count+1):
 				vasp_calculation_set_input_dictionary[key].append(value[i])
 
 
