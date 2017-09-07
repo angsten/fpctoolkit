@@ -80,6 +80,9 @@ class EpitaxialRelaxer(object):
 		inputs_dictionaries = copy.deepcopy(self.inputs_dictionaries)
 
 		for structure_tag, input_dictionary in inputs_dictionaries.items():
+
+			print "Updating Epitaxial Workflow for " + structure_tag + "\n"
+
 			misfit_strains_list = input_dictionary.pop('misfit_strains_list')
 			reference_lattice_constant = input_dictionary.pop('reference_lattice_constant')
 			number_of_trials = input_dictionary.pop('number_of_trials')
@@ -88,6 +91,8 @@ class EpitaxialRelaxer(object):
 			max_strain_magnitude = input_dictionary.pop('max_strain_magnitude')
 
 			for misfit_strain in misfit_strains_list:
+				print "Misfit strain: " + str(misfit_strain)
+				
 				misfit_path = Path.join(epitaxial_path, str(misfit_strain).replace('-', 'n'))
 				Path.make(misfit_path)
 
@@ -115,8 +120,6 @@ class EpitaxialRelaxer(object):
 					random_out_of_plane_strain_tensor = [[1.0, 0.0, 0.5*random.uniform(-1.0*max_strain_magnitude, max_strain_magnitude)], [0.0, 1.0, 0.5*random.uniform(-1.0*max_strain_magnitude, max_strain_magnitude)], [0.0, 0.0, 1.0 + random.uniform(-1.0*max_strain_magnitude, max_strain_magnitude)]]
 
 					initial_structure.lattice.strain(strain_tensor=random_out_of_plane_strain_tensor)
-
-					print "Updating Epitaxial Relax run at " + relaxation_path
 
 					relaxation = VaspRelaxationCalculation(path=relaxation_path, initial_structure=initial_structure, input_dictionary=self.relaxation_inputs_dictionaries[structure_tag])
 					relaxation.update()
