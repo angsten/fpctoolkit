@@ -87,5 +87,7 @@ class VaspCalculationSetGenerator(VaspCalculationSet):
 
 			list_of_vasp_calculation_input_dictionaries.append(vasp_calculation_input_group)
 
+		print '\n\nvasp_calc_set_gen:'
+		print list_of_vasp_calculation_input_dictionaries
 
 		super(VaspCalculationSetGenerator, self).__init__(list_of_vasp_calculation_input_dictionaries=list_of_vasp_calculation_input_dictionaries)
