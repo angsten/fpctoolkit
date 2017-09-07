@@ -24,8 +24,8 @@ class IncarMaker(object):
 		incar['prec'] = 'Accurate'
 		incar['ediff'] = 1.0e-6
 		incar['encut'] = 600
-		incar['lwave'] = False
-		incar['lcharg'] = False
+		# incar['lwave'] = False
+		# incar['lcharg'] = False
 
 		incar.modify_from_dictionary(custom_parameters_dictionary)
 
