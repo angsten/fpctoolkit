@@ -3,6 +3,7 @@
 import collections
 import copy
 
+from fpctoolkit.util.path import Path
 from fpctoolkit.data_structures.parameter_list import ParameterList
 from fpctoolkit.workflow.convenient_vasp_calculation_set_generator import ConvenientVaspCalculationSetGenerator
 
@@ -23,7 +24,7 @@ class VaspRelaxationCalculation(ConvenientVaspCalculationSetGenerator):
 		initial_structure can be a Structure instance or a path to a poscar
 
 		Input dicitonary should look something like:
-		input_dictioanry = {
+		input_dictionary = {
 			'external_relaxation_count': 4, #number of relaxation calculations before static
 			'kpoints_scheme': 'Gamma', #or ['Gamma', 'Monkhorst'] #in latter example, would use gamma for first, monkhorst for rest, in first example, gamma for all
 			'kpoints_list': ['2 2 2', '4 4 4', '4 4 4', '6 6 6', '8 8 8'],
