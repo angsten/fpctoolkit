@@ -100,7 +100,7 @@ class ConvenientVaspCalculationSetGenerator(VaspCalculationSetGenerator):
 
 							vasp_calculation_set_input_dictionary[key][i][j] = Path.join(vasp_calculation_set_input_dictionary['path'][i-1], append)
 
-		# print '\n\n'
-		# print vasp_calculation_set_input_dictionary
+		print '\n\n'
+		print vasp_calculation_set_input_dictionary
 
 		super(ConvenientVaspCalculationSetGenerator, self).__init__(vasp_calculation_set_input_dictionary=vasp_calculation_set_input_dictionary)
