@@ -172,7 +172,7 @@ class EpitaxialRelaxer(object):
 						minimum_energy = energy
 						min_index = trial_index
 
-				lowest_energy_dictionaries[structure_tag][misfit_strain] = self.data_dictionaries[structure_tag][min_index]
+				lowest_energy_dictionaries[structure_tag][misfit_strain] = self.data_dictionaries[structure_tag][msifit_strain][min_index]
 
 
 
