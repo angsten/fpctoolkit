@@ -142,11 +142,11 @@ class EpitaxialRelaxer(object):
 					if relaxation.complete:
 
 						spg_symprecs = []#[0.01]#[0.1, 0.01, 0.001]
-						# final_structure = relaxation.get_final_structure()
+						final_structure = relaxation.get_final_structure()
 
-						# self.data_dictionaries[structure_tag][misfit_strain][-1]['energy_per_atom'] = relaxation.get_final_energy(per_atom=True)
-						# self.data_dictionaries[structure_tag][misfit_strain][-1]['energy'] = relaxation.get_final_energy(per_atom=False)
-						# self.data_dictionaries[structure_tag][misfit_strain][-1]['final_structure'] = final_structure
+						self.data_dictionaries[structure_tag][misfit_strain][-1]['energy_per_atom'] = relaxation.get_final_energy(per_atom=True)
+						self.data_dictionaries[structure_tag][misfit_strain][-1]['energy'] = relaxation.get_final_energy(per_atom=False)
+						self.data_dictionaries[structure_tag][misfit_strain][-1]['final_structure'] = final_structure
 
 						for symprec in spg_symprecs:
 							self.data_dictionaries[structure_tag][misfit_strain][-1]['spg_' + str(symprec)] = final_structure.get_spacegroup_string(symprec)
