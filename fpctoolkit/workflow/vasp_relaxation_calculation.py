@@ -42,6 +42,8 @@ class VaspRelaxationCalculation(ConvenientVaspCalculationSetGenerator):
 		Any parameters normally in the vaspcalculationset input dictionary can be overwritten above.
 		"""
 
+		self.path = path
+
 		input_dictionary = copy.deepcopy(input_dictionary)
 
 		vasp_calculation_set_input_dictionary = {}
