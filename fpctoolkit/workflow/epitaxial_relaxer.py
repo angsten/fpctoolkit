@@ -172,7 +172,7 @@ class EpitaxialRelaxer(object):
 						energy = self.data_dictionaries[structure_tag][misfit_strain][trial_index]['energy_per_atom']
 
 						if energy < min_energy:
-							minimum_energy = energy
+							min_energy = energy
 							min_index = trial_index
 
 				if not min_index == None:
