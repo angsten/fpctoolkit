@@ -164,15 +164,20 @@ class EpitaxialRelaxer(object):
 				lowest_energy_dictionaries[structure_tag][misfit_strain] = {}
 
 				min_energy = 10000000
-				min_index = 10000000
+				min_index = None
 				for trial_index, trial_dictionary in enumerate(self.data_dictionaries[structure_tag][misfit_strain]):
-					energy = self.data_dictionaries[structure_tag][misfit_strain][trial_index]['energy_per_atom']
 
-					if energy < min_energy:
-						minimum_energy = energy
-						min_index = trial_index
+					if 'energy_per_atom' in self.data_dictionaries[structure_tag][misfit_strain][trial_index].keys():
+						energy = self.data_dictionaries[structure_tag][misfit_strain][trial_index]['energy_per_atom']
 
-				lowest_energy_dictionaries[structure_tag][misfit_strain] = self.data_dictionaries[structure_tag][misfit_strain][min_index]
+						if energy < min_energy:
+							minimum_energy = energy
+							min_index = trial_index
+
+				if not min_index == None:
+					lowest_energy_dictionaries[structure_tag][misfit_strain] = self.data_dictionaries[structure_tag][misfit_strain][min_index]
+				else:
+					lowest_energy_dictionaries[structure_tag][misfit_strain] = None
 
 		return lowest_energy_dictionaries
 
