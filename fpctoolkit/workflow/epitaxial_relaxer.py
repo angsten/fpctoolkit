@@ -95,7 +95,7 @@ class EpitaxialRelaxer(object):
 
 			for misfit_strain in misfit_strains_list:
 
-				self.data_dictionaries[structure_tag][misfit_strain] = {}
+				self.data_dictionaries[structure_tag][misfit_strain] = []
 
 
 				print "Misfit strain: " + str(misfit_strain)
@@ -109,6 +109,9 @@ class EpitaxialRelaxer(object):
 				lattice_constant = reference_lattice_constant*(1.0+misfit_strain)
 
 				for i in range(number_of_trials):
+
+					self.data_dictionaries[structure_tag][misfit_strain].append({})
+
 					relaxation_path = Path.join(relaxations_set_path, 'trial_' + str(i))
 
 					initial_structure_path = Path.join(self.path, 'initial_structures', structure_tag)
@@ -141,14 +144,37 @@ class EpitaxialRelaxer(object):
 						spg_symprecs = [0.1, 0.01, 0.001]
 						final_structure = relaxation.get_final_structure()
 
-						self.data_dictionaries[structure_tag][misfit_strain]['energy_per_atom'] = relaxation.get_final_energy(per_atom=True)
-						self.data_dictionaries[structure_tag][misfit_strain]['energy'] = relaxation.get_final_energy(per_atom=False)
-						self.data_dictionaries[structure_tag][misfit_strain]['final_structure'] = final_structure
+						self.data_dictionaries[structure_tag][misfit_strain][-1]['energy_per_atom'] = relaxation.get_final_energy(per_atom=True)
+						self.data_dictionaries[structure_tag][misfit_strain][-1]['energy'] = relaxation.get_final_energy(per_atom=False)
+						self.data_dictionaries[structure_tag][misfit_strain][-1]['final_structure'] = final_structure
 
 						for symprec in spg_symprecs:
-							self.data_dictionaries[structure_tag][misfit_strain]['spg_' + str(symprec)] = final_structure.get_spacegroup_string(symprec)
+							self.data_dictionaries[structure_tag][misfit_strain][-1]['spg_' + str(symprec)] = final_structure.get_spacegroup_string(symprec)
 
 				print 
+
+	def get_lowest_energy_data_dictionaries(self):
+
+		lowest_energy_dictionaries = {}
+
+		for structure_tag in self.data_dictionaries:
+			lowest_energy_dictionaries[structure_tag] = {}
+
+			for misfit_strain in self.data_dictionaries[structure_tag]:
+				lowest_energy_dictionaries[structure_tag][misfit_strain] = {}
+
+				min_energy = 10000000
+				min_index = 10000000
+				for trial_index, trial_dictionary in enumerate(self.data_dictionaries[structure_tag][misfit_strain]):
+					energy = self.data_dictionaries[structure_tag][misfit_strain][trial_index]['energy_per_atom']
+
+					if energy < min_energy:
+						minimum_energy = energy
+						min_index = trial_index
+
+				lowest_energy_dictionaries[structure_tag][misfit_strain] = self.data_dictionaries[structure_tag][min_index]
+
+
 
 
 	def update_polarization_run(self, relaxation, structure_tag):

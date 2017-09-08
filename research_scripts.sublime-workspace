@@ -4,6 +4,42 @@
 		"selected_items":
 		[
 			[
+				"calc",
+				"calculation_path"
+			],
+			[
+				"ener",
+				"energies_list"
+			],
+			[
+				"calculat",
+				"calculations_list"
+			],
+			[
+				"vasp",
+				"vasp_calculation"
+			],
+			[
+				"data",
+				"data_dictionary"
+			],
+			[
+				"outpu",
+				"output_data_dictionaries"
+			],
+			[
+				"rela",
+				"relaxation_inputs_dictionaries"
+			],
+			[
+				"rel",
+				"relaxation_inputs_dictionaries"
+			],
+			[
+				"para",
+				"parameter_listed_input_dictionary"
+			],
+			[
 				"path",
 				"path_group"
 			],
@@ -24,20 +60,12 @@
 				"structure_data"
 			],
 			[
-				"vasp",
-				"vasp_calculation_set_input_dictionary"
-			],
-			[
 				"new",
 				"new_data_group"
 			],
 			[
 				"vasp_calc",
 				"vasp_calculation_input_group"
-			],
-			[
-				"data",
-				"data_item"
 			],
 			[
 				"pa",
@@ -184,10 +212,6 @@
 				"relaxation_input_dictionary"
 			],
 			[
-				"rela",
-				"relaxation_input_dictionary"
-			],
-			[
 				"ex",
 				"extra_dos_inputs"
 			],
@@ -286,10 +310,6 @@
 			[
 				"refere",
 				"reference_structure"
-			],
-			[
-				"calc",
-				"calculate_polarizations"
 			],
 			[
 				"relaxat",
@@ -452,10 +472,6 @@
 				"mode_charge_file"
 			],
 			[
-				"rel",
-				"relax_path"
-			],
-			[
 				"cell",
 				"cell_volume"
 			],
@@ -498,22 +514,6 @@
 			[
 				"spg",
 				"spg_symprecs"
-			],
-			[
-				"get_m",
-				"get_misfit_strain_minimum_energy_polarization_triplets_list"
-			],
-			[
-				"epita",
-				"epitaxial_relaxer"
-			],
-			[
-				"update",
-				"update_eptiaxy_only"
-			],
-			[
-				"mi",
-				"minimum_energy"
 			]
 		]
 	},
@@ -523,7 +523,16 @@
 			"file": "fpctoolkit/workflow/vasp_calculation.py",
 			"settings":
 			{
-				"buffer_size": 6851,
+				"buffer_size": 7037,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/workflow/vasp_calculation_set.py",
+			"settings":
+			{
+				"buffer_size": 4926,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -533,15 +542,6 @@
 			"settings":
 			{
 				"buffer_size": 6659,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/workflow/vasp_calculation_set.py",
-			"settings":
-			{
-				"buffer_size": 2983,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -569,6 +569,24 @@
 			"settings":
 			{
 				"buffer_size": 4072,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/workflow/vasp_relaxation_calculation.py",
+			"settings":
+			{
+				"buffer_size": 3798,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/workflow/epitaxial_relaxer.py",
+			"settings":
+			{
+				"buffer_size": 11029,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -780,6 +798,7 @@
 	],
 	"file_history":
 	[
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar_maker.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/vasp_calculation_generator.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/path.py",
@@ -800,7 +819,6 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/doscar_plotter_5_atom_with_spin.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_polarization_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/epitaxial_relaxer.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_hybrid_dos_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/responsive_bot/rob.py",
 		"/C/Users/Tom/Anaconda2/lib/site-packages/matplotlib/axes/_base.py",
@@ -926,6 +944,11 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"energies",
+			"energies_list",
+			"vasp_calculation_input_dictionary_parallel_group",
+			"supercell_dimensions_list",
+			"VaspRelaxation",
 			"wavecar_path",
 			"value",
 			"structure_data",
@@ -1048,12 +1071,7 @@
 			"path.make",
 			"get_force_sums",
 			"delete_wavecars_of_completed_runs",
-			"get_displacement_second_derivative",
-			"get_distorted_structure_from_eigen_chromosome",
-			"displacement_magnitude",
-			"pure_displacement_magnitudes_list",
-			"displacement_variable",
-			"displacement_magnitudes_list"
+			"get_displacement_second_derivative"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1087,7 +1105,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -1096,15 +1114,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6851,
+						"buffer_size": 7037,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								65,
-								1
+								5321,
+								5321
 							]
 						],
 						"settings":
@@ -1114,14 +1132,44 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 378.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
+					"file": "fpctoolkit/workflow/vasp_calculation_set.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4926,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2872,
+								2872
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 504.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
 					"file": "fpctoolkit/workflow/vasp_calculation_generator.py",
 					"semi_transient": false,
 					"settings":
@@ -1144,40 +1192,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 714.0,
+						"translation.y": 126.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "fpctoolkit/workflow/vasp_calculation_set.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2983,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1215,
-								1215
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -1193,8 +1211,8 @@
 						"selection":
 						[
 							[
-								4023,
-								3934
+								162,
+								125
 							]
 						],
 						"settings":
@@ -1204,10 +1222,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 546.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
@@ -1223,8 +1241,8 @@
 						"selection":
 						[
 							[
-								4566,
-								4502
+								112,
+								1
 							]
 						],
 						"settings":
@@ -1234,10 +1252,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 798.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
@@ -1253,8 +1271,8 @@
 						"selection":
 						[
 							[
-								1439,
-								1439
+								842,
+								842
 							]
 						],
 						"settings":
@@ -1267,7 +1285,67 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "fpctoolkit/workflow/vasp_relaxation_calculation.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3798,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								86,
+								1
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 84.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "fpctoolkit/workflow/epitaxial_relaxer.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11029,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6146,
+								6146
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1356.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
