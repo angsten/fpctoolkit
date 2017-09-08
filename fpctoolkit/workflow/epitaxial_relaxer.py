@@ -174,7 +174,7 @@ class EpitaxialRelaxer(object):
 
 				lowest_energy_dictionaries[structure_tag][misfit_strain] = self.data_dictionaries[structure_tag][misfit_strain][min_index]
 
-
+		return lowest_energy_dictionaries
 
 
 	def update_polarization_run(self, relaxation, structure_tag):
