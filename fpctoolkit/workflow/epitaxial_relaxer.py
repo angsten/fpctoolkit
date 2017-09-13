@@ -182,6 +182,16 @@ class EpitaxialRelaxer(object):
 
 		return lowest_energy_dictionaries
 
+	def print_lowest_energies(self):
+		lowest_energy_dictionaries = self.get_lowest_energy_data_dictionaries()
+
+		for structure_tag in lowest_energy_dictionaries:
+			print '\n' + structure_tag
+
+			ordered_misfits = Sorted(lowest_energy_dictionaries[structure_tag])
+
+			for misfit in ordered_misfits:
+				print str(misfit), lowest_energy_dictionaries[structure_tag][misfit]['energy'], lowest_energy_dictionaries[structure_tag][misfit]['energy_per_atom'] 
 
 	def update_polarization_run(self, relaxation, structure_tag):
 

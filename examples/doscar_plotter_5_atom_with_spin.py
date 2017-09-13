@@ -6,7 +6,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 from fpctoolkit.io.file import File
 import fpctoolkit.util.string_util as su
 
-file_path = 'C:\Users\Tom\Desktop\pvodosrefined666M'
+file_path = 'C:\Users\Tom\Desktop/5at_kvo_epi_666G'
 file = File(file_path)
 
 
@@ -121,18 +121,18 @@ if len(data_series[1][0]) == 19: #spin, columns are energy and those above, one 
 
 
 
-energy_min = -10
-energy_max = 10
+energy_min = -6.5
+energy_max = 6.5
 state_count_max = 10
 
-title = 'PVO3 5-atom Ferromagnetic GGA HSE06 With Spin Polarization bulk 600eV encut 6x6x6M Kpoints precfock=normal no nkred'
-labels = ['Total', 'V d-states', 'O1 p-states', 'O2 p-states']
+title = 'KVO 5-atom Spin Polarized GGA HSE06 -0.035 misfit epitaxial structure 600eV encut 6x6x6G Kpoints'
+labels = ['Total', 'V d-states', 'O1 p-states', 'O2 p-states', 'O3 p-states']
 
 # plt.suptitle('DOS')
 
 # plt.plot(energies_list, total_dos, 'black', linewidth=2.0)
 
-figure, sub_plots = plt.subplots(4, sharex=True)
+figure, sub_plots = plt.subplots(5, sharex=True)
 figure.set_size_inches(12, 9, forward=True)
 
 sub_plots[0].plot(energies_list, total_dos, 'black', linewidth=2.0)
@@ -144,8 +144,9 @@ sub_plots[0].axis([energy_min, energy_max, 0, state_count_max])
 sub_plots[1].plot(energies_list, pdos[1]['d_up']['total'], 'black', linewidth=2.0)
 sub_plots[1].plot(energies_list, pdos[1]['d_down']['total'], 'black', linewidth=2.0)
 
-sub_plots[2].plot(energies_list, pdos[4]['p_total'], 'black', linewidth=2.0)
-sub_plots[3].plot(energies_list, pdos[2]['p_total'], 'black', linewidth=2.0)
+sub_plots[2].plot(energies_list, pdos[2]['p_total'], 'black', linewidth=2.0)
+sub_plots[3].plot(energies_list, pdos[3]['p_total'], 'black', linewidth=2.0)
+sub_plots[4].plot(energies_list, pdos[4]['p_total'], 'black', linewidth=2.0)
 
 # sub_plots[2].plot(energies_list, pdos[4]['p'], 'black', linewidth=2.0)
 # sub_plots[3].plot(energies_list, pdos[2]['p'], 'black', linewidth=2.0)
@@ -166,6 +167,8 @@ for i, plot in enumerate(sub_plots):
 	[spine.set_linewidth(1.5) for spine in plot.spines.itervalues()] #set border width
 
 	plot.yaxis.get_major_ticks()[-1].set_visible(False)
+	if i in [3, 4]:
+		plot.yaxis.get_major_ticks()[-2].set_visible(False)
 	plot.axvline(x=0.0, color='r', linestyle='--')
 
 	plot.text(0.88, 0.85, labels[i], verticalalignment='top', horizontalalignment='center', transform=plot.transAxes, color='black', fontsize=16)
