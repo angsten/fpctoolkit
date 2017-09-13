@@ -188,7 +188,7 @@ class EpitaxialRelaxer(object):
 		for structure_tag in lowest_energy_dictionaries:
 			print '\n' + structure_tag
 
-			ordered_misfits = Sorted(lowest_energy_dictionaries[structure_tag])
+			ordered_misfits = sorted(lowest_energy_dictionaries[structure_tag])
 
 			for misfit in ordered_misfits:
 				print str(misfit), lowest_energy_dictionaries[structure_tag][misfit]['energy'], lowest_energy_dictionaries[structure_tag][misfit]['energy_per_atom'] 
