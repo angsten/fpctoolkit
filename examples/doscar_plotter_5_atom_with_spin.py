@@ -6,7 +6,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 from fpctoolkit.io.file import File
 import fpctoolkit.util.string_util as su
 
-file_path = 'C:\Users\Tom\Desktop/5at_kvo_epi_666G'
+file_path = 'C:\Users\Tom\Desktop/kvo_5at_hse_doscar_10G'
 file = File(file_path)
 
 
@@ -121,11 +121,12 @@ if len(data_series[1][0]) == 19: #spin, columns are energy and those above, one 
 
 
 
-energy_min = -6.5
-energy_max = 6.5
+energy_min = -7
+energy_max = 7
 state_count_max = 10
 
-title = 'KVO 5-atom Spin Polarized GGA HSE06 -0.035 misfit epitaxial structure 600eV encut 6x6x6G Kpoints'
+title = 'KVO 5-atom Spin Polarized GGA HSE06 -0.035 misfit epitaxial structure 600eV encut 10x10x10G Kpoints'
+#title = 'PVO 5-atom FM HSE06 bulk experimental structure 600eV encut 10x10x10G'
 labels = ['Total', 'V d-states', 'O1 p-states', 'O2 p-states', 'O3 p-states']
 
 # plt.suptitle('DOS')
@@ -184,6 +185,143 @@ figure.text(0.5, 0.94, title, fontsize=16, ha='center')
 
 plt.show()
 
-# plt.clf()
 
 
+
+
+
+
+
+
+
+############################d orbital zoom
+
+
+labels = ['V d total', 'V dxy', 'V dyz', 'V dxz', 'V dx^2-y^2', 'V dz^2']
+
+# plt.suptitle('DOS')
+
+# plt.plot(energies_list, total_dos, 'black', linewidth=2.0)
+
+figure, sub_plots = plt.subplots(6, sharex=True)
+figure.set_size_inches(12, 9, forward=True)
+
+
+
+sub_plots[0].set_xlim(energy_min, energy_max)
+
+sub_plots[0].plot(energies_list, pdos[1]['d_up']['total'], 'black', linewidth=2.0)
+sub_plots[0].plot(energies_list, pdos[1]['d_down']['total'], 'black', linewidth=2.0)
+
+sub_plots[1].plot(energies_list, pdos[1]['d_up']['xy'], 'black', linewidth=2.0)
+sub_plots[1].plot(energies_list, pdos[1]['d_down']['xy'], 'black', linewidth=2.0)
+
+sub_plots[2].plot(energies_list, pdos[1]['d_up']['yz'], 'black', linewidth=2.0)
+sub_plots[2].plot(energies_list, pdos[1]['d_down']['yz'], 'black', linewidth=2.0)
+
+sub_plots[3].plot(energies_list, pdos[1]['d_up']['xz'], 'black', linewidth=2.0)
+sub_plots[3].plot(energies_list, pdos[1]['d_down']['xz'], 'black', linewidth=2.0)
+
+sub_plots[4].plot(energies_list, pdos[1]['d_up']['x2'], 'black', linewidth=2.0)
+sub_plots[4].plot(energies_list, pdos[1]['d_down']['x2'], 'black', linewidth=2.0)
+
+sub_plots[5].plot(energies_list, pdos[1]['d_up']['z2'], 'black', linewidth=2.0)
+sub_plots[5].plot(energies_list, pdos[1]['d_down']['z2'], 'black', linewidth=2.0)
+
+
+sub_plots[-1].set_xlabel('Energy (eV)', fontsize=18)
+figure.text(0.04, 0.5, 'Density of States (states/eV*cell)', fontsize=18, va='center', rotation='vertical')
+
+figure.subplots_adjust(hspace=0)
+
+for i, plot in enumerate(sub_plots):
+	for tick in plot.xaxis.get_major_ticks():
+		tick.label.set_fontsize(14)
+	for tick in plot.yaxis.get_major_ticks():
+		tick.label.set_fontsize(14)
+	plot.xaxis.set_tick_params(width=1.25, length=5) #set tick length and width
+	plot.yaxis.set_tick_params(width=1.25, length=5)
+	[spine.set_linewidth(1.5) for spine in plot.spines.itervalues()] #set border width
+
+	plot.yaxis.get_major_ticks()[-1].set_visible(False)
+	if i in [3, 4]:
+		plot.yaxis.get_major_ticks()[-2].set_visible(False)
+	plot.axvline(x=0.0, color='r', linestyle='--')
+
+	plot.text(0.88, 0.85, labels[i], verticalalignment='top', horizontalalignment='center', transform=plot.transAxes, color='black', fontsize=16)
+
+
+
+# plt.savefig(pp, format='pdf')
+
+figure.set_figwidth(8)
+figure.set_figheight(8)
+figure.patch.set_facecolor('white')
+figure.text(0.5, 0.94, title, fontsize=16, ha='center')
+
+plt.show()
+
+
+
+
+
+############################Oxygen p orbital zoom
+
+
+for i in range(2, 5):
+
+	o_lab = 'O' + str(i-1)
+
+	labels = [o_lab + ' p total', o_lab + ' px', o_lab + ' py', o_lab + ' pz']
+
+	# plt.suptitle('DOS')
+
+	# plt.plot(energies_list, total_dos, 'black', linewidth=2.0)
+
+	figure, sub_plots = plt.subplots(4, sharex=True)
+	figure.set_size_inches(12, 9, forward=True)
+
+	sub_plots[0].set_xlim(energy_min, energy_max)
+
+	sub_plots[0].plot(energies_list, pdos[i]['p_total'], 'black', linewidth=2.0)
+
+	sub_plots[1].plot(energies_list, pdos[i]['p_up']['x'], 'black', linewidth=2.0)
+	sub_plots[1].plot(energies_list, pdos[i]['p_down']['x'], 'black', linewidth=2.0)
+
+	sub_plots[2].plot(energies_list, pdos[i]['p_up']['y'], 'black', linewidth=2.0)
+	sub_plots[2].plot(energies_list, pdos[i]['p_down']['y'], 'black', linewidth=2.0)
+
+	sub_plots[3].plot(energies_list, pdos[i]['p_up']['z'], 'black', linewidth=2.0)
+	sub_plots[3].plot(energies_list, pdos[i]['p_down']['z'], 'black', linewidth=2.0)
+
+	sub_plots[-1].set_xlabel('Energy (eV)', fontsize=18)
+	figure.text(0.04, 0.5, 'Density of States (states/eV*cell)', fontsize=18, va='center', rotation='vertical')
+
+	figure.subplots_adjust(hspace=0)
+
+	for i, plot in enumerate(sub_plots):
+		for tick in plot.xaxis.get_major_ticks():
+			tick.label.set_fontsize(14)
+		for tick in plot.yaxis.get_major_ticks():
+			tick.label.set_fontsize(14)
+		plot.xaxis.set_tick_params(width=1.25, length=5) #set tick length and width
+		plot.yaxis.set_tick_params(width=1.25, length=5)
+		[spine.set_linewidth(1.5) for spine in plot.spines.itervalues()] #set border width
+
+		plot.yaxis.get_major_ticks()[-1].set_visible(False)
+		if i in [3, 4]:
+			plot.yaxis.get_major_ticks()[-2].set_visible(False)
+		plot.axvline(x=0.0, color='r', linestyle='--')
+
+		plot.text(0.88, 0.85, labels[i], verticalalignment='top', horizontalalignment='center', transform=plot.transAxes, color='black', fontsize=16)
+
+
+
+	# plt.savefig(pp, format='pdf')
+
+	figure.set_figwidth(8)
+	figure.set_figheight(8)
+	figure.patch.set_facecolor('white')
+	figure.text(0.5, 0.94, title, fontsize=16, ha='center')
+
+	plt.show()
