@@ -7,6 +7,7 @@ from fpctoolkit.structure.structure_analyzer import StructureAnalyzer
 from fpctoolkit.structure.site_collection import SiteCollection
 from fpctoolkit.util.math.vector import Vector
 from fpctoolkit.util.random_selector import RandomSelector
+from fpctoolkit.structure.displacement_vector import DisplacementVector
 
 
 class StructureManipulator(object):
@@ -164,3 +165,13 @@ class StructureManipulator(object):
 
 		for site in structure.sites:
 			site.randomly_displace(displacement_vector_distribution_function_dictionary_by_type[site['type']], structure.lattice)
+
+	@staticmethod
+	def get_inverse(reference_structure, distorted_structure):
+		"""
+		Returns an equivalent structure but with the atom positions inverted about the reference structure (this reference should be centrosymmetric)
+		"""
+
+		disp_vector = DisplacementVector.get_instance_from_displaced_structure_relative_to_reference_structure(reference_structure=reference_structure, displaced_structure=distorted_structure, coordinate_mode='Direct')
+
+		print disp_vector
