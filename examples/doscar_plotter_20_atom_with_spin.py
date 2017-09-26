@@ -3,17 +3,18 @@ import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import sys
+import copy
 
 from fpctoolkit.io.file import File
 import fpctoolkit.util.string_util as su
 
-file_path = 'C:\Users\Tom\Desktop/hse_kvo_doscar_664G'
-A_lab = 'Pb'
+file_path = 'C:\Users\Tom\Desktop/kvo_pcmb_lda_doscar_12128G'
+A_lab = 'K'
 
 file = File(file_path)
 
 
-num_atoms = 5
+num_atoms = 20
 
 
 def get_floats_list_from_string(line):
@@ -80,7 +81,7 @@ pdos = [] #each index corresponds to the associated atom in the poscar, a set of
 if len(data_series[1][0]) == 19: #spin, columns are energy and those above, one set for each atom
 
 	for i in range(num_atoms):
-		new_pdos = {'s_up': [], 's_down': [], 'p_total': [], 'p_up': {'total': [], 'x': [], 'y': [], 'z': []}, 'p_down': {'total': [], 'x': [], 'y': [], 'z': []}, 'd_total': [], 'd_up': {'total': [], 'xy': [], 'yz': [], 'z2': [], 'xz': [], 'x2': []}, 'd_down': {'total': [], 'xy': [], 'yz': [], 'z2': [], 'xz': [], 'x2': []}}
+		new_pdos = {'total_up': [], 'total_down': [], 's_up': [], 's_down': [], 'p_total': [], 'p_up': {'total': [], 'x': [], 'y': [], 'z': []}, 'p_down': {'total': [], 'x': [], 'y': [], 'z': []}, 'd_total': [], 'd_up': {'total': [], 'xy': [], 'yz': [], 'z2': [], 'xz': [], 'x2': []}, 'd_down': {'total': [], 'xy': [], 'yz': [], 'z2': [], 'xz': [], 'x2': []}}
 
 		for data in data_series[i+1]:
 			new_pdos['s_up'].append(data[1])
@@ -118,43 +119,53 @@ if len(data_series[1][0]) == 19: #spin, columns are energy and those above, one 
 
 			new_pdos['d_total'].append(data[9] + data[11] + data[13] + data[15] + data[17] + data[10] + data[12] + data[14] + data[16] + data[18])
 
+			new_pdos['total_up'].append(new_pdos['s_up'][-1] + new_pdos['p_up']['total'][-1] + new_pdos['d_up']['total'][-1])
+			new_pdos['total_down'].append(new_pdos['s_down'][-1] + new_pdos['p_down']['total'][-1] + new_pdos['d_down']['total'][-1])
+
 
 		pdos.append(new_pdos)
 
 
 
+offset_index = 0
+
+index = {}
+
+index[0] = 0 + offset_index
+index[1] = 4 + offset_index
+index[2] = 8 + offset_index
+index[3] = 12 + offset_index
+index[4] = 16 + offset_index
 
 
-energy_min = -10
-energy_max = 10
-state_count_max = 10
+energy_min = -5
+energy_max = 6
+state_count_max = 100
 
-# title = 'KVO 5-atom Spin Polarized GGA HSE06 -0.035 misfit epitaxial structure 600eV encut 10x10x10G Kpoints'
-title = 'PVO 5-atom FM HSE06 bulk experimental structure 600eV encut 10x10x10G isym=0'
+#title = 'KVO 20-atom Spin Polarized GGA HSE06 Pcmb bulk experimental 600eV encut 6x6x4G'
+title = 'KVO 20-atom Spin Polarized LDA Pcmb bulk experimental 600eV encut 12x12x8G'
 labels = ['Total', 'V d-states', 'O1 p-states', 'O2 p-states', 'O3 p-states']
 
 # plt.suptitle('DOS')
 
 # plt.plot(energies_list, total_dos, 'black', linewidth=2.0)
 
-figure, sub_plots = plt.subplots(5, sharex=True)
+figure, sub_plots = plt.subplots(5, sharex=True, sharey=False)
 figure.set_size_inches(12, 9, forward=True)
 
 sub_plots[0].plot(energies_list, total_dos, 'black', linewidth=2.0)
 
 sub_plots[0].axis([energy_min, energy_max, 0, state_count_max])
 
-#sub_plots[0].plot(energies_list, total_dos_down, 'black', linewidth=2.0)
 
-sub_plots[1].plot(energies_list, pdos[1]['d_up']['total'], 'black', linewidth=2.0)
-sub_plots[1].plot(energies_list, pdos[1]['d_down']['total'], 'black', linewidth=2.0)
+sub_plots[1].plot(energies_list, pdos[index[1]]['d_up']['total'], 'black', linewidth=2.0)
+sub_plots[1].plot(energies_list, pdos[index[1]]['d_down']['total'], 'black', linewidth=2.0)
 
-sub_plots[2].plot(energies_list, pdos[2]['p_total'], 'black', linewidth=2.0)
-sub_plots[3].plot(energies_list, pdos[3]['p_total'], 'black', linewidth=2.0)
-sub_plots[4].plot(energies_list, pdos[4]['p_total'], 'black', linewidth=2.0)
+sub_plots[2].plot(energies_list, pdos[index[2]]['p_total'], 'black', linewidth=2.0)
+sub_plots[3].plot(energies_list, pdos[index[3]]['p_total'], 'black', linewidth=2.0)
+sub_plots[4].plot(energies_list, pdos[index[4]]['p_total'], 'black', linewidth=2.0)
 
-# sub_plots[2].plot(energies_list, pdos[4]['p'], 'black', linewidth=2.0)
-# sub_plots[3].plot(energies_list, pdos[2]['p'], 'black', linewidth=2.0)
+
 
 
 sub_plots[-1].set_xlabel('Energy (eV)', fontsize=18)
@@ -188,7 +199,6 @@ figure.patch.set_facecolor('white')
 figure.text(0.5, 0.94, title, fontsize=16, ha='center')
 
 plt.show()
-
 
 
 
@@ -208,23 +218,23 @@ figure.set_size_inches(12, 9, forward=True)
 
 sub_plots[0].set_xlim(energy_min, energy_max)
 
-sub_plots[0].plot(energies_list, pdos[1]['d_up']['total'], 'black', linewidth=2.0)
-sub_plots[0].plot(energies_list, pdos[1]['d_down']['total'], 'black', linewidth=2.0)
+sub_plots[0].plot(energies_list, pdos[index[1]]['d_up']['total'], 'black', linewidth=2.0)
+sub_plots[0].plot(energies_list, pdos[index[1]]['d_down']['total'], 'black', linewidth=2.0)
 
-sub_plots[1].plot(energies_list, pdos[1]['d_up']['xy'], 'black', linewidth=2.0)
-sub_plots[1].plot(energies_list, pdos[1]['d_down']['xy'], 'black', linewidth=2.0)
+sub_plots[1].plot(energies_list, pdos[index[1]]['d_up']['xy'], 'black', linewidth=2.0)
+sub_plots[1].plot(energies_list, pdos[index[1]]['d_down']['xy'], 'black', linewidth=2.0)
 
-sub_plots[2].plot(energies_list, pdos[1]['d_up']['yz'], 'black', linewidth=2.0)
-sub_plots[2].plot(energies_list, pdos[1]['d_down']['yz'], 'black', linewidth=2.0)
+sub_plots[2].plot(energies_list, pdos[index[1]]['d_up']['yz'], 'black', linewidth=2.0)
+sub_plots[2].plot(energies_list, pdos[index[1]]['d_down']['yz'], 'black', linewidth=2.0)
 
-sub_plots[3].plot(energies_list, pdos[1]['d_up']['xz'], 'black', linewidth=2.0)
-sub_plots[3].plot(energies_list, pdos[1]['d_down']['xz'], 'black', linewidth=2.0)
+sub_plots[3].plot(energies_list, pdos[index[1]]['d_up']['xz'], 'black', linewidth=2.0)
+sub_plots[3].plot(energies_list, pdos[index[1]]['d_down']['xz'], 'black', linewidth=2.0)
 
-sub_plots[4].plot(energies_list, pdos[1]['d_up']['x2'], 'black', linewidth=2.0)
-sub_plots[4].plot(energies_list, pdos[1]['d_down']['x2'], 'black', linewidth=2.0)
+sub_plots[4].plot(energies_list, pdos[index[1]]['d_up']['x2'], 'black', linewidth=2.0)
+sub_plots[4].plot(energies_list, pdos[index[1]]['d_down']['x2'], 'black', linewidth=2.0)
 
-sub_plots[5].plot(energies_list, pdos[1]['d_up']['z2'], 'black', linewidth=2.0)
-sub_plots[5].plot(energies_list, pdos[1]['d_down']['z2'], 'black', linewidth=2.0)
+sub_plots[5].plot(energies_list, pdos[index[1]]['d_up']['z2'], 'black', linewidth=2.0)
+sub_plots[5].plot(energies_list, pdos[index[1]]['d_down']['z2'], 'black', linewidth=2.0)
 
 
 sub_plots[-1].set_xlabel('Energy (eV)', fontsize=18)
@@ -258,6 +268,7 @@ figure.patch.set_facecolor('white')
 figure.text(0.5, 0.94, title, fontsize=16, ha='center')
 
 plt.show()
+
 
 
 
@@ -278,20 +289,20 @@ figure.set_size_inches(12, 9, forward=True)
 
 sub_plots[0].set_xlim(energy_min, energy_max)
 
-sub_plots[0].plot(energies_list, pdos[1]['s_up'], 'black', linewidth=2.0)
-sub_plots[0].plot(energies_list, pdos[1]['s_down'], 'black', linewidth=2.0)
+sub_plots[0].plot(energies_list, pdos[index[1]]['s_up'], 'black', linewidth=2.0)
+sub_plots[0].plot(energies_list, pdos[index[1]]['s_down'], 'black', linewidth=2.0)
 
-sub_plots[1].plot(energies_list, pdos[1]['p_up']['total'], 'black', linewidth=2.0)
-sub_plots[1].plot(energies_list, pdos[1]['p_down']['total'], 'black', linewidth=2.0)
+sub_plots[1].plot(energies_list, pdos[index[1]]['p_up']['total'], 'black', linewidth=2.0)
+sub_plots[1].plot(energies_list, pdos[index[1]]['p_down']['total'], 'black', linewidth=2.0)
 
-sub_plots[2].plot(energies_list, pdos[1]['p_up']['x'], 'black', linewidth=2.0)
-sub_plots[2].plot(energies_list, pdos[1]['p_down']['x'], 'black', linewidth=2.0)
+sub_plots[2].plot(energies_list, pdos[index[1]]['p_up']['x'], 'black', linewidth=2.0)
+sub_plots[2].plot(energies_list, pdos[index[1]]['p_down']['x'], 'black', linewidth=2.0)
 
-sub_plots[3].plot(energies_list, pdos[1]['p_up']['y'], 'black', linewidth=2.0)
-sub_plots[3].plot(energies_list, pdos[1]['p_down']['y'], 'black', linewidth=2.0)
+sub_plots[3].plot(energies_list, pdos[index[1]]['p_up']['y'], 'black', linewidth=2.0)
+sub_plots[3].plot(energies_list, pdos[index[1]]['p_down']['y'], 'black', linewidth=2.0)
 
-sub_plots[4].plot(energies_list, pdos[1]['p_up']['z'], 'black', linewidth=2.0)
-sub_plots[4].plot(energies_list, pdos[1]['p_down']['z'], 'black', linewidth=2.0)
+sub_plots[4].plot(energies_list, pdos[index[1]]['p_up']['z'], 'black', linewidth=2.0)
+sub_plots[4].plot(energies_list, pdos[index[1]]['p_down']['z'], 'black', linewidth=2.0)
 
 
 sub_plots[-1].set_xlabel('Energy (eV)', fontsize=18)
@@ -350,20 +361,20 @@ for i in range(2, 5):
 
 	sub_plots[0].set_xlim(energy_min, energy_max)
 
-	sub_plots[0].plot(energies_list, pdos[i]['s_up'], 'black', linewidth=2.0)
-	sub_plots[0].plot(energies_list, pdos[i]['s_down'], 'black', linewidth=2.0)
+	sub_plots[0].plot(energies_list, pdos[index[i]]['s_up'], 'black', linewidth=2.0)
+	sub_plots[0].plot(energies_list, pdos[index[i]]['s_down'], 'black', linewidth=2.0)
 
-	sub_plots[1].plot(energies_list, pdos[i]['p_up']['total'], 'black', linewidth=2.0)
-	sub_plots[1].plot(energies_list, pdos[i]['p_down']['total'], 'black', linewidth=2.0)
+	sub_plots[1].plot(energies_list, pdos[index[i]]['p_up']['total'], 'black', linewidth=2.0)
+	sub_plots[1].plot(energies_list, pdos[index[i]]['p_down']['total'], 'black', linewidth=2.0)
 
-	sub_plots[2].plot(energies_list, pdos[i]['p_up']['x'], 'black', linewidth=2.0)
-	sub_plots[2].plot(energies_list, pdos[i]['p_down']['x'], 'black', linewidth=2.0)
+	sub_plots[2].plot(energies_list, pdos[index[i]]['p_up']['x'], 'black', linewidth=2.0)
+	sub_plots[2].plot(energies_list, pdos[index[i]]['p_down']['x'], 'black', linewidth=2.0)
 
-	sub_plots[3].plot(energies_list, pdos[i]['p_up']['y'], 'black', linewidth=2.0)
-	sub_plots[3].plot(energies_list, pdos[i]['p_down']['y'], 'black', linewidth=2.0)
+	sub_plots[3].plot(energies_list, pdos[index[i]]['p_up']['y'], 'black', linewidth=2.0)
+	sub_plots[3].plot(energies_list, pdos[index[i]]['p_down']['y'], 'black', linewidth=2.0)
 
-	sub_plots[4].plot(energies_list, pdos[i]['p_up']['z'], 'black', linewidth=2.0)
-	sub_plots[4].plot(energies_list, pdos[i]['p_down']['z'], 'black', linewidth=2.0)
+	sub_plots[4].plot(energies_list, pdos[index[i]]['p_up']['z'], 'black', linewidth=2.0)
+	sub_plots[4].plot(energies_list, pdos[index[i]]['p_down']['z'], 'black', linewidth=2.0)
 
 	sub_plots[-1].set_xlabel('Energy (eV)', fontsize=18)
 	figure.text(0.04, 0.5, 'Density of States (states/eV*cell)', fontsize=18, va='center', rotation='vertical')
@@ -416,21 +427,21 @@ figure.set_size_inches(12, 9, forward=True)
 
 sub_plots[0].set_xlim(energy_min, energy_max)
 
-sub_plots[0].plot(energies_list, pdos[0]['s_up'], 'black', linewidth=2.0)
-sub_plots[0].plot(energies_list, pdos[0]['s_down'], 'black', linewidth=2.0)
+sub_plots[0].plot(energies_list, pdos[index[0]]['s_up'], 'black', linewidth=2.0)
+sub_plots[0].plot(energies_list, pdos[index[0]]['s_down'], 'black', linewidth=2.0)
 
-sub_plots[1].plot(energies_list, pdos[0]['p_up']['total'], 'black', linewidth=2.0)
-sub_plots[1].plot(energies_list, pdos[0]['p_down']['total'], 'black', linewidth=2.0)
+sub_plots[1].plot(energies_list, pdos[index[0]]['p_up']['total'], 'black', linewidth=2.0)
+sub_plots[1].plot(energies_list, pdos[index[0]]['p_down']['total'], 'black', linewidth=2.0)
 
 
-sub_plots[2].plot(energies_list, pdos[0]['p_up']['x'], 'black', linewidth=2.0)
-sub_plots[2].plot(energies_list, pdos[0]['p_down']['x'], 'black', linewidth=2.0)
+sub_plots[2].plot(energies_list, pdos[index[0]]['p_up']['x'], 'black', linewidth=2.0)
+sub_plots[2].plot(energies_list, pdos[index[0]]['p_down']['x'], 'black', linewidth=2.0)
 
-sub_plots[3].plot(energies_list, pdos[0]['p_up']['y'], 'black', linewidth=2.0)
-sub_plots[3].plot(energies_list, pdos[0]['p_down']['y'], 'black', linewidth=2.0)
+sub_plots[3].plot(energies_list, pdos[index[0]]['p_up']['y'], 'black', linewidth=2.0)
+sub_plots[3].plot(energies_list, pdos[index[0]]['p_down']['y'], 'black', linewidth=2.0)
 
-sub_plots[4].plot(energies_list, pdos[0]['p_up']['z'], 'black', linewidth=2.0)
-sub_plots[4].plot(energies_list, pdos[0]['p_down']['z'], 'black', linewidth=2.0)
+sub_plots[4].plot(energies_list, pdos[index[0]]['p_up']['z'], 'black', linewidth=2.0)
+sub_plots[4].plot(energies_list, pdos[index[0]]['p_down']['z'], 'black', linewidth=2.0)
 
 sub_plots[-1].set_xlabel('Energy (eV)', fontsize=18)
 figure.text(0.04, 0.5, 'Density of States (states/eV*cell)', fontsize=18, va='center', rotation='vertical')

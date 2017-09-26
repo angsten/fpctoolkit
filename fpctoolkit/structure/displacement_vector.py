@@ -187,7 +187,7 @@ class DisplacementVector(object):
 		difference_array = lattice_2_np_array - lattice_1_np_array
 
 		if np.linalg.norm(difference_array) > 1e-8:
-			raise Exception("Lattice for reference and displaced structure are not equivalent. This will break the pbc shorted vector portion of this call.", difference_array)
+			raise Exception("Lattice for reference and displaced structure are not equivalent. This will break the pbc shortest vector portion of this call.", difference_array)
 
 
 		reference_structure = copy.deepcopy(reference_structure)
