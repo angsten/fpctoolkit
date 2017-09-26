@@ -176,4 +176,4 @@ class StructureManipulator(object):
 
 		add_vector = -1.0*disp_vector
 
-		return displace_structure(reference_structure=reference_structure, displacement_vector=add_vector, displacement_coordinate_mode='Direct')
+		return DisplacementVector.displace_structure(reference_structure=reference_structure, displacement_vector=add_vector, displacement_coordinate_mode='Direct')
