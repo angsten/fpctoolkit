@@ -240,6 +240,12 @@ class VaspCalculation(object):
 		if Path.exists(self.get_extended_path('WAVECAR')) and self.complete:
 			Path.remove(self.get_extended_path('WAVECAR'))
 
+	def delete_big_vasp_files_if_complete(self):
+		if self.complete:
+			for file_name in ['WAVECAR', 'CHG', 'CHGCAR', 'vasprun.xml']:
+				if Path.exists(self.get_extended_path(file_name)):
+					Path.remove(self.get_extended_path(file_name))			
+
 	def get_extended_path(self, relative_path):
 		return Path.join(self.path, relative_path)
 

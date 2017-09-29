@@ -176,4 +176,9 @@ class StructureManipulator(object):
 
 		add_vector = -1.0*disp_vector
 
-		return DisplacementVector.displace_structure(reference_structure=reference_structure, displacement_vector=add_vector, displacement_coordinate_mode='Direct')
+		final_structure = DisplacementVector.displace_structure(reference_structure=reference_structure, displacement_vector=add_vector, displacement_coordinate_mode='Direct')
+
+
+		print "Sum one " + sum()
+
+		return final_structure
