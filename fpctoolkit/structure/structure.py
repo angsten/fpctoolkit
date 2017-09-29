@@ -170,7 +170,7 @@ class Structure(object):
 			site.convert_to_direct_coordinates(self.lattice)
 
 
-	def randomly_displace_sites(self, max_displacement_magnitude):
+	def randomly_displace_sites(self, max_displacement_magnitude, keep_first_site_at_origin=False):
 		"""
 		max_displacement_magnitude is the maximum displacement in a single cartesian direction (in angstroms)
 		"""
@@ -182,6 +182,12 @@ class Structure(object):
 		for site in self.sites:
 			for i in range(3):
 				site['position'][i] += random.uniform(-1.0*max_displacement_magnitude, max_displacement_magnitude)
+
+		if keep_first_site_at_origin:
+			for site in self.sites:
+				for i in range(3):
+					site['position'][i] -= self.sites[0]['position'][i]
+
 
 		self.convert_sites_to_coordinate_mode(original_coordinate_mode)
 
