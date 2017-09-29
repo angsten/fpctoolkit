@@ -208,7 +208,7 @@ class Lattice(object):
 		def r():
 			return random.uniform(-1.0*max_strain, max_strain)
 
-		strain_tensor = [[1.0+r(), r()/4.0, r()/4.0], [r()/4.0, 1.0+r(), r()/4.0], [r()/4.0, r()/4.0, 1.0+r()]]
+		strain_tensor = [[1.0+r(), r()/2.0, r()/2.0], [r()/2.0, 1.0+r(), r()/2.0], [r()/2.0, r()/2.0, 1.0+r()]]
 
 		self.strain(strain_tensor)
 
