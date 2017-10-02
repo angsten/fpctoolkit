@@ -5,6 +5,7 @@ import copy
 import random
 from phonopy import Phonopy
 from phonopy.interface.vasp import read_vasp
+import math
 
 from fpctoolkit.io.file import File
 from fpctoolkit.io.vasp.poscar import Poscar
@@ -254,3 +255,17 @@ class Structure(object):
 
 		return self.lattice.get_volume()
 
+
+	def getMagnitudesAndAngles(self):
+		a = self.lattice[0]
+		b = self.lattice[1]
+		c = self.lattice[2]
+
+		magnitudes = [np.linalg.norm(x) for x in [a, b, c]]
+
+
+		alpha = (180.0/math.pi)*math.acos(np.dot(b,c)/(magnitudes[1]*magnitudes[2]))
+		beta = (180.0/math.pi)*math.acos(np.dot(a,c)/(magnitudes[0]*magnitudes[2]))
+		gamma = (180.0/math.pi)*math.acos(np.dot(a,b)/(magnitudes[0]*magnitudes[1]))
+
+		return magnitudes + [alpha, beta, gamma]
