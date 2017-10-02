@@ -256,7 +256,8 @@ class Structure(object):
 		return self.lattice.get_volume()
 
 
-	def getMagnitudesAndAngles(self):
+	def get_magnitudes_and_angles(self):
+
 		a = self.lattice[0]
 		b = self.lattice[1]
 		c = self.lattice[2]
