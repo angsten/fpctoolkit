@@ -12,6 +12,7 @@ class Outcar(File):
 	born_effective_charge_tensor_string = "BORN EFFECTIVE CHARGES (in e, cummulative output)"
 	hessian_string = "SECOND DERIVATIVES (NOT SYMMETRIZED)"
 	forces_string = "POSITION                                       TOTAL-FORCE (eV/Angst)"
+	stresses_string = "FORCE on cell =-STRESS in cart. coord.  units (eV)"
 	chemical_shift_string = "SYMMETRIZED TENSORS"
 	isotropic_chemical_shift_string = "(absolute, valence and core)"
 
@@ -81,6 +82,41 @@ class Outcar(File):
 
 		return final_forces_list
 
+		@property
+
+	def final_stresses_list(self):
+		"""
+		Returns list of stresses (in eV) - one for each x, y, z component of each atom, ordered by poscar position. Note, the negative of the vasp output is
+		taken in order to make this output an externally applied stress. Positive stress means pulling in tension.
+
+		To convert to actual pressure units, divide by the volume of the cell
+
+		The order is standardized to [XX          YY          ZZ          YZ          XZ          XY]
+		"""
+
+		if not self.complete:
+			raise Exception("Run not yet completed - cannot get stresses list")
+
+		stresses_start_indices = self.get_line_indices_containing_string(Outcar.stresses_string)
+
+		if len(stresses_start_indices) == 0:
+			raise Exception("No set of stresses found in completed outcar file")
+
+		stresses_start_index = stresses_start_indices[-1] + 13
+
+		line = self.lines[stresses_start_index]
+
+		line = ' '.join(line.split(' ')[3:])
+
+		final_stresses_list = su.get_number_list_from_string(line)
+
+		if not len(final_stresses_list) == 6:
+			raise Exception("Error reading row from stresses data. Length should be 6 but is not. Row number list looks like", final_stresses_list)
+
+
+		new_stresses = [-1.0*x for x in final_stresses_list]
+
+		return [new_stresses[0], new_stresses[1], new_stresses[2], new_stresses[4], new_stresses[5], new_stresses[3]]
 
 	def get_ionic_energies(self):
 		"""Returns list of energies (one for each ionic step) currently present in outcar"""
