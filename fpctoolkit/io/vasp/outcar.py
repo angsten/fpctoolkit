@@ -82,8 +82,7 @@ class Outcar(File):
 
 		return final_forces_list
 
-		@property
-
+	@property
 	def final_stresses_list(self):
 		"""
 		Returns list of stresses (in eV) - one for each x, y, z component of each atom, ordered by poscar position. Note, the negative of the vasp output is

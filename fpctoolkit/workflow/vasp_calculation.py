@@ -1,5 +1,7 @@
 #from fpctoolkit.workflow.vasp_calculation import VaspCalculation
 
+import time
+
 from fpctoolkit.io.file import File
 from fpctoolkit.io.vasp.kpoints import Kpoints
 from fpctoolkit.io.vasp.potcar import Potcar
@@ -10,6 +12,7 @@ from fpctoolkit.io.vasp.outcar import Outcar
 from fpctoolkit.util.path import Path
 from fpctoolkit.util.queue_adapter import QueueAdapter, QueueStatus
 import fpctoolkit.util.string_util as su
+
 
 class VaspCalculation(object):
 	"""
@@ -94,6 +97,22 @@ class VaspCalculation(object):
 
 		if not self.job_id_string:
 			raise Exception("Tried to start vasp run but an active job is already associated with its path.")
+
+	def restart(self):
+		"""Delete the job on queue, submit another job"""
+
+		print "Resetting job at " + self.path
+
+		if self.job_id_string != None:
+			self.stop()
+
+		time.sleep(0.5)
+
+		QueueAdapter.submit_job(self.path)		
+		
+		if not self.job_id_string:
+			raise Exception("Tried to start vasp run but an active job is already associated with its path.")
+
 
 	def stop(self):
 		"""If run has associated job on queue, delete this job"""
