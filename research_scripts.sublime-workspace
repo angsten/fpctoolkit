@@ -549,8 +549,16 @@
 			"file": "fpctoolkit/workflow/vasp_calculation.py",
 			"settings":
 			{
-				"buffer_size": 7649,
+				"buffer_size": 7831,
 				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/io/file.py",
+			"settings":
+			{
+				"buffer_size": 5770,
 				"line_ending": "Windows"
 			}
 		},
@@ -788,6 +796,9 @@
 	],
 	"file_history":
 	[
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run_set.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/responsive_bot/market_order_data_set.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/eigen_decomposer.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/vasp_input_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/displacement_vector.py",
@@ -830,7 +841,6 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar_element_mapping.json",
 		"/C/Users/Tom/Documents/Berkeley/research/my_papers/Vanadates Paper/files/fpcnotes",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/kpoints.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/poscar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/doscar_plotter_5_atom_with_spin.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_polarization_run_set.py",
@@ -839,7 +849,6 @@
 		"/C/Users/Tom/Anaconda2/lib/site-packages/matplotlib/axes/_base.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/responsive_bot/session.py",
 		"/C/Users/Tom/.bashrc",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/rob.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/open_orders_dictionary.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/utility.py",
@@ -914,8 +923,7 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/phonon/q_point.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/phonon/normal_mode.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/phonon/__init__.py",
-		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/cubic_2_2_2/settings.conf",
-		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/cubic_3_3_3/settings.conf"
+		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/cubic_2_2_2/settings.conf"
 	],
 	"find":
 	{
@@ -923,7 +931,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 90.0,
+		"height": 104.0,
 		"where_history":
 		[
 			""
@@ -934,6 +942,9 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"save(self",
+			"save",
+			"pickle",
 			"aspect",
 			"pp ",
 			"pp",
@@ -1058,10 +1069,7 @@
 			"initial_structure",
 			"delete_non_static_wavecars",
 			"set_strains_and_amplitudes_from_distorted_structure",
-			"shorted_pbc_vector_between_sites",
-			"self",
-			"get_data_dictionaries_list",
-			"get_current_run_path_basename"
+			"shorted_pbc_vector_between_sites"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1095,7 +1103,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -1155,7 +1163,7 @@
 						"translation.y": 462.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
@@ -1182,10 +1190,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 336.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
@@ -1194,15 +1202,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7649,
+						"buffer_size": 7831,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3401,
-								3401
+								3506,
+								3505
 							]
 						],
 						"settings":
@@ -1212,14 +1220,44 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1134.0,
+						"translation.y": 1008.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "fpctoolkit/io/file.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5770,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								967,
+								967
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1470.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 5,
 					"file": "fpctoolkit/util/queue_adapter.py",
 					"semi_transient": false,
 					"settings":
@@ -1245,11 +1283,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 6,
 					"file": "examples/pretty_derivative_plotter.py",
 					"semi_transient": false,
 					"settings":
@@ -1261,8 +1299,8 @@
 						"selection":
 						[
 							[
-								3888,
-								3888
+								2559,
+								2559
 							]
 						],
 						"settings":
@@ -1275,11 +1313,11 @@
 						"translation.y": 1470.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 7,
 					"file": "data/derivative_plot_data_pretty",
 					"semi_transient": false,
 					"settings":
@@ -1304,7 +1342,7 @@
 						"translation.y": 655.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 7,
 					"type": "text"
 				}
 			]
@@ -1375,6 +1413,10 @@
 		"selected_items":
 		[
 			[
+				"file",
+				"fpctoolkit\\io\\file.py"
+			],
+			[
 				"plot",
 				"examples\\derivative_plotter.py"
 			],
@@ -1413,10 +1455,6 @@
 			[
 				"str",
 				"fpctoolkit\\structure\\structure.py"
-			],
-			[
-				"file",
-				"fpctoolkit\\io\\file.py"
 			],
 			[
 				"path",
