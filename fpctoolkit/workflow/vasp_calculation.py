@@ -101,8 +101,6 @@ class VaspCalculation(object):
 	def restart(self, even_if_running=True):
 		"""Delete the job on queue, submit another job"""
 
-		print "Resetting job at " + self.path
-
 		was_reset = True
 
 		if self.job_id_string != None:
@@ -113,6 +111,8 @@ class VaspCalculation(object):
 				was_reset = False
 
 		if was_reset:
+			print "Resetting job at " + self.path
+			
 			time.sleep(0.5)
 
 			QueueAdapter.submit_job(self.path)		
