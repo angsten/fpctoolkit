@@ -98,20 +98,27 @@ class VaspCalculation(object):
 		if not self.job_id_string:
 			raise Exception("Tried to start vasp run but an active job is already associated with its path.")
 
-	def restart(self):
+	def restart(self, even_if_running=True):
 		"""Delete the job on queue, submit another job"""
 
 		print "Resetting job at " + self.path
 
+		was_reset = True
+
 		if self.job_id_string != None:
-			self.stop()
 
-		time.sleep(0.5)
+			if (self.queue_properties['status'] != QueueStatus.running) or even_if_running:
+				self.stop()
+			else:
+				was_reset = False
 
-		QueueAdapter.submit_job(self.path)		
+		if was_reset:
+			time.sleep(0.5)
+
+			QueueAdapter.submit_job(self.path)		
 		
-		if not self.job_id_string:
-			raise Exception("Tried to start vasp run but an active job is already associated with its path.")
+			if not self.job_id_string:
+				raise Exception("Tried to start vasp run but an active job is already associated with its path.")
 
 
 	def stop(self):
