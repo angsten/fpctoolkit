@@ -113,7 +113,7 @@ class EigenStructure(object):
 		return distorted_structure
 		
 
-	def get_decomposed_structures(self, distorted_structure, threshold=0.1):
+	def get_decomposed_structures(self, distorted_structure, threshold=0.1, mult=1.0):
 		"""
 		Finds all active modes in distorted_structure and separates them out into the consituent mode distorted structures. The list of such structures is returned
 		"""
@@ -132,7 +132,7 @@ class EigenStructure(object):
 
 				new_chromosome[:6] = full_eigen_chromosome[:6]
 
-				new_chromosome[i] = full_eigen_chromosome[i]
+				new_chromosome[i] = full_eigen_chromosome[i]*mult
 
 				self.set_eigen_chromosome(new_chromosome)
 
