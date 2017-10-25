@@ -22,7 +22,7 @@ class Site(object):
 	can also do: site['position'] = [0.1, 0.2, 0.0, 'cart']
 	"""
 
-	accepted_keys = ['position', 'coordinate_mode', 'type']
+	accepted_keys = ['position', 'coordinate_mode', 'type', 'force']
 
 	def __init__(self, properties=None):
 		self._properties = {}

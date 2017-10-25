@@ -520,71 +520,34 @@
 	"buffers":
 	[
 		{
-			"file": "examples/doscar_plotter_5_atom_with_spin.py",
+			"file": "fpctoolkit/structure/structure.py",
 			"settings":
 			{
-				"buffer_size": 15387,
-				"encoding": "UTF-8",
+				"buffer_size": 8101,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/io/vasp/outcar.py",
+			"file": "fpctoolkit/structure/lattice.py",
 			"settings":
 			{
-				"buffer_size": 17809,
-				"encoding": "UTF-8",
+				"buffer_size": 8666,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/workflow/vasp_calculation_set.py",
+			"file": "fpctoolkit/structure/site_collection.py",
 			"settings":
 			{
-				"buffer_size": 4996,
+				"buffer_size": 7721,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "fpctoolkit/workflow/vasp_calculation.py",
+			"file": "fpctoolkit/structure/site.py",
 			"settings":
 			{
-				"buffer_size": 7831,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/io/file.py",
-			"settings":
-			{
-				"buffer_size": 5770,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/util/queue_adapter.py",
-			"settings":
-			{
-				"buffer_size": 15090,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "examples/pretty_derivative_plotter.py",
-			"settings":
-			{
-				"buffer_size": 7747,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "data/derivative_plot_data_pretty",
-			"settings":
-			{
-				"buffer_size": 1296,
-				"encoding": "UTF-8",
+				"buffer_size": 5889,
 				"line_ending": "Windows"
 			}
 		}
@@ -796,6 +759,18 @@
 	],
 	"file_history":
 	[
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/eigen_structure.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/eigen_decomposer.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/pretty_derivative_plotter.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/high_eigenvalue_plotter.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/derivative_plotter.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/data/derivative_plot_data_pretty",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/queue_adapter.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/file.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_calculation.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_calculation_set.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/outcar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/doscar_plotter_5_atom_with_spin.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/responsive_bot/market_order_data_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run.py",
@@ -806,11 +781,8 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/epitaxial_relaxer.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_collection.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/outcar.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_calculation.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation_calculation.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/lattice.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/file.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/path.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/doscar_plotter_20_atom_with_spin.py",
@@ -821,7 +793,6 @@
 		"/C/Users/Tom/AppData/Local/Temp/wza5e9/CONVERT ATAT TO POSCAR/convert_ATAT_to_POSCAR.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/example_single_calculation.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_calculation_generator.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_calculation_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_calculation_set_generator.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/convenient_vasp_calculation_set_generator.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar_maker.py",
@@ -835,14 +806,12 @@
 		"/C/Users/Tom/Documents/Berkeley/research/vasp_viewer/elfcar",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/vasp_calculation_generator.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/queue_adapter.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar_element_mapping.json",
 		"/C/Users/Tom/Documents/Berkeley/research/my_papers/Vanadates Paper/files/fpcnotes",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/kpoints.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/poscar.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/doscar_plotter_5_atom_with_spin.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_polarization_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_hybrid_dos_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/responsive_bot/rob.py",
@@ -855,12 +824,10 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/test.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expansion/derivative_evaluator.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop/derivative_evaluator.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/derivative_plotter.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/data/derivative_plot_data",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/table_builder.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure_prediction/taylor_expansion/minima_relaxer.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/hessian.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/eigen_structure.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/string_util.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/eigen_component.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_static_run_set.py",
@@ -919,11 +886,7 @@
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/rhombohedral_2_2_2/settings.conf",
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/rhombohedral_2_2_2/BORN",
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/rhombohedral_2_2_2/FORCE_CONSTANTS",
-		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/rhombohedral_2_2_2/initial_structure",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/phonon/q_point.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/phonon/normal_mode.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/phonon/__init__.py",
-		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/cubic_2_2_2/settings.conf"
+		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/rhombohedral_2_2_2/initial_structure"
 	],
 	"find":
 	{
@@ -1103,24 +1066,24 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "examples/doscar_plotter_5_atom_with_spin.py",
+					"file": "fpctoolkit/structure/structure.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15387,
+						"buffer_size": 8101,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5874,
-								5874
+								566,
+								529
 							]
 						],
 						"settings":
@@ -1130,57 +1093,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2279.0,
+						"translation.y": 168.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "fpctoolkit/io/vasp/outcar.py",
+					"file": "fpctoolkit/structure/lattice.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 17809,
+						"buffer_size": 8666,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2783,
-								2783
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 462.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "fpctoolkit/workflow/vasp_calculation_set.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4996,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
+								49,
+								1
 							]
 						],
 						"settings":
@@ -1193,84 +1126,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "fpctoolkit/workflow/vasp_calculation.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7831,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3506,
-								3505
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1008.0,
-						"zoom_level": 1.0
-					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "fpctoolkit/io/file.py",
+					"buffer": 2,
+					"file": "fpctoolkit/structure/site_collection.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5770,
+						"buffer_size": 7721,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								967,
-								967
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1470.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "fpctoolkit/util/queue_adapter.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 15090,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2440,
-								2457
+								64,
+								1
 							]
 						],
 						"settings":
@@ -1287,20 +1160,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "examples/pretty_derivative_plotter.py",
+					"buffer": 3,
+					"file": "fpctoolkit/structure/site.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7747,
+						"buffer_size": 5889,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2559,
-								2559
+								43,
+								1
 							]
 						],
 						"settings":
@@ -1310,39 +1183,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1470.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "data/derivative_plot_data_pretty",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1296,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1293,
-								1142
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 655.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
 					"type": "text"
 				}
 			]
@@ -1412,6 +1256,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"eigen_str",
+				"fpctoolkit\\phonon\\eigen_structure.py"
+			],
 			[
 				"file",
 				"fpctoolkit\\io\\file.py"
