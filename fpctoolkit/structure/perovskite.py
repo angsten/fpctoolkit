@@ -39,12 +39,12 @@ class Perovskite(Structure):
 	def verify_is_perovskite(self):
 		if len(self.sites) % 5 != 0:
 			raise Exception("Perovskite number of sites must be divisible by 5")
-		elif len(self.sites.get_species_list()) != 3:
-			raise Exception("Perovskite must have exactly three types of species")
+		#elif len(self.sites.get_species_list()) != 3:
+		#	raise Exception("Perovskite must have exactly three types of species")
 
-		species_counts = self.sites.get_species_count_list()
-		if species_counts[0]/species_counts[1] != 1.0 or species_counts[2]/species_counts[0] != 3.0:
-			raise Exception("Perovskite ABO3 atom ratios not 1:1:3")
+		#species_counts = self.sites.get_species_count_list()
+		#if species_counts[0]/species_counts[1] != 1.0 or species_counts[2]/species_counts[0] != 3.0:
+		#	raise Exception("Perovskite ABO3 atom ratios not 1:1:3")
 
 
 	@staticmethod

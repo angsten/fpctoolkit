@@ -70,7 +70,8 @@ class VaspCalculationGenerator(VaspCalculation):
 
 		for file_path in [wavecar_path, chargecar_path]:
 			if file_path != None and not Path.exists(file_path):
-				raise Exception("Path " + str(file_path) + " specified does not exist.")
+				print "Warning: Path " + str(file_path) + " specified does not exist. Not using."
+				#raise Exception("Path " + str(file_path) + " specified does not exist.")
 
 		if kpoints_scheme != None and kpoints_list != None:
 			kpoints = Kpoints(scheme_string=kpoints_scheme, subdivisions_list=kpoints_list)
