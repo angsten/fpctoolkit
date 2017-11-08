@@ -148,6 +148,7 @@ class EpitaxialRelaxer(object):
 						self.data_dictionaries[structure_tag][misfit_strain][-1]['energy'] = relaxation.get_final_energy(per_atom=False)
 						self.data_dictionaries[structure_tag][misfit_strain][-1]['final_structure'] = final_structure
 						self.data_dictionaries[structure_tag][misfit_strain][-1]['path'] = relaxation.path + '/static'
+						self.data_dictionaries[structure_tag][misfit_strain][-1]['lattice_parameters'] = final_structure.get_magnitudes_and_angles()
 
 						for symprec in spg_symprecs:
 							self.data_dictionaries[structure_tag][misfit_strain][-1]['spg_' + str(symprec)] = final_structure.get_spacegroup_string(symprec)
