@@ -185,12 +185,15 @@ class Structure(object):
 				site['position'][i] += random.uniform(-1.0*max_displacement_magnitude, max_displacement_magnitude)
 
 		if keep_first_site_at_origin:
-			for site in self.sites:
-				for i in range(3):
-					site['position'][i] -= self.sites[0]['position'][i]
+			self.shift_sites_so_first_atom_is_at_origin()
 
 
 		self.convert_sites_to_coordinate_mode(original_coordinate_mode)
+
+	def shift_sites_so_first_atom_is_at_origin(self):
+		for site in self.sites:
+			for i in range(3):
+				site['position'][i] -= self.sites[0]['position'][i]
 
 	def is_equivalent_to_structure(self, other_structure):
 		"""

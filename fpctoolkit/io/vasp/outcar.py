@@ -1,3 +1,5 @@
+#from fpctoolkit.io.vasp.outcar import Outcar
+
 import numpy as np
 
 from fpctoolkit.io.file import File
