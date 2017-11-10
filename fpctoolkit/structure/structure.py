@@ -198,6 +198,11 @@ class Structure(object):
 			for i in range(3):
 				site['position'][i] -= origin[i]
 
+				while site['position'][i] > 1.0:
+					site['position'][i] -= 1.0
+				while site['position'][i] < 0.0:
+					site['position'][i] += 1.0
+
 	def is_equivalent_to_structure(self, other_structure):
 		"""
 		Returns true if lattice vectors and atomic positions are all the same (within floating-point accuracy).
