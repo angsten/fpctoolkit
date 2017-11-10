@@ -191,9 +191,12 @@ class Structure(object):
 		self.convert_sites_to_coordinate_mode(original_coordinate_mode)
 
 	def shift_sites_so_first_atom_is_at_origin(self):
+
+		origin = copy.deepcopy(self.sites[0]['position'])
+
 		for site in self.sites:
 			for i in range(3):
-				site['position'][i] -= self.sites[0]['position'][i]
+				site['position'][i] -= origin[i]
 
 	def is_equivalent_to_structure(self, other_structure):
 		"""
