@@ -106,7 +106,7 @@ class VaspCalculation(object):
 		print "id string " + str(self.job_id_string)
 		if self.job_id_string != None:
 
-			print "que prop " + str(self.queue_properties['status'])
+			print "que prop " + str(self.queue_properties)
 			print "queue stat " + str(QueueStatus.running)
 
 			if (self.queue_properties['status'] != QueueStatus.running) or even_if_running:
