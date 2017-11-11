@@ -194,7 +194,7 @@ class Structure(object):
 
 		original_coordinate_mode = self.sites.get_coordinate_mode()
 
-		self.convert_to_direct_coordinates()
+		self.convert_sites_to_direct_coordinates()
 
 		origin = copy.deepcopy(self.sites[0]['position'])
 
@@ -208,7 +208,7 @@ class Structure(object):
 					site['position'][i] += 1.0
 
 		self.convert_sites_to_coordinate_mode(original_coordinate_mode)
-		
+
 	def is_equivalent_to_structure(self, other_structure):
 		"""
 		Returns true if lattice vectors and atomic positions are all the same (within floating-point accuracy).
