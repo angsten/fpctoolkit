@@ -103,11 +103,11 @@ class VaspCalculation(object):
 
 		was_reset = True
 
-		print "id string " + str(self.job_id_string)
-		if self.job_id_string != None:
+		# print "id string " + str(self.job_id_string)
+		if self.job_id_string != None and self.queue_properties != None:
 
-			print "que prop " + str(self.queue_properties)
-			print "queue stat " + str(QueueStatus.running)
+			# print "que prop " + str(self.queue_properties)
+			# print "queue stat " + str(QueueStatus.running)
 
 			if (self.queue_properties['status'] != QueueStatus.running) or even_if_running:
 				self.stop()
