@@ -4,6 +4,50 @@
 		"selected_items":
 		[
 			[
+				"xml",
+				"xml_structures"
+			],
+			[
+				"min",
+				"min_length"
+			],
+			[
+				"sampl",
+				"sample_lengths"
+			],
+			[
+				"distan",
+				"distance_cutoff"
+			],
+			[
+				"diff",
+				"difference_vector"
+			],
+			[
+				"other",
+				"other_position"
+			],
+			[
+				"all",
+				"all_positions"
+			],
+			[
+				"str",
+				"structure"
+			],
+			[
+				"num",
+				"num_atoms"
+			],
+			[
+				"for",
+				"forces"
+			],
+			[
+				"queue",
+				"queue_properties"
+			],
+			[
 				"final",
 				"final_stresses_list"
 			],
@@ -78,10 +122,6 @@
 			[
 				"bas",
 				"basestring"
-			],
-			[
-				"str",
-				"structure_data"
 			],
 			[
 				"stru",
@@ -376,10 +416,6 @@
 				"buy_price"
 			],
 			[
-				"min",
-				"min_accumulation_multiplier"
-			],
-			[
 				"sell_pr",
 				"sell_prices_dictionary"
 			],
@@ -410,10 +446,6 @@
 			[
 				"relaxations",
 				"relaxations_set_path"
-			],
-			[
-				"num",
-				"number_of_trials"
 			],
 			[
 				"relaxation",
@@ -482,48 +514,16 @@
 			[
 				"exter",
 				"external_relaxation_count"
-			],
-			[
-				"queu",
-				"queue_properties"
-			],
-			[
-				"cur",
-				"current_run"
-			],
-			[
-				"mode",
-				"mode_charge_file"
-			],
-			[
-				"cell",
-				"cell_volume"
-			],
-			[
-				"tot",
-				"total_polarization_vector"
-			],
-			[
-				"uni",
-				"unique_guesses_file"
-			],
-			[
-				"log",
-				"log_base_path"
-			],
-			[
-				"ful",
-				"full_guesses_list_file"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "fpctoolkit/workflow/epitaxial_relaxer.py",
+			"file": "fpctoolkit/util/math/vector.py",
 			"settings":
 			{
-				"buffer_size": 12900,
+				"buffer_size": 6792,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -532,93 +532,8 @@
 			"file": "fpctoolkit/structure/structure.py",
 			"settings":
 			{
-				"buffer_size": 8549,
+				"buffer_size": 8550,
 				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/io/vasp/outcar.py",
-			"settings":
-			{
-				"buffer_size": 17856,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/workflow/vasp_calculation.py",
-			"settings":
-			{
-				"buffer_size": 7831,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/workflow/vasp_calculation_set.py",
-			"settings":
-			{
-				"buffer_size": 4996,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/workflow/vasp_relaxation_calculation.py",
-			"settings":
-			{
-				"buffer_size": 3818,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/workflow/vasp_calculation_generator.py",
-			"settings":
-			{
-				"buffer_size": 6746,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Users/Tom/Documents/Berkeley/research/my_papers/Morphotropic_HT_ML_Work/files/perovskite_classifier.py",
-			"settings":
-			{
-				"buffer_size": 3740,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "examples/epitaxy_relaxer_PVO.py",
-			"settings":
-			{
-				"buffer_size": 2760,
-				"encoding": "UTF-8",
-				"line_ending": "Windows",
-				"name": "#from fpctoolkit.workflow.epitaxial_relaxer import"
-			}
-		},
-		{
-			"file": "/C/Users/Tom/.bashrc",
-			"settings":
-			{
-				"buffer_size": 1130,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/io/vasp/incar_maker.py",
-			"settings":
-			{
-				"buffer_size": 4120,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/structure/lattice.py",
-			"settings":
-			{
-				"buffer_size": 8666,
 				"line_ending": "Windows"
 			}
 		},
@@ -635,32 +550,41 @@
 			"settings":
 			{
 				"buffer_size": 5898,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/util/string_util.py",
+			"settings":
+			{
+				"buffer_size": 2038,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/structure/structure_analyzer.py",
+			"settings":
+			{
+				"buffer_size": 7689,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/C/Users/Tom/Documents/Coding/Data Science/machine_learning_a_z/notebooks/nonlinear_regression/regression_template.py",
+			"file": "fpctoolkit/io/vasp/vasp_xml.py",
 			"settings":
 			{
-				"buffer_size": 1424,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "fpctoolkit/structure/perovskite.py",
-			"settings":
-			{
-				"buffer_size": 2585,
+				"buffer_size": 2987,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "examples/doscar_plotter_20_atom_no_spin.py",
+			"file": "examples/doscar_plotter_5_atom_with_spin.py",
 			"settings":
 			{
-				"buffer_size": 3808,
+				"buffer_size": 15387,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		}
@@ -872,10 +796,34 @@
 	],
 	"file_history":
 	[
+		"/C/Users/Tom/Documents/Coding/Data Science/materials_modeling/copper_force_potential/sample_gen_alg_pseudo_code",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/data/example.xml",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/outcar.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/doscar_plotter_5_atom_with_spin_custom_for_paper.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_analyzer.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/kpoints.py",
+		"/C/Users/Tom/Desktop/t.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/doscar_plotter_20_atom_no_spin.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/perovskite.py",
+		"/C/Users/Tom/Documents/Coding/Data Science/machine_learning_a_z/notebooks/nonlinear_regression/regression_template.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_collection.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/lattice.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar_maker.py",
+		"/C/Users/Tom/.bashrc",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/epitaxy_relaxer_PVO.py",
+		"/C/Users/Tom/Documents/Coding/Data Science/materials_modeling/copper_force_potential/initial_models_4_atoms_cartesian.py",
+		"/C/Users/Tom/Documents/Berkeley/research/my_papers/Morphotropic_HT_ML_Work/files/perovskite_classifier.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_calculation_generator.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation_calculation.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_calculation_set.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_calculation.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/epitaxial_relaxer.py",
+		"/C/Users/Tom/Desktop/prac.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/get_samples_for_perov_ML.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar.py",
 		"/C/Users/Tom/.bash_profile",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_analyzer.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/eigen_structure.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/eigen_decomposer.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/pretty_derivative_plotter.py",
@@ -884,9 +832,6 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/data/derivative_plot_data_pretty",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/queue_adapter.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/file.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_calculation.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_calculation_set.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/outcar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/doscar_plotter_5_atom_with_spin.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/responsive_bot/market_order_data_set.py",
@@ -895,25 +840,15 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/vasp_input_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/displacement_vector.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/drop/dead_code_drop.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/epitaxial_relaxer.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/site_collection.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_relaxation_calculation.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/lattice.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/util/path.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/doscar_plotter_20_atom_with_spin.py",
 		"/C/Users/Tom/Desktop/support_ep_rel.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_manipulator.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/perovskite.py",
 		"/C/Users/Tom/AppData/Local/Temp/wza5e9/CONVERT ATAT TO POSCAR/convert_ATAT_to_POSCAR.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/example_single_calculation.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_calculation_generator.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_calculation_set_generator.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/convenient_vasp_calculation_set_generator.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/incar_maker.py",
 		"/C/Users/Tom/Desktop/kvo_pcmb_lda_doscar_12128G",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/doscar_plotter_20_atom_no_spin.py",
 		"/C/Users/Tom/Desktop/hse06_pvo_101010G_isym_0_doscar",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/perovskite_epitaxy_energy_explorer.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/standard_GGA_DOS_workflow.py",
@@ -925,14 +860,12 @@
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/potcar_element_mapping.json",
 		"/C/Users/Tom/Documents/Berkeley/research/my_papers/Vanadates Paper/files/fpcnotes",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/kpoints.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/poscar.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_polarization_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_hybrid_dos_run_set.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/responsive_bot/rob.py",
 		"/C/Users/Tom/Anaconda2/lib/site-packages/matplotlib/axes/_base.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/responsive_bot/session.py",
-		"/C/Users/Tom/.bashrc",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/rob.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/open_orders_dictionary.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/cryptobot/conservative_bot/utility.py",
@@ -990,16 +923,7 @@
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/qha_rhombohedral_BaTiO3_2_2_2/qha_rhombohedral_BaTiO3_2_2_2_copy/Cp-temperature.dat",
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/qha_rhombohedral_BaTiO3_2_2_2/qha_rhombohedral_BaTiO3_2_2_2_copy/dsdv-temperature.dat",
 		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/qha_rhombohedral_BaTiO3_2_2_2/qha_rhombohedral_BaTiO3_2_2_2_copy/entropy-volume.dat",
-		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/qha_rhombohedral_BaTiO3_2_2_2/qha_rhombohedral_BaTiO3_2_2_2_copy/gruneisen-temperature.dat",
-		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/qha_rhombohedral_BaTiO3_2_2_2/qha_rhombohedral_BaTiO3_2_2_2_copy/volume_expansion.dat",
-		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/qha_rhombohedral_BaTiO3_2_2_2/qha_rhombohedral_BaTiO3_2_2_2_copy/thermal_expansion.dat",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/phonon_super_displacement_vector.py",
-		"/C/Users/Tom/Anaconda2/sip/__init__.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/phonon_band_structure.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/phonon/q_point.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_phonon.py",
-		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/rhombohedral_2_2_2/settings.conf",
-		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/rhombohedral_2_2_2/BORN"
+		"/C/Users/Tom/Documents/Berkeley/courses/ME_C237_Stat_Mech_for_Engineers/final_project/calculation_data/BaTiO3/qha_rhombohedral_BaTiO3_2_2_2/qha_rhombohedral_BaTiO3_2_2_2_copy/gruneisen-temperature.dat"
 	],
 	"find":
 	{
@@ -1018,6 +942,13 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"same_count",
+			"all_positions_direct",
+			"get",
+			"other",
+			"purple",
+			"gray",
+			"queue_properties",
 			"wavecar_path",
 			"save(self",
 			"save",
@@ -1138,14 +1069,7 @@
 			"print",
 			"Kpoints",
 			"self[2]",
-			"Kpoints",
-			"parse_scheme",
-			"kpoint_schemes",
-			"strain",
-			"relaxation",
-			"initial_structure",
-			"delete_non_static_wavecars",
-			"set_strains_and_amplitudes_from_distorted_structure"
+			"Kpoints"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1179,24 +1103,24 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 7,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "fpctoolkit/workflow/epitaxial_relaxer.py",
+					"file": "fpctoolkit/util/math/vector.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12900,
+						"buffer_size": 6792,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6893,
-								6893
+								1226,
+								1278
 							]
 						],
 						"settings":
@@ -1206,10 +1130,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 462.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -1218,15 +1142,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8549,
+						"buffer_size": 8550,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6255,
-								6255
+								4562,
+								4600
 							]
 						],
 						"settings":
@@ -1236,323 +1160,14 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2058.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "fpctoolkit/io/vasp/outcar.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 17856,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5,
-								5
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "fpctoolkit/workflow/vasp_calculation.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7831,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1529,
-								1541
-							],
-							[
-								1544,
-								1556
-							],
-							[
-								4298,
-								4310
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 362.0,
+						"translation.y": 1932.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "fpctoolkit/workflow/vasp_calculation_set.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4996,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2175,
-								2199
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "fpctoolkit/workflow/vasp_relaxation_calculation.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3818,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1664,
-								1664
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "fpctoolkit/workflow/vasp_calculation_generator.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6746,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4105,
-								4117
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 924.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "/C/Users/Tom/Documents/Berkeley/research/my_papers/Morphotropic_HT_ML_Work/files/perovskite_classifier.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3740,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": false,
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "examples/epitaxy_relaxer_PVO.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2760,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2342,
-								2342
-							]
-						],
-						"settings":
-						{
-							"auto_name": "#from fpctoolkit.workflow.epitaxial_relaxer import",
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 533.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "/C/Users/Tom/.bashrc",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1130,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": false,
-							"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "fpctoolkit/io/vasp/incar_maker.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4120,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2981,
-								2981
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "fpctoolkit/structure/lattice.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8666,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								49,
-								1
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 16,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
+					"buffer": 2,
 					"file": "fpctoolkit/structure/site_collection.py",
 					"semi_transient": false,
 					"settings":
@@ -1575,14 +1190,14 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2226.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 13,
+					"buffer": 3,
 					"file": "fpctoolkit/structure/site.py",
 					"semi_transient": false,
 					"settings":
@@ -1594,8 +1209,8 @@
 						"selection":
 						[
 							[
-								701,
-								701
+								653,
+								699
 							]
 						],
 						"settings":
@@ -1605,85 +1220,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 882.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 14,
-					"file": "/C/Users/Tom/Documents/Coding/Data Science/machine_learning_a_z/notebooks/nonlinear_regression/regression_template.py",
+					"buffer": 4,
+					"file": "fpctoolkit/util/string_util.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1424,
+						"buffer_size": 2038,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": false,
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 15,
-					"type": "text"
-				},
-				{
-					"buffer": 15,
-					"file": "fpctoolkit/structure/perovskite.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2585,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1647,
-								1647
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 14,
-					"type": "text"
-				},
-				{
-					"buffer": 16,
-					"file": "examples/doscar_plotter_20_atom_no_spin.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3808,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
+								1204,
+								1231
 							]
 						],
 						"settings":
@@ -1693,10 +1250,99 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1302.0,
+						"translation.y": 504.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 13,
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "fpctoolkit/structure/structure_analyzer.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7689,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6349,
+								6349
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2074.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "fpctoolkit/io/vasp/vasp_xml.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2987,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2719,
+								2719
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 756.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "examples/doscar_plotter_5_atom_with_spin.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15387,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3729,
+								3729
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1260.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1739,7 +1385,7 @@
 	},
 	"output.exec":
 	{
-		"height": 166.0
+		"height": 96.0
 	},
 	"output.find_results":
 	{
@@ -1748,6 +1394,10 @@
 	"output.git":
 	{
 		"height": 100.0
+	},
+	"output.mdpopups":
+	{
+		"height": 0.0
 	},
 	"output.unsaved_changes":
 	{
@@ -1767,8 +1417,28 @@
 		"selected_items":
 		[
 			[
+				"structu",
+				"fpctoolkit\\structure\\structure_analyzer.py"
+			],
+			[
+				"site.",
+				"fpctoolkit\\structure\\site.py"
+			],
+			[
 				"site",
 				"fpctoolkit\\structure\\site_collection.py"
+			],
+			[
+				"str",
+				"fpctoolkit\\structure\\structure.py"
+			],
+			[
+				"string",
+				"fpctoolkit\\util\\string_util.py"
+			],
+			[
+				"vect",
+				"fpctoolkit\\util\\math\\vector.py"
 			],
 			[
 				"incar",
@@ -1841,10 +1511,6 @@
 			[
 				"lat",
 				"fpctoolkit\\structure\\lattice.py"
-			],
-			[
-				"str",
-				"fpctoolkit\\structure\\structure.py"
 			],
 			[
 				"path",
@@ -1999,7 +1665,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 265.0,
+	"side_bar_width": 319.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

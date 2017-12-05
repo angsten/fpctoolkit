@@ -144,7 +144,7 @@ class Vector(object):
 	def get_minimum_distance_between_two_periodic_points(fractional_coordinate_1, fractional_coordinate_2, lattice, N_max=3, return_vector=False):
 		"""
 		Given periodic boundary conditions specified by lattice and positions 1 and 2 in 
-		fractional coordinates, return the shorted distance between these two points
+		fractional coordinates, return the shortest distance between these two points
 
 		N_max controls how many images out to search - in general, need a higher N max for lattices with larger a*c b*c and a*b dot products
 		Scales (2.0*N_max)^3 in computing time though!

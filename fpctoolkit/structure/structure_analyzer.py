@@ -1,5 +1,6 @@
 #from fpctoolkit.structure.structure_analyzer import StructureAnalyzer
 
+import copy
 
 from fpctoolkit.structure.structure import Structure
 from fpctoolkit.util.math.vector import Vector
@@ -135,3 +136,79 @@ class StructureAnalyzer(object):
 				return True
 
 		return False
+
+
+
+	@staticmethod
+	def get_force_potential_samples(structure, N_max=1, cutoff_fraction=0.9):
+		"""
+		Returns a list of lists, where each sample looks like [[fx of atom 1, fy, fz, x_dist_to_1st_closest_atom (cartesian), y_dist_to...], [fx of atom 2, fy, fz, ...], ...]
+		"""
+
+		structure.convert_sites_to_direct_coordinates()
+
+		distance_cutoff = max(max(structure.lattice[0]), max(structure.lattice[1]), max(structure.lattice[2]))*cutoff_fraction
+
+
+		all_positions = []
+
+		for x in range(-N_max, N_max+1):
+			for y in range(-N_max, N_max+1):
+				for z in range(-N_max, N_max+1):
+
+					for site in structure.sites:
+
+						all_positions.append([site['position'][0]+x, site['position'][1]+y, site['position'][2]+z])
+
+
+		structure.convert_sites_to_cartesian_coordinates()
+
+		for i in range(len(all_positions)):
+			all_positions[i] = Vector.get_in_cartesian_coordinates(direct_vector=all_positions[i], lattice=structure.lattice)
+
+
+		samples = []
+
+		for i, site in enumerate(structure.sites):
+
+			#print "Calculating sample for site: ", i
+
+			site_position = site['position']
+
+			sample = copy.deepcopy(site['force'])
+
+			dist_pos_duples_list = []
+
+			for j in range(len(all_positions)):
+
+				other_position = all_positions[j]
+
+				difference_vector = [(other_position[r]-site_position[r]) for r in range(3)]
+
+				distance = (difference_vector[0]**2.0 + difference_vector[1]**2.0 + difference_vector[2]**2.0)**0.5
+
+				if distance < 0.00001:
+					continue
+				elif distance > distance_cutoff:
+					continue
+
+				dist_pos_duples_list.append([distance, difference_vector])
+
+
+			dist_pos_duples_list = sorted(dist_pos_duples_list, key=lambda x: x[0])
+
+			for z in range(len(dist_pos_duples_list)):
+				sample += dist_pos_duples_list[z][1]
+
+
+			samples.append(sample)
+
+		
+		sample_lengths = [len(s) for s in samples]
+
+		min_length = min(sample_lengths)
+
+		for sample in samples:
+			sample = sample[0:min_length]
+
+		return samples

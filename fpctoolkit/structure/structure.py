@@ -1,5 +1,6 @@
 #from fpctoolkit.structure.structure import Structure
 
+
 import numpy as np
 import copy
 import random

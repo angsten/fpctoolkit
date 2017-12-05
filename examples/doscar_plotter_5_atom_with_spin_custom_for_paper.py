@@ -7,8 +7,12 @@ import sys
 from fpctoolkit.io.file import File
 import fpctoolkit.util.string_util as su
 
+#file_path = 'C:\Users\Tom\Desktop/hse06_pvo_101010G_isym_0_doscar'
 file_path = 'C:\Users\Tom\Desktop/kvo_5at_hse_doscar_10G'
-A_lab = 'K'
+#file_path = 'C:\Users\Tom\Desktop/nvo_doscar_10_10_10G_hse'
+
+
+A_lab = 'Pb'
 
 file = File(file_path)
 
@@ -80,11 +84,13 @@ pdos = [] #each index corresponds to the associated atom in the poscar, a set of
 if len(data_series[1][0]) == 19: #spin, columns are energy and those above, one set for each atom
 
 	for i in range(num_atoms):
-		new_pdos = {'s_up': [], 's_down': [], 'p_total': [], 'p_up': {'total': [], 'x': [], 'y': [], 'z': []}, 'p_down': {'total': [], 'x': [], 'y': [], 'z': []}, 'd_total': [], 'd_up': {'total': [], 'xy': [], 'yz': [], 'z2': [], 'xz': [], 'x2': []}, 'd_down': {'total': [], 'xy': [], 'yz': [], 'z2': [], 'xz': [], 'x2': []}}
+		new_pdos = {'s_total': [], 's_up': [], 's_down': [], 'p_total': [], 'p_up': {'total': [], 'x': [], 'y': [], 'z': []}, 'p_down': {'total': [], 'x': [], 'y': [], 'z': []}, 'd_total': [], 'd_up': {'total': [], 'xy': [], 'yz': [], 'z2': [], 'xz': [], 'x2': []}, 'd_down': {'total': [], 'xy': [], 'yz': [], 'z2': [], 'xz': [], 'x2': []}}
 
 		for data in data_series[i+1]:
 			new_pdos['s_up'].append(data[1])
 			new_pdos['s_down'].append(-1.0*data[2])
+
+			new_pdos['s_total'].append(data[1] + data[2])
 
 			new_pdos['p_up']['y'].append(data[3])
 			new_pdos['p_down']['y'].append(-1.0*data[4])
@@ -125,36 +131,43 @@ if len(data_series[1][0]) == 19: #spin, columns are energy and those above, one 
 
 
 
-energy_min = -7
-energy_max = 7
+energy_min = -10
+energy_max = 10
 state_count_max = 10
 
 # title = 'KVO 5-atom Spin Polarized GGA HSE06 -0.035 misfit epitaxial structure 600eV encut 10x10x10G Kpoints'
 title = 'PVO 5-atom FM HSE06 bulk experimental structure 600eV encut 10x10x10G isym=0'
-labels = ['Total', 'V d-states', 'O1 p-states', 'O2 p-states', 'O3 p-states']
+labels = ['Total',  's-states', 'p-states', 'd-states']
 
 # plt.suptitle('DOS')
 
 # plt.plot(energies_list, total_dos, 'black', linewidth=2.0)
 
-figure, sub_plots = plt.subplots(5, sharex=True)
+
+
+
+
+figure, sub_plots = plt.subplots(4, sharex=True)
 figure.set_size_inches(12, 9, forward=True)
 
 sub_plots[0].plot(energies_list, total_dos, 'black', linewidth=2.0)
 
-sub_plots[0].axis([energy_min, energy_max, 0, state_count_max])
+sub_plots[0].axis([energy_min, energy_max, 0, state_count_max-0])
 
-#sub_plots[0].plot(energies_list, total_dos_down, 'black', linewidth=2.0)
 
-sub_plots[1].plot(energies_list, pdos[1]['d_up']['total'], 'black', linewidth=2.0)
-sub_plots[1].plot(energies_list, pdos[1]['d_down']['total'], 'black', linewidth=2.0)
+sub_plots[1].plot(energies_list, pdos[0]['s_total'], 'red', linewidth=2.0)
+sub_plots[1].plot(energies_list, pdos[1]['s_total'], 'blue', linewidth=2.0)
+sub_plots[1].axis([energy_min, energy_max, 0, 0.6])
 
-sub_plots[2].plot(energies_list, pdos[2]['p_total'], 'black', linewidth=2.0)
-sub_plots[3].plot(energies_list, pdos[3]['p_total'], 'black', linewidth=2.0)
-sub_plots[4].plot(energies_list, pdos[4]['p_total'], 'black', linewidth=2.0)
+sub_plots[2].plot(energies_list, pdos[0]['p_total'], 'red', linewidth=2.0)
+sub_plots[2].plot(energies_list, pdos[1]['p_total'], color='blue', linewidth=2.0)
+sub_plots[2].plot(energies_list, pdos[2]['p_total'], color=(0.1, 0.7, 0.1), linewidth=2.0) #O1
+sub_plots[2].plot(energies_list, pdos[3]['p_total'], color=(0.0, 0.4, 0.0), linewidth=2.0) #O2
+sub_plots[2].plot(energies_list, pdos[4]['p_total'], color=(0.2, 1.0, 0.2), linewidth=2.0) #O3
+sub_plots[2].axis([energy_min, energy_max, 0, 2.3])
 
-# sub_plots[2].plot(energies_list, pdos[4]['p'], 'black', linewidth=2.0)
-# sub_plots[3].plot(energies_list, pdos[2]['p'], 'black', linewidth=2.0)
+sub_plots[3].plot(energies_list, pdos[1]['d_up']['total'], 'blue', linewidth=2.0)
+sub_plots[3].plot(energies_list, pdos[1]['d_down']['total'], 'blue', linewidth=2.0)
 
 
 sub_plots[-1].set_xlabel('Energy (eV)', fontsize=18)
@@ -189,7 +202,7 @@ figure.text(0.5, 0.94, title, fontsize=16, ha='center')
 
 plt.show()
 
-
+sys.exit()
 
 
 ############################V d orbital zoom
