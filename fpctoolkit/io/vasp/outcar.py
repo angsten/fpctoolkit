@@ -470,6 +470,37 @@ class Outcar(File):
 			row_number_list = su.get_number_list_from_string(line)
 			iso_shift = row_number_list[4]
 
-			chemical_shift_values. append(iso_shift)	
+			chemical_shift_values.append(iso_shift)	
 
 		return chemical_shift_values
+
+	def get_electric_field_gradients_tensors(self, diag=True):
+
+		if diag:
+			search_string = 'Electric field gradients after diagonalization (V/A^2)'
+			jump = 5
+		else:
+			search_string = 'Electric field gradients (V/A^2)'
+			jump = 4
+
+		if not self.complete:
+			raise Exception("Run does not yet have EFG information - not completed")
+
+		tensor_start_index = self.get_line_indices_containing_string(search_string)[-1] + jump + -1
+
+		efg_tensors = []
+
+		for N in range(self.get_number_of_atoms()):
+			atomic_efg_tensor = []
+
+			tensor_start_index += 1
+
+			line = self.lines[tensor_start_index]
+			row_number_list = su.get_number_list_from_string(line)
+
+			efg_tensors.append(row_number_list[1:])
+
+		return efg_tensors
+
+
+
