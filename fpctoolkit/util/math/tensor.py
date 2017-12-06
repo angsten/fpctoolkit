@@ -33,7 +33,7 @@ class Tensor(object):
 
 
 	@staticmethod
-	def convert_voigt_to_3x3_tensor(voigt_tensor):
+	def convert_voigt_efg_to_3x3_tensor(voigt_tensor):
 		"""
 		"""
 
@@ -47,8 +47,8 @@ class Tensor(object):
 
 		full_tensor = []
 
-		full_tensor.append([voigt_tensor[0], voigt_tensor[5], voigt_tensor[4]])
-		full_tensor.append([voigt_tensor[5], voigt_tensor[1], voigt_tensor[3]])
-		full_tensor.append([voigt_tensor[4], voigt_tensor[3], voigt_tensor[2]])
+		full_tensor.append([voigt_tensor[0], voigt_tensor[3], voigt_tensor[4]])
+		full_tensor.append([voigt_tensor[3], voigt_tensor[1], voigt_tensor[5]])
+		full_tensor.append([voigt_tensor[4], voigt_tensor[5], voigt_tensor[2]])
 
 		return np.array(full_tensor)
