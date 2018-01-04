@@ -83,4 +83,4 @@ class Potcar(File):
 		for enmax_line in enmax_lines_list:
 			enmax_line = su.remove_extra_spaces(enmax_line)
 
-			enmax_values_list.append(float(enmax_line.split(' = ')[1]))
+			enmax_values_list.append(float(enmax_line.split(' = ')[1].split(';')[0]))
