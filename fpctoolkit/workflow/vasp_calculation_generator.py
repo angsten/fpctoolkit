@@ -104,7 +104,7 @@ class VaspCalculationGenerator(VaspCalculation):
 		if 'encut' in incar_modifiers and (0.1 < incar_modifiers['encut']) and (incar_modifiers['encut'] < 10.0): #Should use this as a multiplier times enmax
 			enmax = potcar.get_enmax()
 
-			incar_modifiers['encut'] = incar_modifiers['encut']*enmax
+			incar_modifiers['encut'] = int(incar_modifiers['encut']*enmax)
 
 
 		if incar_template == 'static':
