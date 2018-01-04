@@ -7,7 +7,7 @@ import sys
 from fpctoolkit.io.file import File
 import fpctoolkit.util.string_util as su
 
-file_path = 'C:\Users\Tom\Desktop/kvo_5at_hse_doscar_10G'
+file_path = 'C:\Users\Tom\Desktop/nvo_doscar_10_10_10G_hse'
 A_lab = 'K'
 
 file = File(file_path)

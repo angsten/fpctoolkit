@@ -3,6 +3,7 @@ import json
 
 from fpctoolkit.io.file import File
 from fpctoolkit.util.path import Path
+import fpctoolkit.util.string_util as su
 
 class Potcar(File):
 	"""
@@ -71,3 +72,15 @@ class Potcar(File):
 		"""Returns minimal form (a dict like {'basenames':['Ba_sv', 'Ti_sv', 'O'], 'calculation_type':'lda'])"""
 
 		return {'basenames':self.get_basenames_list(), 'calculation_type':self.calculation_type}
+
+	def get_enmax(self):
+		"""Returns maximum enmax out of all species' enmax values"""
+
+		enmax_lines_list = self.get_lines_containing_string('ENMAX')
+
+		enmax_values_list = []
+
+		for enmax_line in enmax_lines_list:
+			enmax_line = su.remove_extra_spaces(enmax_line)
+
+			enmax_values_list.append(float(enmax_line.split(' = ')[1]))

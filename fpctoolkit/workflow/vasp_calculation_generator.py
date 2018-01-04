@@ -29,7 +29,7 @@ class VaspCalculationGenerator(VaspCalculation):
 		'node_count': 2,                 #auto-set based on system size and host if not present
 
 		'incar_template': 'static',      #if key not there, just creates a custom incar, can be 'static' or 'external_relaxation'
-		'encut': 600,
+		'encut': 600, #Can also be an integer between 0.1 and 10.0 - in this case, enmax in potcar times this number is used to get encut
 		'ediff': 1e-6,
 		'kspacing': 0.5,    #if this is specified, don't need kpoints info below
 		'kgamma': True,
@@ -100,6 +100,12 @@ class VaspCalculationGenerator(VaspCalculation):
 		for key, value in incar_modifiers.items(): #make sure there are no None values - these should not be put in INCAR
 			if value in [None, 'None']:
 				del incar_modifiers[key]
+
+		if 'encut' in incar_modifiers and (0.1 < incar_modifiers['encut']) and (incar_modifiers['encut'] < 10.0): #Should use this as a multiplier times enmax
+			enmax = potcar.get_enmax()
+
+			incar_modifiers['encut'] = incar_modifiers['encut']*enmax
+
 
 		if incar_template == 'static':
 			incar = IncarMaker.get_static_incar(custom_parameters_dictionary=incar_modifiers)
