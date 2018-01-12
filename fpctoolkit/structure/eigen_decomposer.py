@@ -579,28 +579,16 @@ def get_fraction_of_displacements_for_nine_common_modes(distorted_structure):
 
 	fractions = []
 
-	print
-	print "Norms:"
-	for basis_vector in eigen_basis_vectors_list:
-		print np.linalg.norm(basis_vector)
-	print
-
-	print "Dots:"
-
-	for basis_vector in eigen_basis_vectors_list:
-		for basis_vector_2 in eigen_basis_vectors_list:
-			print np.dot(basis_vector, basis_vector_2)
-
-	print 
-
 	for basis_vector in eigen_basis_vectors_list:
 		projection = np.dot(basis_vector, total_displacement_vector)
 
-		contribution_vector = projection*basis_vector
+		#contribution_vector = projection*basis_vector
 
-		basis_total_displacement_magnitude_contribution = sum([x for x in contribution_vector])
+		#basis_total_displacement_magnitude_contribution = sum([abs(x) for x in contribution_vector])
 
-		fractions.append(basis_total_displacement_magnitude_contribution/total_displacement_magnitude)
+		#fractions.append(float(basis_total_displacement_magnitude_contribution/total_displacement_magnitude))
+
+		fractions.append(projection/total_displacement_magnitude)
 
 	return fractions
 
