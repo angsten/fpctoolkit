@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"enmax",
+				"enmax_values_list"
+			],
+			[
+				"enm",
+				"enmax_lines_list"
+			],
+			[
 				"tensor",
 				"tensor_start_index"
 			],
@@ -506,14 +514,6 @@
 			[
 				"max",
 				"max_minima"
-			],
-			[
-				"eigen_chromo",
-				"eigen_chromosomes_list"
-			],
-			[
-				"eigen_ch",
-				"eigen_chromosomes_list"
 			]
 		]
 	},
@@ -555,26 +555,10 @@
 			}
 		},
 		{
-			"file": "examples/doscar_plotter_5_atom_with_spin_custom_for_paper.py",
-			"settings":
-			{
-				"buffer_size": 15824,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "fpctoolkit/structure/site.py",
 			"settings":
 			{
 				"buffer_size": 5898,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "fpctoolkit/util/string_util.py",
-			"settings":
-			{
-				"buffer_size": 2038,
 				"line_ending": "Windows"
 			}
 		},
@@ -610,6 +594,40 @@
 			"settings":
 			{
 				"buffer_size": 8666,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/util/string_util.py",
+			"settings":
+			{
+				"buffer_size": 2038,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/io/vasp/potcar.py",
+			"settings":
+			{
+				"buffer_size": 3108,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/workflow/vasp_calculation_generator.py",
+			"settings":
+			{
+				"buffer_size": 7114,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fpctoolkit/workflow/vasp_calculation.py",
+			"settings":
+			{
+				"buffer_size": 8019,
 				"line_ending": "Windows"
 			}
 		},
@@ -816,7 +834,6 @@
 	"expanded_folders":
 	[
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp",
@@ -831,6 +848,8 @@
 	],
 	"file_history":
 	[
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/convenient_vasp_calculation_set_generator.py",
+		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/doscar_plotter_5_atom_with_spin_custom_for_paper.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/perovskite_epitaxy_energy_explorer.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/get_samples_for_perov_ML.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/force_calculation.py",
@@ -839,7 +858,6 @@
 		"/C/Users/Tom/Documents/Coding/Data Science/materials_modeling/copper_force_potential/sample_gen_alg_pseudo_code",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/data/example.xml",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/outcar.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/doscar_plotter_5_atom_with_spin_custom_for_paper.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/structure/structure_analyzer.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/io/vasp/kpoints.py",
@@ -886,7 +904,6 @@
 		"/C/Users/Tom/AppData/Local/Temp/wza5e9/CONVERT ATAT TO POSCAR/convert_ATAT_to_POSCAR.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/example_single_calculation.py",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/vasp_calculation_set_generator.py",
-		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/fpctoolkit/workflow/convenient_vasp_calculation_set_generator.py",
 		"/C/Users/Tom/Desktop/kvo_pcmb_lda_doscar_12128G",
 		"/C/Users/Tom/Desktop/hse06_pvo_101010G_isym_0_doscar",
 		"/C/Users/Tom/Documents/Berkeley/research/scripts/fpctoolkit/examples/standard_GGA_DOS_workflow.py",
@@ -1138,7 +1155,7 @@
 	"groups":
 	[
 		{
-			"selected": 11,
+			"selected": 12,
 			"sheets":
 			[
 				{
@@ -1168,7 +1185,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
@@ -1198,7 +1215,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
@@ -1228,7 +1245,7 @@
 						"translation.y": 3321.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
@@ -1258,41 +1275,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "examples/doscar_plotter_5_atom_with_spin_custom_for_paper.py",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 15824,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
 					"file": "fpctoolkit/structure/site.py",
 					"semi_transient": false,
 					"settings":
@@ -1318,41 +1305,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "fpctoolkit/util/string_util.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2038,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1204,
-								1231
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 347.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
+					"buffer": 5,
 					"file": "fpctoolkit/structure/structure_analyzer.py",
 					"semi_transient": false,
 					"settings":
@@ -1378,11 +1335,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
+					"stack_index": 12,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 6,
 					"file": "fpctoolkit/io/vasp/vasp_xml.py",
 					"semi_transient": false,
 					"settings":
@@ -1407,11 +1364,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
+					"stack_index": 13,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 7,
 					"file": "fpctoolkit/io/vasp/outcar.py",
 					"semi_transient": false,
 					"settings":
@@ -1434,14 +1391,14 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 6311.0,
+						"translation.y": 6158.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 8,
 					"file": "fpctoolkit/structure/lattice.py",
 					"semi_transient": false,
 					"settings":
@@ -1464,14 +1421,134 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3486.0,
+						"translation.y": 2853.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "fpctoolkit/util/string_util.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2038,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								41,
+								1
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "fpctoolkit/io/vasp/potcar.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3108,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3107,
+								3107
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 756.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 11,
+					"file": "fpctoolkit/workflow/vasp_calculation_generator.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7114,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6081,
+								6081
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 882.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "fpctoolkit/workflow/vasp_calculation.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8019,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3108.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
 					"file": "examples/doscar_plotter_5_atom_with_spin.py",
 					"semi_transient": false,
 					"settings":
@@ -1497,7 +1574,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 8,
 					"type": "text"
 				}
 			]
