@@ -598,7 +598,7 @@ def get_fraction_of_displacements_for_nine_common_modes(distorted_structure):
 
 		contribution_vector = projection*basis_vector
 
-		basis_total_displacement_magnitude_contribution = sum([abs(x) for x in contribution_vector])
+		basis_total_displacement_magnitude_contribution = sum([x for x in contribution_vector])
 
 		fractions.append(basis_total_displacement_magnitude_contribution/total_displacement_magnitude)
 
