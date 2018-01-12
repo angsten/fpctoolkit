@@ -563,7 +563,32 @@ def get_nine_common_amplitudes(distorted_structure):
 
 		print str(round(projection,4)) + '   ',
 
+def get_fraction_of_displacements_for_nine_common_modes(distorted_structure):
 
+	reference_structure = Perovskite(supercell_dimensions=[2, 2, 2], lattice=distorted_structure.lattice, species_list=distorted_structure.get_species_list())
+
+	total_displacement_vector_instance = DisplacementVector.get_instance_from_displaced_structure_relative_to_reference_structure(reference_structure=reference_structure, 
+			displaced_structure=distorted_structure, coordinate_mode='Cartesian')
+
+	total_displacement_vector = total_displacement_vector_instance.to_numpy_array()
+
+	total_displacement_magnitude = sum([abs(x) for x in total_displacement_vector])
+
+	print "Total displacement magnitude is " + str(total_displacement_magnitude) + " angstroms"
+
+
+	fractions = []
+
+	for basis_vector in eigen_basis_vectors_list:
+		projection = np.dot(basis_vector, total_displacement_vector)
+
+		contribution_vector = projection*basis_vector
+
+		basis_total_displacement_magnitude_contribution = sum([abs(x) for x in contribution_vector])
+
+		fractions.append(basis_total_displacement_magnitude_contribution/total_displacement_magnitude)
+
+	return fractions
 
 
 
