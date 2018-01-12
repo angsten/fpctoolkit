@@ -478,6 +478,8 @@ if __name__ == '__main__':
 
 	#print " ".join(str(round(x, 3)) for x in relaxed_eigen_chromosome[:20])
 
+def ph():
+	print 'hello'
 
 def print_labels():
 	print "a-      b-       c-       a+      b+       c+     FEx      FEy      FEz"
