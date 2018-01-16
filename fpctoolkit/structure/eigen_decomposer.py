@@ -572,12 +572,10 @@ def get_fraction_of_displacements_for_nine_common_modes(distorted_structure):
 
 	total_displacement_vector = total_displacement_vector_instance.to_numpy_array()
 
-	total_displacement_magnitude = np.linalg.norm(total_displacement_vector) #sum([abs(x) for x in total_displacement_vector])
+	total_displacement_magnitude = sum([abs(x) for x in total_displacement_vector])
 
 	print "Total displacement magnitude is " + str(total_displacement_magnitude) + " angstroms"
 
-
-	fractions = []
 
 	for basis_vector in eigen_basis_vectors_list:
 		projection = np.dot(basis_vector, total_displacement_vector)

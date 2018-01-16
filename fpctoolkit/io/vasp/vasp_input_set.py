@@ -14,7 +14,7 @@ class VaspInputSet(object):
 
 	"""
 
-	def __init__(self, structure=None, kpoints=None, incar=None, potcar=None, submission_script_file=None, auto_change_lreal=True, auto_change_npar=True, calculation_type='lda'):
+	def __init__(self, structure=None, kpoints=None, incar=None, potcar=None, submission_script_file=None, auto_change_lreal=True, auto_change_npar=True, calculation_type='lda_paw'):
 		self.structure = structure
 		self.incar = incar
 		self.kpoints = kpoints
