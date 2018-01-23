@@ -25,6 +25,7 @@ class IncarMaker(object):
 		incar['ediff'] = 1.0e-6
 		incar['encut'] = 600
 		incar['lasph'] = True
+		incar['lorbit'] = 11
 		# incar['lwave'] = False
 		# incar['lcharg'] = False
 

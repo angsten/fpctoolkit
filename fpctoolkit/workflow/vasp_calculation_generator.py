@@ -67,6 +67,7 @@ class VaspCalculationGenerator(VaspCalculation):
 		potcar_type = vasp_calculation_input_dictionary.pop('potcar_type') if 'potcar_type' in vasp_calculation_input_dictionary else 'lda_paw'
 		vasp_code_type = vasp_calculation_input_dictionary.pop('vasp_code_type') if 'vasp_code_type' in vasp_calculation_input_dictionary else 'standard'
 		node_count = vasp_calculation_input_dictionary.pop('node_count') if 'node_count' in vasp_calculation_input_dictionary else None
+		use_mp_hubbard_u = vasp_calculation_input_dictionary.pop('use_mp_hubbard_u') if 'use_mp_hubbard_u' in vasp_calculation_input_dictionary else None
 
 		for file_path in [wavecar_path, chargecar_path]:
 			if file_path != None and not Path.exists(file_path):
@@ -107,6 +108,7 @@ class VaspCalculationGenerator(VaspCalculation):
 			incar_modifiers['encut'] = int(incar_modifiers['encut']*enmax)
 
 
+
 		if incar_template == 'static':
 			incar = IncarMaker.get_static_incar(custom_parameters_dictionary=incar_modifiers)
 		elif incar_template == 'external_relaxation':
@@ -127,6 +129,24 @@ class VaspCalculationGenerator(VaspCalculation):
 			incar['npar'] = QueueAdapter.get_optimal_npar(submission_script_file)
 		elif incar['npar'] in ['Remove', 'remove']:
 			del incar['npar']
+
+		###################TEMPORARILY HARDCODED FOR PEROVSKITES##########################################
+		if use_mp_hubbard_u:
+			u_species = initial_structure.get_species_list()[1]
+			mp_hubbard_u_values = {'Co': 3.32, 'Cr': 3.7, 'Fe': 5.3, 'Mn': 3.9, 'Mo': 4.38, 'Ni': 6.2, 'V': 3.25, 'W': 6.2}
+
+			if u_species in mp_hubbard_u_values.keys():
+
+				u_value = mp_hubbard_u_values[u_species]
+
+				incar['LDAU'] = True
+				incar['LDAUJ'] = '0 0 0'
+				incar['LDAUL'] = '0 2 0'
+				incar['LDAUPRINT'] = 1
+				incar['LDAUTYPE'] = 2
+				incar['LDAUU'] = '0 ' + str(u_value) + ' 0'
+				incar['LMAXMIX'] = 4
+				incar['LORBIT'] = 11
 
 
 		super(VaspCalculationGenerator, self).__init__(path=path, initial_structure=initial_structure, incar=incar, kpoints=kpoints, potcar=potcar, 
