@@ -1,6 +1,7 @@
 #from fpctoolkit.workflow.vasp_calculation_generator import VaspCalculationGenerator
 
 import copy
+import os
 
 from fpctoolkit.util.queue_adapter import QueueAdapter
 from fpctoolkit.io.file import File
@@ -89,12 +90,14 @@ class VaspCalculationGenerator(VaspCalculation):
 
 		submission_script_file = QueueAdapter.get_submission_file()
 
-		if node_count == None:
-			submission_script_file = QueueAdapter.modify_number_of_cores_from_num_atoms(submission_script_file, information_structure.site_count)
-		else:
-			submission_script_file = QueueAdapter.set_number_of_nodes(submission_script_file, node_count)
 
-		submission_script_file = QueueAdapter.modify_submission_script(submission_script_file, modification_key=vasp_code_type)
+		if os.environ['QUEUE_ADAPTER_HOST'] != 'Savio':
+			if node_count == None:
+				submission_script_file = QueueAdapter.modify_number_of_cores_from_num_atoms(submission_script_file, information_structure.site_count)
+			else:
+				submission_script_file = QueueAdapter.set_number_of_nodes(submission_script_file, node_count)
+
+			submission_script_file = QueueAdapter.modify_submission_script(submission_script_file, modification_key=vasp_code_type)
 
 		incar_modifiers = vasp_calculation_input_dictionary #whatever is left should only be incar modifiers - we popped all other keys
 
@@ -126,7 +129,10 @@ class VaspCalculationGenerator(VaspCalculation):
 				incar['lreal'] = False
 
 		if 'npar' not in incar:
-			incar['npar'] = QueueAdapter.get_optimal_npar(submission_script_file)
+			if os.environ['QUEUE_ADAPTER_HOST'] == 'Savio':
+				incar['npar'] = 4
+			else:
+				incar['npar'] = QueueAdapter.get_optimal_npar(submission_script_file)
 		elif incar['npar'] in ['Remove', 'remove']:
 			del incar['npar']
 

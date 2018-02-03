@@ -40,12 +40,16 @@ class QueueAdapter(object):
 				time.sleep(QueueAdapter.sleep_buffer_time)
 
 
-		if QueueAdapter.host in ['Fenrir', 'Asathor']:
+		if QueueAdapter.host in ['Fenrir', 'Asathor', 'Savio']:
 			cwd = os.getcwd()
 			os.chdir(calculation_path)
 
 			#This call pipes through output and error which can be obtained from communicate() call
-			process = subprocess.Popen(["qsub", "submit.sh"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+			if QueueAdapter.host == 'Savio':
+				process = subprocess.Popen(["sbatch", "submit.sh"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+			else:
+				process = subprocess.Popen(["qsub", "submit.sh"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
 			output, error = process.communicate() #get output and error from the qsub command
 
 			if error: #error will be None if no error is caused
@@ -250,6 +254,8 @@ class QueueAdapter(object):
 
 		elif QueueAdapter.host == 'Tom_hp':
 			pass
+		elif QueueAdapter.host == 'Savio':
+			return {'a': 1}
 		else:
 			raise Exception("QueueAdapter.host not supported")
 
@@ -291,6 +297,8 @@ class QueueAdapter(object):
 			file[0] = 'fake submit script'
 			file[1] = 'nodes = 3'
 			return file
+		elif QueueAdapter.host == 'Savio':
+			return File('/global/home/users/angsten/submit.sh')
 
 	@staticmethod
 	def modify_number_of_cores_from_num_atoms(submission_file, num_atoms):
