@@ -483,10 +483,10 @@ def print_labels():
 	print "a-      b-       c-       a+      b+       c+     FEx      FEy      FEz"
 
 
-def get_nine_common_amplitudes(distorted_structure):
+def get_nine_common_amplitudes(distorted_structure, reference_structure=None):
 
-
-	reference_structure = Perovskite(supercell_dimensions=[2, 2, 2], lattice=distorted_structure.lattice, species_list=distorted_structure.get_species_list())
+	if reference_structure == None:
+		reference_structure = Perovskite(supercell_dimensions=[2, 2, 2], lattice=distorted_structure.lattice, species_list=distorted_structure.get_species_list())
 
 	total_displacement_vector_instance = DisplacementVector.get_instance_from_displaced_structure_relative_to_reference_structure(reference_structure=reference_structure, 
 			displaced_structure=distorted_structure, coordinate_mode='Cartesian')

@@ -572,18 +572,18 @@
 			}
 		},
 		{
-			"file": "fpctoolkit/structure/displacement_vector.py",
+			"file": "examples/eigen_decomposer.py",
 			"settings":
 			{
-				"buffer_size": 10449,
+				"buffer_size": 13682,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/C/Users/Tom/Documents/Coding/python_work/reg_exp_finder/exp_finder.py",
+			"file": "fpctoolkit/structure/displacement_vector.py",
 			"settings":
 			{
-				"buffer_size": 167,
+				"buffer_size": 10449,
 				"line_ending": "Windows"
 			}
 		},
@@ -597,14 +597,11 @@
 			}
 		},
 		{
-			"contents": "Package Control Messages\n========================\n\nJavaScript Completions\n----------------------\n\n  v2.6.98\n  \n  ## Fixes\n  \n  - #48, keymap update on Windows, now bindings are like Super + Alt + <alphanum>\n  - AttributeError: 'NoneType' object has no attribute 'get' #49\n  \n  🎉🎉 ANNOUNCEMENT - NEW PLUGIN \"JavaScript Enhancements\" RELEASED 🎉🎉\n  =======================================================================\n  \n  I developed a new plugin with new features thanks to Flow (javascript static type checker from Facebook).\n  \n  So, I will NO LONGER SUPPORT \"JavaScript Completions\" plugin, except in particular cases. \n  I'm going to focus only on this new one!\n  \n  You can find it on: 👉👉 https://github.com/pichillilorenzo/JavaScriptEnhancements 👈👈\n  \n  This new plugin offers not only a BETTER AUTOCOMPLETE but a lot of FEATURES about creating, \n  developing and managing javascript projects, such as:\n  \n  - JavaScript real-time errors\n  - Code Refactoring\n  - Local bookmarks project\n  - Cordova projects (run cordova emulate, build, compile, serve, etc. directly from Sublime Text!)\n  - Ionic v1 and v2 (it includes also v3) projects (same as Cordova projects!)\n  - Angular v1 and v2 (it includes also v4 and v5) projects\n  - React projects (only about the creation at this moment)\n  - React Native projects (only about the creation at this moment. I will add also **NativeScript** support)\n  - Express projects (only about the creation at this moment)\n  - Yeoman generators\n  - etc.\n  \n  You could use it also in existing projects!! \n  \n  SEE the Wiki - https://github.com/pichillilorenzo/JavaScriptEnhancements/wiki\n  to get the complete list of the features that it offers!\n  \n  It will turn Sublime Text into a JavaScript IDE like!\n  =====================================================\n  \n  ## OS SUPPORTED NOW by this new plugin:\n  =======================================\n  \n  👉 Linux (64-bit)\n  👉 Mac OS X \n  👉 Windows (64-bit): released without the use of TerminalView plugin. For each feature (like also creating a project) will be used the cmd.exe shell (so during the creation of a project don't close it until it finishes!). Unfortunately the TerminalView plugin supports only Linux-based OS 😞 . Has someone any advice or idea about that? Is there something similar to the TerminalView plugin for Windows?? Thanks!\n  \n  Email me for any questions or doubts about this new project on: pichillilorenzo@gmail.com\n  \n  Thanks for your support!!!\n",
+			"file": "/C/Users/Tom/Documents/Coding/python_work/reg_exp_finder/exp_finder.py",
 			"settings":
 			{
-				"buffer_size": 2467,
-				"line_ending": "Windows",
-				"name": "Package Control Messages",
-				"read_only": true,
-				"scratch": true
+				"buffer_size": 167,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -1129,7 +1126,7 @@
 	"groups":
 	[
 		{
-			"selected": 7,
+			"selected": 6,
 			"sheets":
 			[
 				{
@@ -1219,7 +1216,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
@@ -1295,8 +1292,8 @@
 						"selection":
 						[
 							[
-								9896,
-								9896
+								13625,
+								13625
 							]
 						],
 						"settings":
@@ -1306,14 +1303,44 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3867.0,
+						"translation.y": 6070.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 6,
+					"file": "examples/eigen_decomposer.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13682,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 7119.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
 					"file": "fpctoolkit/structure/displacement_vector.py",
 					"semi_transient": false,
 					"settings":
@@ -1338,36 +1365,7 @@
 						"translation.y": 1755.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "/C/Users/Tom/Documents/Coding/python_work/reg_exp_finder/exp_finder.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 167,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"git_gutter_is_enabled": false,
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -1393,41 +1391,39 @@
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 6543.0,
+						"translation.y": 3363.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
 					"buffer": 9,
+					"file": "/C/Users/Tom/Documents/Coding/python_work/reg_exp_finder/exp_finder.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2467,
+						"buffer_size": 167,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2467,
-								2467
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"auto_indent": false,
 							"git_gutter_is_enabled": false,
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_width": 2,
-							"word_wrap": true
+							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -1501,6 +1497,14 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"eigen",
+				"examples\\eigen_decomposer.py"
+			],
+			[
+				"qu",
+				"fpctoolkit\\util\\queue_adapter.py"
+			],
 			[
 				"str",
 				"fpctoolkit\\structure\\structure.py"
@@ -1660,10 +1664,6 @@
 			[
 				"potcar",
 				"fpctoolkit\\io\\vasp\\potcar.py"
-			],
-			[
-				"qu",
-				"fpctoolkit\\util\\queue_adapter.py"
 			],
 			[
 				"poscar",
